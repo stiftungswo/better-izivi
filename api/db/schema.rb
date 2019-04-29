@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_29_102223) do
+ActiveRecord::Schema.define(version: 2019_04_29_132515) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "start_date", null: false
@@ -42,6 +42,14 @@ ActiveRecord::Schema.define(version: 2019_04_29_102223) do
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 
+  create_table "food_expenses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "breakfast", null: false
+    t.integer "lunch", null: false
+    t.integer "dinner", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "xml_id", null: false
     t.string "xml_date", null: false
@@ -59,6 +67,21 @@ ActiveRecord::Schema.define(version: 2019_04_29_102223) do
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "service_specifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "short_name"
+    t.integer "working_clothes_expenses"
+    t.integer "accommodation_expenses"
+    t.json "work_days_expenses"
+    t.json "paid_vacation_expense"
+    t.json "first_day_expense"
+    t.json "last_day_expense"
+    t.string "language"
+    t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
