@@ -10,7 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_29_075652) do
+ActiveRecord::Schema.define(version: 2019_04_29_102223) do
+
+  create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "end_date", null: false
+    t.bigint "user_id", null: false
+    t.integer "work_days", null: false
+    t.string "work_comment"
+    t.integer "company_holiday_unpaid_days", default: 0
+    t.integer "company_holiday_paid_days", default: 0
+    t.string "company_holiday_comment"
+    t.integer "workfree_days", default: 0
+    t.integer "ill_days", default: 0
+    t.string "ill_comment"
+    t.integer "holiday_days", default: 0
+    t.integer "paid_vacation_days", default: 0
+    t.string "paid_vacation_comment"
+    t.integer "unpaid_vacation_days", default: 0
+    t.string "unpaid_vacation_comment"
+    t.integer "driving_charges", default: 0
+    t.string "driving_charges_comment"
+    t.integer "extraordinarily_expenses", default: 0
+    t.string "extraordinarily_expenses_comment"
+    t.integer "clothes_expenses", default: 0
+    t.string "clothes_expenses_comment"
+    t.string "bank_account_number", null: false
+    t.integer "state", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_expense_sheets_on_user_id"
+  end
+
+  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "xml_id", null: false
+    t.string "xml_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "regional_centers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -52,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_04_29_075652) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
+  add_foreign_key "expense_sheets", "users"
   add_foreign_key "users", "regional_centers"
   add_foreign_key "users", "roles"
 end

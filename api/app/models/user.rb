@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'iban-tools'
 
 class User < ApplicationRecord
@@ -14,6 +16,8 @@ class User < ApplicationRecord
 
   belongs_to :role
   belongs_to :regional_center
+
+  has_many :expense_sheets, dependent: :restrict_with_error
 
   private
 
