@@ -5,7 +5,6 @@ class CreateExpenseSheets < ActiveRecord::Migration[5.2]
       t.date :ending, null: false
       t.references :user, foreign_key: true, null: false
       t.integer :work_days, null: false
-      t.string :work_comment
       t.integer :company_holiday_unpaid_days, default: 0
       t.integer :company_holiday_paid_days, default: 0
       t.string :company_holiday_comment

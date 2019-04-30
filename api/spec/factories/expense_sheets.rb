@@ -5,7 +5,6 @@ FactoryBot.define do
     beginning { (Time.zone.today - 3.weeks).beginning_of_week }
     ending { (Time.zone.today - 3.weeks).end_of_week }
     work_days { 5 - ill_days }
-    work_comment { 'MyString' }
     company_holiday_unpaid_days { 0 }
     company_holiday_paid_days { 0 }
     company_holiday_comment { 'MyString' }
