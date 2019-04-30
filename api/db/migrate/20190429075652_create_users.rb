@@ -2,12 +2,12 @@ class CreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users do |t|
       t.string :email, null: false
-      t.references :role, foreign_key: true, null: false
       t.integer :zdp, null: false
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.string :address, null: false
       t.integer :zip, null: false
+      t.integer :role, default: 2, null: false
       t.string :city, null: false
       t.string :hometown, null: false
       t.date :birthday, null: false

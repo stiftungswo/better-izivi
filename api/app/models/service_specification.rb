@@ -13,6 +13,8 @@ class ServiceSpecification < ApplicationRecord
     french: 'fr'
   }
 
+  has_many :services, dependent: :restrict_with_error
+
   validates :short_name, :name, :accommodation_expenses,
             :working_clothes_expenses, :work_days_expenses,
             :paid_vacation_expense, :first_day_expense,

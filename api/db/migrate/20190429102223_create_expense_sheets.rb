@@ -1,8 +1,8 @@
 class CreateExpenseSheets < ActiveRecord::Migration[5.2]
   def change
     create_table :expense_sheets do |t|
-      t.date :start_date, null: false
-      t.date :end_date, null: false
+      t.date :beginning, null: false
+      t.date :ending, null: false
       t.references :user, foreign_key: true, null: false
       t.integer :work_days, null: false
       t.string :work_comment
@@ -12,7 +12,7 @@ class CreateExpenseSheets < ActiveRecord::Migration[5.2]
       t.integer :workfree_days, default: 0
       t.integer :ill_days, default: 0
       t.string :ill_comment
-      t.integer :holiday_days, default: 0
+      t.integer :personal_vacation_days, default: 0
       t.integer :paid_vacation_days, default: 0
       t.string :paid_vacation_comment
       t.integer :unpaid_vacation_days, default: 0

@@ -20,6 +20,6 @@ FactoryBot.define do
     internal_note { 'Mag den Gül; Nimmt nur Pesto Sauce beim Pasta-Mondo' }
     chainsaw_workshop { false }
     regional_center
-    role
+    role { User.roles[:civil_servant] }
   end
 end

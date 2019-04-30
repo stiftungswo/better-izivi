@@ -11,6 +11,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:birthday) }
   it { is_expected.to validate_presence_of(:city) }
   it { is_expected.to validate_presence_of(:health_insurance) }
+  it { is_expected.to validate_presence_of(:role) }
   it { is_expected.to validate_presence_of(:zip) }
   it { is_expected.to validate_presence_of(:hometown) }
   it { is_expected.to validate_presence_of(:phone) }

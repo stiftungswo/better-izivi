@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_074741) do
+ActiveRecord::Schema.define(version: 2019_04_30_121050) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.date "start_date", null: false
-    t.date "end_date", null: false
+    t.date "beginning", null: false
+    t.date "ending", null: false
     t.bigint "user_id", null: false
     t.integer "work_days", null: false
     t.string "work_comment"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2019_04_30_074741) do
     t.integer "workfree_days", default: 0
     t.integer "ill_days", default: 0
     t.string "ill_comment"
-    t.integer "holiday_days", default: 0
+    t.integer "personal_vacation_days", default: 0
     t.integer "paid_vacation_days", default: 0
     t.string "paid_vacation_comment"
     t.integer "unpaid_vacation_days", default: 0
@@ -59,12 +59,6 @@ ActiveRecord::Schema.define(version: 2019_04_30_074741) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "service_specifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "short_name", null: false
@@ -80,14 +74,32 @@ ActiveRecord::Schema.define(version: 2019_04_30_074741) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "services", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "service_specification_id", null: false
+    t.date "beginning", null: false
+    t.date "ending", null: false
+    t.date "confirmation_date"
+    t.integer "eligible_personal_vacation_days", null: false
+    t.integer "service_type", default: 0, null: false
+    t.boolean "first_swo_service", null: false
+    t.boolean "long_service", null: false
+    t.boolean "probation_service", null: false
+    t.boolean "feedback_mail_sent", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_specification_id"], name: "index_services_on_service_specification_id"
+    t.index ["user_id"], name: "index_services_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", null: false
-    t.bigint "role_id", null: false
     t.integer "zdp", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "address", null: false
     t.integer "zip", null: false
+    t.integer "role", default: 2, null: false
     t.string "city", null: false
     t.string "hometown", null: false
     t.date "birthday", null: false
@@ -103,10 +115,10 @@ ActiveRecord::Schema.define(version: 2019_04_30_074741) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
-    t.index ["role_id"], name: "index_users_on_role_id"
   end
 
   add_foreign_key "expense_sheets", "users"
+  add_foreign_key "services", "service_specifications"
+  add_foreign_key "services", "users"
   add_foreign_key "users", "regional_centers"
-  add_foreign_key "users", "roles"
 end

@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class ExpenseSheet < ApplicationRecord
+  include Concerns::PositiveTimeSpanValidatable
+
   belongs_to :user
 
-  validates :start_date, :end_date, :user,
+  validates :beginning, :ending, :user,
             :work_days, :bank_account_number, :state, presence: true
 
   enum state: {
