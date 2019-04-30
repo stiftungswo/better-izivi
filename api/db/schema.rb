@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_29_132515) do
+ActiveRecord::Schema.define(version: 2019_04_30_074741) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "start_date", null: false
@@ -42,17 +42,11 @@ ActiveRecord::Schema.define(version: 2019_04_29_132515) do
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 
-  create_table "food_expenses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "breakfast", null: false
-    t.integer "lunch", null: false
-    t.integer "dinner", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "payments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "xml_id", null: false
-    t.string "xml_date", null: false
+  create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "beginning", null: false
+    t.date "ending", null: false
+    t.integer "holiday_type", default: 1, null: false
+    t.string "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -72,16 +66,16 @@ ActiveRecord::Schema.define(version: 2019_04_29_132515) do
   end
 
   create_table "service_specifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.string "short_name"
-    t.integer "working_clothes_expenses"
-    t.integer "accommodation_expenses"
-    t.json "work_days_expenses"
-    t.json "paid_vacation_expense"
-    t.json "first_day_expense"
-    t.json "last_day_expense"
-    t.string "language"
-    t.boolean "active"
+    t.string "name", null: false
+    t.string "short_name", null: false
+    t.integer "working_clothes_expenses", null: false
+    t.integer "accommodation_expenses", null: false
+    t.json "work_days_expenses", null: false
+    t.json "paid_vacation_expense", null: false
+    t.json "first_day_expense", null: false
+    t.json "last_day_expense", null: false
+    t.string "language", default: "de"
+    t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
