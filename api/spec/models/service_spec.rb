@@ -22,7 +22,6 @@ RSpec.describe Service, type: :model do
     let(:service) { build(:service, beginning: beginning, ending: beginning + 26.days) }
     let(:beginning) { Time.zone.today.beginning_of_week }
 
-
     it 'returns the duration of the service' do
       expect(service.duration).to eq 26
     end

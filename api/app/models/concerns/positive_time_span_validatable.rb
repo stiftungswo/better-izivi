@@ -16,5 +16,4 @@ module Concerns
       errors.add(:ending, :before_beginning) unless ending >= beginning
     end
   end
-
 end
