@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_30_121050) do
+ActiveRecord::Schema.define(version: 2019_05_06_084444) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "beginning", null: false
@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(version: 2019_04_30_121050) do
     t.string "short_name", null: false
     t.integer "working_clothes_expenses", null: false
     t.integer "accommodation_expenses", null: false
-    t.text "work_days_expenses", limit: 4294967295, null: false, collation: "utf8mb4_bin"
-    t.text "paid_vacation_expense", limit: 4294967295, null: false, collation: "utf8mb4_bin"
-    t.text "first_day_expense", limit: 4294967295, null: false, collation: "utf8mb4_bin"
-    t.text "last_day_expense", limit: 4294967295, null: false, collation: "utf8mb4_bin"
+    t.json "work_days_expenses", null: false
+    t.json "paid_vacation_expense", null: false
+    t.json "first_day_expense", null: false
+    t.json "last_day_expense", null: false
     t.string "location", default: "zh"
     t.boolean "active", default: true
     t.datetime "created_at", null: false
@@ -113,7 +113,14 @@ ActiveRecord::Schema.define(version: 2019_04_30_121050) do
     t.boolean "chainsaw_workshop", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.string "jti", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "expense_sheets", "users"

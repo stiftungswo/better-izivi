@@ -28,6 +28,9 @@ Metrics/BlockLength:
     - 'spec/**/*.rb'
     - 'config/environments/**/*.rb'
 
+Metrics/MethodLength:
+  Max: 12
+
 RSpec/MultipleExpectations:
   Enabled: false
 

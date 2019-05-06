@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 ruby '2.5.1'
 
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'devise-jwt', '~> 0.5.9'
 gem 'dotenv-rails'
 gem 'iban-tools'
 gem 'jbuilder'
