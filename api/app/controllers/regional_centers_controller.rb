@@ -2,6 +2,6 @@
 
 class RegionalCentersController < ApplicationController
   def index
-    render json: RegionalCenter.select(:name, :address, :short_name, :id)
+    @regional_centers = RegionalCenter.select(:name, :address, :short_name, :id)
   end
 end
