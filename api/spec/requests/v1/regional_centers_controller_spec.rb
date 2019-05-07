@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RegionalCentersController, type: :request do
+RSpec.describe V1::RegionalCentersController, type: :request do
   describe '#index' do
     subject { response }
 
@@ -12,7 +12,7 @@ RSpec.describe RegionalCentersController, type: :request do
     before do
       regional_center
 
-      get regional_centers_path
+      get v1_regional_centers_path
     end
 
     it { is_expected.to be_successful }
