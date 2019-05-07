@@ -116,9 +116,7 @@ ActiveRecord::Schema.define(version: 2019_05_06_084444) do
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.string "jti", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
