@@ -26,7 +26,7 @@ RSpec.describe RegionalCentersController, type: :request do
         id: regional_center.id,
         name: regional_center.name,
         address: regional_center.address,
-        short_name: regional_center.short_name,
+        short_name: regional_center.short_name
       )
     end
   end
