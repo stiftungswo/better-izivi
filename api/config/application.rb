@@ -31,5 +31,10 @@ module Api
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    config.action_mailer.default_url_options = {
+      host: ENV.fetch('APP_HOST') { 'localhost' },
+      port: ENV.fetch('APP_POST') { 3000 }
+    }
   end
 end
