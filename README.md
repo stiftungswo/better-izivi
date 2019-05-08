@@ -14,7 +14,7 @@ https://izivi.stiftungswo.ch/
 ### Fundamentals
 | Name | Verwendung | Informationen / Tutorials |
 | --- | --- | --- |
-| PHP | Basis für das Backend | [Basis PHP-Tutorial](https://www.tutorialspoint.com/php/index.htm) <br> [Sauberer PHP-Code schreiben](https://www.phptherightway.com/) |
+| Ruby | Basis für das Backend | [Basis Ruby-Tutorial](https://www.tutorialspoint.com/ruby/) |
 | Javascript (ES6) | Basis für das Frontend | [Basis-Tutorial von Mozilla](https://developer.mozilla.org/de/docs/Learn/Getting_started_with_the_web/JavaScript_basis) <br>[Neue Funktionen in ES6](http://es6-features.org/) |
 | Docker | Software-Virtualisierung, genutzt für die Entwicklung | [Einführung in Docker](https://docs.docker.com/get-started/) <br>[Einführung in docker-compose](https://docs.docker.com/compose/) |
 | Git | Versionsverwaltung | [Einführung in Git](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics) |
@@ -23,10 +23,8 @@ https://izivi.stiftungswo.ch/
 
 | Name | Verwendung | Informationen / Tutorials |
 | --- | --- | --- |
-| Lumen | PHP Micro-Framework zur Datenbank-Abstraktion, MVC-konform. Lumen ist eine leichtere Version vom Laravel-Framework | [Offizielle Dokumentation](https://lumen.laravel.com/docs/5.6) |
-| Artisan	| Artisan ist Teil des Laravel Frameworks und bietet ein Konsolen-Interface mit nützlichen Befehlen. Wir verwenden „artisan serve“ beim Entwickeln und „artisan migrate“ für die Datenmigration. |
-| Composer | Composer ist ein serverseitiger Package Manager und verwaltet das Lumen-Framework mit allen Abhängigkeiten | [Offizielle Dokumentation](https://getcomposer.org/doc/) |
-| JWT-Auth | JSON Web-Token-Authentifizierung für PHP | [Mehr zu JWT](https://jwt.io/introduction/) <br> [Github-Repo von jwt-auth](https://github.com/tymondesigns/jwt-auth) |
+| Ruby on Rails | Ruby Framework zur Datenbank-Abstraktion, MVC-konform. | [Offizielle Dokumentation](https://guides.rubyonrails.org/) |
+| RSpec	| RSpec wird für das Testing von Ruby-Code verwendet. |
 
 ### Frontend
 | Name | Verwendung | Informationen / Tutorials |
@@ -60,6 +58,15 @@ Fast jede Linux-Distribution wird mit einem Paketmanager ausgeliefert. Diese erm
 
 Die Installation kann im Terminal mit einem Einzeiler angestossen werden, welcher sich auf der [offiziellen Website](https://brew.sh/index_de) befindet.
 
+#### Ruby
+Ruby wird einfacherweise mit [rbenv](https://github.com/rbenv/rbenv) installiert:
+1. `brew install rbenv ruby-build`
+2. `echo 'eval "$(rbenv init -)"' >> ~/.bash_profile`
+3. `source ~/.bash_profile`
+4. `cd betterIzivi/api/`
+5. `rbenv install`
+6. `gem install bundler`
+
 #### Docker
 Installation gemäss der Installationsanleitung auf der [Website](https://docs.docker.com/install/) durchführen. Wichtig: Für manche Betriebssysteme muss docker-compose noch separat installiert werden.
 
@@ -67,7 +74,7 @@ Installation gemäss der Installationsanleitung auf der [Website](https://docs.d
 Die Punkte `Backend` und `Git` können mit `./setup-dev.sh` im iZivi-Verzeichnis automatisch ausgeführt werden.
 
 ### Backend
-1. Ins Verzeichnis des iZivi wechseln (z.B. cd ``~/src/swo/izivi``)
+1. Ins Verzeichnis des betterIzivi wechseln (z.B. cd ``~/src/swo/betterIzivi/api``)
 2. Docker-Image der API bauen: ``docker build -t izivi_api api``
 3. composer-Abhängigkeiten mit dem neuen Image installieren lassen: ``docker run --rm -v $PWD/api:/app -w /app izivi_api composer install``
 4. Docker-Stack starten: ``docker-compose up -d``
@@ -79,9 +86,6 @@ Die Punkte `Backend` und `Git` können mit `./setup-dev.sh` im iZivi-Verzeichnis
     - Neue Datenbank erstellen namens "izivi" und den Datenbankexport von Cyon importieren.
 7. Die API ist nun unter `localhost:48000` erreichbar.
 
-
-### Git
-1. Git Pre-Commit Hook ins .git-Verzeichnis kopieren, damit die Änderung auf allenfalls fehlerhafte Formatierung getestet werden: ``ln -s $(pwd)/hooks/pre-commit $(pwd)/.git/hooks``
 
 ## Entwicklung
 ### Code-Formatierung
