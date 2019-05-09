@@ -15,12 +15,7 @@ services:
             - mysql
         ports:
             - "28000:8000"
-        environment:
-            - DATABASE_HOST=mysql
-            - DATABASE_USERNAME=root
-            - DATABASE_PASSWORD=
-            - DEVISE_SECRET_KEY=1b2da73f2fc4e7928233077c82f5750f1357cf9040f3001b37f1bbba588fe8fa7144699f738954692ca6a79b20b89cdd3bfbec5044f3aeb6abfef45385ff1b99
-            - DEVISE_JWT_SECRET_KEY=f68a2f61eac9c5cb1aebb29e2f20c4978e604a6df37281119b256b01fea1f5452f553ce480746ecc82bb23aaad0e4c08e8a33757555780f3eb79dffe8e11b1a3
+        env_file: 'api/.env.semaphore'
     frontend:
         image: node:10
         container_name: better_izivi_frontend
