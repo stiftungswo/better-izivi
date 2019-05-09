@@ -71,20 +71,18 @@ Ruby wird einfacherweise mit [rbenv](https://github.com/rbenv/rbenv) installiert
 Installation gemäss der Installationsanleitung auf der [Website](https://docs.docker.com/install/) durchführen. Wichtig: Für manche Betriebssysteme muss docker-compose noch separat installiert werden.
 
 #### Installationsskript
-Die Punkte `Backend` und `Git` können mit `./setup-dev.sh` im iZivi-Verzeichnis automatisch ausgeführt werden.
+[WIP] Die Punkte `Backend` und `Git` können mit `./setup-dev.sh` im iZivi-Verzeichnis automatisch ausgeführt werden.
 
 ### Backend
 1. Ins Verzeichnis des betterIzivi wechseln (z.B. cd ``~/src/swo/betterIzivi/api``)
-2. Docker-Image der API bauen: ``docker build -t izivi_api api``
-3. composer-Abhängigkeiten mit dem neuen Image installieren lassen: ``docker run --rm -v $PWD/api:/app -w /app izivi_api composer install``
+2. Docker-Image der API bauen: ``docker-compose up -d --build api``
 4. Docker-Stack starten: ``docker-compose up -d``
-5. .env Datei kopieren: ``cp api/.env.example api/.env``
 6. Datenbank importieren:
-    - Datenbank bei Cyon als SQL exportieren (Datenbank -> MySQL -> stiftun8_izivi2 -> Backup)
-    - PHPMyAdmin öffnen, verfügbar unter `localhost:48080`
+    - Datenbank bei Metanet als SQL exportieren (Datenbank -> MySQL -> stiftun8_izivi2 -> Backup)
+    - PHPMyAdmin öffnen, verfügbar unter `localhost:28080`
     - Einloggen mit Server "mariadb", Benutzername "root", Passwort leer.
-    - Neue Datenbank erstellen namens "izivi" und den Datenbankexport von Cyon importieren.
-7. Die API ist nun unter `localhost:48000` erreichbar.
+    - Neue Datenbank erstellen namens "better_izivi_development" und den Datenbankexport von Metanet importieren.
+7. Die API ist nun unter `localhost:28000` erreichbar.
 
 
 ## Entwicklung
@@ -94,10 +92,10 @@ Das Backend und Frontend sollen immer sauber formatiert sein (wird von Travis ü
 
 Vor dem commiten sollten immer die formatier-tools ausgeführt werden.
 
-* Backend: `docker-compose exec api composer run format`
+* Backend: `docker-compose exec rubocop -a`
 * Frontend: `docker-compose exec web-client yarn format`
 
-Für das Backend kommt [phpcbf](https://github.com/squizlabs/PHP_CodeSniffer) zum Einsatz, welches den Code nach [PSR-2](https://www.php-fig.org/psr/psr-2/) formatiert. Für das Frontend übernimmt [TSLint](https://palantir.github.io/tslint/) den Job.
+Für das Backend kommt [rubocop](https://github.com/rubocop-hq/rubocop) zum Einsatz und für das Frontend übernimmt [TSLint](https://palantir.github.io/tslint/) den Job.
 
 ### Deployment
 
