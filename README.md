@@ -75,8 +75,10 @@ Installation gemäss der Installationsanleitung auf der [Website](https://docs.d
 
 ### Backend
 1. Ins Verzeichnis des betterIzivi wechseln (z.B. cd ``~/src/swo/betterIzivi/api``)
-2. Docker-Image der API bauen: ``docker-compose up -d --build api``
-4. Docker-Stack starten: ``docker-compose up -d``
+2. Die .env-Datei kopieren `cp .env.example .env`
+3. Die .env-Datei ausfüllen
+4. Docker-Image der API bauen: ``docker-compose up -d --build api``
+5. Docker-Stack starten: ``docker-compose up -d``
 6. Datenbank importieren:
     - Datenbank bei Metanet als SQL exportieren (Datenbank -> MySQL -> stiftun8_izivi2 -> Backup)
     - PHPMyAdmin öffnen, verfügbar unter `localhost:28080`
@@ -86,16 +88,27 @@ Installation gemäss der Installationsanleitung auf der [Website](https://docs.d
 
 
 ## Entwicklung
+### RubyMine
+RubyMine ist eine IDE für Ruby von Jetbrains. Will man mit RubyMine im Docker entwickeln und testen, muss jedoch noch einiges konfiguriert werden:
+1. In RubyMine: `Preferences > Languages & Frameworks > Ruby SDK and Gems` eine neue Remote SDK hinzufügen (`+ > New remote...`) 
+2. `Docker Compose` auswählen
+3. Bei `Configuration file` die Semaphore-Docker-Compose-Datei auswählen (`betterIzivi/docker-compose.semaphore.yaml`)
+4. Die `system environment variables` (Icon rechts bei `Environment variables`) deaktivieren
+
+Nun kann man direkt in RubyMine die API starten und beenden. (Über `Edit run configurations` das Port-Mapping anpassen)
+
 ### Code-Formatierung
 
-Das Backend und Frontend sollen immer sauber formatiert sein (wird von Travis überprüft).
+Das Backend und Frontend sollen immer sauber formatiert sein (wird von der CI überprüft).
 
-Vor dem commiten sollten immer die formatier-tools ausgeführt werden.
+Vor dem Commiten sollten immer die Formatier-Tools ausgeführt werden.
 
 * Backend: `docker-compose exec rubocop -a`
 * Frontend: `docker-compose exec web-client yarn format`
 
 Für das Backend kommt [rubocop](https://github.com/rubocop-hq/rubocop) zum Einsatz und für das Frontend übernimmt [TSLint](https://palantir.github.io/tslint/) den Job.
+
+#WIP ab hier
 
 ### Deployment
 
