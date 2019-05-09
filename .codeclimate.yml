@@ -5,3 +5,4 @@ plugins:
   rubocop:
     enabled: true
     config: api/.rubocop.yml
+    channel: rubocop-0-67
