@@ -51,6 +51,7 @@ class ServiceSpecification < ApplicationRecord
     return if self[attribute].nil?
 
     keys = self[attribute].keys
+
     contains_only_valid_keys = keys.all? { |key| ALLOWED_EXPENSE_KEYS.include? key }
     has_same_length = keys.length == ALLOWED_EXPENSE_KEYS.length
 
