@@ -20,6 +20,8 @@ class ServiceSpecification < ApplicationRecord
             :paid_vacation_expenses, :first_day_expenses,
             :last_day_expenses, :location, presence: true
 
+  validates :accommodation_expenses, :working_clothes_expenses, numericality: { only_integer: true }
+
   validate :validate_work_days_expenses
   validate :validate_paid_vacation_expenses
   validate :validate_first_day_expenses

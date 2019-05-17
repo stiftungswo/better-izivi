@@ -30,20 +30,28 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
         it { is_expected.to change(ServiceSpecification, :count).by(1) }
 
-        it 'returns the created holiday' do
+        it 'returns the created service specification' do
           post_request
           expect(parse_response_json(response)).to include(
-            id: Holiday.last.id,
-            beginning: params[:beginning],
-            ending: params[:ending],
-            holiday_type: params[:holiday_type].to_s,
-            description: params[:description]
+            id: ServiceSpecification.last.id,
+            name: params[:name],
+            short_name: params[:short_name],
+            working_clothes_expenses: params[:working_clothes_expenses].to_i,
+            accommodation_expenses: params[:accommodation_expenses].to_i,
+            location: params[:location],
+            active: params[:active],
+            work_days_expenses: params[:work_days_expenses],
+            paid_vacation_expenses: params[:paid_vacation_expenses],
+            first_day_expenses: params[:first_day_expenses],
+            last_day_expenses: params[:last_day_expenses]
           )
         end
       end
 
       context 'when params are invalid' do
-        let(:params) { { description: '', ending_date: 'I am invalid' } }
+        let(:params) do
+          attributes_for(:service_specification).merge(short_name: '', accommodation_expenses: 'I am invalid')
+        end
 
         it { is_expected.to change(ServiceSpecification, :count).by(0) }
 
@@ -55,9 +63,8 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
           it 'renders all validation errors' do
             post_request
             expect(parse_response_json(response)[:errors]).to include(
-              ending: be_an_instance_of(Array),
-              beginning: be_an_instance_of(Array),
-              description: be_an_instance_of(Array)
+              short_name: be_an_instance_of(Array),
+              accommodation_expenses: be_an_instance_of(Array)
             )
           end
         end
@@ -65,29 +72,44 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
     end
 
     describe '#update' do
-      let!(:holiday) { create :holiday }
-      let(:put_request) { put v1_service_specifications_path(service_specification, params: { service_specification: params }) }
+      let!(:service_specification) { create :service_specification }
+      let(:put_request) do
+        put v1_service_specification_path(service_specification, params: { service_specification: params })
+      end
 
       context 'with valid params' do
         subject { -> { put_request } }
 
-        let(:params) { { description: 'New description' } }
-        let(:expected_attributes) { extract_to_json(service_specification, :beginning, :ending, :description, :holiday_type, :id) }
+        let(:params) { { name: 'New name' } }
+        let(:expected_attributes) do
+          extract_to_json(service_specification,
+                          :name,
+                          :short_name,
+                          :working_clothes_expenses,
+                          :accommodation_expenses,
+                          :location,
+                          :active,
+                          :work_days_expenses,
+                          :paid_vacation_expenses,
+                          :first_day_expenses,
+                          :last_day_expenses)
+        end
 
-        it { is_expected.to(change { service_specification.reload.description }.to('New description')) }
+        it { is_expected.to(change { service_specification.reload.name }.to('New name')) }
 
         it_behaves_like 'renders a successful http status code' do
           let(:request) { put_request }
         end
 
-        it 'returns the updated holiday' do
+        it 'returns the updated service specification' do
           put_request
+          p expected_attributes
           expect(parse_response_json(response)).to include(expected_attributes)
         end
       end
 
       context 'with invalid params' do
-        let(:params) { { description: '' } }
+        let(:params) { { working_clothes_expenses: 'ab' } }
 
         it_behaves_like 'renders a validation error response' do
           let(:request) { put_request }
@@ -96,41 +118,14 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
         it 'renders all validation errors' do
           put_request
           expect(parse_response_json(response)[:errors]).to include(
-            description: be_an_instance_of(Array)
+            working_clothes_expenses: be_an_instance_of(Array)
           )
         end
       end
 
       context 'when the requested resource does not exist' do
         it_behaves_like 'renders a not found error response' do
-          let(:request) { put v1_service_specifications_path(-2) }
-        end
-      end
-    end
-
-    describe '#destroy' do
-      subject { -> { delete_request } }
-
-      let!(:service_specification) { create :service_specification }
-      let(:delete_request) { delete v1_service_specifications_path(holiday) }
-
-      it { is_expected.to change(ServiceSpecification, :count).by(-1) }
-
-      it 'returns the deleted resource' do
-        expected_response = extract_to_json(service_specification, :id, :beginning, :ending, :description)
-
-        delete_request
-
-        expect(parse_response_json(response)).to include(expected_response)
-      end
-
-      context 'when the requested resource does not exist' do
-        let(:request) { delete v1_service_specifications_path(-2) }
-
-        it_behaves_like 'renders a not found error response'
-
-        it 'does not delete anything' do
-          expect { request }.not_to change(ServiceSpecification, :count)
+          let(:request) { put v1_service_specification_path(-2) }
         end
       end
     end
@@ -149,31 +144,22 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
       it_behaves_like 'protected resource'
 
-      it 'does not create a new holiday' do
+      it 'does not create a new service specification' do
         expect { request }.not_to change(ServiceSpecification, :count)
       end
     end
 
     describe '#update' do
       let!(:service_specification) { create :service_specification }
-      let(:request) { put v1_service_specifications_path(service_specification, params: { service_specification: params }) }
-      let(:params) { { description: 'New description' } }
-
-      it_behaves_like 'protected resource'
-
-      it 'does not update the holiday' do
-        expect { request }.not_to(change { service_specification.reload.description })
+      let(:request) do
+        put v1_service_specification_path(service_specification, params: { service_specification: params })
       end
-    end
-
-    describe '#destroy' do
-      let!(:service_specification) { create :service_specification }
-      let(:request) { delete v1_service_specifications_path(service_specification) }
+      let(:params) { { name: 'New name' } }
 
       it_behaves_like 'protected resource'
 
-      it 'does not delete the holiday' do
-        expect { request }.not_to change(ServiceSpecification, :count)
+      it 'does not update the service specification' do
+        expect { request }.not_to(change { service_specification.reload.name })
       end
     end
   end
