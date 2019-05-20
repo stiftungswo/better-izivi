@@ -84,8 +84,7 @@ export class ApiStore {
 
   @action
   async logout(redirect = true) {
-    const result = await this._api.delete('/users/sign_out');
-    if result.status
+    await this._api.delete('/users/sign_out');
 
     localStorage.removeItem(KEY_TOKEN);
     this._token = '';
@@ -93,6 +92,7 @@ export class ApiStore {
     if (redirect) {
       this.history.push('/');
     }
+
     this.updateSentryContext();
   }
 
@@ -117,7 +117,7 @@ export class ApiStore {
     community_pw: string;
     newsletter: boolean;
   }) {
-    const res = await this._api.post<LoginResponse>('/users/sign', values);
+    const res = await this._api.post<LoginResponse>('/users', values);
     runInAction(() => {
       this.setToken(res.data.data.token);
       this.updateSentryContext();
