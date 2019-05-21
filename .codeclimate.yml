@@ -1,3 +1,4 @@
+version: "2"
 plugins:
   tslint:
     enabled: true
@@ -7,5 +8,5 @@ plugins:
     config: api/.rubocop_base.yml
     channel: rubocop-0-67
 exclude_patterns:
-  - "api/db/seed_data/*"
+  - "api/db/seed_data/"
   - "api/db/seeds.rb"
