@@ -16,8 +16,7 @@ class Service < ApplicationRecord
   }, _suffix: 'civil_service'
 
   validates :ending, :beginning, :user, :eligible_personal_vacation_days,
-            :feedback_mail_sent, :first_swo_service, :long_service,
-            :probation_service, :service_specification, :service_type,
+            :service_specification, :service_type,
             presence: true
 
   validate :ending_is_friday, unless: :last_civil_service?
