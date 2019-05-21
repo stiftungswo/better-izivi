@@ -8,15 +8,19 @@ def is_a_boolean?(value)
   value.in? [true, false]
 end
 
+def convert_to_json_value(value)
+  return value if value.is_a?(Integer) || is_a_boolean?(value) || value.is_a?(Hash)
+
+  value.to_s
+end
+
 def extract_to_json(resource, *keys)
   resource
     .reload
     .attributes
     .symbolize_keys
     .slice(*keys)
-    .map do |key, value|
-      [key, (value.is_a?(Integer) || is_a_boolean?(value) || value.is_a?(Hash) ? value : value.to_s)]
-    end
+    .map { |key, value| [key, convert_to_json_value(value)] }
     .to_h
 end
 
