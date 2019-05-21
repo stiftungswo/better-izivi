@@ -100,7 +100,6 @@ export class ApiStore {
   async postLogin(values: { email: string; password: string }) {
     const res = await this._api.post<LoginResponse>('/users/sign_in', { user: values });
     runInAction(() => {
-      // debugger;
       this.setToken(res.headers.authorization);
       this.updateSentryContext();
     });
