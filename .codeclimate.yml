@@ -10,3 +10,13 @@ plugins:
 exclude_patterns:
   - "api/db/seed_data/"
   - "api/db/seeds.rb"
+  - "config/"
+  - "api/db/**/*"
+  - "dist/"
+  - "**/node_modules/"
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - "**/vendor/"
+  - "**/*.d.ts"
+
