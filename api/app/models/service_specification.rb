@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 class ServiceSpecification < ApplicationRecord
-  ALLOWED_EXPENSE_KEYS = %i[breakfast lunch dinner].freeze
-
-  serialize :work_days_expenses, Hash
-  serialize :paid_vacation_expenses, Hash
-  serialize :first_day_expenses, Hash
-  serialize :last_day_expenses, Hash
+  ALLOWED_EXPENSE_KEYS = %w[breakfast lunch dinner].freeze
 
   enum location: {
     valais: 'vs',
