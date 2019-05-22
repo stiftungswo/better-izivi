@@ -22,7 +22,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       let(:post_request) { post v1_expense_sheets_path(expense_sheet: params) }
 
       context 'when params are valid' do
-        let(:params) { attributes_for(:expense_sheet).merge user_id: 1 }
+        let(:params) { attributes_for(:expense_sheet).merge user_id: user.to_param }
 
         it_behaves_like 'renders a successful http status code' do
           let(:request) { post_request }
@@ -32,13 +32,15 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
         it 'returns the created expense_sheet' do
           post_request
+          p response.body
           p params
           expect(parse_response_json(response)).to include(
                                                      id: ExpenseSheet.last.id,
                                                      beginning: params[:beginning],
                                                      ending: params[:ending],
                                                      state: params[:state],
-                                                     workfree: params[:workfree]
+                                                     workfree: params[:workfree],
+                                                     user_id: params[:user_id]
                                                    )
         end
       end
