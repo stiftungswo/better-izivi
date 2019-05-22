@@ -43,7 +43,7 @@ RSpec.describe V1::HolidaysController, type: :request do
       end
 
       context 'when params are invalid' do
-        let(:params) { { description: '', ending_date: 'I am invalid' } }
+        let(:params) { { description: '', ending: 'I am invalid' } }
 
         it { is_expected.to change(Holiday, :count).by(0) }
 

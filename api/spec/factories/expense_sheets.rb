@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :expense_sheet do
-    beginning { (Time.zone.today - 3.weeks).beginning_of_week }
-    ending { (Time.zone.today - 3.weeks).end_of_week }
+    beginning { (Time.zone.today - 3.weeks).beginning_of_week.to_s }
+    ending { (Time.zone.today - 3.weeks).end_of_week.to_s }
     work_days { 5 - ill_days }
     company_holiday_unpaid_days { 0 }
     company_holiday_paid_days { 0 }
@@ -23,7 +23,7 @@ FactoryBot.define do
     clothes_expenses { 3200 }
     clothes_expenses_comment { 'MyString' }
     bank_account_number { 'MyString' }
-    state { ExpenseSheet.states[:open] }
+    state { :open }
     user
 
     trait :with_ill_days do
