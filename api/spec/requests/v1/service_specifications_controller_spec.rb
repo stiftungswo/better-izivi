@@ -102,7 +102,6 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
         it 'returns the updated service specification' do
           put_request
-          p expected_attributes
           expect(parse_response_json(response)).to include(expected_attributes)
         end
 
