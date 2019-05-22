@@ -13,5 +13,9 @@ FactoryBot.define do
     feedback_mail_sent { false }
     service_specification
     user
+
+    trait :unconfirmed do
+      confirmation_date { nil }
+    end
   end
 end
