@@ -11,41 +11,51 @@ module V1
     ].freeze
 
     before_action :set_service, only: %i[show update destroy]
+    before_action :protect_foreign_resource, except: :create, unless: -> { current_user.admin? }
 
     def index
       @services = Service.all
     end
 
-    def show; end
+    def show
+      protect_foreign_resource
+    end
 
     def create
       @service = Service.new(service_params)
 
-      raise ValidationError, @holiday.errors unless @holiday.save
+      raise ValidationError, @service.errors unless @service.save
+
+      # TODO: Return :created in every #create
+      render :show, status: :created
+    end
+
+    def update
+      raise ValidationError, @service.errors unless @service.update(service_params)
 
       render :show
     end
 
-    def update
-      if @service.update(service_params)
-        render :show, status: :ok, location: @service
-      else
-        render json: @service.errors, status: :unprocessable_entity
-      end
-    end
-
     def destroy
+      # TODO: Raise UnprocessableEntity error if failed
       @service.destroy
     end
 
     private
+
+    def protect_foreign_resource
+      raise AuthorizationError unless @service.user_id == current_user.id
+    end
 
     def set_service
       @service = Service.find(params[:id])
     end
 
     def service_params
-      params.require(:service).permit(*PERMITTED_SERVICE_PARAMS)
+      permitted_params = params.require(:service).permit(*PERMITTED_SERVICE_PARAMS).to_h
+      permitted_params[:user_id] = current_user.id unless current_user.admin?
+
+      permitted_params
     end
   end
 end

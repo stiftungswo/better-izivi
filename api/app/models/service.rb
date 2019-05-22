@@ -18,6 +18,7 @@ class Service < ApplicationRecord
   validates :ending, :beginning, :user, :eligible_personal_vacation_days,
             :service_specification, :service_type,
             presence: true
+  validates :eligible_personal_vacation_days, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   validate :ending_is_friday, unless: :last_civil_service?
   validate :beginning_is_monday
