@@ -3,6 +3,11 @@
 class ServiceSpecification < ApplicationRecord
   ALLOWED_EXPENSE_KEYS = %w[breakfast lunch dinner].freeze
 
+  serialize :work_days_expenses, JSON
+  serialize :paid_vacation_expenses, JSON
+  serialize :first_day_expenses, JSON
+  serialize :last_day_expenses, JSON
+
   enum location: {
     valais: 'vs',
     zurich: 'zh'
