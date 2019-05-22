@@ -63,6 +63,7 @@ RSpec.describe V1::ServicesController, type: :request do
     describe '#create' do
       subject { -> { post_request } }
 
+      let(:service_specification) { create :service_specification }
       let(:post_request) { post v1_services_path(service: params) }
 
       let(:valid_params) do
@@ -74,12 +75,12 @@ RSpec.describe V1::ServicesController, type: :request do
       end
 
       context 'when params are valid' do
-        let(:service_specification) { create :service_specification }
         let(:params) { valid_params }
 
         let(:expected_returned_attributes) do
           %i[
-            user_id service_specification_id
+            user_id
+            service_specification_id
             beginning
             ending
             confirmation_date
