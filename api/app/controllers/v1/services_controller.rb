@@ -2,6 +2,14 @@
 
 module V1
   class ServicesController < APIController
+    PERMITTED_SERVICE_PARAMS = %i[
+      user_id service_specification_id
+      beginning ending confirmation_date
+      eligible_personal_vacation_days service_type
+      first_swo_service long_service probation_service
+      feedback_mail_sent
+    ].freeze
+
     before_action :set_service, only: %i[show update destroy]
 
     def index
@@ -13,11 +21,9 @@ module V1
     def create
       @service = Service.new(service_params)
 
-      if @service.save
-        render :show, status: :created, location: @service
-      else
-        render json: @service.errors, status: :unprocessable_entity
-      end
+      raise ValidationError, @holiday.errors unless @holiday.save
+
+      render :show
     end
 
     def update
@@ -39,7 +45,7 @@ module V1
     end
 
     def service_params
-      params.fetch(:service, {})
+      params.require(:service).permit(*PERMITTED_SERVICE_PARAMS)
     end
   end
 end

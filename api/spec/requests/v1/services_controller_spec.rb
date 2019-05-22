@@ -9,31 +9,27 @@ RSpec.describe V1::ServicesController, type: :request do
     before { sign_in user }
 
     describe '#index' do
+      subject(:json_response) { parse_response_json(response) }
+
       let!(:services) { create_pair :service }
       let(:request) { get v1_services_path }
-      let(:json_response) { parse_response_json(response) }
+      let(:first_service_json) do
+        extract_to_json(services.first, :beginning, :ending, :confirmation_date, :id)
+          .merge(service_specification: services.first.service_specification.name)
+      end
+      let(:second_service_json) do
+        extract_to_json(services.second, :beginning, :ending, :confirmation_date, :id)
+          .merge(service_specification: services.second.service_specification.name)
+      end
+
+      before { request }
 
       it_behaves_like 'renders a successful http status code'
 
       it 'returns the correct data', :aggregate_failures do
-        request
-
         expect(json_response.length).to eq 2
-        expect(json_response).to include(
-          beginning: I18n.l(services.first.beginning),
-          ending: I18n.l(services.first.ending),
-          confirmation_date: I18n.l(services.first.confirmation_date),
-          service_specification: services.first.service_specification.name,
-          id: services.first.id
-        )
-
-        expect(json_response).to include(
-          beginning: I18n.l(services.second.beginning),
-          ending: I18n.l(services.second.ending),
-          confirmation_date: I18n.l(services.second.confirmation_date),
-          service_specification: services.second.service_specification.name,
-          id: services.second.id
-        )
+        expect(json_response).to include(first_service_json)
+        expect(json_response).to include(second_service_json)
       end
     end
 
@@ -55,27 +51,51 @@ RSpec.describe V1::ServicesController, type: :request do
       end
     end
 
-    describe 'POST #create' do
-      context 'with valid params' do
-        it 'creates a new Service' do
-          expect do
-            post :create, params: { service: valid_attributes }, session: valid_session
-          end.to change(Service, :count).by(1)
+    describe '#create' do
+      subject { -> { post_request } }
+
+      let(:post_request) { post v1_services_path(service: params) }
+
+      context 'when params are valid' do
+        let(:service_specification) { create :service_specification }
+        let(:params) { attributes_for(:service, service_specification: service_specification) }
+
+        it_behaves_like 'renders a successful http status code' do
+          let(:request) { post_request }
         end
 
-        it 'renders a JSON response with the new service' do
-          post :create, params: { service: valid_attributes }, session: valid_session
-          expect(response).to have_http_status(:created)
-          expect(response.content_type).to eq('application/json')
-          expect(response.location).to eq(service_url(Service.last))
+        it { is_expected.to change(Holiday, :count).by(1) }
+
+        it 'returns the created holiday' do
+          post_request
+          expect(parse_response_json(response)).to include(
+                                                     id: Holiday.last.id,
+                                                     beginning: params[:beginning],
+                                                     ending: params[:ending],
+                                                     holiday_type: params[:holiday_type].to_s,
+                                                     description: params[:description]
+                                                   )
         end
       end
 
-      context 'with invalid params' do
-        it 'renders a JSON response with errors for the new service' do
-          post :create, params: { service: invalid_attributes }, session: valid_session
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(response.content_type).to eq('application/json')
+      context 'when params are invalid' do
+        let(:params) { { description: '', ending_date: 'I am invalid' } }
+
+        it { is_expected.to change(Holiday, :count).by(0) }
+
+        describe 'returned error' do
+          it_behaves_like 'renders a validation error response' do
+            let(:request) { post_request }
+          end
+
+          it 'renders all validation errors' do
+            post_request
+            expect(parse_response_json(response)[:errors]).to include(
+                                                                ending: be_an_instance_of(Array),
+                                                                beginning: be_an_instance_of(Array),
+                                                                description: be_an_instance_of(Array)
+                                                              )
+          end
         end
       end
     end
