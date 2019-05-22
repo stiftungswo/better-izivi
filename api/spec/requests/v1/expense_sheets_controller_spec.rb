@@ -28,12 +28,12 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           let(:request) { post_request }
         end
 
-        it { is_expected.to change(expense_sheet, :count).by(1) }
+        it { is_expected.to change(ExpenseSheet, :count).by(1) }
 
         it 'returns the created expense_sheet' do
           post_request
           expect(parse_response_json(response)).to include(
-                                                     id: expense_sheet.last.id,
+                                                     id: ExpenseSheet.last.id,
                                                      beginning: params[:beginning],
                                                      ending: params[:ending],
                                                      expense_sheet_type: params[:expense_sheet_type].to_s,
@@ -45,7 +45,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       context 'when params are invalid' do
         let(:params) { { description: '', ending_date: 'I am invalid' } }
 
-        it { is_expected.to change(expense_sheet, :count).by(0) }
+        it { is_expected.to change(ExpenseSheet, :count).by(0) }
 
         describe 'returned error' do
           it_behaves_like 'renders a validation error response' do
@@ -114,7 +114,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       let!(:expense_sheet) { create :expense_sheet }
       let(:delete_request) { delete v1_expense_sheet_path(expense_sheet) }
 
-      it { is_expected.to change(expense_sheet, :count).by(-1) }
+      it { is_expected.to change(ExpenseSheet, :count).by(-1) }
 
       it 'returns the deleted resource' do
         expected_response = extract_to_json(expense_sheet, :id, :beginning, :ending, :description)
@@ -130,7 +130,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         it_behaves_like 'renders a not found error response'
 
         it 'does not delete anything' do
-          expect { request }.not_to change(expense_sheet, :count)
+          expect { request }.not_to change(ExpenseSheet, :count)
         end
       end
     end
@@ -150,7 +150,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       it_behaves_like 'protected resource'
 
       it 'does not create a new expense_sheet' do
-        expect { request }.not_to change(expense_sheet, :count)
+        expect { request }.not_to change(ExpenseSheet, :count)
       end
     end
 
@@ -173,7 +173,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       it_behaves_like 'protected resource'
 
       it 'does not delete the expense_sheet' do
-        expect { request }.not_to change(expense_sheet, :count)
+        expect { request }.not_to change(ExpenseSheet, :count)
       end
     end
   end
