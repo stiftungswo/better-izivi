@@ -77,14 +77,33 @@ service_specification = ServiceSpecification.create!(
 )
 
 beginning = Time.zone.today.at_beginning_of_week - 4.weeks
-Service.create(user: users.first,
-               service_specification: service_specification,
-               beginning: beginning,
-               ending: beginning + 2.weeks + 4.days,
-               confirmation_date: beginning - 1.month,
-               eligible_personal_vacation_days: 0,
-               service_type: :normal,
-               first_swo_service: true,
-               long_service: false,
-               probation_service: false,
-               feedback_mail_sent: false)
+Service.create(
+  [
+    {
+      user: users.first,
+      service_specification: service_specification,
+      beginning: beginning,
+      ending: beginning + 2.weeks + 4.days,
+      confirmation_date: beginning - 1.month,
+      eligible_personal_vacation_days: 0,
+      service_type: :normal,
+      first_swo_service: true,
+      long_service: false,
+      probation_service: false,
+      feedback_mail_sent: false
+    },
+    {
+      user: users.second,
+      service_specification: service_specification,
+      beginning: beginning,
+      ending: beginning + 3.weeks + 4.days,
+      confirmation_date: beginning - 1.month,
+      eligible_personal_vacation_days: 0,
+      service_type: :normal,
+      first_swo_service: true,
+      long_service: false,
+      probation_service: false,
+      feedback_mail_sent: false
+    }
+  ]
+)
