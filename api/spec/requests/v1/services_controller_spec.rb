@@ -304,7 +304,7 @@ RSpec.describe V1::ServicesController, type: :request do
       end
 
       context 'when the requested resource does not exist' do
-        let(:request) { delete v1_service_path -1 }
+        let(:request) { delete v1_service_path(-1) }
 
         it_behaves_like 'renders a not found error response'
       end
