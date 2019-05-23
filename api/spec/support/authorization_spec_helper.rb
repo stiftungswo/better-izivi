@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples_for 'protected resource' do
+RSpec.shared_examples_for 'login protected resource' do
   subject { response }
 
   before { request }
