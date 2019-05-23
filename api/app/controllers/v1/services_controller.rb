@@ -11,7 +11,8 @@ module V1
     ].freeze
 
     before_action :set_service, only: %i[show update destroy]
-    before_action :protect_foreign_resource, except: %i[index create], unless: -> { current_user.admin? }
+    before_action :protect_foreign_resource!, except: %i[index create], unless: -> { current_user.admin? }
+    before_action :authorize_admin!, only: :index
 
     def index
       # TODO: Protect index to admin only and test it, also test protect_foreign_resource
@@ -42,7 +43,7 @@ module V1
 
     private
 
-    def protect_foreign_resource
+    def protect_foreign_resource!
       raise AuthorizationError unless @service.user.id == current_user.id
     end
 
