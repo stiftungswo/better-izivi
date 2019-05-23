@@ -60,12 +60,15 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
             let(:request) { post_request }
           end
 
-          it 'renders all validation errors' do
+          it 'renders all validation errors', :aggregate_failures do
             post_request
-            expect(parse_response_json(response)[:errors]).to include(
+            errors = parse_response_json(response)[:errors]
+
+            expect(errors).to include(
               short_name: be_an_instance_of(Array),
               accommodation_expenses: be_an_instance_of(Array)
             )
+            expect(errors.length).to eq 2
           end
         end
       end
@@ -88,11 +91,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
                           :working_clothes_expenses,
                           :accommodation_expenses,
                           :location,
-                          :active,
-                          :work_days_expenses,
-                          :paid_vacation_expenses,
-                          :first_day_expenses,
-                          :last_day_expenses)
+                          :active)
         end
 
         it { is_expected.to(change { service_specification.reload.name }.to('New name')) }
@@ -103,8 +102,17 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
         it 'returns the updated service specification' do
           put_request
-          p expected_attributes
           expect(parse_response_json(response)).to include(expected_attributes)
+        end
+
+        it 'returns updated JSON expenses' do
+          put_request
+          expect(JSON.parse(response.body)).to include extract_to_json(
+            service_specification, :work_days_expenses,
+            :paid_vacation_expenses,
+            :first_day_expenses,
+            :last_day_expenses
+          ).stringify_keys
         end
       end
 
@@ -133,7 +141,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
   context 'when no user is signed in' do
     describe '#index' do
-      it_behaves_like 'protected resource' do
+      it_behaves_like 'login protected resource' do
         let(:request) { get v1_service_specifications_path }
       end
     end
@@ -142,7 +150,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
       let(:params) { attributes_for(:service_specification) }
       let(:request) { post v1_service_specifications_path(service_specification: params) }
 
-      it_behaves_like 'protected resource'
+      it_behaves_like 'login protected resource'
 
       it 'does not create a new service specification' do
         expect { request }.not_to change(ServiceSpecification, :count)
@@ -156,7 +164,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
       end
       let(:params) { { name: 'New name' } }
 
-      it_behaves_like 'protected resource'
+      it_behaves_like 'login protected resource'
 
       it 'does not update the service specification' do
         expect { request }.not_to(change { service_specification.reload.name })

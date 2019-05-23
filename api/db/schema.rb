@@ -63,10 +63,10 @@ ActiveRecord::Schema.define(version: 2019_05_09_144757) do
     t.string "short_name", null: false
     t.integer "working_clothes_expenses", null: false
     t.integer "accommodation_expenses", null: false
-    t.text "work_days_expenses", limit: 4294967295, null: false, collation: "utf8mb4_bin"
-    t.text "paid_vacation_expenses", limit: 4294967295, null: false
-    t.text "first_day_expenses", limit: 4294967295, null: false
-    t.text "last_day_expenses", limit: 4294967295, null: false
+    t.text "work_days_expenses", null: false
+    t.text "paid_vacation_expenses", null: false
+    t.text "first_day_expenses", null: false
+    t.text "last_day_expenses", null: false
     t.string "location", default: "zh"
     t.boolean "active", default: true
     t.datetime "created_at", null: false
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_144757) do
     t.boolean "first_swo_service", null: false
     t.boolean "long_service", null: false
     t.boolean "probation_service", null: false
-    t.boolean "feedback_mail_sent", null: false
+    t.boolean "feedback_mail_sent", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["service_specification_id"], name: "index_services_on_service_specification_id"

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :holidays, only: %i[index create update destroy]
     resources :service_specifications, only: %i[index create update]
     resources :expense_sheets, only: %i[index show create update destroy]
+    resources :services
   end
 
   scope :v1 do
