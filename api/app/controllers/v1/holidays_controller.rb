@@ -13,7 +13,7 @@ module V1
 
       raise ValidationError, @holiday.errors unless @holiday.save
 
-      render_show
+      render :show, status: :created
     end
 
     def update

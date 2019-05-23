@@ -27,7 +27,7 @@ module V1
 
       raise ValidationError, @service_specification.errors unless @service_specification.save
 
-      render_show
+      render :show, status: :created
     end
 
     def update
