@@ -26,7 +26,7 @@ module Concerns
     end
 
     def render_authorization_error
-      render json: { error: I18n.t('authorization_error') }, status: :unauthorized
+      render json: { error: I18n.t('errors.authorization_error') }, status: :unauthorized
     end
   end
 end

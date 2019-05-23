@@ -15,7 +15,6 @@ module V1
     before_action :authorize_admin!, only: :index
 
     def index
-      # TODO: Protect index to admin only and test it, also test protect_foreign_resource
       @services = Service.all
     end
 
@@ -37,8 +36,7 @@ module V1
     end
 
     def destroy
-      # TODO: Raise UnprocessableEntity error if failed
-      @service.destroy
+      raise ValidationError, @service.errors unless @service.destroy
     end
 
     private

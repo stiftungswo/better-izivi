@@ -23,7 +23,7 @@ RSpec.shared_examples_for 'admin protected resource' do
 
   it 'renders an error' do
     expect(parse_response_json(response)).to include(
-                                               error: I18n.t('authorization_error')
+                                               error: I18n.t('errors.authorization_error')
                                              )
   end
 end
