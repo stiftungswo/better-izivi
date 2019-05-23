@@ -5,13 +5,13 @@ module V1
     before_action :set_expense_sheet, only: %i[show update destroy]
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
-      beginning ending work_days company_holiday_unpaid_days
-      company_holiday_paid_days company_holiday_comment workfree_days
-      ill_days ill_comment personal_vacation_days user_id
+      beginning ending work_days unpaid_company_holiday_days
+      paid_company_holiday_days company_holiday_comment workfree_days
+      sick_days sick_comment personal_vacation_days user_id
       paid_vacation_days paid_vacation_comment unpaid_vacation_days
-      unpaid_vacation_comment driving_charges driving_charges_comment
-      extraordinarily_expenses extraordinarily_expenses_comment clothes_expenses
-      clothes_expenses_comment bank_account_number state
+      unpaid_vacation_comment driving_expenses driving_expenses_comment
+      extraordinary_expenses extraordinary_expenses_comment clothing_expenses
+      clothing_expenses_comment bank_account_number state
     ].freeze
 
     def index
