@@ -141,7 +141,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
   context 'when no user is signed in' do
     describe '#index' do
-      it_behaves_like 'protected resource' do
+      it_behaves_like 'login protected resource' do
         let(:request) { get v1_expense_sheets_path }
       end
     end
@@ -150,7 +150,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       let(:params) { attributes_for(:expense_sheet) }
       let(:request) { post v1_expense_sheets_path(expense_sheet: params) }
 
-      it_behaves_like 'protected resource'
+      it_behaves_like 'login protected resource'
 
       it 'does not create a new expense_sheet' do
         expect { request }.not_to change(ExpenseSheet, :count)
@@ -162,7 +162,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       let(:request) { put v1_expense_sheet_path(expense_sheet, params: { expense_sheet: params }) }
       let(:params) { { description: 'New description' } }
 
-      it_behaves_like 'protected resource'
+      it_behaves_like 'login protected resource'
 
       it 'does not update the expense_sheet' do
         expect { request }.not_to(change { expense_sheet.reload.description })
@@ -173,7 +173,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       let!(:expense_sheet) { create :expense_sheet }
       let(:request) { delete v1_expense_sheet_path(expense_sheet) }
 
-      it_behaves_like 'protected resource'
+      it_behaves_like 'login protected resource'
 
       it 'does not delete the expense_sheet' do
         expect { request }.not_to change(ExpenseSheet, :count)
