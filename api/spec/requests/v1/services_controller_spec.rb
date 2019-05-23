@@ -27,36 +27,63 @@ RSpec.describe V1::ServicesController, type: :request do
 
       before { request }
 
-      it_behaves_like 'renders a successful http status code'
+      context 'when the user is admin' do
+        let(:user) { create :user, :admin }
 
-      it 'returns the correct data', :aggregate_failures do
-        expect(json_response.length).to eq 2
-        expect(json_response).to include(first_service_json)
-        expect(json_response).to include(second_service_json)
+        it_behaves_like 'renders a successful http status code'
+
+        it 'returns the correct data', :aggregate_failures do
+          expect(json_response.length).to eq 2
+          expect(json_response).to include(first_service_json)
+          expect(json_response).to include(second_service_json)
+        end
+      end
+
+      context 'when user is not admin' do
+        it_behaves_like 'admin protected resource'
       end
     end
 
     describe 'GET #show' do
-      let(:service) { create :service, user: user }
       let(:request) { get v1_service_path service }
-      let(:expected_response) do
-        extract_to_json(service, :id, :user_id, :service_specification_id, :beginning,
-                        :ending, :confirmation_date, :eligible_personal_vacation_days,
-                        :service_type, :first_swo_service, :long_service,
-                        :probation_service, :feedback_mail_sent)
-      end
 
-      it_behaves_like 'renders a successful http status code'
+      before { request }
 
-      it 'renders the correct response' do
-        request
-        expect(parse_response_json(response)).to include(expected_response)
-      end
-
-      context 'when the requested resource does not exist' do
-        it_behaves_like 'renders a not found error response' do
-          let(:request) { get v1_service_path(-2) }
+      context 'when the user has permission to view its own resource' do
+        let(:service) { create :service, user: user }
+        let(:expected_response) do
+          extract_to_json(service, :id, :user_id, :service_specification_id, :beginning,
+                          :ending, :confirmation_date, :eligible_personal_vacation_days,
+                          :service_type, :first_swo_service, :long_service,
+                          :probation_service, :feedback_mail_sent)
         end
+
+        it_behaves_like 'renders a successful http status code'
+
+        it 'renders the correct response' do
+          expect(parse_response_json(response)).to include(expected_response)
+        end
+
+        context 'when the user is admin' do
+          let(:user) { create(:user, :admin) }
+          let(:service) { create :service, user: create(:user) }
+
+          it 'is able to view services from different people' do
+            expect(parse_response_json(response)).to include(expected_response)
+          end
+        end
+
+        context 'when the requested resource does not exist' do
+          it_behaves_like 'renders a not found error response' do
+            let(:request) { get v1_service_path(-2) }
+          end
+        end
+      end
+
+      context 'when a non-admin user requests a service which is not his own' do
+        let(:service) { create :service, user: create(:user) }
+
+        it_behaves_like 'admin protected resource'
       end
     end
 
@@ -153,9 +180,7 @@ RSpec.describe V1::ServicesController, type: :request do
             expect(parse_response_json(response)[:errors]).to include(
               beginning: be_an_instance_of(Array),
               ending: be_an_instance_of(Array),
-              eligible_personal_vacation_days: be_an_instance_of(Array),
-              service_specification: be_an_instance_of(Array),
-              user: be_an_instance_of(Array)
+              eligible_personal_vacation_days: be_an_instance_of(Array)
             )
           end
         end
@@ -178,19 +203,48 @@ RSpec.describe V1::ServicesController, type: :request do
                           :probation_service, :feedback_mail_sent)
         end
 
-        it { is_expected.to(change { service.reload.confirmation_date }.to(new_service_date)) }
+        context 'when a non-admin user updates it\'s own service' do
+          it { is_expected.to(change { service.reload.confirmation_date }.to(new_service_date)) }
 
-        it_behaves_like 'renders a successful http status code' do
-          let(:request) { put_request }
+          it_behaves_like 'renders a successful http status code' do
+            let(:request) { put_request }
+          end
+
+          it 'returns the updated service' do
+            put_request
+            expect(parse_response_json(response)).to include(expected_attributes)
+          end
         end
 
-        it 'returns the updated service' do
-          put_request
-          expect(parse_response_json(response)).to include(expected_attributes)
+        context 'when a non-admin user tries to update other\'s service' do
+          let!(:service) { create :service, :unconfirmed, user: create(:user) }
+
+          it_behaves_like 'admin protected resource' do
+            let(:request) { put_request }
+          end
+
+          it { is_expected.not_to(change { service.reload.confirmation_date }) }
+        end
+
+        context 'when an admin user updates a service of a foreign person' do
+          let(:user) { create :user, :admin }
+          let!(:service) { create :service, :unconfirmed, user: create(:user) }
+
+          it { is_expected.to(change { service.reload.confirmation_date }.to(new_service_date)) }
+
+          it_behaves_like 'renders a successful http status code' do
+            let(:request) { put_request }
+          end
+
+          it 'returns the updated service' do
+            put_request
+            expect(parse_response_json(response)).to include(expected_attributes)
+          end
         end
       end
 
       context 'with invalid params' do
+        let(:user) { create :user, :admin }
         let(:params) { { eligible_personal_vacation_days: 'invalid' } }
 
         it_behaves_like 'renders a validation error response' do
@@ -212,19 +266,54 @@ RSpec.describe V1::ServicesController, type: :request do
       end
     end
 
-    describe 'DELETE #destroy' do
-      it 'destroys the requested service' do
-        service = create :service, valid_attributes
-        expect do
-          delete :destroy, params: { id: service.to_param }, session: valid_session
-        end.to change(Service, :count).by(-1)
+    describe '#destroy' do
+      subject { -> { delete_request } }
+
+      let(:delete_request) { delete v1_service_path service }
+      let(:service) { create :service, user: user }
+
+      before { service }
+
+      context 'when the user deletes his own service' do
+        it { is_expected.to change(Service, :count).by(-1) }
+
+        it_behaves_like 'renders a successful http status code' do
+          let(:request) { delete_request }
+        end
+      end
+
+      context 'when a non-admin user tries to delete a foreign service' do
+        let(:service) { create :service, user: create(:user) }
+
+        it { is_expected.not_to change(Service, :count) }
+
+        it_behaves_like 'admin protected resource' do
+          let(:request) { delete_request }
+        end
+      end
+
+      context 'when an admin user tries to delete a foreign service' do
+        let(:user) { create :user, :admin }
+        let(:service) { create :service, user: create(:user) }
+
+        it { is_expected.to change(Service, :count).by(-1) }
+
+        it_behaves_like 'renders a successful http status code' do
+          let(:request) { delete_request }
+        end
+      end
+
+      context 'when the requested resource does not exist' do
+        let(:request) { delete v1_service_path -1 }
+
+        it_behaves_like 'renders a not found error response'
       end
     end
   end
 
   context 'when no user is signed in' do
     describe '#index' do
-      it_behaves_like 'protected resource' do
+      it_behaves_like 'login protected resource' do
         let(:request) { get v1_services_path }
       end
     end
@@ -232,7 +321,7 @@ RSpec.describe V1::ServicesController, type: :request do
     describe '#show' do
       let!(:service) { create :service }
 
-      it_behaves_like 'protected resource' do
+      it_behaves_like 'login protected resource' do
         let(:request) { get v1_service_path service }
       end
     end
@@ -251,7 +340,7 @@ RSpec.describe V1::ServicesController, type: :request do
           )
       end
 
-      it_behaves_like 'protected resource'
+      it_behaves_like 'login protected resource'
 
       it { is_expected.not_to change(Service, :count) }
     end
@@ -259,9 +348,20 @@ RSpec.describe V1::ServicesController, type: :request do
     describe '#update' do
       let!(:service) { create :service }
 
-      it_behaves_like 'protected resource' do
+      it_behaves_like 'login protected resource' do
         let(:request) { put v1_service_path service, params: { confirmation_date: Time.zone.today.to_s } }
       end
+    end
+
+    describe '#destroy' do
+      subject { -> { request } }
+
+      let!(:service) { create :service }
+      let(:request) { delete v1_service_path service }
+
+      it { is_expected.not_to change(Service, :count) }
+
+      it_behaves_like 'login protected resource'
     end
   end
 end
