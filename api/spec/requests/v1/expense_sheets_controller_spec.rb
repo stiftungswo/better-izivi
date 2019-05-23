@@ -23,7 +23,9 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
       context 'when params are valid' do
         let(:params) do
-          attributes_for(:expense_sheet).merge user_id: user.id, beginning: '2019-04-29', ending: '2019-05-05', state: 'open'
+          attributes_for(:expense_sheet).merge(
+            user_id: user.id, beginning: '2019-04-29', ending: '2019-05-05', state: 'open'
+          )
         end
 
         it_behaves_like 'renders a successful http status code' do
@@ -35,13 +37,13 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         it 'returns the created expense_sheet' do
           post_request
           expect(parse_response_json(response)).to include(
-                                                     id: ExpenseSheet.last.id,
-                                                     beginning: params[:beginning],
-                                                     ending: params[:ending],
-                                                     state: params[:state],
-                                                     workfree_days: params[:workfree_days],
-                                                     user_id: params[:user_id]
-                                                   )
+            id: ExpenseSheet.last.id,
+            beginning: params[:beginning],
+            ending: params[:ending],
+            state: params[:state],
+            workfree_days: params[:workfree_days],
+            user_id: params[:user_id]
+          )
         end
       end
 
@@ -58,10 +60,10 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           it 'renders all validation errors' do
             post_request
             expect(parse_response_json(response)[:errors]).to include(
-                                                                ending: be_an_instance_of(Array),
-                                                                beginning: be_an_instance_of(Array),
-                                                                driving_expenses: be_an_instance_of(Array)
-                                                              )
+              ending: be_an_instance_of(Array),
+              beginning: be_an_instance_of(Array),
+              driving_expenses: be_an_instance_of(Array)
+            )
           end
         end
       end
@@ -75,7 +77,9 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         subject { -> { put_request } }
 
         let(:params) { { driving_expenses: 6969 } }
-        let(:expected_attributes) { extract_to_json(expense_sheet, :beginning, :ending, :driving_expenses, :expense_sheet_type, :id) }
+        let(:expected_attributes) do
+          extract_to_json(expense_sheet, :beginning, :ending, :driving_expenses, :id)
+        end
 
         it { is_expected.to(change { expense_sheet.reload.driving_expenses }.to(6969)) }
 
@@ -99,8 +103,8 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         it 'renders all validation errors' do
           put_request
           expect(parse_response_json(response)[:errors]).to include(
-                                                              driving_expenses: be_an_instance_of(Array)
-                                                            )
+            driving_expenses: be_an_instance_of(Array)
+          )
         end
       end
 

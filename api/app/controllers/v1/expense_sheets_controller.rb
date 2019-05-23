@@ -5,8 +5,6 @@ module V1
     before_action :set_expense_sheet, only: %i[show update destroy]
     before_action :authorize_admin!
 
-
-
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
       beginning ending work_days unpaid_company_holiday_days
       paid_company_holiday_days company_holiday_comment workfree_days
