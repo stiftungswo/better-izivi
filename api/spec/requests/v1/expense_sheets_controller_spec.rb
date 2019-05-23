@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe V1::ExpenseSheetsController, type: :request do
   context 'when the user is signed in' do
-    let(:user) { create :user }
+    let(:user) { create :user, :admin }
 
     before { sign_in user }
 
@@ -22,7 +22,9 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       let(:post_request) { post v1_expense_sheets_path(expense_sheet: params) }
 
       context 'when params are valid' do
-        let(:params) { attributes_for(:expense_sheet).merge user_id: user.to_param }
+        let(:params) do
+          attributes_for(:expense_sheet).merge user_id: user.id, beginning: '2019-04-29', ending: '2019-05-05', state: 'open'
+        end
 
         it_behaves_like 'renders a successful http status code' do
           let(:request) { post_request }
@@ -32,21 +34,19 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
         it 'returns the created expense_sheet' do
           post_request
-          p response.body
-          p params
           expect(parse_response_json(response)).to include(
                                                      id: ExpenseSheet.last.id,
                                                      beginning: params[:beginning],
                                                      ending: params[:ending],
                                                      state: params[:state],
-                                                     workfree: params[:workfree],
+                                                     workfree_days: params[:workfree_days],
                                                      user_id: params[:user_id]
                                                    )
         end
       end
 
       context 'when params are invalid' do
-        let(:params) { { description: '', ending: 'I am invalid' } }
+        let(:params) { { driving_expenses: 'aa', ending: 'I am invalid' } }
 
         it { is_expected.to change(ExpenseSheet, :count).by(0) }
 
@@ -60,7 +60,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
             expect(parse_response_json(response)[:errors]).to include(
                                                                 ending: be_an_instance_of(Array),
                                                                 beginning: be_an_instance_of(Array),
-                                                                description: be_an_instance_of(Array)
+                                                                driving_expenses: be_an_instance_of(Array)
                                                               )
           end
         end
@@ -74,10 +74,10 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       context 'with valid params' do
         subject { -> { put_request } }
 
-        let(:params) { { description: 'New description' } }
-        let(:expected_attributes) { extract_to_json(expense_sheet, :beginning, :ending, :description, :expense_sheet_type, :id) }
+        let(:params) { { driving_expenses: 6969 } }
+        let(:expected_attributes) { extract_to_json(expense_sheet, :beginning, :ending, :driving_expenses, :expense_sheet_type, :id) }
 
-        it { is_expected.to(change { expense_sheet.reload.description }.to('New description')) }
+        it { is_expected.to(change { expense_sheet.reload.driving_expenses }.to(6969)) }
 
         it_behaves_like 'renders a successful http status code' do
           let(:request) { put_request }
@@ -90,7 +90,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
       end
 
       context 'with invalid params' do
-        let(:params) { { description: '' } }
+        let(:params) { { driving_expenses: 'a' } }
 
         it_behaves_like 'renders a validation error response' do
           let(:request) { put_request }
@@ -99,7 +99,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         it 'renders all validation errors' do
           put_request
           expect(parse_response_json(response)[:errors]).to include(
-                                                              description: be_an_instance_of(Array)
+                                                              driving_expenses: be_an_instance_of(Array)
                                                             )
         end
       end
@@ -160,12 +160,12 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
     describe '#update' do
       let!(:expense_sheet) { create :expense_sheet }
       let(:request) { put v1_expense_sheet_path(expense_sheet, params: { expense_sheet: params }) }
-      let(:params) { { description: 'New description' } }
+      let(:params) { { driving_expenses: 1000 } }
 
       it_behaves_like 'login protected resource'
 
       it 'does not update the expense_sheet' do
-        expect { request }.not_to(change { expense_sheet.reload.description })
+        expect { request }.not_to(change { expense_sheet.reload.driving_expenses })
       end
     end
 

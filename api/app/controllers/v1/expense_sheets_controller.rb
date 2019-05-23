@@ -3,6 +3,9 @@
 module V1
   class ExpenseSheetsController < APIController
     before_action :set_expense_sheet, only: %i[show update destroy]
+    before_action :authorize_admin!
+
+
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
       beginning ending work_days unpaid_company_holiday_days
@@ -28,6 +31,7 @@ module V1
       render_show
     end
 
+    # TODO: check state updates (does it already belong to a payment?)
     def update
       raise ValidationError, @expense_sheet.errors unless @expense_sheet.update(expense_sheet_params)
 
