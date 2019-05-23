@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe V1::ExpenseSheetsController, type: :request do
   context 'when the user is signed in' do
+    # TODO: Add admin specs
     let(:user) { create :user, :admin }
 
     before { sign_in user }
