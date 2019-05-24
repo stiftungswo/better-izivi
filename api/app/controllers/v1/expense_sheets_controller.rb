@@ -8,7 +8,7 @@ module V1
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
       beginning ending work_days unpaid_company_holiday_days
       paid_company_holiday_days company_holiday_comment workfree_days
-      sick_days sick_comment personal_vacation_days user_id
+      sick_days sick_comment user_id
       paid_vacation_days paid_vacation_comment unpaid_vacation_days
       unpaid_vacation_comment driving_expenses driving_expenses_comment
       extraordinary_expenses extraordinary_expenses_comment clothing_expenses

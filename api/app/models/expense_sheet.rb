@@ -12,7 +12,6 @@ class ExpenseSheet < ApplicationRecord
   validates :work_days,
             :workfree_days,
             :sick_days,
-            :personal_vacation_days,
             :paid_vacation_days,
             :unpaid_vacation_days,
             :driving_expenses,
