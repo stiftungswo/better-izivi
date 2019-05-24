@@ -2,18 +2,18 @@
 
 require 'rails_helper'
 
-RSpec.describe ServiceCalculator, type: :service do
+RSpec.describe ShortServiceCalculator, type: :service do
   describe '#calculate_ending_date' do
     subject { calculated_ending_day - beginning }
 
-    let(:calculated_ending_day) { ServiceCalculator.new(beginning).calculate_ending_date(required_service_days) }
+    let(:calculated_ending_day) { ShortServiceCalculator.new(beginning).calculate_ending_date(required_service_days) }
     let(:beginning) { Time.zone.today.beginning_of_week }
     let(:required_service_days) { 26 }
 
     context 'when service duration is between 1 and 5' do
       it 'returns correct ending date', :aggregate_failures do
         (1..5).each do |delta|
-          ending = ServiceCalculator.new(beginning).calculate_ending_date(delta)
+          ending = ShortServiceCalculator.new(beginning).calculate_ending_date(delta)
           expect((ending - beginning).to_i).to eq(delta - 1)
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe ServiceCalculator, type: :service do
     end
 
     context 'when service duration is invalid' do
-      subject { -> { ServiceCalculator.new(beginning).calculate_ending_date(required_service_days) } }
+      subject { -> { ShortServiceCalculator.new(beginning).calculate_ending_date(required_service_days) } }
 
       let(:required_service_days) { 0 }
 
@@ -116,13 +116,13 @@ RSpec.describe ServiceCalculator, type: :service do
     let(:beginning) { Time.zone.today.at_beginning_of_week }
     let(:ending) { beginning }
     let(:calculate_chargeable_service_days) do
-      ServiceCalculator.new(beginning).calculate_chargeable_service_days(ending)
+      ShortServiceCalculator.new(beginning).calculate_chargeable_service_days(ending)
     end
 
     context 'when service end is withing weekdays of beginning week' do
       it 'returns correct eligible days', :aggregate_failures do
         (0..4).each do |delta|
-          service_days = ServiceCalculator.new(beginning).calculate_chargeable_service_days(beginning + delta.days)
+          service_days = ShortServiceCalculator.new(beginning).calculate_chargeable_service_days(beginning + delta.days)
           expect(service_days).to eq(delta + 1)
         end
       end
