@@ -27,6 +27,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
     describe '#create' do
       context 'when user is admin' do
         subject { -> { post_request } }
+
         let(:user) { create :user, :admin }
         let(:post_request) { post v1_expense_sheets_path(expense_sheet: params) }
         let(:params) do
@@ -45,13 +46,13 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           it 'returns the created expense_sheet' do
             post_request
             expect(parse_response_json(response)).to include(
-                                                       id: ExpenseSheet.last.id,
-                                                       beginning: params[:beginning],
-                                                       ending: params[:ending],
-                                                       state: params[:state],
-                                                       workfree_days: params[:workfree_days],
-                                                       user_id: params[:user_id]
-                                                     )
+              id: ExpenseSheet.last.id,
+              beginning: params[:beginning],
+              ending: params[:ending],
+              state: params[:state],
+              workfree_days: params[:workfree_days],
+              user_id: params[:user_id]
+            )
           end
         end
 
@@ -60,19 +61,17 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
           it { is_expected.to change(ExpenseSheet, :count).by(0) }
 
-          describe 'returned error' do
-            it_behaves_like 'renders a validation error response' do
-              let(:request) { post_request }
-            end
+          it_behaves_like 'renders a validation error response' do
+            let(:request) { post_request }
+          end
 
-            it 'renders all validation errors' do
-              post_request
-              expect(parse_response_json(response)[:errors]).to include(
-                                                                  ending: be_an_instance_of(Array),
-                                                                  beginning: be_an_instance_of(Array),
-                                                                  driving_expenses: be_an_instance_of(Array)
-                                                                )
-            end
+          it 'renders all validation errors' do
+            post_request
+            expect(parse_response_json(response)[:errors]).to include(
+              ending: be_an_instance_of(Array),
+              beginning: be_an_instance_of(Array),
+              driving_expenses: be_an_instance_of(Array)
+            )
           end
         end
       end
@@ -121,8 +120,8 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           it 'renders all validation errors' do
             put_request
             expect(parse_response_json(response)[:errors]).to include(
-                                                                driving_expenses: be_an_instance_of(Array)
-                                                              )
+              driving_expenses: be_an_instance_of(Array)
+            )
           end
         end
 
@@ -139,8 +138,6 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         end
       end
     end
-
-
 
     describe '#destroy' do
       let!(:expense_sheet) { create :expense_sheet }
@@ -173,7 +170,6 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           let(:request) { delete v1_expense_sheet_path(expense_sheet) }
         end
       end
-
     end
   end
 

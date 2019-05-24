@@ -47,19 +47,17 @@ RSpec.describe V1::HolidaysController, type: :request do
 
         it { is_expected.to change(Holiday, :count).by(0) }
 
-        describe 'returned error' do
-          it_behaves_like 'renders a validation error response' do
-            let(:request) { post_request }
-          end
+        it_behaves_like 'renders a validation error response' do
+          let(:request) { post_request }
+        end
 
-          it 'renders all validation errors' do
-            post_request
-            expect(parse_response_json(response)[:errors]).to include(
-              ending: be_an_instance_of(Array),
-              beginning: be_an_instance_of(Array),
-              description: be_an_instance_of(Array)
-            )
-          end
+        it 'renders all validation errors' do
+          post_request
+          expect(parse_response_json(response)[:errors]).to include(
+            ending: be_an_instance_of(Array),
+            beginning: be_an_instance_of(Array),
+            description: be_an_instance_of(Array)
+          )
         end
       end
     end
