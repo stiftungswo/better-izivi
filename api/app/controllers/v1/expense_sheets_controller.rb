@@ -38,8 +38,6 @@ module V1
 
     def destroy
       raise ValidationError, @expense_sheet.errors unless @expense_sheet.destroy
-
-      render_show
     end
 
     private
