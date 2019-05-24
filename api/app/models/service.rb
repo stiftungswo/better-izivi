@@ -61,15 +61,12 @@ class Service < ApplicationRecord
   end
 
   def calculate_company_holiday_days_during_service
-    # TODO: split after query
-    company_holidays = Holiday
+    all_holidays = Holiday
                          .where(beginning: beginning..ending)
                          .or(Holiday.where(ending: beginning..ending))
-                         .company_holiday
-    public_holidays = Holiday
-                        .where(beginning: beginning..ending)
-                        .or(Holiday.where(ending: beginning..ending))
-                        .public_holiday
+
+    public_holidays = all_holidays.select(&:public_holiday?)
+    company_holidays = all_holidays.select(&:company_holiday?)
 
     subtracted_days = []
 
