@@ -27,6 +27,10 @@ class Service < ApplicationRecord
     (ending - beginning).to_i + 1
   end
 
+  def eligible_personal_vacation_days
+    self.long_service ? calculate_eligible_personal_vacation_days : 0
+  end
+
   private
 
   def beginning_is_monday
@@ -35,5 +39,16 @@ class Service < ApplicationRecord
 
   def ending_is_friday
     errors.add(:ending, :not_a_friday) unless ending.present? && ending.wday == FRIDAY_WEEKDAY
+  end
+
+  def calculate_eligible_personal_vacation_days
+    long_mission_base_duration = 180
+    base_holiday_days = 8
+    additional_holiday_days_per_month = 2
+    days_per_month = 30
+
+    additional_days = self.duration - long_mission_base_duration
+    additional_holiday_days = (additional_days/days_per_month.to_f).floor * additional_holiday_days_per_month
+    base_holiday_days + additional_holiday_days
   end
 end
