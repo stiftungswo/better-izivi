@@ -24,8 +24,6 @@ module V1
 
     def destroy
       raise ValidationError, @holiday.errors unless @holiday.destroy
-
-      render_show
     end
 
     private
