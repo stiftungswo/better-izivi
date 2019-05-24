@@ -36,6 +36,23 @@ users = User.create!(
       phone: '076 876 54 32',
       zdp: 739_540,
       regional_center: RegionalCenter.first
+    },
+    {
+      email: 'admin@example.com',
+      first_name: 'Admin',
+      last_name: 'Boss',
+      password: '123456',
+      address: 'Zivistrasse 12b',
+      bank_iban: 'CH9300762011623852957',
+      birthday: Time.zone.today - 19.years,
+      city: 'Zivistadt',
+      health_insurance: 'Militärversicherunng',
+      zip: '4231',
+      hometown: 'Better Zivitown',
+      phone: '076 876 54 32',
+      zdp: 739_540,
+      regional_center: RegionalCenter.first,
+      role: :admin
     }
   ]
 )
@@ -85,7 +102,6 @@ Service.create(
       beginning: beginning,
       ending: beginning + 2.weeks + 4.days,
       confirmation_date: beginning - 1.month,
-      eligible_personal_vacation_days: 0,
       service_type: :normal,
       first_swo_service: true,
       long_service: false,
@@ -98,7 +114,6 @@ Service.create(
       beginning: beginning,
       ending: beginning + 3.weeks + 4.days,
       confirmation_date: beginning - 1.month,
-      eligible_personal_vacation_days: 0,
       service_type: :normal,
       first_swo_service: true,
       long_service: false,
