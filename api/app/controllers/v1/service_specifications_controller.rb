@@ -34,17 +34,13 @@ module V1
       raise ValidationError, @service_specification.errors unless
           @service_specification.update(service_specification_params)
 
-      render_show
+      render :show
     end
 
     private
 
     def set_service_specification
       @service_specification = ServiceSpecification.find(params[:id])
-    end
-
-    def render_show
-      render :show
     end
 
     def service_specification_params

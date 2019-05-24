@@ -19,7 +19,7 @@ module V1
     def update
       raise ValidationError, @holiday.errors unless @holiday.update(holiday_params)
 
-      render_show
+      render :show
     end
 
     def destroy
@@ -30,10 +30,6 @@ module V1
 
     def set_holiday
       @holiday = Holiday.find(params[:id])
-    end
-
-    def render_show
-      render :show
     end
 
     def holiday_params
