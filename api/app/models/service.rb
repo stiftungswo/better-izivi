@@ -27,7 +27,9 @@ class Service < ApplicationRecord
   validate :beginning_is_monday
 
   def duration
-    (ending - beginning).to_i + 1
+    temp_duration = (ending - beginning).to_i + 1
+    unpaid_days = [0, calculate_company_holiday_days_during_service - eligible_personal_vacation_days].max
+    temp_duration - unpaid_days
   end
 
   def eligible_personal_vacation_days
@@ -45,8 +47,37 @@ class Service < ApplicationRecord
   end
 
   def calculate_eligible_personal_vacation_days
-    additional_days = duration - LONG_MISSION_BASE_DURATION
+    additional_days = (ending - beginning).to_i + 1 - LONG_MISSION_BASE_DURATION
+    additional_holiday_days = ([0, additional_days].max / DAYS_PER_MONTH.to_f).floor * ADDITIONAL_HOLIDAY_DAYS_PER_MONTH
+    personal_vacation_days = BASE_HOLIDAY_DAYS + additional_holiday_days
+
+    temp_duration = (ending - beginning).to_i + 1
+    unpaid_days = [0, calculate_company_holiday_days_during_service - personal_vacation_days].max
+    custom_duration = temp_duration - unpaid_days
+
+    additional_days = custom_duration - LONG_MISSION_BASE_DURATION
     additional_holiday_days = (additional_days / DAYS_PER_MONTH.to_f).floor * ADDITIONAL_HOLIDAY_DAYS_PER_MONTH
     BASE_HOLIDAY_DAYS + additional_holiday_days
+  end
+
+  def calculate_company_holiday_days_during_service
+    # TODO: split after query
+    company_holidays = Holiday
+                         .where(beginning: beginning..ending)
+                         .or(Holiday.where(ending: beginning..ending))
+                         .company_holiday
+    public_holidays = Holiday
+                        .where(beginning: beginning..ending)
+                        .or(Holiday.where(ending: beginning..ending))
+                        .public_holiday
+
+    subtracted_days = []
+
+    company_holidays.each do |company_holiday|
+      holiday_work_days = company_holiday.work_days public_holidays
+      subtracted_days.push *holiday_work_days
+    end
+
+    subtracted_days.uniq.length
   end
 end
