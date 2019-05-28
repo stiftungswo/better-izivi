@@ -28,3 +28,6 @@ de:
     authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
   payment:
     expenses_from: Spesen vom %{from_date}
+  pdfs:
+    phone_list:
+      title: 'Telefonliste vom %{beginning} bis %{ending}'

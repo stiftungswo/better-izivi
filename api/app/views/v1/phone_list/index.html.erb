@@ -1,0 +1,28 @@
+<% content_for :title, I18n.t('pdfs.phone_list.title', beginning: I18n.l(phone_list.beginning), ending: I18n.l(phone_list.ending)) %>
+<header style="text-align: right">
+  Stand vom <%= I18n.l(Time.zone.today) %>
+</header>
+<h3 style="margin-top: 10px">
+  <%= yield :title %>
+</h3>
+
+<% specifications.each do |name, services| %>
+  <h4><%= name %></h4>
+  <table>
+      <thead>
+        <tr>
+          <th><%= I18n.t('activerecord.models.attributes.user.last_name') %></th>
+          <th><%= I18n.t('activerecord.models.attributes.user.first_name') %></th>
+          <th><%= I18n.t('activerecord.models.attributes.user.address') %></th>
+          <th><%= I18n.t('activerecord.models.attributes.user.zip_with_city') %></th>
+          <th><%= I18n.t('activerecord.models.attributes.user.phone') %></th>
+          <th><%= I18n.t('activerecord.models.attributes.user.email') %></th>
+        </tr>
+      </thead>
+    <thead>
+      <tr>
+        <th colspan="6"></th>
+      </tr>
+    </thead>
+</table>
+<% end %>
