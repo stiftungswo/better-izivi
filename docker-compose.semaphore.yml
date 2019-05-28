@@ -10,6 +10,7 @@ services:
         container_name: better_izivi_api
         volumes:
             - ./api:/api
+            - ${SEMAPHORE_CACHE_DIR}/bundler:/bundle
         working_dir: /api
         depends_on:
             - mysql
