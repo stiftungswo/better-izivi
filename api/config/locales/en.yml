@@ -38,3 +38,4 @@ en:
   pdfs:
     phone_list:
       title: 'Phonelist from %{beginning} to %{ending}'
+      header: 'Generated on %{date}'

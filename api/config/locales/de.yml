@@ -21,6 +21,16 @@ de:
               bad_length: ungültige Länge
               bad_chars: ungültige Zeichen
               unknown_country_code: unbekannter Landescode
+    models:
+      user: Benutzer
+      attributes:
+        user:
+          first_name: Vorname
+          last_name: Nachname
+          address: Adresse
+          zip_with_city: PLZ / Ort
+          phone: Telefonnummer
+          email: Email
   service_calculator:
     invalid_required_service_days: Ungültige Einsatztage
     end_date_cannot_be_on_weekend: Einsatzende kann nicht an einem Wochenende sein
@@ -31,3 +41,4 @@ de:
   pdfs:
     phone_list:
       title: 'Telefonliste vom %{beginning} bis %{ending}'
+      header: 'Stand vom %{date}'

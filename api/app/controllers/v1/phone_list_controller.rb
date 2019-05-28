@@ -20,8 +20,9 @@ module V1
 
     private
 
+    # TODO: Validate sent token
     def validate_token
-
+      token = token_param
     end
 
     def filter_params
@@ -29,6 +30,10 @@ module V1
         phone_list_params.require(:beginning)
         phone_list_params.require(:ending)
       end
+    end
+
+    def token_param
+      params.require(:token)
     end
 
     def sanitized_filters
