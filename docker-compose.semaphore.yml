@@ -5,12 +5,11 @@ services:
             context: ./api
             dockerfile: dev.Dockerfile
             cache_from:
-              - better_izivi_api
-              - ruby:2.5.1
+              - ${CACHE_IMAGE}
         container_name: better_izivi_api
         volumes:
             - ./api:/api
-            - ${SEMAPHORE_CACHE_DIR}/bundler:/bundle
+            - ${SEMAPHORE_CACHE_DIR}/bundle:/bundle
         working_dir: /api
         depends_on:
             - mysql
