@@ -7,7 +7,5 @@ RUN chmod +x /tmp/wait-for-it.sh
 
 ENV BUNDLER_VERSION=2.0.1
 RUN gem install bundler -v "2.0.1" --no-document
-COPY Gemfile* ./
-RUN bundle install --path /bundler --retry 2 --jobs 3
 
 EXPOSE 3000
