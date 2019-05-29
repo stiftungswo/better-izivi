@@ -3,20 +3,20 @@
 module V1
   class PaymentsController < ApplicationController
     def export
-      expense_sheets = ExpenseSheet.where(id: payments_params[:ids]).includes(:user)
+      expense_sheets = ExpenseSheet.includes(:user).ready_for_payment
       render plain: generate_pain(expense_sheets).to_xml('pain.001.001.03.ch.02')
     end
 
     private
 
     def generate_pain(sheets)
-      sct = setup_sct
+      sepa_credit_transfer = setup_sct
 
       sheets.each do |sheet|
-        sct.add_transaction(build_transaction(sheet))
+        sepa_credit_transfer.add_transaction(build_transaction(sheet))
       end
 
-      sct
+      sepa_credit_transfer
     end
 
     def build_transaction(sheet)
@@ -50,10 +50,6 @@ module V1
         bic: 'POFICHBEXXX',
         iban: 'CH2409000000800040679'
       )
-    end
-
-    def payments_params
-      params.require(:payment).permit(ids: [])
     end
   end
 end
