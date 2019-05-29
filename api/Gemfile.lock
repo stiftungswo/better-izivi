@@ -250,6 +250,10 @@ GEM
     safe_shell (1.1.0)
     sentry-raven (2.7.4)
       faraday (>= 0.7.6, < 1.0)
+    sepa_king (0.11.2)
+      activemodel (>= 3.1)
+      iban-tools
+      nokogiri
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
     simplecov (0.16.1)
