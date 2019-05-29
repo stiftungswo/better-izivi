@@ -24,7 +24,11 @@ RSpec.describe V1::PaymentsController, type: :request do
           currency: 'CHF',
           iban: user.bank_iban,
           name: user.full_name,
-          remittance_information: I18n.t('payment.expenses_from', from_date: I18n.l(expense_sheet.beginning, format: '%B %Y')),
+          remittance_information: I18n.t('payment.expenses_from',
+                                         from_date: I18n.l(
+                                           expense_sheet.beginning,
+                                           format: '%B %Y'
+                                         )),
           requested_date: Time.zone.today
         }
       end
