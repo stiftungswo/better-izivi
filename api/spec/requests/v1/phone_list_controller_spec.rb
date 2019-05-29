@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe V1::PhoneListController, type: :controller do
+RSpec.describe V1::PhoneListController, type: :request do
 
   describe "GET #index" do
     it "returns http success" do
