@@ -4,8 +4,6 @@ services:
         build:
             context: ./api
             dockerfile: dev.Dockerfile
-            cache_from:
-              - ${CACHE_IMAGE}
         container_name: better_izivi_api
         volumes:
             - ./api:/api
@@ -19,6 +17,7 @@ services:
         container_name: better_izivi_frontend
         volumes:
             - ./frontend:/var/frontend
+            - ${SEMAPHORE_CACHE_DIR}/node_modules:/var/frontend/node_modules
         working_dir: /var/frontend
     mysql:
         image: mariadb:10.3.14
