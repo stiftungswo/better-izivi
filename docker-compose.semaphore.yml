@@ -17,7 +17,7 @@ services:
         container_name: better_izivi_frontend
         volumes:
             - ./frontend:/var/frontend
-            - ${SEMAPHORE_CACHE_DIR}/node_modules:/var/frontend/node_modules
+            - ${SEMAPHORE_CACHE_DIR}/node_modules:/var/node_modules
         working_dir: /var/frontend
     mysql:
         image: mariadb:10.3.14
