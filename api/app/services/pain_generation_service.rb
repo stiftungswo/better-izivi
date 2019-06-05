@@ -13,6 +13,7 @@ class PainGenerationService
     sepa_credit_transfer
   end
 
+  # :reek:FeatureEnvy
   def build_transaction(sheet)
     user = sheet.user
 
