@@ -14,16 +14,18 @@ class PainGenerationService
   end
 
   def build_transaction(sheet)
+    user = sheet.user
+
     {
-      name: sheet.user.full_name,
-      iban: sheet.user.bank_iban,
+      name: user.full_name,
+      iban: user.bank_iban,
       amount: sheet.full_amount,
       currency: 'CHF',
       remittance_information: I18n.t('payment.expenses_from', from_date: I18n.l(sheet.beginning, format: '%B %Y')),
       requested_date: Time.zone.today,
       batch_booking: true,
 
-      creditor_address: build_creditor_address(sheet.user)
+      creditor_address: build_creditor_address(user)
     }
   end
 
