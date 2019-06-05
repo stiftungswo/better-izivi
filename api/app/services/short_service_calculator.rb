@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class ShortServiceCalculator
-  SATURDAY_WEEKDAY = Date::DAYNAMES.index('Saturday').freeze
-  SUNDAY_WEEKDAY = Date::DAYNAMES.index('Sunday').freeze
+  include Concerns::CompanyHolidayCalculationHelper
 
   # rubocop:disable Layout/AlignHash
   DAY_LOOKUP_TABLE = {
@@ -19,7 +18,6 @@ class ShortServiceCalculator
   }.freeze
   # rubocop:enable Layout/AlignHash
 
-  LINEAR_CALCULATION_THRESHOLD = 26
   CONVERTED_LOOKUP_TABLE = [DAY_LOOKUP_TABLE.keys.flatten, DAY_LOOKUP_TABLE.values.flatten].transpose.to_h.freeze
   REVERSED_CONVERTED_LOOKUP_TABLE = CONVERTED_LOOKUP_TABLE.reverse_each.to_h.freeze
 
@@ -28,9 +26,8 @@ class ShortServiceCalculator
   end
 
   def calculate_ending_date(required_service_days)
-    raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
 
-    return calculate_linear_ending_date(required_service_days) if required_service_days >= LINEAR_CALCULATION_THRESHOLD
+    raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
 
     calculate_irregular_ending_date(required_service_days)
   end
@@ -39,7 +36,6 @@ class ShortServiceCalculator
     raise I18n.t('service_calculator.end_date_cannot_be_on_weekend') if ending_date.on_weekend?
 
     duration = (ending_date - @beginning_date).to_i + 1
-    return duration if duration >= LINEAR_CALCULATION_THRESHOLD
 
     reverse_duration_lookup(duration)
   end

@@ -3,10 +3,6 @@
 class Service < ApplicationRecord
   FRIDAY_WEEKDAY = Date::DAYNAMES.index('Friday').freeze
   MONDAY_WEEKDAY = Date::DAYNAMES.index('Monday').freeze
-  LONG_MISSION_BASE_DURATION = 180
-  BASE_HOLIDAY_DAYS = 8
-  ADDITIONAL_HOLIDAY_DAYS_PER_MONTH = 2
-  DAYS_PER_MONTH = 30
 
   include Concerns::PositiveTimeSpanValidatable
 
