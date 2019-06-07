@@ -7,7 +7,6 @@ RSpec.describe V1::PaymentsController, type: :request do
     let(:request) { get v1_pain_export_path, params: { token: token } }
     let!(:user) { create :user }
 
-
     context 'when a token is provided' do
       let(:token) { generate_jwt_token_for_user(user) }
 
