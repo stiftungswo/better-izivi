@@ -34,11 +34,8 @@ class ShortServiceCalculator
   end
 
   def calculate_chargeable_service_days(ending_date)
-    raise I18n.t('service_calculator.end_date_cannot_be_on_weekend') if ending_date.on_weekend?
-
     duration = (ending_date - @beginning_date).to_i + 1
     unpaid_days = calculate_company_holiday_days_during_service(@beginning_date, ending_date)
-
     service_days_lookup(duration) - unpaid_days
   end
 

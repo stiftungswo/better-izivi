@@ -4,17 +4,17 @@ require 'rails_helper'
 
 RSpec.describe ShortServiceCalculator, type: :service do
   describe '#calculate_ending_date' do
-    subject { calculated_ending_day - beginning }
+    subject { calculated_ending_day }
 
     let(:calculated_ending_day) { ShortServiceCalculator.new(beginning).calculate_ending_date(required_service_days) }
-    let(:beginning) { Time.zone.today.beginning_of_week }
+    let(:beginning) { Date.parse('2018-01-01') }
     let(:required_service_days) { 26 }
 
     context 'when service duration is between 1 and 5' do
       it 'returns correct ending date', :aggregate_failures do
         (1..5).each do |delta|
           ending = ShortServiceCalculator.new(beginning).calculate_ending_date(delta)
-          expect((ending - beginning).to_i).to eq(delta - 1)
+          expect(ending).to eq(beginning + delta - 1)
         end
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe ShortServiceCalculator, type: :service do
     context 'when service duration is 6' do
       let(:required_service_days) { 6 }
 
-      it { is_expected.to eq 7 }
+      it { is_expected.to eq(beginning + 7) }
     end
 
     context 'when service duration is between 7 and 10' do
@@ -32,19 +32,19 @@ RSpec.describe ShortServiceCalculator, type: :service do
     context 'when service duration is 11' do
       let(:required_service_days) { 11 }
 
-      it { is_expected.to eq 10 }
+      it { is_expected.to eq(beginning + 10) }
     end
 
     context 'when service duration is 12' do
       let(:required_service_days) { 12 }
 
-      it { is_expected.to eq 11 }
+      it { is_expected.to eq(beginning + 11) }
     end
 
     context 'when service duration is 13' do
       let(:required_service_days) { 13 }
 
-      it { is_expected.to eq 14 }
+      it { is_expected.to eq(beginning + 14) }
     end
 
     context 'when service duration is between 14 and 17' do
@@ -54,19 +54,19 @@ RSpec.describe ShortServiceCalculator, type: :service do
     context 'when service duration is 18' do
       let(:required_service_days) { 18 }
 
-      it { is_expected.to eq 17 }
+      it { is_expected.to eq(beginning + 17) }
     end
 
     context 'when service duration is 19' do
       let(:required_service_days) { 19 }
 
-      it { is_expected.to eq 18 }
+      it { is_expected.to eq(beginning + 18) }
     end
 
     context 'when service duration is 20' do
       let(:required_service_days) { 20 }
 
-      it { is_expected.to eq 21 }
+      it { is_expected.to eq(beginning + 21) }
     end
 
     context 'when service duration is between 21 and 24' do
@@ -76,37 +76,7 @@ RSpec.describe ShortServiceCalculator, type: :service do
     context 'when service duration is 25' do
       let(:required_service_days) { 25 }
 
-      it { is_expected.to eq 24 }
-    end
-
-    context 'when service duration is above irregular threshold' do
-      context 'when service end is on weekend' do
-        context 'when it\'s a saturday' do
-          let(:required_service_days) { 27 }
-
-          it { is_expected.to eq 28 }
-        end
-
-        context 'when it\'s a sunday' do
-          let(:required_service_days) { 28 }
-
-          it { is_expected.to eq 28 }
-        end
-      end
-
-      context 'when service end is a weekday' do
-        let(:required_service_days) { 30 }
-
-        it { is_expected.to eq 29 }
-      end
-    end
-
-    context 'when service duration is invalid' do
-      subject { -> { ShortServiceCalculator.new(beginning).calculate_ending_date(required_service_days) } }
-
-      let(:required_service_days) { 0 }
-
-      it { is_expected.to raise_error(I18n.t('service_calculator.invalid_required_service_days')) }
+      it { is_expected.to eq(beginning + 24) }
     end
   end
 
@@ -119,21 +89,13 @@ RSpec.describe ShortServiceCalculator, type: :service do
       ShortServiceCalculator.new(beginning).calculate_chargeable_service_days(ending)
     end
 
-    context 'when service end is withing weekdays of beginning week' do
+    context 'when service end is within weekdays of beginning week' do
       it 'returns correct eligible days', :aggregate_failures do
         (0..4).each do |delta|
           service_days = ShortServiceCalculator.new(beginning).calculate_chargeable_service_days(beginning + delta.days)
           expect(service_days).to eq(delta + 1)
         end
       end
-    end
-
-    context 'when service end is a weekend' do
-      subject { -> { calculate_chargeable_service_days } }
-
-      let(:ending) { beginning.at_end_of_week }
-
-      it { is_expected.to raise_error I18n.t('service_calculator.end_date_cannot_be_on_weekend') }
     end
 
     context 'when ending is the monday after one week' do
@@ -218,12 +180,6 @@ RSpec.describe ShortServiceCalculator, type: :service do
       let(:ending) { beginning + 3.weeks + 3.days }
 
       it { is_expected.to eq 25 }
-    end
-
-    context 'when ending is the monday after four weeks' do
-      let(:ending) { beginning + 4.weeks }
-
-      it { is_expected.to eq 29 }
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ServiceCalculator
   include Concerns::CompanyHolidayCalculationHelper
 
@@ -9,6 +11,8 @@ class ServiceCalculator
 
   # TODO: Implement routing to normal_service and short_service
   def calculate_ending_date(required_service_days)
+    raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
+
     if required_service_days < LINEAR_CALCULATION_THRESHOLD
       short_service_calculator.calculate_ending_date required_service_days
     else
@@ -17,10 +21,7 @@ class ServiceCalculator
   end
 
   def calculate_chargeable_service_days(ending_date)
-    # unpaid_days = calculate_company_holiday_days_during_service(@beginning_date, ending_date)
-    # temp_service_days = (ending_date - @beginning_date).to_i + 1 - unpaid_days
-    #
-    # if temp_service_days < LINEAR_CALCULATION_THRESHOLD
+    raise I18n.t('service_calculator.end_date_cannot_be_on_weekend') if ending_date.on_weekend?
 
     duration = (ending_date - @beginning_date).to_i + 1
 
@@ -33,6 +34,7 @@ class ServiceCalculator
 
   def calculate_eligible_personal_vacation_days(service_days)
     return 0 if service_days < 180
+
     normal_service_calculator.calculate_eligible_personal_vacation_days service_days
   end
 
@@ -46,5 +48,3 @@ class ServiceCalculator
     @normal_service_calculator ||= NormalServiceCalculator.new @beginning_date
   end
 end
-
-
