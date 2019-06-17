@@ -8,9 +8,7 @@ module V1
 
     protected
 
-    def render_pdf(template, pdf_locals, orientation, filename)
-      pdf_html = ActionController::Base.new.render_to_string(template: template, layout: 'pdf', locals: pdf_locals)
-      pdf = WickedPdf.new.pdf_from_string(pdf_html, orientation: orientation)
+    def render_pdf(filename:, pdf:)
       response.set_header('Content-Disposition', "inline; filename=#{filename}")
       render plain: pdf
     end

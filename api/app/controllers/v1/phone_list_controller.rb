@@ -10,9 +10,10 @@ module V1
     def index
       respond_to do |format|
         format.pdf do
+          generator = TemplatePdfGeneratorService.new('v1/phone_list/index', pdf_locals, 'Landscape')
           render_pdf(
-            'v1/phone_list/index', pdf_locals, 'Landscape',
-            I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today))
+            filename: I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today)),
+            pdf: generator.generate_pdf
           )
         end
       end
@@ -33,6 +34,7 @@ module V1
       }
     end
 
+    # :reek:FeatureEnvy
     def filter_params
       params.require(:phone_list).permit(:beginning, :ending).tap do |phone_list_params|
         phone_list_params.require(:beginning)
