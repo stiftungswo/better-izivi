@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  namespace :v1 do
-    get 'phone_list/index'
-  end
-
   namespace :v1, defaults: { format: :json } do
     resources :regional_centers, only: :index
     resources :holidays, only: %i[index create update destroy]
@@ -12,6 +8,7 @@ Rails.application.routes.draw do
     resources :expense_sheets
     resources :services
     get 'payments/pain', to: 'payments#export', as: 'pain_export'
+    get 'phone_list', to: 'phone_list#index'
   end
 
   scope :v1 do

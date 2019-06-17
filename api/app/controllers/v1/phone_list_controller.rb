@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 module V1
-  class PhoneListController < ApplicationController
-    before_action :validate_token
+  class PhoneListController < FileController
+    include Concerns::AdminAuthorizable
+
+    before_action :authorize_admin!
 
     def index
       @specifications = Service.in_date_range(sanitized_filters.beginning, sanitized_filters.ending)
@@ -22,20 +24,11 @@ module V1
 
     private
 
-    # TODO: Validate sent token
-    def validate_token
-      token = token_param
-    end
-
     def filter_params
       params.require(:phone_list).permit(:beginning, :ending).tap do |phone_list_params|
         phone_list_params.require(:beginning)
         phone_list_params.require(:ending)
       end
-    end
-
-    def token_param
-      params.require(:token)
     end
 
     def sanitized_filters
