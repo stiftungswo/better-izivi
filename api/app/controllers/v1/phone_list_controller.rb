@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 module V1
   class PhoneListController < ApplicationController
     before_action :validate_token
 
     def index
       @specifications = Service.in_date_range(sanitized_filters.beginning, sanitized_filters.ending)
-                          .includes(:user, :service_specification)
-                          .order('service_specification_id')
-                          .group_by { |service| service.service_specification.name }
+                               .includes(:user, :service_specification)
+                               .order('service_specification_id')
+                               .group_by { |service| service.service_specification.name }
 
       respond_to do |format|
         format.pdf do
-          pdf_html = ActionController::Base.new.render_to_string(template: 'v1/phone_list/index', layout: 'pdf', locals: {phone_list: sanitized_filters, specifications: @specifications})
+          pdf_html = ActionController::Base.new.render_to_string(template: 'v1/phone_list/index', layout: 'pdf', locals: { phone_list: sanitized_filters, specifications: @specifications })
           pdf = WickedPdf.new.pdf_from_string(pdf_html, orientation: 'Landscape')
           response.set_header('Content-Disposition', "inline; filename=Telefonliste_#{I18n.l(Time.zone.today)}.pdf")
           render plain: pdf
@@ -39,7 +41,7 @@ module V1
     def sanitized_filters
       @sanitized_filters ||= OpenStruct.new(
         beginning: Date.parse(filter_params[:beginning]),
-        ending: Date.parse(filter_params[:ending]),
+        ending: Date.parse(filter_params[:ending])
       )
     end
   end
