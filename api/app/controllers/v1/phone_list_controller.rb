@@ -5,21 +5,13 @@ module V1
     include Concerns::AdminAuthorizable
 
     before_action :authorize_admin!
+    before_action :load_specifications, only: :index
 
     def index
-      @specifications = Service.in_date_range(sanitized_filters.beginning, sanitized_filters.ending)
-                               .includes(:user, :service_specification)
-                               .order('service_specification_id')
-                               .group_by { |service| service.service_specification.name }
-
       respond_to do |format|
         format.pdf do
           render_pdf(
-            'v1/phone_list/index',
-            {
-              phone_list: sanitized_filters, specifications: @specifications
-            },
-            'Landscape',
+            'v1/phone_list/index', pdf_locals, 'Landscape',
             I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today))
           )
         end
@@ -27,6 +19,19 @@ module V1
     end
 
     private
+
+    def load_specifications
+      @specifications = Service.in_date_range(sanitized_filters.beginning, sanitized_filters.ending)
+                               .includes(:user, :service_specification)
+                               .order('service_specification_id')
+                               .group_by { |service| service.service_specification.name }
+    end
+
+    def pdf_locals
+      {
+        phone_list: sanitized_filters, specifications: @specifications
+      }
+    end
 
     def filter_params
       params.require(:phone_list).permit(:beginning, :ending).tap do |phone_list_params|
