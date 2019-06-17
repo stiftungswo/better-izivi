@@ -52,11 +52,4 @@ class ShortServiceCalculator
   def service_days_lookup(service_duration)
     REVERSED_CONVERTED_LOOKUP_TABLE.key service_duration
   end
-
-  def calculate_linear_ending_date(required_service_days)
-    ending = @beginning_date + required_service_days.days - 1.day
-    return ending unless ending.on_weekend?
-
-    (ending + 1.week).at_beginning_of_week
-  end
 end

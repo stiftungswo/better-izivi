@@ -9,7 +9,6 @@ class ServiceCalculator
     @beginning_date = beginning_date
   end
 
-  # TODO: Implement routing to normal_service and short_service
   def calculate_ending_date(required_service_days)
     raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
 
