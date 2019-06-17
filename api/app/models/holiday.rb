@@ -20,6 +20,7 @@ class Holiday < ApplicationRecord
 
   private
 
+  # :reek:UtilityFunction
   def day_on_public_holiday?(day, public_holidays)
     public_holidays.any? { |public_holiday| public_holiday.range.include? day }
   end
