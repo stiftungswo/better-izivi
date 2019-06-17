@@ -45,9 +45,4 @@ class NormalServiceCalculator
     paid_vacation_days = calculate_eligible_personal_vacation_days service_days
     [0, company_holiday_days - paid_vacation_days].max
   end
-
-  #
-  # def get_valid_ending_date(required_service_days)
-  #
-  # end
 end

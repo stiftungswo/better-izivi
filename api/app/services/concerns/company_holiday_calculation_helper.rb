@@ -2,10 +2,10 @@
 
 module Concerns
   module CompanyHolidayCalculationHelper
-    def calculate_company_holiday_days_during_service(beginning_date, ending_date)
+    def calculate_company_holiday_days_during_service(beginning, ending)
       all_holidays = Holiday
-                     .where(beginning: beginning_date..ending_date)
-                     .or(Holiday.where(ending: beginning_date..ending_date))
+                     .where(beginning: beginning..ending)
+                     .or(Holiday.where(ending: beginning..ending))
 
       public_holidays = all_holidays.select(&:public_holiday?)
       company_holidays = all_holidays.select(&:company_holiday?)
@@ -17,7 +17,7 @@ module Concerns
         subtracted_days.push(*holiday_work_days)
       end
 
-      subtracted_days = subtracted_days.select { |day| (beginning_date..ending_date).cover? day }
+      subtracted_days = subtracted_days.select { |day| (beginning..ending).cover? day }
 
       subtracted_days.uniq.length
     end
