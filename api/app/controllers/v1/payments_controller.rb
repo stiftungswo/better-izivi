@@ -5,7 +5,10 @@ module V1
     AUD_HEADER = Warden::JWTAuth.config.aud_header.upcase.tr('-', '_').freeze
     AUD_FIELD = ENV["HTTP_#{AUD_HEADER}"]
 
+    include AdminAuthorizable
+
     before_action :authenticate_from_params!
+    before_action :authorize_admin!
 
     def export
       sheets = ExpenseSheet.includes(:user).ready_for_payment
