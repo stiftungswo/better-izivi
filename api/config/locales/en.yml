@@ -37,5 +37,6 @@ en:
     expenses_from: Expenses from %{from_date}
   pdfs:
     phone_list:
+      filename: 'Phonelist_%{today}.pdf'
       title: 'Phonelist from %{beginning} to %{ending}'
       header: 'Generated on %{date}'

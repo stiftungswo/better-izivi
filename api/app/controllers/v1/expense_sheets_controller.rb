@@ -2,7 +2,7 @@
 
 module V1
   class ExpenseSheetsController < APIController
-    include Concerns::AdminAuthorizable
+    include V1::Concerns::AdminAuthorizable
 
     before_action :set_expense_sheet, only: %i[show update destroy]
     before_action :authorize_admin!

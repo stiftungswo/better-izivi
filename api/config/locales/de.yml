@@ -40,5 +40,6 @@ de:
     expenses_from: Spesen vom %{from_date}
   pdfs:
     phone_list:
+      filename: 'Telefonliste_%{today}.pdf'
       title: 'Telefonliste vom %{beginning} bis %{ending}'
       header: 'Stand vom %{date}'

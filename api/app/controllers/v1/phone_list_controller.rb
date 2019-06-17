@@ -14,10 +14,14 @@ module V1
 
       respond_to do |format|
         format.pdf do
-          pdf_html = ActionController::Base.new.render_to_string(template: 'v1/phone_list/index', layout: 'pdf', locals: { phone_list: sanitized_filters, specifications: @specifications })
-          pdf = WickedPdf.new.pdf_from_string(pdf_html, orientation: 'Landscape')
-          response.set_header('Content-Disposition', "inline; filename=Telefonliste_#{I18n.l(Time.zone.today)}.pdf")
-          render plain: pdf
+          render_pdf(
+            'v1/phone_list/index',
+            {
+              phone_list: sanitized_filters, specifications: @specifications
+            },
+            'Landscape',
+            I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today))
+          )
         end
       end
     end
