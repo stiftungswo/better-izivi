@@ -9,7 +9,7 @@ def is_a_boolean?(value)
 end
 
 def convert_to_json_value(value)
-  return value if value.is_a?(Integer) || is_a_boolean?(value) || value.is_a?(Hash)
+  return value if value.is_a?(Integer) || is_a_boolean?(value) || value.is_a?(Hash) || value.nil?
 
   value.to_s
 end
