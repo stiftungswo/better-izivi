@@ -17,7 +17,7 @@ RSpec.describe V1::HolidaysController, type: :request do
         end
       end
 
-      it 'returns all holidays', :aggregate_failures do
+      it 'returns all holidays' do
         request
         expect(parse_response_json(response)).to include(*json_holidays)
       end
