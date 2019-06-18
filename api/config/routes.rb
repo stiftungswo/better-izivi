@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :services
     resources :users, only: :show
     get 'payments/pain', to: 'payments#export', as: 'pain_export'
-    get 'phone_list', to: 'phone_list#index'
+    get 'phone_list', to: 'phone_list#export', as: 'phone_list_export'
   end
 
   scope :v1 do

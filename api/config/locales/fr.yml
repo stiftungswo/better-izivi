@@ -26,6 +26,7 @@ fr:
     end_date_cannot_be_on_weekend: La fin du service ne peut pas avoir lieu la fin de semaine.
   errors:
     authorization_error: Vous n'avez pas les droits requis pour cette demande.
+    format_error: Vous avez demandé un format invalide
   payment:
     expenses_from: Frais du %{from_date}
   pdfs:
