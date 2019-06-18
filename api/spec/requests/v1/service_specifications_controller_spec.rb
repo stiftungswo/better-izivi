@@ -17,7 +17,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
         end
       end
 
-      it 'returns all service specifications', :aggregate_failures do
+      it 'returns all service specifications' do
         request
 
         expect(parse_response_json(response)).to include(*json_service_specifications)
