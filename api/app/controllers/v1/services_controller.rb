@@ -2,11 +2,12 @@
 
 module V1
   class ServicesController < APIController
+    include Concerns::AdminAuthorizable
+
     PERMITTED_SERVICE_PARAMS = %i[
       user_id service_specification_id
       beginning ending confirmation_date
-      eligible_personal_vacation_days service_type
-      first_swo_service long_service probation_service
+      service_type first_swo_service long_service probation_service
       feedback_mail_sent
     ].freeze
 
