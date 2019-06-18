@@ -12,7 +12,7 @@ RSpec.describe V1::HolidaysController, type: :request do
       let(:request) { get v1_holidays_path }
       let!(:holidays) { create_list :holiday, 3 }
 
-      it 'returns all expense sheets', :aggregate_failures do
+      it 'returns all holidays', :aggregate_failures do
         request
         json_holidays = holidays.map do |holiday|
           extract_to_json(holiday).except(:created_at, :updated_at)

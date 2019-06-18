@@ -9,10 +9,19 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
     before { sign_in user }
 
     describe '#index' do
+      let(:request) { get v1_service_specifications_path }
+      let!(:service_specifications) { create_list :service_specification, 3 }
+
+      it 'returns all service specifications', :aggregate_failures do
+        request
+        json_service_specifications = service_specifications.map do |service_specification|
+          extract_to_json(service_specification).except(:created_at, :updated_at)
+        end
+        expect(parse_response_json(response)).to include(*json_service_specifications)
+      end
+
       it_behaves_like 'renders a successful http status code' do
         before { create :service_specification }
-
-        let(:request) { get v1_service_specifications_path }
       end
     end
 
