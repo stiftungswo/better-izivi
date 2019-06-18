@@ -4,6 +4,8 @@ require 'rails_helper'
 
 RSpec.describe CompanyHolidayCalculator, type: :service do
   describe '#calculate_company_holidays_during_service' do
+    subject { company_holiday_calculator.calculate_company_holiday_days_during_service }
+
     let(:beginning) { Date.parse('2017-12-01') }
     let(:ending) { Date.parse('2018-01-31') }
     let(:company_holiday_calculator) { CompanyHolidayCalculator.new(beginning, ending) }
@@ -14,7 +16,7 @@ RSpec.describe CompanyHolidayCalculator, type: :service do
 
     context 'when there are no public holidays' do
       context 'when there is one company holiday' do
-        it { expect(company_holiday_calculator.calculate_company_holiday_days_during_service).to eq 5 }
+        it { is_expected.to eq 5 }
       end
 
       context 'when there are overlapping company holidays' do
@@ -22,7 +24,7 @@ RSpec.describe CompanyHolidayCalculator, type: :service do
           create :holiday, beginning: '2018-01-02', ending: '2018-01-15'
         end
 
-        it { expect(company_holiday_calculator.calculate_company_holiday_days_during_service).to eq 11 }
+        it { is_expected.to eq 11 }
       end
     end
 
@@ -33,7 +35,7 @@ RSpec.describe CompanyHolidayCalculator, type: :service do
       end
 
       context 'when there is one company holiday' do
-        it { expect(company_holiday_calculator.calculate_company_holiday_days_during_service).to eq 2 }
+        it { is_expected.to eq 2 }
       end
 
       context 'when there are overlapping company holidays' do
@@ -41,7 +43,7 @@ RSpec.describe CompanyHolidayCalculator, type: :service do
           create :holiday, beginning: '2018-01-04', ending: '2018-01-15'
         end
 
-        it { expect(company_holiday_calculator.calculate_company_holiday_days_during_service).to eq 3 }
+        it { is_expected.to eq 3 }
       end
     end
   end
