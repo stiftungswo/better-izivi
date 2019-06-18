@@ -41,3 +41,5 @@ en:
       filename: 'Phonelist_%{today}.pdf'
       title: 'Phonelist from %{beginning} to %{ending}'
       header: 'Generated on %{date}'
+    expense_sheet:
+      filename: 'ExpenseSheet_%{today}.pdf'

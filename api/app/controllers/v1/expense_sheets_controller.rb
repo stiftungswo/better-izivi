@@ -21,7 +21,17 @@ module V1
       @expense_sheets = ExpenseSheet.all
     end
 
-    def show; end
+    def show
+      respond_to do |format|
+        format.pdf do
+          generator = TemplatePdfGeneratorService.new('v1/expense_sheet/export', pdf_locals, 'Landscape')
+          render_pdf(
+            filename: I18n.t('pdfs.expense_sheet.filename', today: I18n.l(Time.zone.today)),
+            pdf: generator.generate_pdf
+          )
+        end
+      end
+    end
 
     def create
       @expense_sheet = ExpenseSheet.new(expense_sheet_params)

@@ -34,3 +34,5 @@ fr:
       filename: 'Liste_téléphonique_%{today}.pdf'
       title: 'Liste téléphonique de %{beginning} à %{ending}'
       header: 'Généré sur %{date}'
+    expense_sheet:
+      filename: 'Portrait_des_dépenses_%{today}.pdf'

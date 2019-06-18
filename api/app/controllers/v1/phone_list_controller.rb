@@ -5,12 +5,12 @@ module V1
     include V1::Concerns::AdminAuthorizable
 
     before_action :authorize_admin!
-    before_action :load_specifications, only: :export
+    before_action :load_specifications, only: :show
 
-    def export
+    def show
       respond_to do |format|
         format.pdf do
-          generator = TemplatePdfGeneratorService.new('v1/phone_list/export', pdf_locals, 'Landscape')
+          generator = TemplatePdfGeneratorService.new('v1/phone_list/show', pdf_locals, 'Landscape')
           render_pdf(
             filename: I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today)),
             pdf: generator.generate_pdf

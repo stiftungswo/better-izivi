@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::PhoneListController, type: :request do
-  describe '#index' do
+  describe '#show' do
     let(:request) { get(v1_phone_list_export_path(format: :pdf), params: params) }
     let(:beginning) { '2018-11-05' }
     let(:ending) { '2018-11-30' }

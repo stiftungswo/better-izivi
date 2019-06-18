@@ -215,7 +215,43 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
     end
 
     describe '#export' do
+      let(:request) { get v1_expense_sheet_export_path(format: :pdf), params: { token: token } }
+      let!(:user) { create :user }
 
+      context 'when a token is provided' do
+        let(:token) { generate_jwt_token_for_user(user) }
+
+        before { create :expense_sheet, :ready_for_payment }
+
+        context 'when user is admin' do
+          let(:user) { create :user, :admin }
+
+          it_behaves_like 'renders a successful http status code'
+
+          it 'returns a content type pdf' do
+            request
+            expect(response.headers['Content-Type']).to include 'pdf'
+          end
+        end
+
+        context 'when user is civil servant' do
+          it_behaves_like 'admin protected resource'
+        end
+      end
+
+      context 'when no token is provided' do
+        subject { -> { request } }
+
+        let(:token) { nil }
+
+        it { is_expected.to raise_exception ActionController::ParameterMissing }
+      end
+
+      context 'when an invalid token is provided' do
+        let(:token) { 'invalid' }
+
+        it_behaves_like 'admin protected resource'
+      end
     end
   end
 end

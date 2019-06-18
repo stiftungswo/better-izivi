@@ -44,3 +44,5 @@ de:
       filename: 'Telefonliste_%{today}.pdf'
       title: 'Telefonliste vom %{beginning} bis %{ending}'
       header: 'Stand vom %{date}'
+    expense_sheet:
+      filename: 'Spesenraport_%{today}.pdf'
