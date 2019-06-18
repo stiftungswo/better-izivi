@@ -9,10 +9,19 @@ RSpec.describe V1::HolidaysController, type: :request do
     before { sign_in user }
 
     describe '#index' do
+      let(:request) { get v1_holidays_path }
+      let!(:holidays) { create_list :holiday, 3 }
+
+      it 'returns all expense sheets', :aggregate_failures do
+        request
+        json_holidays = holidays.map do |holiday|
+          extract_to_json(holiday).except(:created_at, :updated_at)
+        end
+        expect(parse_response_json(response)).to include(*json_holidays)
+      end
+
       it_behaves_like 'renders a successful http status code' do
         before { create :holiday }
-
-        let(:request) { get v1_holidays_path }
       end
     end
 
