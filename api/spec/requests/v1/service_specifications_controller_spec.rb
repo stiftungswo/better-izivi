@@ -11,12 +11,15 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
     describe '#index' do
       let(:request) { get v1_service_specifications_path }
       let!(:service_specifications) { create_list :service_specification, 3 }
+      let(:json_service_specifications) do
+        service_specifications.map do |service_specification|
+          extract_to_json(service_specification).except(:created_at, :updated_at)
+        end
+      end
 
       it 'returns all service specifications', :aggregate_failures do
         request
-        json_service_specifications = service_specifications.map do |service_specification|
-          extract_to_json(service_specification).except(:created_at, :updated_at)
-        end
+
         expect(parse_response_json(response)).to include(*json_service_specifications)
       end
 
@@ -133,12 +136,12 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
           it 'returns updated JSON expenses' do
             put_request
-            expect(JSON.parse(response.body)).to include extract_to_json(
+            expect(parse_response_json(response)).to include extract_to_json(
               service_specification, :work_days_expenses,
               :paid_vacation_expenses,
               :first_day_expenses,
               :last_day_expenses
-            ).stringify_keys
+            )
           end
         end
 
