@@ -1,11 +1,6 @@
 import { inject } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
-import { SelectField } from '../../form/common';
-import IziviContent from '../../layout/IziviContent';
-import { MissionStore } from '../../stores/missionStore';
-import { SpecificationStore } from '../../stores/specificationStore';
-import { Mission } from '../../types';
 
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
@@ -14,7 +9,12 @@ import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 import Table from 'reactstrap/lib/Table';
 import { CheckboxField } from '../../form/CheckboxField';
+import { SelectField } from '../../form/common';
+import IziviContent from '../../layout/IziviContent';
 import { LoadingInformation } from '../../layout/LoadingInformation';
+import { MissionStore } from '../../stores/missionStore';
+import { SpecificationStore } from '../../stores/specificationStore';
+import { Mission } from '../../types';
 import { MissionRow } from './MissionRow';
 import { MissionStyles } from './MissionStyles';
 
@@ -46,11 +46,11 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
   constructor(props: MissionOverviewProps) {
     super(props);
 
+    const localCookieYear = window.localStorage.getItem(this.cookieYear);
     this.state = {
       loadingMissions: true,
       loadingSpecifications: true,
-      fetchYear:
-        window.localStorage.getItem(this.cookieYear) == null ? this.currYear.toString() : window.localStorage.getItem(this.cookieYear)!,
+      fetchYear: localCookieYear == null ? this.currYear.toString() : localCookieYear!,
       selectedSpecifications: new Map<number, boolean>(),
       monthHeaders: [],
       weekHeaders: [],
@@ -114,10 +114,6 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     window.localStorage.setItem(this.cookieYear, year);
     this.setState({ loadingMissions: true, fetchYear: year }, () => {
       this.loadMissions();
-      // this.props.missionStore!.fetchByYear(year).then(() => {
-      //   this.calculateMissionRows();
-      //   this.setState({ loadingMissions: false });
-      // });
     });
   }
 
@@ -140,7 +136,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     const doneMissions: number[] = [];
 
     this.props.missionStore!.entities.forEach(mission => {
-      // if we've already added the row for this user and specification, skiip
+      // if we've already added the row for this user and specification, skip
       if (doneMissions.includes(mission.id!)) {
         return;
       }
@@ -222,7 +218,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
 
             <Col sm="12" md="8">
               <div>
-                {// Mapping a CheckboxField to every specfication in use
+                {// Mapping a CheckboxField to every specification in use
                 specIdsOfMissions.map(id => {
                   const currSpec = specificationStore!.entities.filter(spec => spec.id! === id)[0];
                   return (
@@ -296,11 +292,6 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     const weekHeaders = [];
     const monthHeaders = [];
     let monthColCount = 0;
-
-    // let currDate = new Date(this.state.fetchYear + '-01-01');
-    // while (moment(currDate).isoWeek() > 50) {
-    //   currDate.setDate(currDate.getDate() + 1);
-    // }
 
     // setting currDate to monday in fetchYear's ISO week 1
     const currDate = moment()
@@ -420,7 +411,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
         if (this.isWeekStartWeek(currWeek, currMission)) {
           const content = moment(currMission.beginning!)
             .date()
-            .toString(); // new Date(currMission.beginning!).getDate().toString();
+            .toString();
           cells.push(
             <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
               {content}
@@ -429,7 +420,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
         } else if (this.isWeekEndWeek(currWeek, currMission)) {
           const content = moment(currMission.ending!)
             .date()
-            .toString(); // new Date(currMission.ending!).getDate().toString();
+            .toString();
           cells.push(
             <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
               {content}
