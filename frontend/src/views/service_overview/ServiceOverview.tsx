@@ -40,7 +40,7 @@ interface ServiceOverviewState {
 class ServiceOverviewContent extends React.Component<ServiceOverviewProps, ServiceOverviewState> {
   cookiePrefixSpec = 'service-overview-checkbox-';
   cookieYear = 'service-overview-year';
-  currYear = moment().year(); // new Date().getFullYear();
+  currYear = moment().year();
   monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 
   constructor(props: ServiceOverviewProps) {
