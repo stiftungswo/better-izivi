@@ -21,7 +21,7 @@ export const missionSchema = yup.object({
   specification_id: yup.string(),
   mission_type: yup.number(),
   beginning: apiDate().required(),
-  end: apiDate().required(),
+  ending: apiDate().required(),
   days: yup.number().required(),
   first_swo_service: yup.boolean(),
   long_mission: yup.boolean(),

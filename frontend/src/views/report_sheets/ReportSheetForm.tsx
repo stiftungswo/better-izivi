@@ -65,7 +65,7 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
           <Form>
             <WiredField disabled horizontal component={TextField} name={'mission.specification.name'} label={'Pflichtenheft'} />
             <WiredField disabled horizontal component={DatePickerField} name={'mission.beginning'} label={'Beginn Einsatz'} />
-            <WiredField disabled horizontal component={DatePickerField} name={'mission.end'} label={'Ende Einsatz'} />
+            <WiredField disabled horizontal component={DatePickerField} name={'mission.ending'} label={'Ende Einsatz'} />
 
             <WiredField horizontal component={DatePickerField} name={'start'} label={'Start Spesenblattperiode'} />
             <WiredField horizontal component={DatePickerField} name={'end'} label={'Ende Spesenblattperiode'} />

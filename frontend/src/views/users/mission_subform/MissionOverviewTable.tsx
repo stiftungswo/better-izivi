@@ -44,7 +44,7 @@ function onMissionTableSubmit(missionStore?: MissionStore, userStore?: UserStore
 }
 
 function renderFeedbackButton(mission: Mission) {
-  if (mission.feedback_done || moment().isBefore(moment(mission.end!))) {
+  if (mission.feedback_done || moment().isBefore(moment(mission.ending!))) {
     return;
   }
 
@@ -85,9 +85,9 @@ export default (params: OverviewTableParams) => {
           format: (mission: Mission) => (mission.beginning ? mainStore!.formatDate(mission.beginning) : ''),
         },
         {
-          id: 'end',
+          id: 'ending',
           label: 'Ende',
-          format: (mission: Mission) => (mission.end ? mainStore!.formatDate(mission.end) : ''),
+          format: (mission: Mission) => (mission.ending ? mainStore!.formatDate(mission.ending) : ''),
         },
         {
           id: 'draft_date',

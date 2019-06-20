@@ -427,9 +427,9 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
             </td>,
           );
         } else if (this.isWeekEndWeek(currWeek, currMission)) {
-          const content = moment(currMission.end!)
+          const content = moment(currMission.ending!)
             .date()
-            .toString(); // new Date(currMission.end!).getDate().toString();
+            .toString(); // new Date(currMission.ending!).getDate().toString();
           cells.push(
             <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
               {content}
@@ -487,8 +487,8 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
   }
 
   getEndWeek(mission: Mission): number {
-    let endWeek = moment(mission.end!).isoWeek();
-    if (moment(mission.end!).year() > parseInt(this.state.fetchYear, 10)) {
+    let endWeek = moment(mission.ending!).isoWeek();
+    if (moment(mission.ending!).year() > parseInt(this.state.fetchYear, 10)) {
       endWeek = 55;
     }
     return endWeek;

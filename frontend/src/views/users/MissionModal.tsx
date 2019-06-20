@@ -49,7 +49,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
     this.autoUpdate = false;
     const data = await this.props.missionStore!.calcPossibleEndDate(moment(start).format(apiDateFormat), days);
     if (data) {
-      formik.setFieldValue('end', data);
+      formik.setFieldValue('ending', data);
     }
     this.autoUpdate = true;
   }, 500);
@@ -60,7 +60,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
       specification_id: '',
       mission_type: 0,
       beginning: null,
-      end: null,
+      ending: null,
       days: 0,
       first_swo_service: false,
       long_mission: false,
@@ -75,9 +75,9 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
 
   handleMissionDateRangeChange: OnChange<Mission> = async (current, next, formik) => {
     if (this.autoUpdate) {
-      if (current.values.beginning !== next.values.beginning || current.values.end !== next.values.end) {
-        if (next.values.beginning && next.values.end) {
-          await this.updateDays(next.values.beginning, next.values.end, formik);
+      if (current.values.beginning !== next.values.beginning || current.values.ending !== next.values.ending) {
+        if (next.values.beginning && next.values.ending) {
+          await this.updateDays(next.values.beginning, next.values.ending, formik);
         }
       }
       if (current.values.beginning !== next.values.beginning || current.values.days !== next.values.days) {
@@ -115,7 +115,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
                   />
                   <Effect onChange={this.handleMissionDateRangeChange} />
                   <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Einsatzbeginn'} />
-                  <WiredField horizontal component={DatePickerField} name={'end'} label={'Einsatzende'} />
+                  <WiredField horizontal component={DatePickerField} name={'ending'} label={'Einsatzende'} />
                   <WiredField horizontal component={TextField} name={'days'} label={'Einsatztage'} />
                   <WiredField horizontal component={CheckboxField} name={'first_swo_service'} label={'Erster SWO Einsatz?'} />
                   <WiredField horizontal component={CheckboxField} name={'long_mission'} label={'Langer Einsatz?'} />

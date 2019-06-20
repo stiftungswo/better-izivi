@@ -143,7 +143,7 @@ export interface Mission {
   days: number;
   draft: null | string;
   eligible_holiday: number;
-  end: string | null;
+  ending: string | null;
   feedback_done: boolean;
   feedback_mail_sent: boolean;
   first_swo_service: boolean;
