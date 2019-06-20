@@ -159,7 +159,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
         (
           <ServiceRow
             key={'service-row-' + service.id!}
-            shortName={service.serviceSpecification!.short_name}
+            shortName={service.service_specification!.short_name}
             service_specification_id={service.service_specification_id}
             user_id={service.user_id}
             zdp={1234}
