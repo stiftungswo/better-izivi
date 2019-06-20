@@ -98,41 +98,34 @@ export interface Specification {
 
 export interface User {
   id: number;
-  email: string;
-  role_id: number;
-  zdp: number;
-  first_name: string;
-  last_name: string;
+  active: boolean;
   address: string;
-  zip: number | null;
-  city: string;
-  hometown: string;
-  hometown_canton: number | null;
-  canton: number | null;
-  birthday: string;
-  phone_mobile: string;
-  phone_private: string;
-  phone_business: string;
-  bank_iban: string;
   bank_bic: string;
-  health_insurance: string;
-  work_experience: null | string;
-  driving_licence: number | null;
-  ga_travelcard: number;
-  half_fare_travelcard: number;
-  other_fare_network: null | string;
-  regional_center_id: number;
-  internal_note: string;
-  phone: string;
+  bank_iban: string;
+  birthday: string;
+  chainsaw_workshop: boolean;
+  city: string;
   driving_licence_b: boolean;
   driving_licence_be: boolean;
-  chainsaw_workshop: boolean;
+  email: string;
+  end: null | string;
+  first_name: string;
+  health_insurance: string;
+  hometown: string;
+  internal_note: string;
+  last_name: string;
+  missions: Mission[];
+  phone: string;
+  phone_business: string;
+  phone_mobile: string;
+  phone_private: string;
+  regional_center_id: number;
+  report_sheets: ReportSheet[];
   role: Role;
   start: null | string;
-  end: null | string;
-  active: boolean;
-  missions: Mission[];
-  report_sheets: ReportSheet[];
+  work_experience: null | string;
+  zdp: number;
+  zip: number | null;
 }
 
 export interface UserFilter {
@@ -146,21 +139,20 @@ export interface UserFilter {
 
 export interface Mission {
   id?: number;
-  user_id: number;
-  specification_id: string;
-  mission_type: number | null;
-  start: string | null;
-  end: string | null;
   days: number;
-  first_time: boolean;
-  long_mission: boolean;
-  probation_period: boolean;
   draft: null | string;
   eligible_holiday: number;
-  feedback_mail_sent: boolean;
+  end: string | null;
   feedback_done: boolean;
-  user?: User;
+  feedback_mail_sent: boolean;
+  first_swo_service: boolean;
+  long_mission: boolean;
+  mission_type: number | null;
+  probation_period: boolean;
   specification?: Specification;
+  specification_id: string;
+  start: string | null;
+  user_id: number;
 }
 
 export interface Role {
@@ -193,7 +185,7 @@ export interface UserQuestionAnswers {
 
 export enum UserRoleName {
   Admin = 'admin',
-  Zivi = 'zivi',
+  Zivi = 'civil_servant',
 }
 
 export interface Listing {
