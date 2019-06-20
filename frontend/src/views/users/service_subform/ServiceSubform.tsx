@@ -8,8 +8,8 @@ import { SpecificationStore } from '../../../stores/specificationStore';
 import { UserStore } from '../../../stores/userStore';
 import { Service, User } from '../../../types';
 import createStyles from '../../../utilities/createStyles';
-import { ServiceModal } from '../ServiceModal';
 import { serviceSchema } from '../schemas';
+import { ServiceModal } from '../ServiceModal';
 import ServiceOverviewTable from './ServiceOverviewTable';
 
 interface Props extends WithSheet<typeof styles> {
