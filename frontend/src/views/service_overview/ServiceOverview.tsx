@@ -307,9 +307,11 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     // looping through every week of the year
     for (let currWeek = 1; currWeek <= 52; currWeek++) {
       weekHeaders.push(
-        <td className={classes.rowTd} key={currWeek}>
-          {currWeek}
-        </td>,
+        (
+          <td className={classes.rowTd} key={currWeek}>
+            {currWeek}
+          </td>
+        ),
       );
       if (
         moment(currDate)
@@ -318,14 +320,16 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
       ) {
         // if we're in a new month
         monthHeaders.push(
-          <td
-            className={classes.rowTd}
-            style={{ fontWeight: 'bold', maxWidth: 25 * monthColCount + 'px', overflow: 'hidden', wordWrap: 'normal' }}
-            colSpan={monthColCount}
-            key={'month_header_' + currWeek}
-          >
-            {this.monthNames[currMonth]}
-          </td>,
+          (
+            <td
+              className={classes.rowTd}
+              style={{ fontWeight: 'bold', maxWidth: 25 * monthColCount + 'px', overflow: 'hidden', wordWrap: 'normal' }}
+              colSpan={monthColCount}
+              key={'month_header_' + currWeek}
+            >
+              {this.monthNames[currMonth]}
+            </td>
+          ),
         );
         monthColCount = 0;
         // setting currMonth to the new month
@@ -339,14 +343,16 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
 
     // pushing final month
     monthHeaders.push(
-      <td
-        className={classes.rowTd}
-        style={{ fontWeight: 'bold' }}
-        colSpan={monthColCount}
-        key={this.monthNames.indexOf(this.monthNames[currMonth])}
-      >
-        {this.monthNames[currMonth]}
-      </td>,
+      (
+        <td
+          className={classes.rowTd}
+          style={{ fontWeight: 'bold' }}
+          colSpan={monthColCount}
+          key={this.monthNames.indexOf(this.monthNames[currMonth])}
+        >
+          {this.monthNames[currMonth]}
+        </td>
+      ),
     );
 
     this.setState({ monthHeaders, weekHeaders });
@@ -365,9 +371,11 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
         }
       });
       weekTotalHeaders.push(
-        <td className={classes.rowTd} key={currWeek}>
-          {weekCountSum}
-        </td>,
+        (
+          <td className={classes.rowTd} key={currWeek}>
+            {weekCountSum}
+          </td>
+        ),
       );
       totalCount += weekCountSum;
     }
@@ -394,9 +402,11 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
       if (currService == null) {
         // no service in this week
         cells.push(
-          <td key={currWeek} title={title} className={classes.rowTd}>
-            {''}
-          </td>,
+          (
+            <td key={currWeek} title={title} className={classes.rowTd}>
+              {''}
+            </td>
+          ),
         );
       } else {
         // service in this week
@@ -413,25 +423,31 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
             .date()
             .toString();
           cells.push(
-            <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
-              {content}
-            </td>,
+            (
+              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+                {content}
+              </td>
+            ),
           );
         } else if (this.isWeekEndWeek(currWeek, currService)) {
           const content = moment(currService.ending!)
             .date()
             .toString();
           cells.push(
-            <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
-              {content}
-            </td>,
+            (
+              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+                {content}
+              </td>
+            ),
           );
         } else {
           // Week must be during a service, but not the ending or starting week
           cells.push(
-            <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
-              {'x'}
-            </td>,
+            (
+              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+                {'x'}
+              </td>
+            ),
           );
         }
       }
