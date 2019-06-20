@@ -4,7 +4,7 @@ import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import { MainStore } from '../../../stores/mainStore';
 import { ServiceStore } from '../../../stores/serviceStore';
-import { SpecificationStore } from '../../../stores/specificationStore';
+import { ServiceSpecificationStore } from '../../../stores/serviceSpecificationStore';
 import { UserStore } from '../../../stores/userStore';
 import { Service, User } from '../../../types';
 import createStyles from '../../../utilities/createStyles';
@@ -16,7 +16,7 @@ import { ServiceSubformExplanationHeader } from './ServiceSubformExplanationHead
 interface Props extends WithSheet<typeof styles> {
   mainStore?: MainStore;
   serviceStore?: ServiceStore;
-  specificationStore?: SpecificationStore;
+  serviceSpecificationStore?: ServiceSpecificationStore;
   userStore?: UserStore;
   user: User;
 }
@@ -41,7 +41,7 @@ const styles = () =>
     },
   });
 
-@inject('mainStore', 'serviceStore', 'specificationStore', 'userStore')
+@inject('mainStore', 'serviceStore', 'serviceSpecificationStore', 'userStore')
 class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
   constructor(props: Props) {
     super(props);
@@ -50,7 +50,7 @@ class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
   }
 
   render() {
-    const { user, serviceStore, mainStore, userStore, specificationStore, classes, theme } = this.props;
+    const { user, serviceStore, mainStore, userStore, serviceSpecificationStore, classes, theme } = this.props;
 
     return (
       <>
@@ -61,7 +61,7 @@ class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
               mainStore={mainStore}
               serviceStore={serviceStore}
               userStore={userStore}
-              specificationStore={specificationStore}
+              serviceSpecificationStore={serviceSpecificationStore}
               user={user}
               classes={classes}
               serviceModalIsOpen={!!this.state.service_id}
