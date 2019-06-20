@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ApiStore } from '../stores/apiStore';
 import { HolidayStore } from '../stores/holidayStore';
 import { MainStore } from '../stores/mainStore';
-import { MissionStore } from '../stores/missionStore';
+import { ServiceStore } from '../stores/serviceStore';
 import { PaymentStore } from '../stores/paymentStore';
 import { ReportSheetStore } from '../stores/reportSheetStore';
 import { SpecificationStore } from '../stores/specificationStore';
@@ -25,7 +25,7 @@ export class StoreProvider extends React.Component<Props> {
     reportSheetStore: ReportSheetStore;
     userFeedbackStore: UserFeedbackStore;
     userStore: UserStore;
-    missionStore: MissionStore;
+    serviceStore: ServiceStore;
     specificationStore: SpecificationStore;
   };
 
@@ -44,7 +44,7 @@ export class StoreProvider extends React.Component<Props> {
       reportSheetStore: new ReportSheetStore(mainStore),
       userFeedbackStore: new UserFeedbackStore(mainStore),
       userStore: new UserStore(mainStore),
-      missionStore: new MissionStore(mainStore),
+      serviceStore: new ServiceStore(mainStore),
       specificationStore: new SpecificationStore(mainStore),
     };
   }
