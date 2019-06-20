@@ -92,12 +92,15 @@ export default (params: OverviewTableParams) => {
         {
           id: 'draft_date',
           label: '',
-          format: (m: Mission) => (
+          format: (mission: Mission) => (
             <>
-              <span id={`reportSheetState-${m.id}`}>
-                <FontAwesomeIcon icon={m.draft ? CheckSquareRegularIcon : SquareRegularIcon} color={m.draft ? 'green' : 'black'} />
+              <span id={`reportSheetState-${mission.id}`}>
+                <FontAwesomeIcon
+                  icon={mission.draft ? CheckSquareRegularIcon : SquareRegularIcon}
+                  color={mission.draft ? 'green' : 'black'}
+                />
               </span>
-              <UncontrolledTooltip target={`reportSheetState-${m.id}`}>Aufgebot erhalten</UncontrolledTooltip>
+              <UncontrolledTooltip target={`reportSheetState-${mission.id}`}>Aufgebot erhalten</UncontrolledTooltip>
             </>
           ),
         },
