@@ -64,7 +64,7 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
           <Form>
             <WiredField disabled horizontal component={TextField} name={'mission.specification.name'} label={'Pflichtenheft'} />
-            <WiredField disabled horizontal component={DatePickerField} name={'mission.start'} label={'Beginn Einsatz'} />
+            <WiredField disabled horizontal component={DatePickerField} name={'mission.beginning'} label={'Beginn Einsatz'} />
             <WiredField disabled horizontal component={DatePickerField} name={'mission.end'} label={'Ende Einsatz'} />
 
             <WiredField horizontal component={DatePickerField} name={'start'} label={'Start Spesenblattperiode'} />

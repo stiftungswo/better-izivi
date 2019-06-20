@@ -59,7 +59,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
     this.initialValues = props.values || {
       specification_id: '',
       mission_type: 0,
-      start: null,
+      beginning: null,
       end: null,
       days: 0,
       first_swo_service: false,
@@ -75,14 +75,14 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
 
   handleMissionDateRangeChange: OnChange<Mission> = async (current, next, formik) => {
     if (this.autoUpdate) {
-      if (current.values.start !== next.values.start || current.values.end !== next.values.end) {
-        if (next.values.start && next.values.end) {
-          await this.updateDays(next.values.start, next.values.end, formik);
+      if (current.values.beginning !== next.values.beginning || current.values.end !== next.values.end) {
+        if (next.values.beginning && next.values.end) {
+          await this.updateDays(next.values.beginning, next.values.end, formik);
         }
       }
-      if (current.values.start !== next.values.start || current.values.days !== next.values.days) {
-        if (next.values.start && next.values.days) {
-          await this.updateEnd(next.values.start, next.values.days, formik);
+      if (current.values.beginning !== next.values.beginning || current.values.days !== next.values.days) {
+        if (next.values.beginning && next.values.days) {
+          await this.updateEnd(next.values.beginning, next.values.days, formik);
         }
       }
     }
@@ -114,7 +114,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
                     options={[{ id: 0, name: '' }, { id: 1, name: 'Erster Einsatz' }, { id: 2, name: 'Letzter Einsatz' }]}
                   />
                   <Effect onChange={this.handleMissionDateRangeChange} />
-                  <WiredField horizontal component={DatePickerField} name={'start'} label={'Einsatzbeginn'} />
+                  <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Einsatzbeginn'} />
                   <WiredField horizontal component={DatePickerField} name={'end'} label={'Einsatzende'} />
                   <WiredField horizontal component={TextField} name={'days'} label={'Einsatztage'} />
                   <WiredField horizontal component={CheckboxField} name={'first_swo_service'} label={'Erster SWO Einsatz?'} />

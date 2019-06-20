@@ -139,6 +139,7 @@ export interface UserFilter {
 
 export interface Mission {
   id?: number;
+  beginning: string | null;
   days: number;
   draft: null | string;
   eligible_holiday: number;
@@ -151,7 +152,6 @@ export interface Mission {
   probation_period: boolean;
   specification?: Specification;
   specification_id: string;
-  start: string | null;
   user_id: number;
 }
 

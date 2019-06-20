@@ -418,9 +418,9 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
         const einsatz = currMission.draft == null ? classes.einsatzDraft : classes.einsatz;
 
         if (this.isWeekStartWeek(currWeek, currMission)) {
-          const content = moment(currMission.start!)
+          const content = moment(currMission.beginning!)
             .date()
-            .toString(); // new Date(currMission.start!).getDate().toString();
+            .toString(); // new Date(currMission.beginning!).getDate().toString();
           cells.push(
             <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
               {content}
@@ -479,8 +479,8 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
   }
 
   getStartWeek(mission: Mission): number {
-    let startWeek = moment(mission.start!).isoWeek();
-    if (moment(mission.start!).year() < parseInt(this.state.fetchYear, 10)) {
+    let startWeek = moment(mission.beginning!).isoWeek();
+    if (moment(mission.beginning!).year() < parseInt(this.state.fetchYear, 10)) {
       startWeek = -1;
     }
     return startWeek;

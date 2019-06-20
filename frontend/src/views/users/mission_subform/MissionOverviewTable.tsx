@@ -80,9 +80,9 @@ export default (params: OverviewTableParams) => {
           },
         },
         {
-          id: 'start',
+          id: 'beginning',
           label: 'Start',
-          format: (mission: Mission) => (mission.start ? mainStore!.formatDate(mission.start) : ''),
+          format: (mission: Mission) => (mission.beginning ? mainStore!.formatDate(mission.beginning) : ''),
         },
         {
           id: 'end',

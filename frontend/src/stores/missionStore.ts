@@ -42,12 +42,12 @@ export class MissionStore extends DomainStore<Mission> {
   }
 
   async calcEligibleDays(start: string, end: string) {
-    const response = await this.mainStore.api.get<EligibleDays>('/mission_days/eligible_days?start=' + start + '&end=' + end);
+    const response = await this.mainStore.api.get<EligibleDays>('/mission_days/eligible_days?beginning=' + start + '&end=' + end);
     return response.data;
   }
 
   async calcPossibleEndDate(start: string, days: number) {
-    const response = await this.mainStore.api.get<PossibleEndDate>('/mission_days/possible_end_date?start=' + start + '&days=' + days);
+    const response = await this.mainStore.api.get<PossibleEndDate>('/mission_days/possible_end_date?beginning=' + start + '&days=' + days);
     return response.data;
   }
 
