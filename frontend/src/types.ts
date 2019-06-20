@@ -47,7 +47,7 @@ export interface ReportSheet {
   holiday_comment: string;
   ignore_first_last_day: boolean;
   ill: number;
-  mission?: Mission;
+  service?: Service;
   start: string;
   state: number;
   total_costs?: number;
@@ -114,7 +114,7 @@ export interface User {
   hometown: string;
   internal_note: string;
   last_name: string;
-  missions: Mission[];
+  services: Service[];
   phone: string;
   phone_business: string;
   phone_mobile: string;
@@ -137,7 +137,7 @@ export interface UserFilter {
   role: string;
 }
 
-export interface Mission {
+export interface Service {
   id?: number;
   beginning: string | null;
   days: number;
@@ -147,8 +147,8 @@ export interface Mission {
   feedback_done: boolean;
   feedback_mail_sent: boolean;
   first_swo_service: boolean;
-  long_mission: boolean;
-  mission_type: number | null;
+  long_service: boolean;
+  service_type: number | null;
   probation_period: boolean;
   specification?: Specification;
   specification_id: string;

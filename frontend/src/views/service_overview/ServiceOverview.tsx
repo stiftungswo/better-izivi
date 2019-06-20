@@ -12,23 +12,23 @@ import { CheckboxField } from '../../form/CheckboxField';
 import { SelectField } from '../../form/common';
 import IziviContent from '../../layout/IziviContent';
 import { LoadingInformation } from '../../layout/LoadingInformation';
-import { MissionStore } from '../../stores/missionStore';
+import { ServiceStore } from '../../stores/serviceStore';
 import { SpecificationStore } from '../../stores/specificationStore';
-import { Mission } from '../../types';
-import { MissionRow } from './MissionRow';
-import { MissionStyles } from './MissionStyles';
+import { Service } from '../../types';
+import { ServiceRow } from './ServiceRow';
+import { ServiceStyles } from './ServiceStyles';
 
-interface MissionOverviewProps extends WithSheet<typeof MissionStyles> {
+interface ServiceOverviewProps extends WithSheet<typeof ServiceStyles> {
   specificationStore?: SpecificationStore;
-  missionStore?: MissionStore;
+  serviceStore?: ServiceStore;
 }
 
-interface MissionOverviewState {
-  loadingMissions: boolean;
+interface ServiceOverviewState {
+  loadingServices: boolean;
   loadingSpecifications: boolean;
   selectedSpecifications: Map<number, boolean>;
   fetchYear: string;
-  missionRows: Map<number, React.ReactNode>;
+  serviceRows: Map<number, React.ReactNode>;
   monthHeaders: React.ReactNode[];
   weekHeaders: React.ReactNode[];
   totalCount: number;
@@ -36,19 +36,19 @@ interface MissionOverviewState {
   weekCount: Map<number, Map<number, number>>;
 }
 
-@inject('missionStore', 'specificationStore')
-class MissionOverviewContent extends React.Component<MissionOverviewProps, MissionOverviewState> {
-  cookiePrefixSpec = 'mission-overview-checkbox-';
-  cookieYear = 'mission-overview-year';
+@inject('serviceStore', 'specificationStore')
+class ServiceOverviewContent extends React.Component<ServiceOverviewProps, ServiceOverviewState> {
+  cookiePrefixSpec = 'service-overview-checkbox-';
+  cookieYear = 'service-overview-year';
   currYear = moment().year(); // new Date().getFullYear();
   monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 
-  constructor(props: MissionOverviewProps) {
+  constructor(props: ServiceOverviewProps) {
     super(props);
 
     const localCookieYear = window.localStorage.getItem(this.cookieYear);
     this.state = {
-      loadingMissions: true,
+      loadingServices: true,
       loadingSpecifications: true,
       fetchYear: localCookieYear == null ? this.currYear.toString() : localCookieYear!,
       selectedSpecifications: new Map<number, boolean>(),
@@ -56,14 +56,14 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
       weekHeaders: [],
       totalCount: 0,
       weekTotalHeaders: [],
-      missionRows: new Map<number, React.ReactNode>(),
+      serviceRows: new Map<number, React.ReactNode>(),
       weekCount: new Map<number, Map<number, number>>(),
     };
   }
 
   componentDidMount(): void {
     this.loadSpecifications();
-    this.loadMissions();
+    this.loadServices();
   }
 
   scrollTableHeader(table: HTMLTableElement | null) {
@@ -94,10 +94,10 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     });
   }
 
-  loadMissions() {
-    this.props.missionStore!.fetchByYear(this.state.fetchYear).then(() => {
-      this.calculateMissionRows();
-      this.setState({ loadingMissions: false }, () => {
+  loadServices() {
+    this.props.serviceStore!.fetchByYear(this.state.fetchYear).then(() => {
+      this.calculateServiceRows();
+      this.setState({ loadingServices: false }, () => {
         this.scrollTableHeader(document.querySelector('table'));
       });
     });
@@ -112,12 +112,12 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
 
   selectYear(year: string) {
     window.localStorage.setItem(this.cookieYear, year);
-    this.setState({ loadingMissions: true, fetchYear: year }, () => {
-      this.loadMissions();
+    this.setState({ loadingServices: true, fetchYear: year }, () => {
+      this.loadServices();
     });
   }
 
-  calculateMissionRows(): void {
+  calculateServiceRows(): void {
     const fetchYear = parseInt(this.state.fetchYear, 10);
     const { classes } = this.props;
 
@@ -131,37 +131,37 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
       endDates[x] = moment(fetchYear + ' ' + x + ' 5', 'YYYY WW E').format('DD.MM.YYYY');
     }
 
-    const missionRows = new Map<number, React.ReactNode>();
+    const serviceRows = new Map<number, React.ReactNode>();
 
-    const doneMissions: number[] = [];
+    const doneServices: number[] = [];
 
-    this.props.missionStore!.entities.forEach(mission => {
+    this.props.serviceStore!.entities.forEach(service => {
       // if we've already added the row for this user and specification, skip
-      if (doneMissions.includes(mission.id!)) {
+      if (doneServices.includes(service.id!)) {
         return;
       }
 
-      // getting all missions of current user with same specification
-      const currMissions = this.props.missionStore!.entities.filter(val => {
-        if (val.user_id === mission.user_id && val.specification_id === mission.specification_id) {
-          doneMissions.push(val.id!);
+      // getting all services of current user with same specification
+      const currServices = this.props.serviceStore!.entities.filter(val => {
+        if (val.user_id === service.user_id && val.specification_id === service.specification_id) {
+          doneServices.push(val.id!);
           return true;
         }
         return false;
       });
 
-      const cells = this.getMissionCells(startDates, endDates, currMissions, weekCount);
+      const cells = this.getServiceCells(startDates, endDates, currServices, weekCount);
 
-      // can use any mission in currMissions here, because user and specification are the same for each mission in array
+      // can use any service in currServices here, because user and specification are the same for each service in array
       // TODO: Make it work
-      missionRows.set(
-        mission.id!,
+      serviceRows.set(
+        service.id!,
         (
-          <MissionRow
-            key={'mission-row-' + mission.id!}
-            shortName={mission.specification!.short_name}
-            specification_id={mission.specification_id}
-            user_id={mission.user_id}
+          <ServiceRow
+            key={'service-row-' + service.id!}
+            shortName={service.specification!.short_name}
+            specification_id={service.specification_id}
+            user_id={service.user_id}
             zdp={1234}
             userName={'Hanspeter'}
             cells={cells}
@@ -174,7 +174,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     this.setState(
       {
         weekCount,
-        missionRows,
+        serviceRows,
       },
       () => {
         this.updateAverageHeaders();
@@ -184,11 +184,11 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
   }
 
   render() {
-    // Specifications that are in use by at least one mission
-    const specIdsOfMissions = this.props
-      .missionStore!.entities.map(mission => mission.specification_id)
+    // Specifications that are in use by at least one service
+    const specIdsOfServices = this.props
+      .serviceStore!.entities.map(service => service.specification_id)
       .filter((elem, index, arr) => index === arr.indexOf(elem));
-    specIdsOfMissions.sort();
+    specIdsOfServices.sort();
 
     const { classes, specificationStore } = this.props;
 
@@ -219,7 +219,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
             <Col sm="12" md="8">
               <div>
                 {// Mapping a CheckboxField to every specification in use
-                specIdsOfMissions.map(id => {
+                specIdsOfServices.map(id => {
                   const currSpec = specificationStore!.entities.filter(spec => spec.id! === id)[0];
                   return (
                     <CheckboxField
@@ -246,11 +246,11 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
             </Col>
           </Row>
 
-          {this.state.loadingMissions ? (
+          {this.state.loadingServices ? (
             <LoadingInformation />
           ) : (
             <Row>
-              <Table responsive={true} striped={true} bordered={true} className={'table-no-padding'} id="mission_overview_table">
+              <Table responsive={true} striped={true} bordered={true} className={'table-no-padding'} id="service_overview_table">
                 <thead>
                   <tr>
                     <td colSpan={3} rowSpan={2} className={classes.rowTd + ' mo-name-header'}>
@@ -271,9 +271,9 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
                   </tr>
                 </thead>
                 <tbody>
-                  {this.props.missionStore!.entities.map(mission => {
-                    if (this.state.selectedSpecifications[mission.specification_id]) {
-                      return this.state.missionRows.get(mission.id!);
+                  {this.props.serviceStore!.entities.map(service => {
+                    if (this.state.selectedSpecifications[service.specification_id]) {
+                      return this.state.serviceRows.get(service.id!);
                     }
                     return;
                   })}
@@ -374,42 +374,42 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     this.setState({ weekTotalHeaders, totalCount });
   }
 
-  getMissionCells(
+  getServiceCells(
     startDates: string[],
     endDates: string[],
-    currMissions: Mission[],
+    currServices: Service[],
     weekCount: Map<number, Map<number, number>>,
   ): React.ReactNode[] {
     const cells: React.ReactNode[] = [];
     const { classes } = this.props;
 
-    // filling MissionRow for currMissions
+    // filling ServiceRow for currServices
     for (let currWeek = 1; currWeek <= 52; currWeek++) {
       const popOverStart = startDates[currWeek];
       const popOverEnd = endDates[currWeek];
       const title = popOverStart + ' - ' + popOverEnd;
 
-      const currMission = this.getActiveMissionInWeek(currWeek, currMissions);
+      const currService = this.getActiveServiceInWeek(currWeek, currServices);
 
-      if (currMission == null) {
-        // no mission in this week
+      if (currService == null) {
+        // no service in this week
         cells.push(
           <td key={currWeek} title={title} className={classes.rowTd}>
             {''}
           </td>,
         );
       } else {
-        // mission in this week
-        if (weekCount[currMission.specification_id]) {
+        // service in this week
+        if (weekCount[currService.specification_id]) {
           // increasing weekCount for this specification
-          weekCount[currMission.specification_id][currWeek]++;
+          weekCount[currService.specification_id][currWeek]++;
         }
 
-        // different styling depending on whether the mission is a draft or not
-        const einsatz = currMission.confirmation_date == null ? classes.einsatzDraft : classes.einsatz;
+        // different styling depending on whether the service is a draft or not
+        const einsatz = currService.confirmation_date == null ? classes.einsatzDraft : classes.einsatz;
 
-        if (this.isWeekStartWeek(currWeek, currMission)) {
-          const content = moment(currMission.beginning!)
+        if (this.isWeekStartWeek(currWeek, currService)) {
+          const content = moment(currService.beginning!)
             .date()
             .toString();
           cells.push(
@@ -417,8 +417,8 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
               {content}
             </td>,
           );
-        } else if (this.isWeekEndWeek(currWeek, currMission)) {
-          const content = moment(currMission.ending!)
+        } else if (this.isWeekEndWeek(currWeek, currService)) {
+          const content = moment(currService.ending!)
             .date()
             .toString();
           cells.push(
@@ -427,7 +427,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
             </td>,
           );
         } else {
-          // Week must be during a mission, but not the ending or starting week
+          // Week must be during a service, but not the ending or starting week
           cells.push(
             <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
               {'x'}
@@ -440,46 +440,46 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
     return cells;
   }
 
-  isWeekStartWeek(week: number, mission: Mission): boolean {
-    return week === this.getStartWeek(mission);
+  isWeekStartWeek(week: number, service: Service): boolean {
+    return week === this.getStartWeek(service);
   }
 
-  isWeekMiddleWeek(week: number, mission: Mission): boolean {
-    const startWeek = this.getStartWeek(mission);
-    const endWeek = this.getEndWeek(mission);
+  isWeekMiddleWeek(week: number, service: Service): boolean {
+    const startWeek = this.getStartWeek(service);
+    const endWeek = this.getEndWeek(service);
 
     return week > startWeek && week < endWeek;
   }
 
-  isWeekEndWeek(week: number, mission: Mission): boolean {
-    return week === this.getEndWeek(mission);
+  isWeekEndWeek(week: number, service: Service): boolean {
+    return week === this.getEndWeek(service);
   }
 
-  isWeekDuringMission(week: number, mission: Mission): boolean {
-    return this.isWeekStartWeek(week, mission) || this.isWeekMiddleWeek(week, mission) || this.isWeekEndWeek(week, mission);
+  isWeekDuringService(week: number, service: Service): boolean {
+    return this.isWeekStartWeek(week, service) || this.isWeekMiddleWeek(week, service) || this.isWeekEndWeek(week, service);
   }
 
-  getActiveMissionInWeek(week: number, missions: Mission[]): Mission | null {
-    let ret: Mission | null = null;
-    missions.forEach(mission => {
-      if (this.isWeekDuringMission(week, mission)) {
-        ret = mission;
+  getActiveServiceInWeek(week: number, services: Service[]): Service | null {
+    let ret: Service | null = null;
+    services.forEach(service => {
+      if (this.isWeekDuringService(week, service)) {
+        ret = service;
       }
     });
     return ret;
   }
 
-  getStartWeek(mission: Mission): number {
-    let startWeek = moment(mission.beginning!).isoWeek();
-    if (moment(mission.beginning!).year() < parseInt(this.state.fetchYear, 10)) {
+  getStartWeek(service: Service): number {
+    let startWeek = moment(service.beginning!).isoWeek();
+    if (moment(service.beginning!).year() < parseInt(this.state.fetchYear, 10)) {
       startWeek = -1;
     }
     return startWeek;
   }
 
-  getEndWeek(mission: Mission): number {
-    let endWeek = moment(mission.ending!).isoWeek();
-    if (moment(mission.ending!).year() > parseInt(this.state.fetchYear, 10)) {
+  getEndWeek(service: Service): number {
+    let endWeek = moment(service.ending!).isoWeek();
+    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10)) {
       endWeek = 55;
     }
     return endWeek;
@@ -497,4 +497,4 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
   }
 }
 
-export const MissionOverview = injectSheet(MissionStyles)(MissionOverviewContent);
+export const ServiceOverview = injectSheet(ServiceStyles)(ServiceOverviewContent);

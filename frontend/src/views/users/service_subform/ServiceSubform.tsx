@@ -3,26 +3,26 @@ import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import { MainStore } from '../../../stores/mainStore';
-import { MissionStore } from '../../../stores/missionStore';
+import { ServiceStore } from '../../../stores/serviceStore';
 import { SpecificationStore } from '../../../stores/specificationStore';
 import { UserStore } from '../../../stores/userStore';
-import { Mission, User } from '../../../types';
+import { Service, User } from '../../../types';
 import createStyles from '../../../utilities/createStyles';
-import { MissionModal } from '../MissionModal';
-import { missionSchema } from '../schemas';
-import MissionOverviewTable from './MissionOverviewTable';
+import { ServiceModal } from '../ServiceModal';
+import { serviceSchema } from '../schemas';
+import ServiceOverviewTable from './ServiceOverviewTable';
 
 interface Props extends WithSheet<typeof styles> {
   mainStore?: MainStore;
-  missionStore?: MissionStore;
+  serviceStore?: ServiceStore;
   specificationStore?: SpecificationStore;
   userStore?: UserStore;
   user: User;
 }
 
-interface MissionSubformState {
-  mission_id?: number;
-  new_mission: boolean;
+interface ServiceSubformState {
+  service_id?: number;
+  new_service: boolean;
 }
 
 const styles = () =>
@@ -40,16 +40,16 @@ const styles = () =>
     },
   });
 
-@inject('mainStore', 'missionStore', 'specificationStore', 'userStore')
-class MissionSubformInner extends React.Component<Props, MissionSubformState> {
+@inject('mainStore', 'serviceStore', 'specificationStore', 'userStore')
+class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { mission_id: undefined, new_mission: false };
+    this.state = { service_id: undefined, new_service: false };
   }
 
   render() {
-    const { user, missionStore, mainStore, userStore, specificationStore, classes, theme } = this.props;
+    const { user, serviceStore, mainStore, userStore, specificationStore, classes, theme } = this.props;
 
     return (
       <>
@@ -67,35 +67,35 @@ class MissionSubformInner extends React.Component<Props, MissionSubformState> {
         </p>
         {user && (
           <div>
-            <MissionOverviewTable
+            <ServiceOverviewTable
               mainStore={mainStore}
-              missionStore={missionStore}
+              serviceStore={serviceStore}
               userStore={userStore}
               specificationStore={specificationStore}
               user={user}
               classes={classes}
-              missionModalIsOpen={!!this.state.mission_id}
+              serviceModalIsOpen={!!this.state.service_id}
               theme={theme}
-              onModalClose={() => this.setState({ mission_id: undefined })}
-              onModalOpen={(mission: Mission) => this.setState({ mission_id: mission.id })}
+              onModalClose={() => this.setState({ service_id: undefined })}
+              onModalOpen={(service: Service) => this.setState({ service_id: service.id })}
             />
 
             <Button
               color={'success'}
               type={'button'}
               onClick={() => {
-                this.setState({ new_mission: true });
+                this.setState({ new_service: true });
               }}
             >
               Neue Einsatzplanung hinzufügen
             </Button>
-            <MissionModal
-              onSubmit={(mission: Mission) => missionStore!.post(missionSchema.cast(mission))}
+            <ServiceModal
+              onSubmit={(service: Service) => serviceStore!.post(serviceSchema.cast(service))}
               user={user}
               onClose={() => {
-                this.setState({ new_mission: false });
+                this.setState({ new_service: false });
               }}
-              isOpen={this.state.new_mission}
+              isOpen={this.state.new_service}
             />
           </div>
         )}
@@ -105,4 +105,4 @@ class MissionSubformInner extends React.Component<Props, MissionSubformState> {
   }
 }
 
-export const MissionSubform = injectSheet(styles)(MissionSubformInner);
+export const ServiceSubform = injectSheet(styles)(ServiceSubformInner);

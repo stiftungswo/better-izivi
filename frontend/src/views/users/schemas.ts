@@ -17,14 +17,14 @@ export const userSchema = yup.object({
   health_insurance: yup.string().required(),
 });
 
-export const missionSchema = yup.object({
+export const serviceSchema = yup.object({
   specification_id: yup.string(),
-  mission_type: yup.number(),
+  service_type: yup.number(),
   beginning: apiDate().required(),
   ending: apiDate().required(),
   days: yup.number().required(),
   first_swo_service: yup.boolean(),
-  long_mission: yup.boolean(),
+  long_service: yup.boolean(),
   probation_period: yup.boolean(),
   confirmation_date: yup.string().nullable(true),
   eligible_holiday: yup.number(),
