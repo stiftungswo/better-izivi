@@ -9,7 +9,7 @@ import { UserStore } from '../../../stores/userStore';
 import { Service, User } from '../../../types';
 import createStyles from '../../../utilities/createStyles';
 import { serviceSchema } from '../schemas';
-import { ServiceModal } from '../ServiceModal';
+import { ServiceModal } from '../service_modal/ServiceModal';
 import ServiceOverviewTable from './ServiceOverviewTable';
 import { ServiceSubformExplanationHeader } from './ServiceSubformExplanationHeader';
 

@@ -22,7 +22,7 @@ import {
   TrashAltRegularIcon,
 } from '../../../utilities/Icon';
 import { serviceSchema } from '../schemas';
-import { ServiceModal } from '../ServiceModal';
+import { ServiceModal } from '../service_modal/ServiceModal';
 
 interface OverviewTableParams extends WithSheet<string, {}> {
   mainStore?: MainStore;
