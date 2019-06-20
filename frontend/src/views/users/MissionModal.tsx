@@ -65,7 +65,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
       first_swo_service: false,
       long_mission: false,
       probation_period: false,
-      draft: null,
+      confirmation_date: null,
       eligible_holiday: 0,
       feedback_done: false,
       feedback_mail_sent: false,

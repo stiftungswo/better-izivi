@@ -96,8 +96,8 @@ export default (params: OverviewTableParams) => {
             <>
               <span id={`reportSheetState-${mission.id}`}>
                 <FontAwesomeIcon
-                  icon={mission.draft ? CheckSquareRegularIcon : SquareRegularIcon}
-                  color={mission.draft ? 'green' : 'black'}
+                  icon={mission.confirmation_date ? CheckSquareRegularIcon : SquareRegularIcon}
+                  color={mission.confirmation_date ? 'green' : 'black'}
                 />
               </span>
               <UncontrolledTooltip target={`reportSheetState-${mission.id}`}>Aufgebot erhalten</UncontrolledTooltip>

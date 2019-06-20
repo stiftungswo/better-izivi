@@ -141,7 +141,7 @@ export interface Mission {
   id?: number;
   beginning: string | null;
   days: number;
-  draft: null | string;
+  confirmation_date: null | string;
   eligible_holiday: number;
   ending: string | null;
   feedback_done: boolean;

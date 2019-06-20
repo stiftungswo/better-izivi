@@ -415,7 +415,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
         }
 
         // different styling depending on whether the mission is a draft or not
-        const einsatz = currMission.draft == null ? classes.einsatzDraft : classes.einsatz;
+        const einsatz = currMission.confirmation_date == null ? classes.einsatzDraft : classes.einsatz;
 
         if (this.isWeekStartWeek(currWeek, currMission)) {
           const content = moment(currMission.beginning!)

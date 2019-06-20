@@ -53,6 +53,7 @@ export class MissionStore extends DomainStore<Mission> {
 
   @action
   async doPutDraft(id: number) {
+    // TODO: Adapt to normal PUT
     const response = await this.mainStore.api.get<Mission>('/missions/' + id + '/draft');
     return response.data;
   }

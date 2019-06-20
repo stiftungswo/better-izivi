@@ -26,7 +26,7 @@ export const missionSchema = yup.object({
   first_swo_service: yup.boolean(),
   long_mission: yup.boolean(),
   probation_period: yup.boolean(),
-  draft: yup.string().nullable(true),
+  confirmation_date: yup.string().nullable(true),
   eligible_holiday: yup.number(),
   feedback_done: yup.boolean(),
   feedback_mail_sent: yup.boolean(),
