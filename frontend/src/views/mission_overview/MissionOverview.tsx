@@ -157,6 +157,7 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
       const cells = this.getMissionCells(startDates, endDates, currMissions, weekCount);
 
       // can use any mission in currMissions here, because user and specification are the same for each mission in array
+      // TODO: Make it work
       missionRows.set(
         mission.id!,
         (
@@ -165,8 +166,8 @@ class MissionOverviewContent extends React.Component<MissionOverviewProps, Missi
             shortName={mission.specification!.short_name}
             specification_id={mission.specification_id}
             user_id={mission.user_id}
-            zdp={mission.user!.zdp}
-            userName={mission.user!.first_name + ' ' + mission.user!.last_name}
+            zdp={1234}
+            userName={'Hanspeter'}
             cells={cells}
             classes={classes}
           />

@@ -62,7 +62,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
       start: null,
       end: null,
       days: 0,
-      first_time: false,
+      first_swo_service: false,
       long_mission: false,
       probation_period: false,
       draft: null,
@@ -117,7 +117,7 @@ export class MissionModal extends React.Component<MissionModalProps<Mission>> {
                   <WiredField horizontal component={DatePickerField} name={'start'} label={'Einsatzbeginn'} />
                   <WiredField horizontal component={DatePickerField} name={'end'} label={'Einsatzende'} />
                   <WiredField horizontal component={TextField} name={'days'} label={'Einsatztage'} />
-                  <WiredField horizontal component={CheckboxField} name={'first_time'} label={'Erster SWO Einsatz?'} />
+                  <WiredField horizontal component={CheckboxField} name={'first_swo_service'} label={'Erster SWO Einsatz?'} />
                   <WiredField horizontal component={CheckboxField} name={'long_mission'} label={'Langer Einsatz?'} />
                   <WiredField horizontal component={CheckboxField} name={'probation_period'} label={'Probe-einsatz?'} />
                 </Form>

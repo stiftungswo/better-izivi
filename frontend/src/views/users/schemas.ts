@@ -23,7 +23,7 @@ export const missionSchema = yup.object({
   start: apiDate().required(),
   end: apiDate().required(),
   days: yup.number().required(),
-  first_time: yup.boolean(),
+  first_swo_service: yup.boolean(),
   long_mission: yup.boolean(),
   probation_period: yup.boolean(),
   draft: yup.string().nullable(true),

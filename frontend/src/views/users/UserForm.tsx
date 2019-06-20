@@ -18,7 +18,7 @@ import { UserStore } from '../../stores/userStore';
 import { User } from '../../types';
 import { empty } from '../../utilities/helpers';
 import { MissionSubform } from './mission_subform/MissionSubform';
-import { ReportSheetSubform } from './ReportSheetSubform';
+// import { ReportSheetSubform } from './ReportSheetSubform';
 import { userSchema } from './schemas';
 
 type Props = {
@@ -118,7 +118,7 @@ class UserFormInner extends React.Component<Props> {
           <MissionSubform user={user} />
 
           <SolidHorizontalRow />
-          <ReportSheetSubform user={user} />
+          {/*<ReportSheetSubform user={user} />*/}
         </FormView>
       </>
     );
