@@ -46,31 +46,28 @@ export class UserStore extends DomainStore<User> {
         if (name && !(u.first_name + ' ' + u.last_name).toLowerCase().includes(name.toLowerCase())) {
           return false;
         }
-        if (date_from && u.start && moment(u.start).isBefore(moment(date_from))) {
+        if (date_from && u.beginning && moment(u.beginning).isBefore(moment(date_from))) {
           return false;
         }
-        if (date_to && u.end && moment(u.end).isAfter(moment(date_to))) {
+        if (date_to && u.ending && moment(u.ending).isAfter(moment(date_to))) {
           return false;
         }
         if (active && !u.active) {
           return false;
         }
-        if (role && u.role.name !== role) {
-          return false;
-        }
-        return true;
+        return !(role && u.role.name !== role);
       })
       .sort((a: User, b: User) => {
-        if (!a.start && b.start) {
+        if (!a.beginning && b.beginning) {
           return 1;
         }
-        if (!b.start && a.start) {
+        if (!b.beginning && a.beginning) {
           return -1;
         }
-        if (!b.start || !a.start) {
+        if (!b.beginning || !a.beginning) {
           return 0;
         }
-        return moment(a.start).isBefore(b.start) ? 1 : -1;
+        return moment(a.beginning).isBefore(b.beginning) ? 1 : -1;
       });
   }, 100);
 

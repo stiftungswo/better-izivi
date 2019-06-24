@@ -36,12 +36,12 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'start',
         label: 'Von',
-        format: (u: User) => (u.start ? this.props.mainStore!.formatDate(u.start) : ''),
+        format: (u: User) => (u.beginning ? this.props.mainStore!.formatDate(u.beginning) : ''),
       },
       {
         id: 'end',
         label: 'Bis',
-        format: (u: User) => (u.end ? this.props.mainStore!.formatDate(u.end) : ''),
+        format: (u: User) => (u.ending ? this.props.mainStore!.formatDate(u.ending) : ''),
       },
       {
         id: 'active',
