@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 module V1
-  class ExpenseSheetsController < APIController
+  class ExpenseSheetsController < ApplicationController
     include V1::Concerns::AdminAuthorizable
+    include V1::Concerns::PdfRenderable
+    include V1::Concerns::ParamsAuthenticatable
 
+    before_action :authenticate_user!, unless: -> { request.format.pdf? }
+    before_action :authenticate_from_params!, if: -> { request.format.pdf? }
     before_action :set_expense_sheet, only: %i[show update destroy]
     before_action :authorize_admin!
 
@@ -23,6 +27,7 @@ module V1
 
     def show
       respond_to do |format|
+        format.json
         format.pdf do
           generator = TemplatePdfGeneratorService.new('v1/expense_sheet/export', pdf_locals, 'Landscape')
           render_pdf(
@@ -38,14 +43,14 @@ module V1
 
       raise ValidationError, @expense_sheet.errors unless @expense_sheet.save
 
-      render_show
+      render :show
     end
 
     # TODO: check state updates (does it already belong to a payment?)
     def update
       raise ValidationError, @expense_sheet.errors unless @expense_sheet.update(expense_sheet_params)
 
-      render_show
+      render :show
     end
 
     def destroy
@@ -58,12 +63,14 @@ module V1
       @expense_sheet = ExpenseSheet.find(params[:id])
     end
 
-    def render_show
-      render :show
-    end
-
     def expense_sheet_params
       params.require(:expense_sheet).permit(*PERMITTED_EXPENSE_SHEET_KEYS)
+    end
+
+    def pdf_locals
+      {
+        expense_sheet: @expense_sheet
+      }
     end
   end
 end

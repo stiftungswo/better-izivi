@@ -7,9 +7,9 @@ Rails.application.routes.draw do
     resources :service_specifications, only: %i[index create update]
     resources :expense_sheets
     resources :services
+    resources :users, only: :show
     get 'payments/pain', to: 'payments#show', as: 'pain_export'
     get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
-    get 'expense_sheet/show', to: 'expense_sheet#show', as: 'expense_sheet_export'
   end
 
   scope :v1 do
