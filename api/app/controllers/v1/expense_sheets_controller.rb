@@ -4,7 +4,7 @@ module V1
   class ExpenseSheetsController < APIController
     include V1::Concerns::AdminAuthorizable
 
-    before_action :set_expense_sheet, only: %i[show update destroy]
+    before_action :set_expense_sheet, only: %i[show update destroy export]
     before_action :authorize_admin!
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
@@ -40,6 +40,14 @@ module V1
 
     def destroy
       raise ValidationError, @expense_sheet.errors unless @expense_sheet.destroy
+    end
+
+    def export
+      generator = TemplatePdfGeneratorService.new('v1/expense_sheet/index', pdf_locals, 'Landscape')
+      render_pdf(
+        filename: I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today)),
+        pdf: generator.generate_pdf
+      )
     end
 
     private

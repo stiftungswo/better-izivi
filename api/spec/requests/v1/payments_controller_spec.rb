@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe V1::PaymentsController, type: :request do
   describe '#index' do
-    let(:request) { get v1_pain_export_path, params: { token: token } }
+    let(:request) { get v1_pain_export_path(format: :xml), params: { token: token } }
     let!(:user) { create :user }
 
     context 'when a token is provided' do
