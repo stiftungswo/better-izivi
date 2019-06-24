@@ -26,7 +26,9 @@ RSpec.describe ExpenseSheet, type: :model do
   end
 
   describe '#state' do
-    subject { expense_sheet.update(state: state) }
+    subject { !expense_sheet.errors.added?(:state, :invalid_state_change) }
+
+    before { expense_sheet.update(state: state) }
 
     let(:expense_sheet) do
       expense_sheet = build(:expense_sheet, user: user, state: state_was)
