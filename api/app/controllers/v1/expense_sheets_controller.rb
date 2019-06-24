@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'prawn'
 
 module V1
   class ExpenseSheetsController < ApplicationController
@@ -29,11 +30,12 @@ module V1
       respond_to do |format|
         format.json
         format.pdf do
-          generator = TemplatePdfGeneratorService.new('v1/expense_sheets/show', pdf_locals, 'Landscape')
-          render_pdf(
-            filename: I18n.t('pdfs.expense_sheet.filename', today: I18n.l(Time.zone.today)),
-            pdf: generator.generate_pdf
-          )
+          pdf = ExpenseSheetPdfService.new(@expense_sheet)
+
+          send_data pdf.render,
+                    filename: I18n.t('pdfs.expense_sheet.filename', today: @expense_sheet.user.full_name),
+                    type: 'application/pdf',
+                    disposition: 'inline'
         end
       end
     end

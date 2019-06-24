@@ -45,4 +45,6 @@ de:
       title: 'Telefonliste vom %{beginning} bis %{ending}'
       header: 'Stand vom %{date}'
     expense_sheet:
-      filename: 'Spesenraport_%{today}.pdf'
+      filename: 'Spesenrapport_%{today}.pdf'
+      title: 'Spesenrapport von %{full_name}.pdf'
+      header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
