@@ -29,7 +29,7 @@ module V1
       respond_to do |format|
         format.json
         format.pdf do
-          generator = TemplatePdfGeneratorService.new('v1/expense_sheet/export', pdf_locals, 'Landscape')
+          generator = TemplatePdfGeneratorService.new('v1/expense_sheets/show', pdf_locals, 'Landscape')
           render_pdf(
             filename: I18n.t('pdfs.expense_sheet.filename', today: I18n.l(Time.zone.today)),
             pdf: generator.generate_pdf

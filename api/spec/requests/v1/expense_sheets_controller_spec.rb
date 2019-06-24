@@ -226,8 +226,9 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
     end
 
     describe '#export' do
-      let(:request) { get v1_expense_sheet_export_path(format: :pdf), params: { token: token } }
+      let(:request) { get v1_expense_sheet_export_path(format: :pdf), params: { token: token, id: expense_sheet.id } }
       let!(:user) { create :user }
+      let(:expense_sheet) { create :expense_sheet }
 
       context 'when a token is provided' do
         let(:token) { generate_jwt_token_for_user(user) }

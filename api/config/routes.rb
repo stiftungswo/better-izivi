@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :users, only: :show
     get 'payments/pain', to: 'payments#show', as: 'pain_export'
     get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
+    get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'
   end
 
   scope :v1 do
