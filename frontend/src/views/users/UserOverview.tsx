@@ -9,6 +9,7 @@ import Overview from '../../layout/Overview';
 import { MainStore } from '../../stores/mainStore';
 import { UserStore } from '../../stores/userStore';
 import { Column, User } from '../../types';
+import { translateUserRole } from '../../utilities/helpers';
 
 interface Props {
   mainStore?: MainStore;
@@ -50,7 +51,7 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'userRole',
         label: 'Gruppe',
-        format: (u: User) => <>{`${u.role.name}`}</>,
+        format: translateUserRole,
       },
     ];
   }

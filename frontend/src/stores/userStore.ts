@@ -55,7 +55,7 @@ export class UserStore extends DomainStore<User> {
         if (active && !u.active) {
           return false;
         }
-        return !(role && u.role.name !== role);
+        return !(role && u.role !== role);
       })
       .sort((a: User, b: User) => {
         if (!a.beginning && b.beginning) {

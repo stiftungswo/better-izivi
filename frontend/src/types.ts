@@ -116,7 +116,7 @@ export interface User {
   phone: string;
   regional_center_id: number;
   report_sheets: ReportSheet[];
-  role: Role;
+  role: 'admin' | 'civil_servant';
   services: Service[];
   beginning: null | string;
   work_experience: null | string;
@@ -149,11 +149,6 @@ export interface Service {
   service_specification?: ServiceSpecification;
   service_specification_id: string;
   user_id: number;
-}
-
-export interface Role {
-  id: number;
-  name: UserRoleName;
 }
 
 export interface UserFeedback {
