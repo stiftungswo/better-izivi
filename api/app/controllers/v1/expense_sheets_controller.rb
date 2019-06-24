@@ -1,10 +1,10 @@
 # frozen_string_literal: true
+
 require 'prawn'
 
 module V1
   class ExpenseSheetsController < ApplicationController
     include V1::Concerns::AdminAuthorizable
-    include V1::Concerns::PdfRenderable
     include V1::Concerns::ParamsAuthenticatable
 
     before_action :authenticate_user!, unless: -> { request.format.pdf? }
@@ -67,12 +67,6 @@ module V1
 
     def expense_sheet_params
       params.require(:expense_sheet).permit(*PERMITTED_EXPENSE_SHEET_KEYS)
-    end
-
-    def pdf_locals
-      {
-        expense_sheet: @expense_sheet
-      }
     end
   end
 end

@@ -3,16 +3,85 @@
 class PhoneListPdfService
   include Prawn::View
 
-  def initialize(expense_sheet)
-    @expense_sheet = expense_sheet
-    # text I18n.t('pdfs.expense_sheet.header')
+  TABLE_HEADER = [
+    I18n.t('activerecord.models.attributes.user.last_name'),
+    I18n.t('activerecord.models.attributes.user.first_name'),
+    I18n.t('activerecord.models.attributes.user.address'),
+    I18n.t('activerecord.models.attributes.user.zip_with_city'),
+    I18n.t('activerecord.models.attributes.user.phone'),
+    I18n.t('activerecord.models.attributes.user.email')
+  ].freeze
 
-    fill_color 'd2f0e6'
-    fill_rectangle [0, cursor], bounds.width, 50
-    fill_color '000000'
+  def initialize(service_specifications, dates)
+    @beginning = dates.beginning
+    @ending = dates.ending
+    @service_specifications = service_specifications
 
-    move_cursor_to cursor - 20
+    header
+    content_table
+  end
 
-    text I18n.t('pdfs.expense_sheet.header'), align: :center, style: :bold
+  def document
+    @document ||= Prawn::Document.new(page_size: 'A4', page_layout: :landscape)
+  end
+
+  private
+
+  def header
+    text I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today)), align: :right
+
+    text(
+      I18n.t(
+        'pdfs.phone_list.title',
+        beginning: I18n.l(@beginning),
+        ending: I18n.l(@ending)
+      ),
+      align: :left,
+      style: :bold,
+      size: 15
+    )
+  end
+
+  def content_table
+    @service_specifications.each do |name, services|
+      pre_table(name)
+
+      font_size 10
+      table(table_data(services),
+            cell_style: { borders: %i[] },
+            width: bounds.width,
+            header: true,
+            column_widths: [98, 98, 179.89, 118, 98, 178]) do
+        row(0).font_style = :bold
+      end
+    end
+  end
+
+  def pre_table(name)
+    move_down 25
+
+    text(
+      name,
+      align: :left,
+      style: :bold,
+      size: 11
+    )
+  end
+
+  def table_data(services)
+    [TABLE_HEADER].push(*table_content(services))
+  end
+
+  def table_content(services)
+    services.map do |service|
+      service.user.slice(
+        :first_name,
+        :last_name,
+        :address,
+        :zip_with_city,
+        :phone,
+        :email
+      ).values
+    end
   end
 end
