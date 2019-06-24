@@ -41,7 +41,7 @@ class ExpenseSheet < ApplicationRecord
       state_ready_for_payment_or_open_to_ready_for_payment_or_open?,
       state_ready_for_payment_to_payment_in_progress?,
       state_payment_in_progress_to_paid_or_ready_for_payment?
-    ].one? || state_was.nil?
+    ].one?
 
     errors.add(:state, :invalid_state_change)
   end
