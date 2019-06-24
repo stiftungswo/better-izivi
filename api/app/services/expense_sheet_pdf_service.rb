@@ -18,6 +18,10 @@ class ExpenseSheetPdfService
     body
   end
 
+  def document
+    @document ||= Prawn::Document.new(page_size: 'A4')
+  end
+
   private
 
   def header
@@ -30,7 +34,10 @@ class ExpenseSheetPdfService
     text I18n.t('pdfs.expense_sheet.header'), align: :center, style: :bold
   end
 
-  def info_block; end
+  def info_block
+    text I18n.t('models.attr')
+
+  end
 
   def body; end
 end
