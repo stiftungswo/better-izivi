@@ -117,4 +117,31 @@ RSpec.describe V1::UsersController, type: :request do
       it { is_expected.to include(*expected_successful_response_json) }
     end
   end
+
+  describe '#destroy' do
+    let(:request) { delete v1_user_path(requested_user) }
+    let!(:requested_user) { create :user }
+
+    context 'when no user is signed in' do
+      it_behaves_like 'login protected resource'
+    end
+
+    context 'when a civil servant is logged in' do
+      before { sign_in create(:user) }
+
+      it_behaves_like 'admin protected resource'
+
+      it 'does not delete the user' do
+        expect { request }.not_to change(User, :count)
+      end
+    end
+
+    context 'when an admin is logged in' do
+      before { sign_in create(:user, :admin) }
+
+      it 'deletes the user' do
+        expect { request }.to change(User, :count).by(-1)
+      end
+    end
+  end
 end

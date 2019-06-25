@@ -62,17 +62,10 @@ export class UserOverview extends React.Component<Props> {
         columns={this.columns}
         store={this.props.userStore!}
         title={'Benutzer'}
-        renderActions={(e: User) => (
-          <>
-            <Button
-              color={'danger'}
-              onClick={() => {
-                this.props.userStore!.delete(e.id!);
-              }}
-            >
-              Löschen
-            </Button>
-          </>
+        renderActions={(user: User) => (
+          <Button color={'danger'} onClick={() => this.props.userStore!.delete(user.id!)}>
+            Löschen
+          </Button>
         )}
         filter={true}
         firstRow={
