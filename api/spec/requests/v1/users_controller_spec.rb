@@ -17,7 +17,8 @@ RSpec.describe V1::UsersController, type: :request do
         ).merge(
           beginning: nil,
           ending: nil,
-          services: []
+          services: [],
+          active: false
         )
     end
 
@@ -69,22 +70,28 @@ RSpec.describe V1::UsersController, type: :request do
   end
 
   describe '#index' do
-    let!(:user) { create :user, services: [create(:service)] }
-    let!(:admin_user) { create :user, :admin, services: [create(:service)] }
+    let!(:user) { create :user }
+    let!(:admin_user) { create :user, :admin }
     let(:request) { get v1_users_path }
     let(:expected_successful_response_json) do
       [user, admin_user].map do |current_user|
         extract_to_json(current_user)
           .merge(
-            services: [],
-            beginning: current_user.services.chronologically.last.beginning,
-            ending: current_user.services.chronologically.last.ending
+            services: be_an_instance_of(Array),
+            beginning: convert_to_json_value(current_user.services.chronologically.last.beginning),
+            ending: convert_to_json_value(current_user.services.chronologically.last.ending.to_s),
+            active: false
           ).except(
             :created_at, :encrypted_password,
             :reset_password_sent_at, :reset_password_token,
             :updated_at
           )
       end
+    end
+
+    before do
+      create :service, user: user
+      create :service, user: admin_user
     end
 
     context 'when no user is logged in' do

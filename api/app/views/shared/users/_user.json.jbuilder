@@ -12,3 +12,4 @@ end
 
 json.beginning user.services.chronologically.last&.beginning
 json.ending user.services.chronologically.last&.ending
+json.active user.active?
