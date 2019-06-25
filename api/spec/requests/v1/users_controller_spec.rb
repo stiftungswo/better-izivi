@@ -9,11 +9,16 @@ RSpec.describe V1::UsersController, type: :request do
     let(:requested_user) { user }
     let(:request) { get v1_user_path(requested_user) }
     let(:expected_successful_response_json) do
-      extract_to_json(requested_user).except(
-        :created_at, :encrypted_password,
-        :reset_password_sent_at, :reset_password_token,
-        :updated_at
-      )
+      extract_to_json(requested_user)
+        .except(
+          :created_at, :encrypted_password,
+          :reset_password_sent_at, :reset_password_token,
+          :updated_at
+        ).merge(
+          beginning: nil,
+          ending: nil,
+          services: []
+        )
     end
 
     context 'when no user is logged in' do
@@ -64,14 +69,17 @@ RSpec.describe V1::UsersController, type: :request do
   end
 
   describe '#index' do
-    let!(:user) { create :user }
-    let!(:admin_user) { create :user, :admin }
+    let!(:user) { create :user, services: [create(:service)] }
+    let!(:admin_user) { create :user, :admin, services: [create(:service)] }
     let(:request) { get v1_users_path }
     let(:expected_successful_response_json) do
       [user, admin_user].map do |current_user|
         extract_to_json(current_user)
-          .merge(services: [])
-          .except(
+          .merge(
+            services: [],
+            beginning: current_user.services.chronologically.last.beginning,
+            ending: current_user.services.chronologically.last.ending
+          ).except(
             :created_at, :encrypted_password,
             :reset_password_sent_at, :reset_password_token,
             :updated_at
