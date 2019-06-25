@@ -7,6 +7,10 @@ de:
         not_a_friday: kein Freitag
         not_a_monday: kein Montag
       models:
+        expense_sheet:
+          attributes:
+            state:
+              invalid_state_change: Ungültiger Statuswechsel
         holiday:
           attributes:
             ending:
@@ -19,12 +23,12 @@ de:
               bad_format: ungültiges Format
               bad_length: ungültige Länge
               unknown_country_code: unbekannter Landescode
+    models:
+      attributes:
         expense_sheet:
           attributes:
             state:
-              invalid_state_change: Ungültiger Statuswechsel
-    models:
-      attributes:
+              invalid_state_change: Changement d'état invalide
         user:
           address: Adresse
           email: Email
@@ -39,6 +43,9 @@ de:
       default: "%d.%m.%Y"
   errors:
     authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
+    messages:
+      not_saved:
+        one: {}
   payment:
     expenses_from: Spesen vom %{from_date}
   pdfs:
@@ -46,7 +53,7 @@ de:
       filename: Spesenrapport_%{today}.pdf
       header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603
         Schwerzenbach '
-      title: Spesenrapport von %{full_name}.pdf
+      title: Spesenrapport_von_%{full_name}.pdf
     phone_list:
       filename: Telefonliste_%{today}.pdf
       header: Stand vom %{date}

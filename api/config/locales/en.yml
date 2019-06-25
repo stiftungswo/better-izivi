@@ -7,6 +7,10 @@ en:
         not_a_friday: not a friday
         not_a_monday: not a monday
       models:
+        expense_sheet:
+          attributes:
+            state:
+              invalid_state_change: Invalid state change
         holiday:
           attributes:
             ending:
@@ -19,12 +23,12 @@ en:
               bad_format: bad format
               bad_length: bad length
               unknown_country_code: unknown country code
+    models:
+      attributes:
         expense_sheet:
           attributes:
             state:
               invalid_state_change: Invalid state change
-    models:
-      attributes:
         user:
           address: Address
           email: Email
@@ -32,7 +36,7 @@ en:
           last_name: Last name
           phone: Phone
           zip_with_city: ZIP / City
-      service_specification: 
+      service_specification: service specification
       user: User
   date:
     formats:
@@ -44,8 +48,9 @@ en:
   pdfs:
     expense_sheet:
       filename: ExpenseSheet_%{today}.pdf
-      header: 
-      title: 
+      header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603
+        Schwerzenbach
+      title: Expense_report_of_%{full_name}.pdf
     phone_list:
       filename: Phonelist_%{today}.pdf
       header: Generated on %{date}

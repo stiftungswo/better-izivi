@@ -7,6 +7,10 @@ fr:
         not_a_friday: pas de vendredi
         not_a_monday: pas de lundi
       models:
+        expense_sheet:
+          attributes:
+            state:
+              invalid_state_change: Changement d'état invalide
         holiday:
           attributes:
             ending:
@@ -21,25 +25,22 @@ fr:
               unknown_country_code: code de pays inconnu
     models:
       attributes:
-        user:
-          address: Adresse
-          email: 
-          first_name: Prénom
-          last_name: Nom de famille
-          phone: Numéro de téléphone
-          zip_with_city: Code postal / Ville
-      service_specification: 
-      user: Utilisateur
-  date:
-    formats:
-      default: "%d.%m.%Y"
         expense_sheet:
           attributes:
             state:
               invalid_state_change: changement de statut invalide
-  service_calculator:
-    invalid_required_service_days: Jours du service non valables
-    end_date_cannot_be_on_weekend: La fin du service ne peut pas avoir lieu la fin de semaine.
+        user:
+          address: Adresse
+          email: e-mail
+          first_name: Prénom
+          last_name: Nom de famille
+          phone: Numéro de téléphone
+          zip_with_city: Code postal / Ville
+      service_specification: spécification d'encart
+      user: Utilisateur
+  date:
+    formats:
+      default: "%d.%m.%Y"
   errors:
     authorization_error: Vous n'avez pas les droits requis pour cette demande.
   payment:
@@ -47,8 +48,9 @@ fr:
   pdfs:
     expense_sheet:
       filename: Portrait_des_dépenses_%{today}.pdf
-      header: 
-      title: 
+      header: 'Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse
+        18b, 8603 Schwerzenbach '
+      title: Rapport_de_dépenses_de_%{full_name}.pdf
     phone_list:
       filename: Liste_téléphonique_%{today}.pdf
       header: Généré sur %{date}
