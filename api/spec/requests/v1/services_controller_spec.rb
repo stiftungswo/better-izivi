@@ -11,7 +11,7 @@ RSpec.describe V1::ServicesController, type: :request do
     describe '#index' do
       subject(:json_response) { parse_response_json(response) }
 
-      let!(:services) { create_pair :service }
+      let!(:services) { create_pair :service, beginning: '2018-11-05', ending: '2018-11-30', user: user }
       let(:request) { get v1_services_path }
       let(:first_service_json) do
         extract_to_json(services.first, :beginning, :ending, :confirmation_date, :id)
@@ -25,17 +25,30 @@ RSpec.describe V1::ServicesController, type: :request do
           .merge(user: extract_to_json(services.second.user, :id, :first_name, :last_name))
       end
 
-      before { request }
-
       context 'when the user is admin' do
         let(:user) { create :user, :admin }
+
+        before do
+          create :service, beginning: '2019-06-17', ending: '2019-06-28', user: user
+          request
+        end
 
         it_behaves_like 'renders a successful http status code'
 
         it 'returns the correct data', :aggregate_failures do
-          expect(json_response.length).to eq 2
+          expect(json_response.length).to eq 3
           expect(json_response).to include(first_service_json)
           expect(json_response).to include(second_service_json)
+        end
+
+        context 'with a year filter' do
+          let(:request) { get v1_services_path(params: { year: 2018 }) }
+
+          it 'only returns services of year 2018' do
+            expect(json_response.length).to eq 2
+            expect(json_response).to include(first_service_json)
+            expect(json_response).to include(second_service_json)
+          end
         end
       end
 

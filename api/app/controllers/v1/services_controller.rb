@@ -16,7 +16,7 @@ module V1
     before_action :authorize_admin!, only: :index
 
     def index
-      @services = Service.all
+      @services = service_range(filter_params[:year].to_i)
     end
 
     def show; end
@@ -41,12 +41,22 @@ module V1
 
     private
 
+    def service_range(year)
+      return Service.all if year <= 0
+
+      Service.all.in_date_range(Date.new(year), Date.new(year + 1))
+    end
+
     def protect_foreign_resource!
       raise AuthorizationError unless @service.user.id == current_user.id
     end
 
     def set_service
       @service = Service.find(params[:id])
+    end
+
+    def filter_params
+      params.permit(:year)
     end
 
     def service_params
