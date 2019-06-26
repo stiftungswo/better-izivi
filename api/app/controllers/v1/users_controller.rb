@@ -5,8 +5,9 @@ module V1
     include V1::Concerns::AdminAuthorizable
 
     before_action :set_user, only: %i[show destroy]
-    before_action :protect_foreign_resource!, if: -> { current_user.civil_servant? }, only: :show
+    before_action :protect_foreign_resource!, only: :show, if: -> { current_user.civil_servant? }
     before_action :authorize_admin!, only: %i[index destroy]
+    before_action :protect_self_deletion!, only: :destroy
 
     def index
       @users = User.all
@@ -17,7 +18,6 @@ module V1
     end
 
     def destroy
-      raise ValidationError, base: I18n.t('activerecord.errors.models.user.attributes.base.cant_delete_himself') if @user.id == current_user.id
       raise ValidationError, @user.errors unless @user.destroy
     end
 
@@ -29,6 +29,12 @@ module V1
 
     def protect_foreign_resource!
       raise AuthorizationError unless current_user.id == @user.id
+    end
+
+    def protect_self_deletion!
+      return unless @user.id == current_user.id
+
+      raise ValidationError, base: I18n.t('activerecord.errors.models.user.attributes.base.cant_delete_himself')
     end
   end
 end

@@ -137,10 +137,32 @@ RSpec.describe V1::UsersController, type: :request do
     end
 
     context 'when an admin is logged in' do
-      before { sign_in create(:user, :admin) }
+      let(:admin) { create(:user, :admin) }
 
-      it 'deletes the user' do
+      before { sign_in admin }
+
+      it 'deletes a user' do
         expect { request }.to change(User, :count).by(-1)
+      end
+
+      context 'when he tries to delete himself' do
+        let(:requested_user) { admin }
+
+        it_behaves_like 'renders a validation error response'
+
+        it 'does not delete the user' do
+          expect { request }.not_to change(User, :count)
+        end
+      end
+
+      context 'when the user has associated services' do
+        before { create :service, user: requested_user }
+
+        it_behaves_like 'renders a validation error response'
+
+        it 'does not delete the user or it\'s service' do
+          expect { request }.to not_change(User, :count).and not_change(Service, :count)
+        end
       end
     end
   end

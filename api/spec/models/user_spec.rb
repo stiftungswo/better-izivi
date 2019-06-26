@@ -63,7 +63,6 @@ RSpec.describe User, type: :model do
       it { is_expected.to eq false }
     end
 
-
     context 'when the civil service he\'s currently doing ends today' do
       let(:beginning) { Time.zone.today.at_beginning_of_week - 1.week }
       let(:service) { create :service, :last, beginning: beginning, ending: Time.zone.today }
