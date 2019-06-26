@@ -104,10 +104,10 @@ export class UserOverview extends React.Component<Props> {
             </td>
             <td>
               <DatePickerInput
-                value={new Date(this.props.userStore!.userFilters.date_to)}
+                value={new Date(this.props.userStore!.userFilters.ending)}
                 onChange={(d: Date) => {
                   this.props.userStore!.updateFilters({
-                    date_to: d.toISOString(),
+                    ending: d.toISOString(),
                   });
                 }}
               />

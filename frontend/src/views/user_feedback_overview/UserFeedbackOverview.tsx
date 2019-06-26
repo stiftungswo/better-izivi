@@ -31,7 +31,7 @@ const initialValues = {
   beginning: moment()
     .subtract(1, 'year')
     .format('YYYY-MM-DD'),
-  date_to: moment().format('YYYY-MM-DD'),
+  ending: moment().format('YYYY-MM-DD'),
 };
 
 @inject('userFeedbackStore')
@@ -49,7 +49,7 @@ export class UserFeedbackOverview extends React.Component<Props, State> {
     this.updateData(initialValues);
   }
 
-  updateData = (props: { beginning: string; date_to: string }) => {
+  updateData = (props: { beginning: string; ending: string }) => {
     this.setState({ loading: true }, () => {
       this.props.userFeedbackStore!.fetchAll(props).then(() => this.setState({ loading: false }));
     });
@@ -63,17 +63,17 @@ export class UserFeedbackOverview extends React.Component<Props, State> {
             beginning: moment()
               .subtract(1, 'year')
               .toDate(),
-            date_to: moment().toDate(),
+            ending: moment().toDate(),
           }}
           onSubmit={values => {
             const dateFrom = moment(values.beginning).format('YYYY-MM-DD');
-            const dateTo = moment(values.date_to).format('YYYY-MM-DD');
-            this.updateData({ beginning: dateFrom, date_to: dateTo });
+            const dateTo = moment(values.ending).format('YYYY-MM-DD');
+            this.updateData({ beginning: dateFrom, ending: dateTo });
           }}
           render={({ submitForm }) => (
             <>
               <WiredField horizontal component={DatePickerInput} name={'beginning'} label={'Von'} />
-              <WiredField horizontal component={DatePickerInput} name={'date_to'} label={'Bis'} />
+              <WiredField horizontal component={DatePickerInput} name={'ending'} label={'Bis'} />
 
               <br />
               <Button onClick={() => submitForm()}>Antworten aktualisieren</Button>

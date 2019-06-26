@@ -17,12 +17,12 @@ import { apiDate } from '../utilities/validationHelpers';
 
 const phonelistSchema = yup.object({
   beginning: apiDate().required(),
-  date_to: apiDate().required(),
+  ending: apiDate().required(),
 });
 
 interface PhoneList {
   beginning: string;
-  date_to: string;
+  ending: string;
 }
 
 interface Props extends RouteComponentProps {
@@ -37,7 +37,7 @@ export class PhoneListView extends React.Component<Props> {
     const inputs = phonelistSchema.cast(entity);
     const secret = this.props.apiStore!.token;
 
-    const url = `${baseUrl}/documents/phone_list?start=${inputs.beginning}&end=${inputs.date_to}&token=${secret}`;
+    const url = `${baseUrl}/documents/phone_list?start=${inputs.beginning}&end=${inputs.ending}&token=${secret}`;
 
     const win = window.open(url, '_blank');
     if (win) {
@@ -59,7 +59,7 @@ export class PhoneListView extends React.Component<Props> {
             beginning: moment()
               .date(0)
               .format('Y-MM-DD'),
-            date_to: moment()
+            ending: moment()
               .endOf('month')
               .format('Y-MM-DD'),
             holiday_type: 2,
@@ -71,7 +71,7 @@ export class PhoneListView extends React.Component<Props> {
               <Row>
                 <Col xs="12">
                   <WiredField horizontal component={DatePickerField} label={'Anfang'} name={'beginning'} />
-                  <WiredField horizontal component={DatePickerField} label={'Ende'} name={'date_to'} />
+                  <WiredField horizontal component={DatePickerField} label={'Ende'} name={'ending'} />
                 </Col>
               </Row>
               <Row>

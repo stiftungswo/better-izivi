@@ -17,7 +17,7 @@ import { apiDate } from '../utilities/validationHelpers';
 
 const holidaySchema = yup.object({
   beginning: apiDate().required(),
-  date_to: apiDate().required(),
+  ending: apiDate().required(),
   holiday_type_id: yup.number().required(),
   description: yup.string().required(),
 });
@@ -50,14 +50,14 @@ export class HolidayOverview extends React.Component<Props, State> {
       {
         id: 'beginning',
         numeric: false,
-        label: 'Datum Start',
+        label: 'Start',
         format: holiday => this.props.mainStore!.formatDate(holiday.beginning),
       },
       {
-        id: 'date_to',
+        id: 'ending',
         numeric: false,
-        label: 'Datum Ende',
-        format: holiday => this.props.mainStore!.formatDate(holiday.date_to),
+        label: 'Ende',
+        format: holiday => this.props.mainStore!.formatDate(holiday.ending),
       },
       {
         id: 'holiday_type_id',
@@ -112,7 +112,7 @@ export class HolidayOverview extends React.Component<Props, State> {
               validationSchema={holidaySchema}
               initialValues={{
                 beginning: moment().format('Y-MM-DD'),
-                date_to: moment().format('Y-MM-DD'),
+                ending: moment().format('Y-MM-DD'),
                 holiday_type_id: 2,
                 description: '',
               }}
@@ -123,7 +123,7 @@ export class HolidayOverview extends React.Component<Props, State> {
                     <WiredField component={DatePickerField} name={'beginning'} />
                   </td>
                   <td>
-                    <WiredField component={DatePickerField} name={'date_to'} />
+                    <WiredField component={DatePickerField} name={'ending'} />
                   </td>
                   <td>
                     <WiredField
@@ -156,7 +156,7 @@ export class HolidayOverview extends React.Component<Props, State> {
                       <WiredField component={DatePickerField} name={'beginning'} />
                     </td>
                     <td>
-                      <WiredField component={DatePickerField} name={'date_to'} />
+                      <WiredField component={DatePickerField} name={'ending'} />
                     </td>
                     <td>
                       <WiredField
