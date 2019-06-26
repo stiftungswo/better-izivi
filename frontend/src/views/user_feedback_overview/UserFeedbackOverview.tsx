@@ -28,7 +28,7 @@ interface State {
 }
 
 const initialValues = {
-  date_from: moment()
+  beginning: moment()
     .subtract(1, 'year')
     .format('YYYY-MM-DD'),
   date_to: moment().format('YYYY-MM-DD'),
@@ -49,7 +49,7 @@ export class UserFeedbackOverview extends React.Component<Props, State> {
     this.updateData(initialValues);
   }
 
-  updateData = (props: { date_from: string; date_to: string }) => {
+  updateData = (props: { beginning: string; date_to: string }) => {
     this.setState({ loading: true }, () => {
       this.props.userFeedbackStore!.fetchAll(props).then(() => this.setState({ loading: false }));
     });
@@ -60,19 +60,19 @@ export class UserFeedbackOverview extends React.Component<Props, State> {
       <IziviContent card title={'Einsatzfeedbacks'}>
         <Formik
           initialValues={{
-            date_from: moment()
+            beginning: moment()
               .subtract(1, 'year')
               .toDate(),
             date_to: moment().toDate(),
           }}
           onSubmit={values => {
-            const dateFrom = moment(values.date_from).format('YYYY-MM-DD');
+            const dateFrom = moment(values.beginning).format('YYYY-MM-DD');
             const dateTo = moment(values.date_to).format('YYYY-MM-DD');
-            this.updateData({ date_from: dateFrom, date_to: dateTo });
+            this.updateData({ beginning: dateFrom, date_to: dateTo });
           }}
           render={({ submitForm }) => (
             <>
-              <WiredField horizontal component={DatePickerInput} name={'date_from'} label={'Von'} />
+              <WiredField horizontal component={DatePickerInput} name={'beginning'} label={'Von'} />
               <WiredField horizontal component={DatePickerInput} name={'date_to'} label={'Bis'} />
 
               <br />

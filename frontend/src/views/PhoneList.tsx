@@ -16,12 +16,12 @@ import { MainStore } from '../stores/mainStore';
 import { apiDate } from '../utilities/validationHelpers';
 
 const phonelistSchema = yup.object({
-  date_from: apiDate().required(),
+  beginning: apiDate().required(),
   date_to: apiDate().required(),
 });
 
 interface PhoneList {
-  date_from: string;
+  beginning: string;
   date_to: string;
 }
 
@@ -37,7 +37,7 @@ export class PhoneListView extends React.Component<Props> {
     const inputs = phonelistSchema.cast(entity);
     const secret = this.props.apiStore!.token;
 
-    const url = `${baseUrl}/documents/phone_list?start=${inputs.date_from}&end=${inputs.date_to}&token=${secret}`;
+    const url = `${baseUrl}/documents/phone_list?start=${inputs.beginning}&end=${inputs.date_to}&token=${secret}`;
 
     const win = window.open(url, '_blank');
     if (win) {
@@ -56,7 +56,7 @@ export class PhoneListView extends React.Component<Props> {
         <Formik
           validationSchema={phonelistSchema}
           initialValues={{
-            date_from: moment()
+            beginning: moment()
               .date(0)
               .format('Y-MM-DD'),
             date_to: moment()
@@ -70,7 +70,7 @@ export class PhoneListView extends React.Component<Props> {
             <Form>
               <Row>
                 <Col xs="12">
-                  <WiredField horizontal component={DatePickerField} label={'Anfang'} name={'date_from'} />
+                  <WiredField horizontal component={DatePickerField} label={'Anfang'} name={'beginning'} />
                   <WiredField horizontal component={DatePickerField} label={'Ende'} name={'date_to'} />
                 </Col>
               </Row>

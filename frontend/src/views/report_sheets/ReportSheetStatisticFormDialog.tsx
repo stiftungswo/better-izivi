@@ -38,7 +38,7 @@ export class ReportSheetStatisticFormDialog extends React.Component<Props> {
         <ModalHeader>Spesenstatistik erstellen</ModalHeader>
         <Formik
           initialValues={{
-            date_from: moment()
+            beginning: moment()
               .startOf('year')
               .format('Y-MM-DD'),
             date_to: moment()
@@ -79,7 +79,7 @@ export class ReportSheetStatisticFormDialog extends React.Component<Props> {
 
                 {formikProps.values.time_type === '1' && (
                   <>
-                    <WiredField horizontal component={DatePickerField} name={'date_from'} label={'Start'} />
+                    <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Start'} />
                     <WiredField horizontal component={DatePickerField} name={'date_to'} label={'Ende'} />
                   </>
                 )}
