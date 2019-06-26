@@ -37,25 +37,18 @@ export class UserStore extends DomainStore<User> {
   userFilters: UserFilter;
 
   filter = debounce(() => {
-    this.filteredEntities = this.users
-      .filter((u: User) => {
+    this.filteredEntities = this.users.filter((user: User) => {
         const { zdp, name, date_from, date_to, active, role } = this.userFilters;
-        if (zdp && !u.zdp.toString().startsWith(zdp.toString())) {
-          return false;
+        switch (true) {
+          case zdp && !user.zdp.toString().startsWith(zdp.toString()):
+          case name && !(user.first_name + ' ' + user.last_name).toLowerCase().includes(name.toLowerCase()):
+          case date_from && user.beginning && moment(user.beginning).isBefore(moment(date_from)):
+          case date_to && user.ending && moment(user.ending).isAfter(moment(date_to)):
+          case active && !user.active:
+            return false;
+          default:
+            return !(role && user.role !== role);
         }
-        if (name && !(u.first_name + ' ' + u.last_name).toLowerCase().includes(name.toLowerCase())) {
-          return false;
-        }
-        if (date_from && u.beginning && moment(u.beginning).isBefore(moment(date_from))) {
-          return false;
-        }
-        if (date_to && u.ending && moment(u.ending).isAfter(moment(date_to))) {
-          return false;
-        }
-        if (active && !u.active) {
-          return false;
-        }
-        return !(role && u.role !== role);
       })
       .sort((a: User, b: User) => {
         if (!a.beginning && b.beginning) {
@@ -97,9 +90,7 @@ export class UserStore extends DomainStore<User> {
         this.userFilters.active,
         this.userFilters.role,
       ],
-      () => {
-        this.filter();
-      },
+      this.filter,
     );
   }
 
