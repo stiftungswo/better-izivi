@@ -43,7 +43,7 @@ module V1
 
     def set_service_specification
       # TODO: Find by identification number and adapt frontend
-    @service_specification = ServiceSpecification.find(params[:id])
+      @service_specification = ServiceSpecification.find(params[:id])
     end
 
     def service_specification_params

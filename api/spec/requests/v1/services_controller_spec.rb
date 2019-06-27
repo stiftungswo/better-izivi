@@ -15,13 +15,15 @@ RSpec.describe V1::ServicesController, type: :request do
       let(:request) { get v1_services_path }
       let(:first_service_json) do
         extract_to_json(services.first, :beginning, :ending, :confirmation_date, :id)
-          .merge(service_specification: extract_to_json(services.first.service_specification, :name, :short_name, :identification_number))
+          .merge(service_specification: extract_to_json(services.first.service_specification,
+                                                        :name, :short_name, :identification_number))
           .merge(user: extract_to_json(services.first.user, :id, :first_name, :last_name, :zdp))
       end
 
       let(:second_service_json) do
         extract_to_json(services.second, :beginning, :ending, :confirmation_date, :id)
-          .merge(service_specification: extract_to_json(services.second.service_specification, :name, :short_name, :identification_number))
+          .merge(service_specification: extract_to_json(services.second.service_specification,
+                                                        :name, :short_name, :identification_number))
           .merge(user: extract_to_json(services.second.user, :id, :first_name, :last_name, :zdp))
       end
 
