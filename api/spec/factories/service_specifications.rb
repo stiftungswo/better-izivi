@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :service_specification do
     name { 'MyServiceSpecification' }
+    identification_number { '82844' }
     short_name { 'M' }
     work_clothing_expenses { 1000 }
     accommodation_expenses { 0 }

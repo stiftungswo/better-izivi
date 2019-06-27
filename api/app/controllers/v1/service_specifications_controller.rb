@@ -10,6 +10,7 @@ module V1
     PERMITTED_SERVICE_SPECIFICATION_KEYS = %i[
       name short_name work_clothing_expenses
       accommodation_expenses location active
+      identification_number
     ].freeze
 
     PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS = {
@@ -41,7 +42,8 @@ module V1
     private
 
     def set_service_specification
-      @service_specification = ServiceSpecification.find(params[:id])
+      # TODO: Find by identification number and adapt frontend
+    @service_specification = ServiceSpecification.find(params[:id])
     end
 
     def service_specification_params
