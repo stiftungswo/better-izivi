@@ -162,6 +162,7 @@ export class ApiStore {
             this.logout().catch(this.removeAuthorizationToken.bind(this));
           } else {
             this.removeAuthorizationToken();
+            this.history.push('/');
           }
         }
         return Promise.reject({ error, messages: error.response ? error.response.data : [] });
