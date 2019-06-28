@@ -72,7 +72,7 @@ export interface ReportSheetListing {
 }
 
 export interface ServiceSpecification {
-  id?: string;
+  identification_number?: string;
   name: string;
   short_name: string;
   working_clothes_payment: null | string;
@@ -100,7 +100,6 @@ export interface User {
   id: number;
   active: boolean;
   address: string;
-  bank_bic: string;
   bank_iban: string;
   birthday: string;
   chainsaw_workshop: boolean;
@@ -108,21 +107,18 @@ export interface User {
   driving_licence_b: boolean;
   driving_licence_be: boolean;
   email: string;
-  end: null | string;
+  ending: null | string;
   first_name: string;
   health_insurance: string;
   hometown: string;
   internal_note: string;
   last_name: string;
-  services: Service[];
   phone: string;
-  phone_business: string;
-  phone_mobile: string;
-  phone_private: string;
   regional_center_id: number;
   report_sheets: ReportSheet[];
-  role: Role;
-  start: null | string;
+  role: 'admin' | 'civil_servant';
+  services: Service[];
+  beginning: null | string;
   work_experience: null | string;
   zdp: number;
   zip: number | null;
@@ -155,9 +151,22 @@ export interface Service {
   user_id: number;
 }
 
-export interface Role {
-  id: number;
-  name: UserRoleName;
+export interface ServiceCollection {
+  id?: number;
+  beginning: string | null;
+  ending: string | null;
+  confirmation_date: string | null;
+  service_specification: {
+    identification_number: string;
+    name: string | null;
+    short_name: string | null;
+  };
+  user: {
+    id: number;
+    first_name: string | null;
+    last_name: string | null;
+    zdp: number;
+  };
 }
 
 export interface UserFeedback {
