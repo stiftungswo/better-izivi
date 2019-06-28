@@ -12,7 +12,7 @@ module V1
     def show
       respond_to do |format|
         format.pdf do
-          pdf = PhoneListPdfService.new(@specifications, sanitized_filters)
+          pdf = Pdfs::PhoneListService.new(@specifications, sanitized_filters)
 
           send_data pdf.render,
                     filename: I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today)),

@@ -2,6 +2,7 @@
 
 class ServiceSpecification < ApplicationRecord
   ALLOWED_EXPENSE_KEYS = %w[breakfast lunch dinner].freeze
+  POCKET_MONEY = 500
 
   serialize :work_days_expenses, JSON
   serialize :paid_vacation_expenses, JSON
@@ -29,6 +30,10 @@ class ServiceSpecification < ApplicationRecord
 
   def title
     "#{id} #{name}"
+  end
+
+  def pocket_money
+    POCKET_MONEY
   end
 
   private

@@ -35,6 +35,7 @@ en:
           first_name: First name
           last_name: Last name
           phone: Phone
+          zdp: civile servant number
           zip_with_city: ZIP / City
       service_specification: service specification
       user: User
@@ -51,6 +52,17 @@ en:
       filename: ExpenseSheet_%{today}.pdf
       header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603
         Schwerzenbach
+      info_block:
+        complete_service:
+          label: full service
+          value:
+            one: '<b>%{beginning} to %{ending} (%{duration} day)</b>'
+            other: '<b>%{beginning} to %{ending} (%{duration} days)</b>'
+        expense_sheet_time_duration:
+          label: reporting period
+          value:
+            one: '%{beginning} to %{ending} (%{duration} day)'
+            other: '%{beginning} to %{ending} (%{duration} days)'
       title: Expense_report_of_%{full_name}.pdf
     phone_list:
       filename: Phonelist_%{today}.pdf
@@ -59,3 +71,6 @@ en:
   service_calculator:
     end_date_cannot_be_on_weekend: Service end date can't be on a weekend
     invalid_required_service_days: Invalid service days
+  expense_sheet_calculator:
+    errors:
+      unknown_day_type: Ungültiger Spesentagestyp

@@ -34,6 +34,26 @@ class ExpenseSheet < ApplicationRecord
     10_000 # TODO: implement correct calculator
   end
 
+  def service
+    user.services.including_date_range(beginning, ending).first
+  end
+
+  def duration
+    (ending - beginning).to_i + 1
+  end
+
+  def work_days_count
+    work_days - [at_service_start?, at_service_end?].count(&:itself)
+  end
+
+  def at_service_start?
+    beginning == service.beginning
+  end
+
+  def at_service_end?
+    ending == service.ending
+  end
+
   private
 
   def legitimate_state_change

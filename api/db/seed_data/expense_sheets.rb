@@ -1,33 +1,39 @@
 # frozen_string_literal: true
 
-at_beginning_of_month = (Time.zone.today - 1.month).at_beginning_of_month
-at_end_of_month = (Time.zone.today - 1.month).at_end_of_month
-
 def count_workdays(date)
   (1..5).cover? date.wday
 end
 
+beginning_first_user = User.first.services.last.beginning
+ending_first_user = User.first.services.last.ending
+
 ExpenseSheet.create!(
   user: User.first,
-  beginning: at_beginning_of_month,
-  ending: at_end_of_month,
-  work_days: (at_beginning_of_month..at_end_of_month).count(&method(:count_workdays)),
+  beginning: beginning_first_user,
+  ending: ending_first_user,
+  work_days: (beginning_first_user..ending_first_user).count(&:on_weekday?),
+  workfree_days: (beginning_first_user..ending_first_user).count(&:on_weekend?),
   bank_account_number: User.first.bank_iban
 )
 
+beginning_last_user = User.find_by(email: 'zivi_francise@france.ch').services.last.beginning
+ending_last_user = User.find_by(email: 'zivi_francise@france.ch').services.last.ending
+
 ExpenseSheet.create!(
-  user: User.second,
-  beginning: at_beginning_of_month,
-  ending: at_end_of_month,
-  work_days: (at_beginning_of_month..at_end_of_month).count(&method(:count_workdays)),
-  bank_account_number: User.second.bank_iban
+  user: User.find_by(email: 'zivi_francise@france.ch'),
+  beginning: beginning_last_user,
+  ending: ending_last_user,
+  work_days: (beginning_last_user..ending_last_user).count(&:on_weekday?),
+  workfree_days: (beginning_last_user..ending_last_user).count(&:on_weekend?),
+  bank_account_number: User.find_by(email: 'zivi_francise@france.ch').bank_iban
 )
 
 ExpenseSheet.create!(
-  user: User.second,
-  beginning: at_beginning_of_month,
-  ending: at_end_of_month,
-  work_days: (at_beginning_of_month..at_end_of_month).count(&method(:count_workdays)),
-  bank_account_number: User.second.bank_iban,
+  user: User.find_by(email: 'zivi_francise@france.ch'),
+  beginning: beginning_last_user,
+  ending: ending_last_user,
+  work_days: (beginning_last_user..ending_last_user).count(&:on_weekday?),
+  workfree_days: (beginning_last_user..ending_last_user).count(&:on_weekend?),
+  bank_account_number: User.find_by(email: 'zivi_francise@france.ch').bank_iban,
   state: :ready_for_payment
 )

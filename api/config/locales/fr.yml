@@ -35,8 +35,9 @@ fr:
           first_name: Prénom
           last_name: Nom de famille
           phone: Numéro de téléphone
+          zdp: N° de civiliste
           zip_with_city: Code postal / Ville
-      service_specification: spécification d'encart
+      service_specification: spécification du service
       user: Utilisateur
   date:
     formats:
@@ -51,6 +52,17 @@ fr:
       filename: Portrait_des_dépenses_%{today}.pdf
       header: 'Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse
         18b, 8603 Schwerzenbach '
+      info_block:
+        complete_service:
+          label: Service complet
+          value:
+            one: '%{beginning} à %{ending} (%{duration} jour)'
+            other: '%{beginning} à %{ending} (%{duration} jours)'
+        expense_sheet_time_duration:
+          label: Période du rapport
+          value:
+            one: '<b>%{beginning} à %{ending} (%{duration} jour)</b>'
+            other: '<b>%{beginning} à %{ending} (%{duration} jours)</b>'
       title: Rapport_de_dépenses_de_%{full_name}.pdf
     phone_list:
       filename: Liste_téléphonique_%{today}.pdf
@@ -60,3 +72,6 @@ fr:
     end_date_cannot_be_on_weekend: La fin du service ne peut pas avoir lieu la fin
       de semaine.
     invalid_required_service_days: Jours du service non valables
+  expense_sheet_calculator:
+    errors:
+      unknown_day_type: Ungültiger Spesentagestyp
