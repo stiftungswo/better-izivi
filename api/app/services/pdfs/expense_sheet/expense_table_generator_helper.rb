@@ -5,8 +5,9 @@ module Pdfs
     module ExpenseTableGeneratorHelper
       def expense_table
         indent(20) do
+          move_cursor_to cursor - 50
           draw_expense_table_headers
-          move_cursor_to cursor - 10
+          move_cursor_to cursor - 35
           draw_expense_table_row
         end
       end
@@ -18,18 +19,24 @@ module Pdfs
       end
 
       def draw_expense_table_headers
-        move_cursor_to cursor - 50
+        header_indent = bounds.left + Fields::ExpenseTable::COLUMN_WIDTHS[0..1].sum + 5
 
-        current_indent = 115
-        Fields::ExpenseTable::HEADERS.each.with_index do |header, index|
-          indent(current_indent) do
-            save_cursor = cursor
-            text header, style: :bold
-            text '(Fr.)'
-            move_cursor_to save_cursor unless (Fields::ExpenseTable::HEADERS.length - 1) == index
-          end
-          current_indent += Fields::ExpenseTable::COLUMN_WIDTHS[2..-1][index]
+        Fields::ExpenseTable::HEADERS.each.with_index.reduce(header_indent) do |global_indent, (header, index)|
+          current_indent = Fields::ExpenseTable::COLUMN_WIDTHS[2..-1][index]
+
+          draw_table_head_text(header, index, global_indent)
+          global_indent + current_indent
         end
+      end
+
+      def draw_table_head_text(header, index, global_indent)
+        last = index == (Fields::ExpenseTable::HEADERS.length - 1)
+        current_indent = Fields::ExpenseTable::COLUMN_WIDTHS[2..-1][index]
+        current_width = current_indent - (last ? 5 : 0) - 3
+        current_align = last ? :right : :left
+
+        text_box(header, at: [global_indent + 2, cursor], width: current_width, align: current_align, style: :bold)
+        text_box('(Fr.)', at: [global_indent + 2, cursor - 12], width: current_width, align: current_align)
       end
 
       def draw_expense_table_row

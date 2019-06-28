@@ -8,7 +8,7 @@ FactoryBot.define do
     work_clothing_expenses { 1000 }
     accommodation_expenses { 0 }
     location { 'zurich' }
-    active { false }
+    active { true }
     work_days_expenses { { breakfast: 400, lunch: 900, dinner: 700 } }
     paid_vacation_expenses { { breakfast: 400, lunch: 900, dinner: 700 } }
     first_day_expenses { { breakfast: 400, lunch: 900, dinner: 700 } }

@@ -229,19 +229,24 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
   describe '#show' do
     let(:request) { get v1_expense_sheet_path(format: :pdf, id: expense_sheet.id), params: { token: token } }
     let!(:user) { create :user }
-    let(:expense_sheet) { create :expense_sheet, :ready_for_payment }
+    let(:expense_sheet) { create :expense_sheet, user: user, beginning: beginning, ending: ending }
     let(:service) do
       create :service,
-             beginning: expense_sheet.beginning,
-             ending: expense_sheet.ending,
+             beginning: beginning,
+             ending: ending,
              user: expense_sheet.user
     end
+
+    let(:beginning) { (Time.zone.today - 3.months).beginning_of_week }
+    let(:ending) { (Time.zone.today - 1.week).end_of_week - 2.days }
 
     context 'when a token is provided' do
       let(:token) { generate_jwt_token_for_user(user) }
 
       context 'when user is admin' do
         let(:user) { create :user, :admin }
+
+        before { service }
 
         it_behaves_like 'renders a successful http status code'
 

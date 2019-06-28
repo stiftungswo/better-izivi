@@ -46,6 +46,7 @@ de:
             unpaid_vacation_days:
               one: Urlaubstag
               other: Urlaubstage
+            driving_expenses: Fahrspesen
         user:
           address: Adresse
           email: Email

@@ -41,11 +41,11 @@ module Pdfs
         move_cursor_to save_cursor
       end
 
-      def cursor_save_text(*text_args)
-        cursor_save do
-          text(*text_args)
-        end
-      end
+      # def cursor_save_text(*text_args)
+      #   cursor_save do
+      #     text(*text_args)
+      #   end
+      # end
 
       def cursor_save_text_box(*text_box_args)
         cursor_save do
