@@ -25,8 +25,9 @@ module Pdfs
 
       def draw_supplement_row_content(global_indent, indent, content)
         header = (global_indent < (bounds.left + 105))
-        current_indent = global_indent + (header ? 0 : 5)
-        current_width = indent - (header ? 0 : 5)
+        header_padding = (header ? 0 : 5)
+        current_indent = global_indent + header_padding
+        current_width = indent - header_padding
 
         if header
           draw_supplement_header(content, current_indent, current_width)
