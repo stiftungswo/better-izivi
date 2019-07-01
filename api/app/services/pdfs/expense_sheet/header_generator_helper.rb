@@ -5,7 +5,7 @@ module Pdfs
     module HeaderGeneratorHelper
       def header
         box Colors::GREEN, [0, cursor], width: bounds.width, height: 30
-        move_cursor_to cursor - 30
+        move_down 30
         text_box I18n.t('pdfs.expense_sheet.header'),
                  align: :center,
                  valign: :center,

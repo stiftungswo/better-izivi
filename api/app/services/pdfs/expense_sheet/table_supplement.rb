@@ -6,7 +6,7 @@ module Pdfs
       def draw_supplement_rows
         Fields::ExpenseTable::SUPPLEMENT_ROWS.each do |row|
           draw_supplement_row row
-          move_cursor_to cursor - 20
+          move_down 20
         end
       end
 
@@ -20,7 +20,7 @@ module Pdfs
 
           global_indent + indent
         end
-        move_cursor_to cursor + 20 if no_content
+        move_up 20 if no_content
       end
 
       def draw_supplement_row_content(global_indent, indent, content)

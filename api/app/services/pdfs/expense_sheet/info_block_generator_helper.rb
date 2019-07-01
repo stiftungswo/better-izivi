@@ -4,7 +4,7 @@ module Pdfs
   module ExpenseSheet
     module InfoBlockGeneratorHelper
       def info_block
-        move_cursor_to cursor - 25
+        move_down 25
         draw_specification_fields
         draw_user_fields
         draw_calculated_fields
@@ -12,11 +12,11 @@ module Pdfs
 
       def draw_info_block_line(label, content)
         indent(20) do
-          move_cursor_to cursor - 10
+          move_down 10
           text label
           box Colors::GREY, [115, cursor + 15], width: 350, height: 15
           indent(120) do
-            move_cursor_to cursor + 12
+            move_up 12
             text content.to_s, inline_format: true
           end
         end

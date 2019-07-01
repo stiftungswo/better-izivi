@@ -8,9 +8,9 @@ module Pdfs
 
       def expense_table
         indent(10) do
-          move_cursor_to cursor - 50
+          move_down 50
           draw_expense_table_headers
-          move_cursor_to cursor - 35
+          move_down 35
           draw_expense_table_row
           draw_supplement_rows
         end
@@ -29,7 +29,7 @@ module Pdfs
 
           draw_row_head([count.to_s, title])
           draw_row_content(row[:calculation_method], count)
-          move_cursor_to cursor - 20
+          move_down 20
         end
       end
 
