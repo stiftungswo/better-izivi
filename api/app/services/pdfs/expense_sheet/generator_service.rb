@@ -3,11 +3,11 @@
 module Pdfs
   module ExpenseSheet
     class GeneratorService
-      include Pdfs::ExpenseSheet::ExpenseTableGeneratorHelper
+      include Pdfs::ExpenseSheet::TableGenerator
       include Prawn::View
       include HeaderGeneratorHelper
       include InfoBlockGeneratorHelper
-      include ExpenseTableGeneratorHelper
+      include TableGenerator
 
       def initialize(expense_sheet)
         @expense_sheet = expense_sheet
@@ -40,12 +40,6 @@ module Pdfs
         yield
         move_cursor_to save_cursor
       end
-
-      # def cursor_save_text(*text_args)
-      #   cursor_save do
-      #     text(*text_args)
-      #   end
-      # end
 
       def cursor_save_text_box(*text_box_args)
         cursor_save do

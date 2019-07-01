@@ -1,5 +1,12 @@
 ---
 fr:
+  activerecord:
+    models:
+      attributes:
+        expense_sheet:
+          attributes:
+            paid_vacation_days:
+              one: {}
   devise:
     confirmations:
       confirmed: Votre compte a bien été confirmé.
@@ -147,7 +154,3 @@ fr:
           :'
         other: "%{count} erreurs ont empêché ce (cet ou cette) %{resource} d’être
           enregistré(e) :"
-  pdfs:
-    expense_sheet:
-      info_block:
-        expense_sheet_time_duration: {}

@@ -62,7 +62,28 @@ module Pdfs
           }
         ].freeze
 
-        SUPPLEMENT_ROWS = [].freeze
+        SUPPLEMENT_ROWS = [
+          {
+            COLUMN_WIDTHS[0..1].sum => '',
+            COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.unpaid_vacation_comment }
+          },
+          {
+            COLUMN_WIDTHS[0] => '+',
+            COLUMN_WIDTHS[1] => I18n.t('activerecord.models.attributes.expense_sheet.attributes.driving_expenses'),
+            COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.driving_expenses_comment },
+            COLUMN_WIDTHS[5..-2].sum => '',
+            COLUMN_WIDTHS[-1] => ->(expense_sheet) { format('%.2f', expense_sheet.driving_expenses.to_d / 100) }
+          },
+          {
+            COLUMN_WIDTHS[0] => '+',
+            COLUMN_WIDTHS[1] => I18n.t(
+              'activerecord.models.attributes.expense_sheet.attributes.work_clothing_expenses'
+            ),
+            COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.driving_expenses_comment },
+            COLUMN_WIDTHS[5..-2].sum => '',
+            COLUMN_WIDTHS[-1] => ->(expense_sheet) { format('%.2f', expense_sheet.driving_expenses.to_d / 100) }
+          }
+        ].freeze
 
         COLUMNS = %i[
           pocket_money

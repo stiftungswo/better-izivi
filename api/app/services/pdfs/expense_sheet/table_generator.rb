@@ -2,13 +2,17 @@
 
 module Pdfs
   module ExpenseSheet
-    module ExpenseTableGeneratorHelper
+    module TableGenerator
+      include TableHeader
+      include TableSupplement
+
       def expense_table
-        indent(20) do
+        indent(10) do
           move_cursor_to cursor - 50
           draw_expense_table_headers
           move_cursor_to cursor - 35
           draw_expense_table_row
+          draw_supplement_rows
         end
       end
 
@@ -16,27 +20,6 @@ module Pdfs
 
       def calculator
         @calculator ||= ExpenseSheetCalculatorService.new(@expense_sheet)
-      end
-
-      def draw_expense_table_headers
-        header_indent = bounds.left + Fields::ExpenseTable::COLUMN_WIDTHS[0..1].sum + 5
-
-        Fields::ExpenseTable::HEADERS.each.with_index.reduce(header_indent) do |global_indent, (header, index)|
-          current_indent = Fields::ExpenseTable::COLUMN_WIDTHS[2..-1][index]
-
-          draw_table_head_text(header, index, global_indent)
-          global_indent + current_indent
-        end
-      end
-
-      def draw_table_head_text(header, index, global_indent)
-        last = index == (Fields::ExpenseTable::HEADERS.length - 1)
-        current_indent = Fields::ExpenseTable::COLUMN_WIDTHS[2..-1][index]
-        current_width = current_indent - (last ? 5 : 0) - 3
-        current_align = last ? :right : :left
-
-        text_box(header, at: [global_indent + 2, cursor], width: current_width, align: current_align, style: :bold)
-        text_box('(Fr.)', at: [global_indent + 2, cursor - 12], width: current_width, align: current_align)
       end
 
       def draw_expense_table_row
@@ -64,11 +47,9 @@ module Pdfs
         current_align = index.even? ? :right : :left
 
         cursor_save_text_box(
-          content,
-          style: :bold,
-          align: current_align,
-          at: [global_indent, cursor],
-          width: current_width
+          content, style: :bold, align: current_align,
+                   at: [global_indent, cursor], width: current_width,
+                   overflow: :shrink_to_fit, height: 15
         )
         global_indent + current_indent
       end
@@ -92,7 +73,7 @@ module Pdfs
         box Colors::GREY, [global_indent, (cursor + 3)], width: current_width, height: 15
         cursor_save_text_box(row_content_format(expense),
                              at: [(global_indent + 3), cursor],
-                             width: (current_width - 5),
+                             width: (current_width - 8),
                              align: (last ? :right : :left))
 
         global_indent + current_indent

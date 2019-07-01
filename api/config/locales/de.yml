@@ -29,24 +29,32 @@ de:
       attributes:
         expense_sheet:
           attributes:
-            pocket_money: Taschengeld
             accommodation_expenses: Unterkunft
+            driving_expenses: Fahrspesen
+            paid_vacation_days:
+              one: Ferientag
+              other: Ferientage
+            pocket_money: Taschengeld
+            sick_days:
+              one: Krankheitstag
+              other: Krankheitstage
+            state:
+              invalid_state_change: 
+            unpaid_vacation_days:
+              one: Urlaubstag
+              other: Urlaubstage
+            work_clothing_expenses: Arbeitskleider
             work_days:
               one: Arbeitstag
               other: Arbeitstage
             workfree_days:
               one: Arbeitsfreier Tag
               other: Arbeitsfreie Tage
-            sick_days:
-              one: Krankheitstag
-              other: Krankheitstage
-            paid_vacation_days:
-              one: Ferientag
-              other: Ferientage
-            unpaid_vacation_days:
-              one: Urlaubstag
-              other: Urlaubstage
-            driving_expenses: Fahrspesen
+        service_specification:
+          expense_keys:
+            breakfast: Morgen
+            dinner: Abend
+            lunch: Mittag
         user:
           address: Adresse
           email: Email
@@ -55,11 +63,6 @@ de:
           phone: Telefonnummer
           zdp: ZDP-Nr.
           zip_with_city: PLZ / Ort
-        service_specification:
-          expense_keys:
-            breakfast: Morgen
-            lunch: Mittag
-            dinner: Abend
       service_specification: Pflichtenheft
       user: Benutzer
   date:
@@ -69,14 +72,22 @@ de:
   errors:
     authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
     format_error: Sie haben ein ungültiges Format angefordert
+  expense_sheet_calculator:
+    errors:
+      unknown_day_type: Ungültiger Spesentagestyp
   payment:
     expenses_from: Spesen vom %{from_date}
   pdfs:
     expense_sheet:
+      expense_table:
+        headers:
+          full_amount: Total
+        row_headers:
+          first_work_days: Erster Arbeitstag
+          last_work_days: Letzter Arbeitstag
       filename: Spesenrapport_%{today}.pdf
       header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603
         Schwerzenbach '
-      title: Spesenrapport_von_%{full_name}.pdf
       info_block:
         complete_service:
           label: Gesamteinsatz
@@ -88,12 +99,7 @@ de:
           value:
             one: "<b>%{beginning} bis %{ending} (%{duration} Tag)</b>"
             other: "<b>%{beginning} bis %{ending} (%{duration} Tage)</b>"
-      expense_table:
-        headers:
-          full_amount: Total
-        row_headers:
-          first_work_days: Erster Arbeitstag
-          last_work_days: Letzter Arbeitstag
+      title: Spesenrapport_von_%{full_name}.pdf
     phone_list:
       filename: Telefonliste_%{today}.pdf
       header: Stand vom %{date}
@@ -101,6 +107,3 @@ de:
   service_calculator:
     end_date_cannot_be_on_weekend: Einsatzende kann nicht an einem Wochenende sein
     invalid_required_service_days: Ungültige Einsatztage
-  expense_sheet_calculator:
-    errors:
-      unknown_day_type: Ungültiger Spesentagestyp

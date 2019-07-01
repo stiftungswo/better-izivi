@@ -29,8 +29,32 @@ en:
       attributes:
         expense_sheet:
           attributes:
+            accommodation_expenses: Accommodation
+            driving_expenses: 
+            paid_vacation_days:
+              one: 
+              other: 
+            pocket_money: Pocket money
+            sick_days:
+              one: 
+              other: 
             state:
               invalid_state_change: Invalid state change
+            unpaid_vacation_days:
+              one: 
+              other: 
+            work_clothing_expenses: 
+            work_days:
+              one: Work day
+              other: Work days
+            workfree_days:
+              one: 
+              other: 
+        service_specification:
+          expense_keys:
+            breakfast: 
+            dinner: 
+            lunch: 
         user:
           address: Address
           email: Email
@@ -44,13 +68,23 @@ en:
   date:
     formats:
       default: "%d.%m.%Y"
+      long: "%d.%b.%Y"
   errors:
     authorization_error: You are not authorized to perform this action
     format_error: You requested an invalid format
+  expense_sheet_calculator:
+    errors:
+      unknown_day_type: Ungültiger Spesentagestyp
   payment:
     expenses_from: Expenses from %{from_date}
   pdfs:
     expense_sheet:
+      expense_table:
+        headers:
+          full_amount: Total
+        row_headers:
+          first_work_days: First work day
+          last_work_days: Last work day
       filename: ExpenseSheet_%{today}.pdf
       header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603
         Schwerzenbach
@@ -58,13 +92,13 @@ en:
         complete_service:
           label: full service
           value:
-            one: '<b>%{beginning} to %{ending} (%{duration} day)</b>'
-            other: '<b>%{beginning} to %{ending} (%{duration} days)</b>'
+            one: "<b>%{beginning} to %{ending} (%{duration} day)</b>"
+            other: "<b>%{beginning} to %{ending} (%{duration} days)</b>"
         expense_sheet_time_duration:
           label: reporting period
           value:
-            one: '%{beginning} to %{ending} (%{duration} day)'
-            other: '%{beginning} to %{ending} (%{duration} days)'
+            one: "%{beginning} to %{ending} (%{duration} day)"
+            other: "%{beginning} to %{ending} (%{duration} days)"
       title: Expense_report_of_%{full_name}.pdf
     phone_list:
       filename: Phonelist_%{today}.pdf
@@ -73,6 +107,3 @@ en:
   service_calculator:
     end_date_cannot_be_on_weekend: Service end date can't be on a weekend
     invalid_required_service_days: Invalid service days
-  expense_sheet_calculator:
-    errors:
-      unknown_day_type: Ungültiger Spesentagestyp
