@@ -47,12 +47,10 @@ class ExpenseSheetCalculatorService
   def calculate_values(count, day_spec)
     expenses = {
       pocket_money: @specification.pocket_money,
-      accommodation: @specification.accommodation_expenses,
-      breakfast: day_spec['breakfast'],
-      lunch: day_spec['lunch'],
-      dinner: day_spec['dinner']
+      accommodation: @specification.accommodation_expenses
     }
 
-    expenses.merge(total: count * expenses.values.sum)
+    expenses.merge(day_spec.symbolize_keys.slice(:breakfast, :lunch, :dinner))
+            .merge(total: count * expenses.values.sum)
   end
 end
