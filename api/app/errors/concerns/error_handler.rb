@@ -5,6 +5,7 @@ module Concerns
     extend ActiveSupport::Concern
 
     class << self
+      # :reek:TooManyStatements
       def included(klass)
         # Caution, do not simplify statement which is suggested by RubyMine. It breaks the application
         klass.rescue_from(ActiveRecord::RecordNotFound) { |error| render_json_error(error) }
