@@ -8,45 +8,15 @@ class ExpenseSheetCalculatorService
   end
 
   def calculate_first_day(count)
-    first_day_spec = @specification.first_day_expenses
-
-    expenses = {
-      pocket_money: @specification.pocket_money,
-      accommodation: @specification.accommodation_expenses,
-      breakfast: first_day_spec['breakfast'],
-      lunch: first_day_spec['lunch'],
-      dinner: first_day_spec['dinner']
-    }
-
-    expenses.merge(total: count * expenses.values.sum)
+    calculate_values(count, @specification.first_day_expenses)
   end
 
   def calculate_work_days(count)
-    work_days_spec = @specification.work_days_expenses
-
-    expenses = {
-      pocket_money: @specification.pocket_money,
-      accommodation: @specification.accommodation_expenses,
-      breakfast: work_days_spec['breakfast'],
-      lunch: work_days_spec['lunch'],
-      dinner: work_days_spec['dinner']
-    }
-
-    expenses.merge(total: count * expenses.values.sum)
+    calculate_values(count, @specification.work_days_expenses)
   end
 
   def calculate_last_day(count)
-    last_day_spec = @specification.last_day_expenses
-
-    expenses = {
-      pocket_money: @specification.pocket_money,
-      accommodation: @specification.accommodation_expenses,
-      breakfast: last_day_spec['breakfast'],
-      lunch: last_day_spec['lunch'],
-      dinner: last_day_spec['dinner']
-    }
-
-    expenses.merge(total: count * expenses.values.sum)
+    calculate_values(count, @specification.last_day_expenses)
   end
 
   def calculate_workfree_days(count)
@@ -72,5 +42,17 @@ class ExpenseSheetCalculatorService
     }
   end
 
-  # private
+  private
+
+  def calculate_values(count, day_spec)
+    expenses = {
+      pocket_money: @specification.pocket_money,
+      accommodation: @specification.accommodation_expenses,
+      breakfast: day_spec['breakfast'],
+      lunch: day_spec['lunch'],
+      dinner: day_spec['dinner']
+    }
+
+    expenses.merge(total: count * expenses.values.sum)
+  end
 end
