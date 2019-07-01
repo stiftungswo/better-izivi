@@ -63,7 +63,8 @@ module V1
       identification_number = specification_params[:service_specification_identification_number]
 
       if identification_number.present?
-        permitted_params[:service_specification] = ServiceSpecification.find_by(identification_number: identification_number)
+        service_specification = ServiceSpecification.find_by(identification_number: identification_number)
+        permitted_params[:service_specification] = service_specification
       end
 
       permitted_params
