@@ -7,31 +7,33 @@ class ExpenseSheetCalculatorService
     @specification = expense_sheet.service.service_specification
   end
 
-  def calculate_first_day(count)
+  def calculate_first_day
+    count = @expense_sheet.at_service_beginning? ? 1 : 0
     calculate_values(count, @specification.first_day_expenses)
   end
 
-  def calculate_work_days(count)
-    calculate_values(count, @specification.work_days_expenses)
+  def calculate_work_days
+    calculate_default_days(@expense_sheet.work_days_count)
   end
 
-  def calculate_last_day(count)
+  def calculate_last_day
+    count = @expense_sheet.at_service_ending? ? 1 : 0
     calculate_values(count, @specification.last_day_expenses)
   end
 
-  def calculate_workfree_days(count)
-    calculate_work_days(count)
+  def calculate_workfree_days
+    calculate_default_days(@expense_sheet.workfree_days)
   end
 
-  def calculate_sick_days(count)
-    calculate_work_days(count)
+  def calculate_sick_days
+    calculate_default_days(@expense_sheet.sick_days)
   end
 
-  def calculate_paid_vacation_days(count)
-    calculate_work_days(count)
+  def calculate_paid_vacation_days
+    calculate_default_days(@expense_sheet.paid_vacation_days)
   end
 
-  def calculate_unpaid_vacation_days(_count)
+  def calculate_unpaid_vacation_days
     {
       pocket_money: 0,
       accommodation: 0,
@@ -42,7 +44,23 @@ class ExpenseSheetCalculatorService
     }
   end
 
+  def calculate_full_expenses
+    [
+      calculate_first_day,
+      calculate_work_days,
+      calculate_last_day,
+      calculate_workfree_days,
+      calculate_sick_days,
+      calculate_paid_vacation_days,
+      calculate_unpaid_vacation_days
+    ].sum { |values| values[:total] }
+  end
+
   private
+
+  def calculate_default_days(count)
+    calculate_values(count, @specification.work_days_expenses)
+  end
 
   def calculate_values(count, day_spec)
     expenses = {
@@ -51,6 +69,6 @@ class ExpenseSheetCalculatorService
     }
 
     expenses.merge(day_spec.symbolize_keys.slice(:breakfast, :lunch, :dinner))
-            .merge(total: count * expenses.values.sum)
+            .yield_self { |full_expenses| full_expenses.merge(total: count * full_expenses.values.sum) }
   end
 end

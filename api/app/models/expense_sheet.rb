@@ -35,7 +35,7 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def service
-    user.services.including_date_range(beginning, ending).first
+    @service ||= user.services.including_date_range(beginning, ending).first
   end
 
   def duration
@@ -43,14 +43,14 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def work_days_count
-    work_days - [at_service_start?, at_service_end?].count(&:itself)
+    work_days - [at_service_beginning?, at_service_ending?].count(&:itself)
   end
 
-  def at_service_start?
+  def at_service_beginning?
     beginning == service.beginning
   end
 
-  def at_service_end?
+  def at_service_ending?
     ending == service.ending
   end
 

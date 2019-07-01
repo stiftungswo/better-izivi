@@ -5,6 +5,7 @@ module Pdfs
     module TableGenerator
       include TableHeader
       include TableSupplement
+      include TableFooter
 
       def expense_table
         indent(10) do
@@ -13,6 +14,8 @@ module Pdfs
           move_down 35
           draw_expense_table_row
           draw_supplement_rows
+          move_down 20
+          draw_table_footer
         end
       end
 
@@ -28,7 +31,7 @@ module Pdfs
           title = I18n.t(row[:header_title_key], count: count)
 
           draw_row_head([count.to_s, title])
-          draw_row_content(row[:calculation_method], count)
+          draw_row_content(row[:calculation_method])
           move_down 20
         end
       end
@@ -54,10 +57,10 @@ module Pdfs
         global_indent + current_indent
       end
 
-      def draw_row_content(calculation_method, count)
+      def draw_row_content(calculation_method)
         header_indent = bounds.left + Fields::ExpenseTable::COLUMN_WIDTHS[0..1].sum + 5
 
-        calculated_expenses = calculator.public_send(calculation_method, count)
+        calculated_expenses = calculator.public_send(calculation_method)
         Fields::ExpenseTable::COLUMNS.each.with_index.reduce(header_indent) do |global_indent, (expense, index)|
           draw_row_content_box_and_text(global_indent,
                                         index,
@@ -71,16 +74,12 @@ module Pdfs
         last = Fields::ExpenseTable::COLUMNS.size == (index + 1)
 
         box Colors::GREY, [global_indent, (cursor + 3)], width: current_width, height: 15
-        cursor_save_text_box(row_content_format(expense),
+        cursor_save_text_box(FormatHelper.to_chf(expense),
                              at: [(global_indent + 3), cursor],
                              width: (current_width - 8),
                              align: (last ? :right : :left))
 
         global_indent + current_indent
-      end
-
-      def row_content_format(expense)
-        format('%.2f', expense.to_d / 100)
       end
     end
   end

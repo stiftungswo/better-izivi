@@ -1,9 +1,5 @@
 # frozen_string_literal: true
 
-def count_workdays(date)
-  (1..5).cover? date.wday
-end
-
 beginning_first_user = User.first.services.last.beginning
 ending_first_user = User.first.services.last.ending
 

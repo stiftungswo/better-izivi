@@ -5,14 +5,7 @@ module Pdfs
     module Fields
       module ExpenseTable
         COLUMN_WIDTHS = [
-          20,
-          85,
-          70,
-          70,
-          55,
-          55,
-          55,
-          65
+          20, 85, 70, 70, 55, 55, 55, 65
         ].freeze
 
         HEADERS = [
@@ -26,7 +19,7 @@ module Pdfs
 
         DAY_ROWS = [
           {
-            count: ->(expense_sheet) { expense_sheet.at_service_start? ? 1 : 0 },
+            count: ->(expense_sheet) { expense_sheet.at_service_beginning? ? 1 : 0 },
             header_title_key: 'pdfs.expense_sheet.expense_table.row_headers.first_work_days',
             calculation_method: :calculate_first_day
           },
@@ -36,7 +29,7 @@ module Pdfs
             calculation_method: :calculate_work_days
           },
           {
-            count: ->(expense_sheet) { expense_sheet.at_service_end? ? 1 : 0 },
+            count: ->(expense_sheet) { expense_sheet.at_service_ending? ? 1 : 0 },
             header_title_key: 'pdfs.expense_sheet.expense_table.row_headers.last_work_days',
             calculation_method: :calculate_last_day
           },
@@ -72,7 +65,9 @@ module Pdfs
             COLUMN_WIDTHS[1] => I18n.t('activerecord.models.attributes.expense_sheet.attributes.driving_expenses'),
             COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.driving_expenses_comment },
             COLUMN_WIDTHS[5..-2].sum => '',
-            COLUMN_WIDTHS[-1] => ->(expense_sheet) { format('%.2f', expense_sheet.driving_expenses.to_d / 100) }
+            COLUMN_WIDTHS[-1] => lambda do |expense_sheet|
+              Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses.to_d / 100)
+            end
           },
           {
             COLUMN_WIDTHS[0] => '+',
@@ -81,18 +76,35 @@ module Pdfs
             ),
             COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.driving_expenses_comment },
             COLUMN_WIDTHS[5..-2].sum => '',
-            COLUMN_WIDTHS[-1] => ->(expense_sheet) { format('%.2f', expense_sheet.driving_expenses.to_d / 100) }
+            COLUMN_WIDTHS[-1] => lambda do |expense_sheet|
+              Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses.to_d / 100)
+            end
           }
         ].freeze
 
-        COLUMNS = %i[
-          pocket_money
-          accommodation
-          breakfast
-          lunch
-          dinner
-          total
-        ].freeze
+        FOOTER = {
+          pre_line: [
+            {
+              COLUMN_WIDTHS[0..-3].sum => '',
+              COLUMN_WIDTHS[-2..-1].sum => '-'
+            }
+          ],
+          content: [
+            {
+              COLUMN_WIDTHS[0..-3].sum => '',
+              COLUMN_WIDTHS[-2] => "#{I18n.t('pdfs.expense_sheet.footer.total')}:",
+              COLUMN_WIDTHS[-1] => lambda do |calculator|
+                Pdfs::ExpenseSheet::FormatHelper.to_chf(calculator.calculate_full_expenses.to_d)
+              end
+            }
+          ],
+          post_line: [
+            { COLUMN_WIDTHS[0..-3].sum => '', COLUMN_WIDTHS[-2..-1].sum => '-' },
+            { COLUMN_WIDTHS[0..-3].sum => '', COLUMN_WIDTHS[-2..-1].sum => '-' }
+          ]
+        }.freeze
+
+        COLUMNS = %i[pocket_money accommodation breakfast lunch dinner total].freeze
       end
     end
   end

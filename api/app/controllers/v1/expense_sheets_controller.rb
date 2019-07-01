@@ -30,7 +30,7 @@ module V1
       respond_to do |format|
         format.json
         format.pdf do
-          I18n.locale = :de
+          I18n.locale = :fr
           pdf = Pdfs::ExpenseSheet::GeneratorService.new(@expense_sheet)
 
           send_data pdf.render,
