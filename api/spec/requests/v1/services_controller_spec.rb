@@ -240,8 +240,8 @@ RSpec.describe V1::ServicesController, type: :request do
             expect(parse_response_json(response)).to include(expected_attributes)
           end
 
-          it 'ignores confirmation date' do
-            put_request
+          it 'ignores confirmation date', :aggregate_failures do
+            expect { put_request }.not_to(change { service.reload.confirmation_date })
             expect(parse_response_json(response)[:confirmation_date]).to eq(nil)
           end
         end
