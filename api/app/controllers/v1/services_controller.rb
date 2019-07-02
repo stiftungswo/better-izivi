@@ -32,7 +32,6 @@ module V1
 
     def update
       raise ValidationError, @service.errors unless @service.update(service_params)
-      raise AuthorizationError unless @service.confirmation_date.nil? || current_user.admin?
 
       render :show
     end
