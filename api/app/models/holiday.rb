@@ -10,6 +10,10 @@ class Holiday < ApplicationRecord
     public_holiday: 2
   }
 
+  scope :in_service, lambda { |service|
+    where(arel_table[:beginning].lteq(service.ending)).where(arel_table[:ending].gteq(service.beginning))
+  }
+
   def work_days(public_holidays)
     range.reject { |day| day.on_weekend? || day_on_public_holiday?(day, public_holidays) } if company_holiday?
   end
