@@ -87,7 +87,10 @@ export default (params: OverviewTableParams) => {
           format: (service: Service) => {
             const spec = serviceSpecificationStore!
               .entities
-              .find((specification: ServiceSpecification) => specification.identification_number === service.service_specification_identification_number);
+              .find((specification: ServiceSpecification) => {
+                  return specification.identification_number === service.service_specification_identification_number;
+                },
+              );
             return `${spec ? spec.name : ''} (${service.service_specification_identification_number})`;
           },
         },
