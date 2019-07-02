@@ -34,6 +34,7 @@ class ServicePdfFormFiller
       .merge(load_service_date_fields)
       .merge(load_service_checkboxes)
       .merge(load_service_specification_fields)
+      .merge(load_company_holiday_fields)
   end
 
   def load_user_fields
@@ -57,6 +58,15 @@ class ServicePdfFormFiller
   def load_service_specification_fields
     convert_to_form_fields_hash(ServicePdfFormFields::SERVICE_SPECIFICATION_FORM_FIELDS) do |key, value|
       [value, @service.service_specification.public_send(key)]
+    end
+  end
+
+  def load_company_holiday_fields
+    company_holiday = Holiday.in_service(@service).select(&:company_holiday?).first
+    return {} if company_holiday.nil?
+
+    convert_to_form_fields_hash(ServicePdfFormFields::COMPANY_HOLIDAY_FORM_FIELDS) do |key, value|
+      [value, I18n.l(company_holiday.public_send(key))]
     end
   end
 
