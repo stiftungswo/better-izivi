@@ -6,14 +6,16 @@ module Pdfs
       include Pdfs::ExpenseSheet::TableGenerator
       include Prawn::View
       include HeaderGeneratorHelper
-      include InfoBlockGeneratorHelper
+      include HeaderInfoBlockGenerator
       include TableGenerator
+      include FooterInfoBlockGenerator
 
       def initialize(expense_sheet)
         @expense_sheet = expense_sheet
 
         header
         body
+        footer
       end
 
       private
@@ -24,8 +26,14 @@ module Pdfs
 
       def body
         font_size 10 do
-          info_block
+          header_info_block
           expense_table
+        end
+      end
+
+      def footer
+        font_size 10 do
+          footer_info_block
         end
       end
 

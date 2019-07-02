@@ -20,12 +20,12 @@ Service.create!(
     {
       user: User.find_by(email: 'zivi_francise@france.ch'),
       service_specification: ServiceSpecification.last,
-      beginning: beginning,
-      ending: beginning + 3.weeks + 4.days,
-      confirmation_date: beginning - 1.month,
+      beginning: beginning - 260.days,
+      ending: beginning - 80.days,
+      confirmation_date: beginning - 8.months,
       service_type: :normal,
-      first_swo_service: true,
-      long_service: false,
+      first_swo_service: false,
+      long_service: true,
       probation_service: false,
       feedback_mail_sent: false
     },

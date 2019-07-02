@@ -2,8 +2,8 @@
 
 module Pdfs
   module ExpenseSheet
-    module InfoBlockGeneratorHelper
-      def info_block
+    module HeaderInfoBlockGenerator
+      def header_info_block
         move_down 25
         draw_specification_fields
         draw_user_fields
@@ -23,19 +23,19 @@ module Pdfs
       end
 
       def draw_specification_fields
-        Fields::InfoBlock::ROWS[:service_specification].each do |field, label|
+        Fields::InfoBlock::HEADER_ROWS[:service_specification].each do |field, label|
           draw_info_block_line(label, @expense_sheet.service.service_specification.public_send(field))
         end
       end
 
       def draw_user_fields
-        Fields::InfoBlock::ROWS[:user].each do |field, label|
+        Fields::InfoBlock::HEADER_ROWS[:user].each do |field, label|
           draw_info_block_line(label, @expense_sheet.user.public_send(field))
         end
       end
 
       def draw_calculated_fields
-        Fields::InfoBlock::ROWS[:calculated].each do |field|
+        Fields::InfoBlock::HEADER_ROWS[:calculated].each do |field|
           draw_info_block_line(field[:label], field[:value].call(@expense_sheet))
         end
       end

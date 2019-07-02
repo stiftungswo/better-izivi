@@ -4,7 +4,7 @@ module Pdfs
   module ExpenseSheet
     module Fields
       module InfoBlock
-        ROWS = {
+        HEADER_ROWS = {
           service_specification: {
             title: "#{I18n.t('activerecord.models.service_specification').sub(/\w/, &:capitalize)}:"
           },
@@ -39,6 +39,12 @@ module Pdfs
             }
           ]
         }.freeze
+
+        # FOOTER_ROWS = {
+        #   user: {
+        #     iban: "#{I18n.t('')}"
+        #   }
+        # }
       end
     end
   end

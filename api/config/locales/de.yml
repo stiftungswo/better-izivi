@@ -63,6 +63,7 @@ de:
           phone: Telefonnummer
           zdp: ZDP-Nr.
           zip_with_city: PLZ / Ort
+          bank_iban: IBAN
       service_specification: Pflichtenheft
       user: Benutzer
   date:
