@@ -56,6 +56,13 @@ class ExpenseSheetCalculatorService
     ].sum { |values| values[:total] }
   end
 
+  # def calculate_work_clothing_expenses
+  #   allready_paid = @expense_sheet.service.expense_sheets
+  #
+  #
+  #   @expense_sheet.service.service_specification
+  # end
+
   private
 
   def calculate_default_days(count)

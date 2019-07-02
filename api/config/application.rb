@@ -38,7 +38,7 @@ module Api
     }
 
     config.i18n.default_locale = :de
-    config.i18n.fallbacks = %i[de en]
+    config.i18n.fallbacks = %i[de en fr]
     config.time_zone = 'Bern'
 
     Prawn::Font::AFM.hide_m17n_warning = true

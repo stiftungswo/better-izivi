@@ -1,12 +1,5 @@
 ---
 fr:
-  activerecord:
-    models:
-      attributes:
-        expense_sheet:
-          attributes:
-            paid_vacation_days:
-              one: {}
   devise:
     confirmations:
       confirmed: Votre compte a bien été confirmé.

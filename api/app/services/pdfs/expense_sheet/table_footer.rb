@@ -36,7 +36,7 @@ module Pdfs
       def draw_table_footer_row_content(global_indent, footer_column, align)
         indent = footer_column[0]
         content = footer_column[1]
-        content = content.call(calculator).to_s if content.is_a? Proc
+        content = content.call(@expense_sheet).to_s if content.is_a? Proc
 
         return if content.blank?
 

@@ -139,3 +139,8 @@ en:
       not_saved:
         one: '1 error prohibited this %{resource} from being saved:'
         other: "%{count} errors prohibited this %{resource} from being saved:"
+  pdfs:
+    expense_sheet:
+      expense_table:
+        supplement:
+          unpaid_vacation_comment: {}

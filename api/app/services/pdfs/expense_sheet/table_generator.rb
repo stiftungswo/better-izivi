@@ -21,10 +21,6 @@ module Pdfs
 
       private
 
-      def calculator
-        @calculator ||= ExpenseSheetCalculatorService.new(@expense_sheet)
-      end
-
       def draw_expense_table_row
         Fields::ExpenseTable::DAY_ROWS.each do |row|
           count = row[:count].call(@expense_sheet)
@@ -60,7 +56,7 @@ module Pdfs
       def draw_row_content(calculation_method)
         header_indent = bounds.left + Fields::ExpenseTable::COLUMN_WIDTHS[0..1].sum + 5
 
-        calculated_expenses = calculator.public_send(calculation_method)
+        calculated_expenses = @expense_sheet.public_send(calculation_method)
         Fields::ExpenseTable::COLUMNS.each.with_index.reduce(header_indent) do |global_indent, (expense, index)|
           draw_row_content_box_and_text(global_indent,
                                         index,

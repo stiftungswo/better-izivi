@@ -5,6 +5,7 @@ class Service < ApplicationRecord
   MONDAY_WEEKDAY = Date::DAYNAMES.index('Monday').freeze
 
   include Concerns::PositiveTimeSpanValidatable
+  include Concerns::DateRangeFilterable
 
   belongs_to :user
   belongs_to :service_specification
@@ -21,11 +22,6 @@ class Service < ApplicationRecord
 
   validate :ending_is_friday, unless: :last_civil_service?
   validate :beginning_is_monday
-
-  scope :in_date_range, (lambda do |beginning, ending|
-    where(arel_table[:beginning].gteq(beginning))
-    .where(arel_table[:ending].lteq(ending))
-  end)
 
   scope :at_date, ->(date) { where(arel_table[:beginning].lteq(date)).where(arel_table[:ending].gteq(date)) }
   scope :chronologically, -> { order(:beginning, :ending) }
@@ -46,6 +42,10 @@ class Service < ApplicationRecord
 
   def conventional_service?
     !probation_service? && !long_service?
+  end
+
+  def expense_sheets
+    @expense_sheets ||= user.expense_sheets.in_date_range(beginning, ending)
   end
 
   private

@@ -2,6 +2,7 @@
 
 class ExpenseSheet < ApplicationRecord
   include Concerns::PositiveTimeSpanValidatable
+  include Concerns::DateRangeFilterable
 
   belongs_to :user
 
@@ -30,9 +31,16 @@ class ExpenseSheet < ApplicationRecord
     paid: 3
   }
 
-  def full_amount
-    10_000 # TODO: implement correct calculator
-  end
+  delegate :calculate_first_day,
+           :calculate_full_expenses,
+           :calculate_last_day,
+           :calculate_paid_vacation_days,
+           :calculate_sick_days,
+           :calculate_unpaid_vacation_days,
+           :calculate_work_clothing_expenses,
+           :calculate_work_days,
+           :calculate_workfree_days,
+           to: :values_calculator
 
   def service
     @service ||= user.services.including_date_range(beginning, ending).first
@@ -55,6 +63,10 @@ class ExpenseSheet < ApplicationRecord
   end
 
   private
+
+  def values_calculator
+    @values_calculator ||= ExpenseSheetCalculatorService.new(self)
+  end
 
   def legitimate_state_change
     return if [

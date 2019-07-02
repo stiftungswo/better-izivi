@@ -22,7 +22,7 @@ class PainGenerationService
     {
       name: user.full_name,
       iban: user.bank_iban,
-      amount: sheet.full_amount,
+      amount: sheet.calculate_full_expenses,
       currency: 'CHF',
       remittance_information: I18n.t('payment.expenses_from', from_date: I18n.l(sheet.beginning, format: '%B %Y')),
       requested_date: Time.zone.today,
@@ -41,6 +41,7 @@ class PainGenerationService
     )
   end
 
+  # TODO: Add correct data
   def sepa_credit_transfer
     @sepa_credit_transfer ||= SEPA::CreditTransfer.new(
       name: 'Lou GmbH',
