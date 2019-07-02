@@ -32,6 +32,7 @@ module V1
 
     def update
       raise ValidationError, @service.errors unless @service.update(service_params)
+      raise AuthorizationError unless @service.confirmation_date.nil? || current_user.admin?
 
       render :show
     end
@@ -58,6 +59,7 @@ module V1
       service_params = params.require(:service)
       permitted_params = service_params.permit(*PERMITTED_SERVICE_PARAMS).to_h
       permitted_params[:user_id] = current_user.id unless current_user.admin?
+      permitted_params.except!(:confirmation_date) unless current_user.admin?
 
       specification_params = service_params.permit(*PERMITTED_SERVICE_SPECIFICATION_PARAMS)
       identification_number = specification_params[:service_specification_identification_number]
