@@ -59,7 +59,7 @@ RSpec.describe V1::ServicesController, type: :request do
       end
     end
 
-    describe 'GET #show' do
+    describe '#show' do
       let(:request) { get v1_service_path service }
 
       before { request }
@@ -67,8 +67,8 @@ RSpec.describe V1::ServicesController, type: :request do
       context 'when the user has permission to view its own resource' do
         let(:service) { create :service, user: user }
         let(:expected_response) do
-          extract_to_json(service, :id, :user_id, :service_specification_id, :beginning,
-                          :ending, :confirmation_date, :eligible_personal_vacation_days,
+          extract_to_json(service, :id, :user_id, :service_specification_identification_number,
+                          :beginning, :ending, :confirmation_date, :eligible_personal_vacation_days,
                           :service_type, :first_swo_service, :long_service,
                           :probation_service, :feedback_mail_sent)
         end
@@ -109,9 +109,9 @@ RSpec.describe V1::ServicesController, type: :request do
       let(:post_request) { post v1_services_path(service: params) }
 
       let(:valid_params) do
-        attributes_for(:service, service_type: 'normal')
+        attributes_for(:service, :unconfirmed, service_type: 'normal')
           .merge(
-            service_specification_id: service_specification.id,
+            service_specification_identification_number: service_specification.identification_number,
             user_id: user.id
           )
       end
@@ -122,7 +122,6 @@ RSpec.describe V1::ServicesController, type: :request do
         let(:expected_returned_attributes) do
           %i[
             user_id
-            service_specification_id
             beginning
             ending
             confirmation_date
@@ -144,7 +143,9 @@ RSpec.describe V1::ServicesController, type: :request do
         it 'returns the created service' do
           post_request
           expect(parse_response_json(response)).to include(
-            params.slice(*expected_returned_attributes).merge(id: Service.last.id)
+            params.slice(*expected_returned_attributes).merge(
+              service_specification_identification_number: Service.last.identification_number
+            )
           )
         end
 
@@ -158,6 +159,15 @@ RSpec.describe V1::ServicesController, type: :request do
 
           it 'does create the service in the name of the logged in user' do
             expect { post_request }.to(change { user.reload.services.count }.by(1))
+          end
+        end
+
+        context 'when a non-admin user tries to create a service with a confirmation date' do
+          let(:params) { valid_params.merge(confirmation_date: '2018-11-01') }
+
+          it 'ignores confirmation date' do
+            post_request
+            expect(parse_response_json(response)[:confirmation_date]).to eq nil
           end
         end
 
@@ -208,17 +218,18 @@ RSpec.describe V1::ServicesController, type: :request do
       context 'with valid params' do
         subject { -> { put_request } }
 
-        let(:new_service_date) { service.beginning - 3.days }
-        let(:params) { { confirmation_date: new_service_date } }
+        let(:new_service_date) { service.beginning - 7.days }
+        let(:new_confirmation_date) { service.beginning - 8.days }
+        let(:params) { { beginning: new_service_date, confirmation_date: new_confirmation_date } }
         let(:expected_attributes) do
-          extract_to_json(service, :id, :user_id, :service_specification_id, :beginning,
+          extract_to_json(service, :id, :user_id, :service_specification_identification_number, :beginning,
                           :ending, :confirmation_date, :eligible_personal_vacation_days,
                           :service_type, :first_swo_service, :long_service,
                           :probation_service, :feedback_mail_sent)
         end
 
         context 'when a non-admin user updates it\'s own service' do
-          it { is_expected.to(change { service.reload.confirmation_date }.to(new_service_date)) }
+          it { is_expected.to(change { service.reload.beginning }.to(new_service_date)) }
 
           it_behaves_like 'renders a successful http status code' do
             let(:request) { put_request }
@@ -227,6 +238,11 @@ RSpec.describe V1::ServicesController, type: :request do
           it 'returns the updated service' do
             put_request
             expect(parse_response_json(response)).to include(expected_attributes)
+          end
+
+          it 'ignores confirmation date', :aggregate_failures do
+            expect { put_request }.not_to(change { service.reload.confirmation_date })
+            expect(parse_response_json(response)[:confirmation_date]).to eq(nil)
           end
         end
 
@@ -244,7 +260,7 @@ RSpec.describe V1::ServicesController, type: :request do
           let(:user) { create :user, :admin }
           let!(:service) { create :service, :unconfirmed, user: create(:user) }
 
-          it { is_expected.to(change { service.reload.confirmation_date }.to(new_service_date)) }
+          it { is_expected.to(change { service.reload.confirmation_date }.to(new_confirmation_date)) }
 
           it_behaves_like 'renders a successful http status code' do
             let(:request) { put_request }
