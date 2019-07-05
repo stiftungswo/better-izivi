@@ -33,6 +33,9 @@ module V1
     def update
       raise ValidationError, @service.errors unless @service.update(service_params)
 
+      generate_sheets = @service.confirmation_date.blank? && service_params[:confirmation_date].present?
+      ExpenseSheetGenerator.new(@service).create_expense_sheets if generate_sheets
+
       render :show
     end
 
