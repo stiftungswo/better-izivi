@@ -10,6 +10,7 @@ class Holiday < ApplicationRecord
     public_holiday: 2
   }
 
+  # TODO: use Concern
   scope :soft_in_date_range, lambda { |beginning, ending|
     where(arel_table[:beginning].lteq(ending)).where(arel_table[:ending].gteq(beginning))
   }
