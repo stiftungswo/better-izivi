@@ -25,8 +25,8 @@ module Pdfs
           label = row[:label]
           content = row[:content]
 
-          label = label.call(@expense_sheet).to_s if label.is_a? Proc
-          content = content.call(@expense_sheet).to_s if content.is_a? Proc
+          label = evaluate_value(label)
+          content = evaluate_value(content)
 
           draw_info_block_line(label, content)
         end

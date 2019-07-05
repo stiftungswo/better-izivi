@@ -13,7 +13,7 @@ module Pdfs
       def draw_supplement_row(row)
         no_content = true
         row.each.reduce(bounds.left) do |global_indent, (indent, content)|
-          content = content.call(@expense_sheet).to_s if content.is_a? Proc
+          content = evaluate_value(content)
           no_content &&= content.empty?
 
           draw_supplement_row_content(global_indent, indent, content)

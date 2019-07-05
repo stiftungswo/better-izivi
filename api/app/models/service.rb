@@ -29,11 +29,6 @@ class Service < ApplicationRecord
 
   delegate :identification_number, to: :service_specification
 
-  scope :including_date_range, (lambda do |beginning, ending|
-    where(arel_table[:beginning].lteq(beginning))
-      .where(arel_table[:ending].gteq(ending))
-  end)
-
   def service_days
     ServiceCalculator.new(beginning).calculate_chargeable_service_days(ending)
   end

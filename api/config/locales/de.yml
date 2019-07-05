@@ -90,6 +90,10 @@ de:
           last_work_days: Letzter Arbeitstag
         supplement:
           unpaid_vacation_comment: inkl. %{comment}
+          work_clothing_expenses_comment:
+            one: CHF %{amount}/Tag für %{count} anrechenbarer Tag
+            other: CHF %{amount}/Tag für %{count} anrechenbare Tage
+          driving_expenses_comment_empty: Keine Angaben
       filename: Spesenrapport_%{today}.pdf
       header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603
         Schwerzenbach '

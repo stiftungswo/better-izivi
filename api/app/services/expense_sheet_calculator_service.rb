@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ExpenseSheetCalculatorService
+  WORK_CLOTHING_MAX_PER_SERVICE = 24_000
+
   def initialize(expense_sheet)
     @expense_sheet = expense_sheet
     @service = expense_sheet.service
@@ -45,7 +47,7 @@ class ExpenseSheetCalculatorService
   end
 
   def calculate_full_expenses
-    [
+    day_sum = [
       calculate_first_day,
       calculate_work_days,
       calculate_last_day,
@@ -54,14 +56,26 @@ class ExpenseSheetCalculatorService
       calculate_paid_vacation_days,
       calculate_unpaid_vacation_days
     ].sum { |values| values[:total] }
+
+    day_sum + @expense_sheet.driving_expenses + calculate_work_clothing_expenses
   end
 
-  # def calculate_work_clothing_expenses
-  #   allready_paid = @expense_sheet.service.expense_sheets
-  #
-  #
-  #   @expense_sheet.service.service_specification
-  # end
+  def calculate_work_clothing_expenses
+    sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
+    already_paid = sheets.sum { |sheet| sheet.public_send :calculate_work_clothing_expenses }
+
+    per_day = @expense_sheet.service.service_specification.work_clothing_expenses
+    value = calculate_chargeable_days * per_day
+    future_already_paid = already_paid + value
+
+    return WORK_CLOTHING_MAX_PER_SERVICE - already_paid if future_already_paid > WORK_CLOTHING_MAX_PER_SERVICE
+
+    value
+  end
+
+  def calculate_chargeable_days
+    @expense_sheet.duration - @expense_sheet.unpaid_vacation_days
+  end
 
   private
 

@@ -31,7 +31,12 @@ class ExpenseSheet < ApplicationRecord
     paid: 3
   }
 
-  delegate :calculate_first_day,
+  scope :before_date, (lambda do |date|
+    where(arel_table[:ending].lt(date))
+  end)
+
+  delegate :calculate_chargeable_days,
+           :calculate_first_day,
            :calculate_full_expenses,
            :calculate_last_day,
            :calculate_paid_vacation_days,

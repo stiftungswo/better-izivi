@@ -21,7 +21,7 @@ Service.create!(
       user: User.find_by(email: 'zivi_francise@france.ch'),
       service_specification: ServiceSpecification.last,
       beginning: (Time.zone.today - 180.days).at_beginning_of_week,
-      ending: (Time.zone.today - 180.days).at_end_of_week - 2.days,
+      ending: Time.zone.today.at_end_of_week - 2.days,
       confirmation_date: beginning - 8.months,
       service_type: :normal,
       first_swo_service: false,

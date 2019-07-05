@@ -54,6 +54,11 @@ module Pdfs
           text_box(*text_box_args)
         end
       end
+
+      def evaluate_value(argument)
+        argument = argument.call(@expense_sheet) if argument.is_a? Proc
+        argument
+      end
     end
   end
 end

@@ -4,9 +4,7 @@ module Pdfs
   module ExpenseSheet
     module Fields
       module ExpenseTable
-        COLUMN_WIDTHS = [
-          20, 85, 70, 70, 55, 55, 55, 65
-        ].freeze
+        COLUMN_WIDTHS = [20, 85, 70, 70, 55, 55, 55, 65].freeze
 
         HEADERS = [
           I18n.t('activerecord.models.attributes.expense_sheet.attributes.pocket_money'),
@@ -59,6 +57,8 @@ module Pdfs
           {
             COLUMN_WIDTHS[0..1].sum => '',
             COLUMN_WIDTHS[2..4].sum => lambda do |expense_sheet|
+              return '' if expense_sheet.unpaid_vacation_comment.blank?
+
               I18n.t('pdfs.expense_sheet.expense_table.supplement.unpaid_vacation_comment',
                      comment: expense_sheet.unpaid_vacation_comment)
             end
@@ -66,10 +66,15 @@ module Pdfs
           {
             COLUMN_WIDTHS[0] => '+',
             COLUMN_WIDTHS[1] => I18n.t('activerecord.models.attributes.expense_sheet.attributes.driving_expenses'),
-            COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.driving_expenses_comment },
+            COLUMN_WIDTHS[2..4].sum => lambda do |expense_sheet|
+              comment = expense_sheet.driving_expenses_comment
+              return comment if comment.present?
+
+              I18n.t('pdfs.expense_sheet.expense_table.supplement.driving_expenses_comment_empty')
+            end,
             COLUMN_WIDTHS[5..-2].sum => '',
             COLUMN_WIDTHS[-1] => lambda do |expense_sheet|
-              Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses.to_d / 100)
+              Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses.to_d)
             end
           },
           {
@@ -77,20 +82,24 @@ module Pdfs
             COLUMN_WIDTHS[1] => I18n.t(
               'activerecord.models.attributes.expense_sheet.attributes.work_clothing_expenses'
             ),
-            COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.driving_expenses_comment },
+            COLUMN_WIDTHS[2..4].sum => lambda do |expense_sheet|
+              double_amount = expense_sheet.service.service_specification.work_clothing_expenses.to_d
+              formatted_amount = Pdfs::ExpenseSheet::FormatHelper.to_chf(double_amount)
+
+              I18n.t('pdfs.expense_sheet.expense_table.supplement.work_clothing_expenses_comment',
+                     amount: formatted_amount,
+                     count: expense_sheet.calculate_chargeable_days)
+            end,
             COLUMN_WIDTHS[5..-2].sum => '',
             COLUMN_WIDTHS[-1] => lambda do |expense_sheet|
-              Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses.to_d / 100)
+              Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_clothing_expenses.to_d)
             end
           }
         ].freeze
 
         FOOTER = {
           pre_line: [
-            {
-              COLUMN_WIDTHS[0..-3].sum => '',
-              COLUMN_WIDTHS[-2..-1].sum => '-'
-            }
+            { COLUMN_WIDTHS[0..-3].sum => '', COLUMN_WIDTHS[-2..-1].sum => '-' }
           ],
           content: [
             {
