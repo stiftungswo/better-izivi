@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe CompanyHolidayCalculator, type: :service do
+RSpec.describe HolidayCalculator, type: :service do
   describe '#calculate_company_holidays_during_service' do
-    subject { company_holiday_calculator.calculate_company_holiday_days_during_service }
+    subject { company_holiday_calculator.calculate_company_holiday_days }
 
     let(:beginning) { Date.parse('2017-12-01') }
     let(:ending) { Date.parse('2018-01-31') }
-    let(:company_holiday_calculator) { CompanyHolidayCalculator.new(beginning, ending) }
+    let(:company_holiday_calculator) { HolidayCalculator.new(beginning, ending) }
 
     before do
       create :holiday, beginning: '2018-01-01', ending: '2018-01-07'
