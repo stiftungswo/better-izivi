@@ -86,6 +86,8 @@ RSpec.describe Holiday, type: :model do
           Date.parse('2019-04-19')
         ]
       end
+
+      it { expect(holiday.work_days).to eq expected_work_days }
     end
   end
 end

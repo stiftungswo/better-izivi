@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HolidayCalculator
   def initialize(beginning, ending)
     @beginning = beginning
