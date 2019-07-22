@@ -8,13 +8,11 @@ class DayCalculator
     @ending = ending
   end
   
-  # TODO: Add specs
   def calculate_workfree_days
     workfree_days = (@beginning..@ending).select(&:on_weekend?).length
     workfree_days + holiday_calculator.calculate_public_holiday_days
   end
 
-  # TODO: Add specs
   def calculate_work_days
     total = (@beginning..@ending).count
     unpaid_days = holiday_calculator.calculate_company_holiday_days
