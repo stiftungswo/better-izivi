@@ -5,7 +5,6 @@ class ExpenseSheetGenerator
     @service = service
   end
 
-  # TODO: Add specs
   def create_expense_sheets
     beginning = @service.beginning
     ending = beginning.end_of_month
