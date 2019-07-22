@@ -12,7 +12,6 @@ class ServicePdfFormFiller
     @service = service
   end
 
-  # TODO: Add unpaid_company_holiday_days
   def fill_service_agreement
     I18n.locale = valais? ? :fr : :de
 
