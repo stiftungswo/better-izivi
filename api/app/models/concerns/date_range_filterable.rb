@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Concerns
+  # TODO: FIX THIS, NAMING AND FUNCIONALITY
   module DateRangeFilterable
     extend ActiveSupport::Concern
 
