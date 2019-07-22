@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DayCalculator
   delegate :calculate_public_holiday_days,
            :calculate_company_holiday_days,
@@ -7,7 +9,7 @@ class DayCalculator
     @beginning = beginning
     @ending = ending
   end
-  
+
   def calculate_workfree_days
     workfree_days = (@beginning..@ending).select(&:on_weekend?).length
     workfree_days + holiday_calculator.calculate_public_holiday_days
