@@ -51,27 +51,6 @@ module Pdfs
       }
     }.freeze
 
-<<<<<<< HEAD:api/app/services/service_pdf_form_fields.rb
-  SERVICE_SPECIFICATION_FORM_FIELDS = {
-    fr: {
-      title: 'Cahier des charges'
-    },
-    de: {
-      title: 26
-    }
-  }.freeze
-
-  COMPANY_HOLIDAY_FORM_FIELDS = {
-    fr: {
-      beginning: 'Fermeture1',
-      ending: 'Fermeture2'
-    },
-    de: {
-      beginning: 27,
-      ending: 28
-    }
-  }.freeze
-=======
     SERVICE_SPECIFICATION_FORM_FIELDS = {
       fr: {
         title: 'Cahier des charges'
@@ -80,6 +59,16 @@ module Pdfs
         title: 26
       }
     }.freeze
+
+    COMPANY_HOLIDAY_FORM_FIELDS = {
+      fr: {
+        beginning: 'Fermeture1',
+        ending: 'Fermeture2'
+      },
+      de: {
+        beginning: 27,
+        ending: 28
+      }
+    }.freeze
   end
->>>>>>> pdfGenerate:api/app/services/pdfs/service_form_fields.rb
 end

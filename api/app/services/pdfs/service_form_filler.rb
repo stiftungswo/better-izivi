@@ -13,14 +13,8 @@ module Pdfs
       @service = service
     end
 
-<<<<<<< HEAD:api/app/services/service_pdf_form_filler.rb
-  def fill_service_agreement
-    I18n.locale = valais? ? :fr : :de
-=======
-    # TODO: Add unpaid_company_holiday_days
     def fill_service_agreement
       I18n.locale = valais? ? :fr : :de
->>>>>>> pdfGenerate:api/app/services/pdfs/service_form_filler.rb
 
       file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
       result_file_name = "#{Time.now.in_time_zone.strftime '%Y%m%d%H%M%S'}.pdf"
@@ -35,22 +29,13 @@ module Pdfs
       @pdftk ||= PdfForms.new('/usr/bin/pdftk')
     end
 
-<<<<<<< HEAD:api/app/services/service_pdf_form_filler.rb
-  def load_fields
-    load_user_fields
-      .merge(load_service_date_fields)
-      .merge(load_service_checkboxes)
-      .merge(load_service_specification_fields)
-      .merge(load_company_holiday_fields)
-  end
-=======
     def load_fields
       load_user_fields
         .merge(load_service_date_fields)
         .merge(load_service_checkboxes)
         .merge(load_service_specification_fields)
+        .merge(load_company_holiday_fields)
     end
->>>>>>> pdfGenerate:api/app/services/pdfs/service_form_filler.rb
 
     def load_user_fields
       convert_to_form_fields_hash(ServiceFormFields::USER_FORM_FIELDS) do |key, value|
@@ -76,24 +61,18 @@ module Pdfs
       end
     end
 
-<<<<<<< HEAD:api/app/services/service_pdf_form_filler.rb
-  def load_company_holiday_fields
-    company_holiday = Holiday.touching_date_range(@service.beginning, @service.ending).select(&:company_holiday?).first
-    return {} if company_holiday.nil?
+    def load_company_holiday_fields
+      company_holiday = Holiday.touching_date_range(@service.beginning, @service.ending).select(&:company_holiday?).first
+      return {} if company_holiday.nil?
 
-    convert_to_form_fields_hash(ServicePdfFormFields::COMPANY_HOLIDAY_FORM_FIELDS) do |key, value|
-      [value, I18n.l(company_holiday.public_send(key))]
+      convert_to_form_fields_hash(ServiceFormFields::COMPANY_HOLIDAY_FORM_FIELDS) do |key, value|
+        [value, I18n.l(company_holiday.public_send(key))]
+      end
     end
-  end
 
-  def convert_to_form_fields_hash(mapping, &block)
-    mapping[I18n.locale].map(&block).to_h
-  end
-=======
     def convert_to_form_fields_hash(mapping, &block)
       mapping[I18n.locale].map(&block).to_h
     end
->>>>>>> pdfGenerate:api/app/services/pdfs/service_form_filler.rb
 
     def valais?
       @service.service_specification.location_valais?
