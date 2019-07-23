@@ -5,8 +5,6 @@ class ApplicationController < ActionController::API
   include Concerns::ErrorHandler
   include Concerns::DeviseUserParamsRegistrable
 
-  PERMITTED_LOCALES = %w[de en fr]
-  
   before_action :set_locale
 
   respond_to :json
@@ -15,6 +13,6 @@ class ApplicationController < ActionController::API
 
   def set_locale
     locale = params[:locale]
-    I18n.locale = locale.in?(PERMITTED_LOCALES) ? locale : I18n.default_locale
+    I18n.locale = I18n.locale_available?(locale) ? locale : I18n.default_locale
   end
 end
