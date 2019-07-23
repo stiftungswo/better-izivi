@@ -30,7 +30,5 @@ RSpec.describe ApplicationController, type: :request do
         expect(actual_locale).to eq I18n.default_locale
       end
     end
-
-
   end
 end
