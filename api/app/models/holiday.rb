@@ -2,6 +2,8 @@
 
 class Holiday < ApplicationRecord
   include Concerns::PositiveTimeSpanValidatable
+  include Concerns::DateRangeFilterable
+
   validates :beginning, :ending, timeliness: { type: :date }
   validates :beginning, :ending, :description, :holiday_type, presence: true
 
@@ -10,12 +12,10 @@ class Holiday < ApplicationRecord
     public_holiday: 2
   }
 
-  scope :in_service, lambda { |service|
-    where(arel_table[:beginning].lteq(service.ending)).where(arel_table[:ending].gteq(service.beginning))
-  }
+  def work_days(public_holidays = nil)
+    return range.reject { |day| day.on_weekend? || day_on_public_holiday?(day, public_holidays) } if company_holiday?
 
-  def work_days(public_holidays)
-    range.reject { |day| day.on_weekend? || day_on_public_holiday?(day, public_holidays) } if company_holiday?
+    range.select(&:on_weekday?) if public_holiday?
   end
 
   def range
