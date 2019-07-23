@@ -6,19 +6,20 @@ class ExpenseSheetGenerator
   end
 
   def create_expense_sheets
-    beginning = @service.beginning
-    ending = beginning.end_of_month
+    grouped_days = group_days_by_month(@service.beginning..@service.ending)
 
-    while ending < @service.ending
+    grouped_days.each do |month_days|
+      beginning = month_days.first
+      ending = month_days.last
       create_expense_sheet(beginning, ending)
-      beginning = (beginning + 1.month).beginning_of_month
-      ending = beginning.end_of_month
     end
-
-    create_expense_sheet(beginning, @service.ending)
   end
 
   private
+
+  def group_days_by_month(days)
+    days.slice_when { |date| date == date.at_end_of_month }
+  end
 
   def create_expense_sheet(beginning, ending)
     ExpenseSheet.create(
