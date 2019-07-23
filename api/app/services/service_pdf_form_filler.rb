@@ -61,7 +61,7 @@ class ServicePdfFormFiller
   end
 
   def load_company_holiday_fields
-    company_holiday = Holiday.in_service(@service).select(&:company_holiday?).first
+    company_holiday = Holiday.touching_date_range(@service.beginning, @service.ending).select(&:company_holiday?).first
     return {} if company_holiday.nil?
 
     convert_to_form_fields_hash(ServicePdfFormFields::COMPANY_HOLIDAY_FORM_FIELDS) do |key, value|
