@@ -8,6 +8,13 @@ class PainGenerationService
   def generate_pain
     @sheets.each do |sheet|
       sepa_credit_transfer.add_transaction(build_transaction(sheet))
+      sheet.update(state: :payment_in_progress)
+    end
+
+    payment_timestamp = Time.zone.now
+
+    @sheets.each do |sheet|
+      sheet.update(state: :payment_in_progress, payment_timestamp: payment_timestamp)
     end
 
     sepa_credit_transfer
