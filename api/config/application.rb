@@ -11,6 +11,7 @@ require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
 require 'action_cable/engine'
+require 'sprockets/railtie'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -37,7 +38,9 @@ module Api
     }
 
     config.i18n.default_locale = :de
-    config.i18n.fallbacks = %i[de en]
+    config.i18n.fallbacks = %i[de en fr]
     config.time_zone = 'Bern'
+
+    Prawn::Font::AFM.hide_m17n_warning = true
   end
 end

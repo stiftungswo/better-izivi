@@ -2,15 +2,22 @@
 
 require 'rails_helper'
 
-RSpec.describe ServicePdfFormFiller, type: :service do
+RSpec.describe Pdfs::ServiceFormFiller, type: :service do
   describe '#fill_service_agreement' do
     subject(:form_filler) { instance_double(PdfForms::PdftkWrapper, fill_form: true) }
 
+<<<<<<< HEAD:api/spec/services/service_pdf_form_filler_spec.rb
     let(:fill_service) { ServicePdfFormFiller.new(service) }
     let(:service) { create :service, beginning: '2018-12-24', ending: '2019-01-04' }
     let(:user) { service.user }
     let(:file_path) { ServicePdfFormFiller::GERMAN_FILE_PATH }
     let(:company_holiday) { create :holiday, beginning: '2018-12-28', ending: '2019-01-02' }
+=======
+    let(:fill_service) { Pdfs::ServiceFormFiller.new(service) }
+    let(:service) { create :service }
+    let(:user) { service.user }
+    let(:file_path) { Pdfs::ServiceFormFiller::GERMAN_FILE_PATH }
+>>>>>>> pdfGenerate:api/spec/services/pdfs/service_form_filler_spec.rb
 
     before do
       company_holiday
@@ -50,8 +57,13 @@ RSpec.describe ServicePdfFormFiller, type: :service do
     end
 
     context 'when it is french' do
+<<<<<<< HEAD:api/spec/services/service_pdf_form_filler_spec.rb
       let(:service) { create(:service, :valais, beginning: '2018-12-24', ending: '2019-01-04') }
       let(:file_path) { ServicePdfFormFiller::FRENCH_FILE_PATH }
+=======
+      let(:service) { create(:service, :valais) }
+      let(:file_path) { Pdfs::ServiceFormFiller::FRENCH_FILE_PATH }
+>>>>>>> pdfGenerate:api/spec/services/pdfs/service_form_filler_spec.rb
 
       let(:expected_fields) do
         {

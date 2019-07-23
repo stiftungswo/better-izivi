@@ -27,3 +27,26 @@ RSpec.shared_examples_for 'admin protected resource' do
     )
   end
 end
+
+# RSpec.shared_examples_for 'token protected resource' do
+#   subject { response }
+#
+#   before { request }
+#
+#   let(:user) { create :user }
+#   let(:token) { generate_jwt_token_for_user(user) }
+#
+#   context 'when no token is provided' do
+#     subject { -> { request } }
+#
+#     let(:token) { nil }
+#
+#     it { is_expected.to raise_exception ActionController::ParameterMissing }
+#   end
+#
+#   context 'when an invalid token is provided' do
+#     let(:token) { 'invalid' }
+#
+#     it_behaves_like 'admin protected resource'
+#   end
+# end

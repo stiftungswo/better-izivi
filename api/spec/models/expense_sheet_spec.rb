@@ -125,4 +125,14 @@ RSpec.describe ExpenseSheet, type: :model do
       end
     end
   end
+
+  describe '#duration' do
+    let(:expense_sheet) { build :expense_sheet, beginning: beginning, ending: ending }
+    let(:beginning) { Time.zone.today }
+    let(:ending) { beginning + 2.days }
+
+    it 'returns duration' do
+      expect(expense_sheet.duration).to eq 3
+    end
+  end
 end
