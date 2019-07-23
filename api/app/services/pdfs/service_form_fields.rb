@@ -59,5 +59,16 @@ module Pdfs
         title: 26
       }
     }.freeze
+
+    COMPANY_HOLIDAY_FORM_FIELDS = {
+      fr: {
+        beginning: 'Fermeture1',
+        ending: 'Fermeture2'
+      },
+      de: {
+        beginning: 27,
+        ending: 28
+      }
+    }.freeze
   end
 end

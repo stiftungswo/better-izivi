@@ -13,7 +13,6 @@ module Pdfs
       @service = service
     end
 
-    # TODO: Add unpaid_company_holiday_days
     def fill_service_agreement
       I18n.locale = valais? ? :fr : :de
 
@@ -35,6 +34,7 @@ module Pdfs
         .merge(load_service_date_fields)
         .merge(load_service_checkboxes)
         .merge(load_service_specification_fields)
+        .merge(load_company_holiday_fields)
     end
 
     def load_user_fields
@@ -58,6 +58,15 @@ module Pdfs
     def load_service_specification_fields
       convert_to_form_fields_hash(ServiceFormFields::SERVICE_SPECIFICATION_FORM_FIELDS) do |key, value|
         [value, @service.service_specification.public_send(key)]
+      end
+    end
+
+    def load_company_holiday_fields
+      company_holiday = Holiday.touching_date_range(@service.beginning, @service.ending).select(&:company_holiday?).first
+      return {} if company_holiday.nil?
+
+      convert_to_form_fields_hash(ServiceFormFields::COMPANY_HOLIDAY_FORM_FIELDS) do |key, value|
+        [value, I18n.l(company_holiday.public_send(key))]
       end
     end
 
