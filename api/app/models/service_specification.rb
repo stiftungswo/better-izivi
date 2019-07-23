@@ -61,7 +61,7 @@ class ServiceSpecification < ApplicationRecord
   end
 
   def validate_json_format(attribute)
-    return if self[attribute].nil?
+    return if self[attribute].blank?
 
     keys = self[attribute].keys
 
@@ -72,7 +72,7 @@ class ServiceSpecification < ApplicationRecord
   end
 
   def validate_numericality_of_json(attribute)
-    return if self[attribute].nil?
+    return if self[attribute].blank?
 
     errors.add(attribute, :not_an_unsigned_integer) unless values_numeric?(self[attribute].values)
   end
