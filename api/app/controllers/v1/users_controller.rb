@@ -44,7 +44,7 @@ module V1
     end
 
     def user_params
-      params.require(:user).permit(*::Concerns::PermittedDeviseUserRegistrationKeys::PERMITTED_USER_KEYS)
+      params.require(:user).permit(*::Concerns::DeviseUserParamsRegistrable::PERMITTED_USER_KEYS)
     end
   end
 end

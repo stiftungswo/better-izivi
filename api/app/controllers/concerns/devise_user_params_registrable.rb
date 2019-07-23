@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Concerns
-  module PermittedDeviseUserRegistrationKeys
+  module DeviseUserParamsRegistrable
     extend ActiveSupport::Concern
 
     PERMITTED_USER_KEYS = %i[
