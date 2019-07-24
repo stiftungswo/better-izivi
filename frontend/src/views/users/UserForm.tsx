@@ -33,7 +33,7 @@ type Props = {
 @observer
 class UserFormInner extends React.Component<Props> {
   componentWillMount() {
-    this.props.serviceSpecificationStore!.fetchAll();
+    void this.props.serviceSpecificationStore!.fetchAll();
   }
 
   render() {
@@ -41,14 +41,14 @@ class UserFormInner extends React.Component<Props> {
 
     return (
       <>
-        <FormView
+        <FormView<User>
           card
           loading={empty(user) || this.props.loading}
           initialValues={user}
-          onSubmit={(_: object): Promise<void> => onSubmit(user)}
+          onSubmit={(updatedUser: User): Promise<void> => onSubmit(updatedUser as User)}
           title={title}
           validationSchema={userSchema}
-          render={(formikProps: FormikProps<{}>) => (
+          render={(formikProps: FormikProps<User>) => (
             <Form>
               <h3>Persönliche Informationen</h3>
               <p>

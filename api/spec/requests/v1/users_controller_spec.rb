@@ -139,9 +139,10 @@ RSpec.describe V1::UsersController, type: :request do
         end
 
         context 'when he tries to update an admin protected field' do
-          let(:params) { { internal_note: 'Restricted' } }
+          let(:params) { { internal_note: 'Restricted', role: 'admin' } }
 
           it { is_expected.not_to(change { updated_user.reload.internal_note }) }
+          it { is_expected.not_to(change { updated_user.reload.role }) }
         end
 
         context 'when the updated data is incorrect' do
@@ -188,7 +189,7 @@ RSpec.describe V1::UsersController, type: :request do
         let(:params) { { internal_note: 'Restricted', role: 'admin' } }
 
         it 'changes #role and #internal_note' do
-          expect { request }.to change { updated_user.reload.internal_note }.to('Restricted').and(
+          expect { request }.to change { updated_user.reload.internal_note }.to(params[:internal_note]).and(
             change { updated_user.reload.admin? }.from(false).to(true)
           )
         end
