@@ -23,8 +23,15 @@ export class DomainStore<T, OverviewType = T> {
     throw new Error('Not implemented');
   }
 
+  set entities(entities: OverviewType[]) {
+    throw new Error('Not implemented');
+  }
+
   @observable
   filteredEntities: OverviewType[] = [];
+
+  protected entitiesURL?: string = '';
+  protected entityURL?: string = '';
 
   constructor(protected mainStore: MainStore) {}
 
@@ -122,24 +129,52 @@ export class DomainStore<T, OverviewType = T> {
   }
 
   protected async doFetchAll(params: object = {}) {
-    throw new Error('Not implemented');
+    if (!this.entitiesURL) {
+      throw new Error('Not implemented');
+    }
+
+    const res = await this.mainStore.api.get<OverviewType[]>(this.entitiesURL);
+    this.entities = res.data;
   }
 
   protected async doFetchOne(id: number): Promise<T | void> {
-    throw new Error('Not implemented');
+    if (!this.entityURL) {
+      throw new Error('Not implemented');
+    }
+
+    const res = await this.mainStore.api.get<T>(this.entityURL + id);
+    this.entity = res.data;
   }
 
   protected async doPost(entity: T) {
-    throw new Error('Not implemented');
+    if (!this.entitiesURL) {
+      throw new Error('Not implemented');
+    }
+
+    const response = await this.mainStore.api.post<OverviewType[]>(this.entitiesURL, entity);
+    this.entities = response.data;
   }
 
   @action
   protected async doPut(entity: T) {
-    throw new Error('Not implemented');
+    if (!this.entityURL || !('id' in entity)) {
+      throw new Error('Not implemented');
+    }
+
+    const entityWithId = entity as T & { id: any };
+
+    const response = await this.mainStore.api.put<T>(this.entitiesURL + entityWithId.id, entity);
+    this.entity = response.data;
   }
 
   @action
   protected async doDelete(id: number | string) {
-    throw new Error('Not implemented');
+    if (!this.entityURL) {
+      throw new Error('Not implemented');
+    }
+
+    await this.mainStore.api.delete(this.entityURL + id);
+    await this.doFetchAll();
+    await this.filter();
   }
 }
