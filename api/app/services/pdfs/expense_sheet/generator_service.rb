@@ -3,12 +3,13 @@
 module Pdfs
   module ExpenseSheet
     class GeneratorService
-      include Pdfs::ExpenseSheet::TableGenerator
+      include TableGenerator
       include Prawn::View
       include HeaderGeneratorHelper
       include HeaderInfoBlockGenerator
       include TableGenerator
       include FooterInfoBlockGenerator
+      include GeneratorServiceHelpers
 
       def initialize(expense_sheet)
         @expense_sheet = expense_sheet
@@ -53,11 +54,6 @@ module Pdfs
         cursor_save do
           text_box(*text_box_args)
         end
-      end
-
-      def evaluate_value(argument)
-        argument = argument.call(@expense_sheet) if argument.is_a? Proc
-        argument
       end
     end
   end

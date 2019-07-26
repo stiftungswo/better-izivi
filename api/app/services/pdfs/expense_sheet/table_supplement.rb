@@ -13,7 +13,7 @@ module Pdfs
       def draw_supplement_row(row)
         no_content = true
         row.each.reduce(bounds.left) do |global_indent, (indent, content)|
-          content = evaluate_value(content)
+          content = GeneratorServiceHelpers.safe_call_value(content)
           no_content &&= content.empty?
 
           draw_supplement_row_content(global_indent, indent, content)
@@ -54,23 +54,25 @@ module Pdfs
 
         box Colors::GREY, [full_indent, (cursor + 3)], width: full_width, height: 15
         font_size size do
-          draw_supplement_box_content(content, full_indent, full_width)
+          cursor_save_text_box(content, *supplement_box_content_config(full_indent, full_width))
         end
       end
 
-      def draw_supplement_box_content(content, full_indent, full_width)
+      # :reek:FeatureEnvy
+      def supplement_box_content_config(full_indent, full_width)
         last = (full_indent == Fields::ExpenseTable::COLUMN_WIDTHS[0..-2].sum + 5)
         align = last ? :right : :left
         current_width = full_width - (last ? 8 : 6)
         style = last ? nil : :italic
 
-        cursor_save_text_box(content,
-                             at: [full_indent + 3, cursor],
-                             width: current_width,
-                             overflow: :shrink_to_fit,
-                             height: 15,
-                             align: align,
-                             style: style)
+        {
+          at: [full_indent + 3, cursor],
+          width: current_width,
+          overflow: :shrink_to_fit,
+          height: 15,
+          align: align,
+          style: style
+        }
       end
     end
   end

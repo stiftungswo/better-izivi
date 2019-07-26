@@ -20,13 +20,14 @@ module Pdfs
         end
       end
 
+      # :reek:FeatureEnvy
       def draw_header_rows
         Fields::InfoBlock::HEADER_ROWS.each do |row|
           label = row[:label]
           content = row[:content]
 
-          label = evaluate_value(label)
-          content = evaluate_value(content)
+          label = GeneratorServiceHelpers.safe_call_value(label)
+          content = GeneratorServiceHelpers.safe_call_value(content)
 
           draw_info_block_line(label, content)
         end
