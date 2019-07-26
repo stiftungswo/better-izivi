@@ -165,6 +165,10 @@ export class DomainStore<T, OverviewType = T> {
 
     const response = await this.mainStore.api.put<T>(this.entitiesURL + entityWithId.id, entity);
     this.entity = response.data;
+
+    if (this.entities.length > 0) {
+      this.entities.findIndex(value => (value as any).id === entityWithId.id);
+    }
   }
 
   @action
