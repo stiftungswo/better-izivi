@@ -3,9 +3,13 @@
 module Pdfs
   module ExpenseSheet
     module GeneratorServiceHelpers
-      def self.safe_call_value(value)
-        value = value.call(@expense_sheet) if value.is_a? Proc
-        value
+      def self.safe_call(object, *args)
+        object = object.call(*args) if object.is_a? Proc
+        object
+      end
+
+      def safe_call_value(value)
+        GeneratorServiceHelpers.safe_call(value, @expense_sheet)
       end
     end
   end

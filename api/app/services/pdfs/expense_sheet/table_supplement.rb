@@ -13,7 +13,7 @@ module Pdfs
       def draw_supplement_row(row)
         no_content = true
         row.each.reduce(bounds.left) do |global_indent, (indent, content)|
-          content = GeneratorServiceHelpers.safe_call_value(content)
+          content = safe_call_value(content)
           no_content &&= content.empty?
 
           draw_supplement_row_content(global_indent, indent, content)
@@ -68,7 +68,7 @@ module Pdfs
         cursor_save_text_box(
           content,
           default_supplement_box_content_config(current_indent, current_width)
-            .merge(*supplement_box_content_config(current_indent, current_width))
+            .merge(supplement_box_content_config(current_indent, current_width))
         )
       end
 

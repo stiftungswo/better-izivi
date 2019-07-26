@@ -3,8 +3,8 @@
 module Pdfs
   module ExpenseSheet
     class GeneratorService
-      include TableGenerator
       include Prawn::View
+      include TableGenerator
       include HeaderGeneratorHelper
       include HeaderInfoBlockGenerator
       include TableGenerator
@@ -13,6 +13,7 @@ module Pdfs
 
       def initialize(expense_sheet)
         @expense_sheet = expense_sheet
+        p @expense_sheet
 
         header
         body

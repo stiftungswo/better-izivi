@@ -26,8 +26,8 @@ module Pdfs
           label = row[:label]
           content = row[:content]
 
-          label = GeneratorServiceHelpers.safe_call_value(label)
-          content = GeneratorServiceHelpers.safe_call_value(content)
+          label = safe_call_value(label)
+          content = safe_call_value(content)
 
           draw_info_block_line(label, content)
         end

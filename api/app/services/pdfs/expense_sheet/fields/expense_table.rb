@@ -4,7 +4,6 @@ module Pdfs
   module ExpenseSheet
     module Fields
       module ExpenseTable
-        include Pdfs::ExpenseSheet::Fields::ExpenseTableAdditionals
         COLUMN_WIDTHS = [20, 85, 70, 70, 55, 55, 55, 65].freeze
 
         HEADERS = [
@@ -55,6 +54,8 @@ module Pdfs
         ].freeze
 
         COLUMNS = %i[pocket_money accommodation breakfast lunch dinner total].freeze
+
+        include ExpenseTableAdditions
       end
     end
   end
