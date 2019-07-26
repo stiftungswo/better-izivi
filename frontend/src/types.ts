@@ -4,7 +4,7 @@ export interface Holiday {
   id?: number;
   beginning: string;
   ending: string;
-  holiday_type_id: number;
+  holiday_type: 'public_holiday' | 'company_holiday';
   description: string;
 }
 
@@ -122,6 +122,13 @@ export interface User {
   work_experience: null | string;
   zdp: number;
   zip: number | null;
+}
+
+export interface RegionalCenter {
+  name: string;
+  address: string;
+  short_name: string;
+  id: number;
 }
 
 export interface UserFilter {
