@@ -1,23 +1,22 @@
+import { Moment } from 'moment';
 import * as React from 'react';
 import Table from 'reactstrap/lib/Table';
 import { MainStore } from '../../stores/mainStore';
 import { Holiday } from '../../types';
 
-export const HolidayOverviewTable: React.FunctionComponent<{mainStore: MainStore}> = props => {
-  const { formatDate } = props.mainStore;
-
-  const columns = [
+function getColumns(formatDate: (date: string | Moment) => string) {
+  return [
     {
       id: 'beginning',
       numeric: false,
       label: 'Start',
-      format: (holiday: Holiday) => formatDate(holiday.beginning),
+      format: ({ beginning }: Holiday) => formatDate(beginning),
     },
     {
       id: 'ending',
       numeric: false,
       label: 'Ende',
-      format: (holiday: Holiday) => formatDate(holiday.ending),
+      format: ({ ending }: Holiday) => formatDate(ending),
     },
     {
       id: 'holiday_type_id',
@@ -40,6 +39,12 @@ export const HolidayOverviewTable: React.FunctionComponent<{mainStore: MainStore
       label: '',
     },
   ];
+}
+
+export const HolidayOverviewTable: React.FunctionComponent<{mainStore: MainStore}> = props => {
+  const { formatDate } = props.mainStore;
+
+  const columns = getColumns(formatDate);
 
   return (
     <Table>
