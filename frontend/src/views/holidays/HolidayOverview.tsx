@@ -16,7 +16,7 @@ import HolidayTableRow from './HolidayTableRow';
 const holidaySchema = yup.object({
   beginning: apiDate().required(),
   ending: apiDate().required(),
-  holiday_type_id: yup.number().required(),
+  holiday_type: yup.string().required().matches(/company_holiday|public_holiday/),
   description: yup.string().required(),
 });
 
@@ -44,11 +44,12 @@ export class HolidayOverview extends React.Component<Props, State> {
   }
 
   handleSubmit = async (holiday: Holiday, actions: FormikActions<Holiday>) => {
-    this.props.holidayStore!.put(holidaySchema.cast(holiday)).then(() => actions.setSubmitting(false));
+    await this.props.holidayStore!.put(holidaySchema.cast(holiday) as Holiday);
+    actions.setSubmitting(false);
   }
 
   handleAdd = async (holiday: Holiday, actions: FormikActions<Holiday>) => {
-    await this.props.holidayStore!.post(holidaySchema.cast(holiday)).then(() => {
+    await this.props.holidayStore!.post(holidaySchema.cast(holiday) as Holiday).then(() => {
       actions.setSubmitting(false);
       actions.resetForm();
     });
@@ -66,7 +67,7 @@ export class HolidayOverview extends React.Component<Props, State> {
             initialValues={{
               beginning: moment().format('Y-MM-DD'),
               ending: moment().format('Y-MM-DD'),
-              holiday_type_id: 2,
+              holiday_type: 'company_holiday',
               description: '',
             }}
             onSubmit={this.handleAdd}

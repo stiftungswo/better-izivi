@@ -19,8 +19,8 @@ export default (params: { buttons: React.ReactElement[] }) => {
           component={SelectField}
           name={'holiday_type_id'}
           options={[
-            { id: '1', name: 'Betriebsferien' },
-            { id: '2', name: 'Feiertag' },
+            { id: 'company_holiday', name: 'Betriebsferien' },
+            { id: 'public_holiday', name: 'Feiertag' },
           ]}
         />
       </td>

@@ -47,10 +47,4 @@ export class HolidayStore extends DomainStore<Holiday> {
     const response = await this.mainStore.api.post<Holiday>('/holidays', holiday);
     this.holidays.unshift(response.data);
   }
-
-  @action
-  protected async doPut(holiday: Holiday) {
-    const response = await this.mainStore.api.put<Holiday[]>('/holidays/' + holiday.id, holiday);
-    this.holidays = response.data;
-  }
 }
