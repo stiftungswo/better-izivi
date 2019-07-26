@@ -16,7 +16,8 @@ module Pdfs
           },
           {
             ExpenseTable::COLUMN_WIDTHS[0] => '+',
-            ExpenseTable::COLUMN_WIDTHS[1] => I18n.t('activerecord.models.attributes.expense_sheet.attributes.driving_expenses'),
+            ExpenseTable::COLUMN_WIDTHS[1] =>
+              I18n.t('activerecord.models.attributes.expense_sheet.attributes.driving_expenses'),
             ExpenseTable::COLUMN_WIDTHS[2..4].sum => lambda do |expense_sheet|
               comment = expense_sheet.driving_expenses_comment
               return comment if comment.present?

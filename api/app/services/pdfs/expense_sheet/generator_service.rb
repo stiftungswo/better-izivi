@@ -13,7 +13,6 @@ module Pdfs
 
       def initialize(expense_sheet)
         @expense_sheet = expense_sheet
-        p @expense_sheet
 
         header
         body
