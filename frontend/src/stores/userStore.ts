@@ -105,10 +105,4 @@ export class UserStore extends DomainStore<User> {
   updateFilters(updates: Partial<UserFilter>) {
     this.userFilters = {...this.userFilters, ...updates};
   }
-
-  @action
-  protected async doPost(user: User) {
-    const response = await this.mainStore.api.post<User[]>('/users', user);
-    this.users = response.data;
-  }
 }

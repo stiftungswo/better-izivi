@@ -35,12 +35,12 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
   @observable
   service?: Service;
 
+  protected entitiesURL = '/services/';
+  protected entityURL = '/services/';
+
   constructor(mainStore: MainStore) {
     super(mainStore);
   }
-
-  protected entitiesURL = '/services/';
-  protected entityURL = '/services/';
 
   @action
   async fetchByYear(year: string) {
