@@ -43,7 +43,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
           'Taschengeld', '(Fr.)', 'Unterkunft', '(Fr.)',
           'Morgen', '(Fr.)', 'Mittag', '(Fr.)', 'Abend', '(Fr.)', 'Total', '(Fr.)',
           '1', 'Erster Arbeitstag', '5.00', '0.00', '0.00', '9.00', '7.00', '21.00',
-          '4', 'Arbeitstage', '5.00', '0.00', '4.00', '9.00', '7.00', '100.00',
+          '25', 'Arbeitstage', '5.00', '0.00', '4.00', '9.00', '7.00', '625.00',
           '0', 'Letzter Arbeitstag', '5.00', '0.00', '4.00', '9.00', '0.00', '0.00',
           '2', 'Arbeitsfreie Tage', '5.00', '0.00', '4.00', '9.00', '7.00', '50.00',
           '0', 'Krankheitstage', '5.00', '0.00', '4.00', '9.00', '7.00', '0.00',
@@ -52,7 +52,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
           'inkl. MyString',
           '+', 'Fahrspesen', 'MyString', '20.00',
           '+', 'Arbeitskleider', 'CHF 2.30/Tag für 27 anrechenbare Tage', '62.10',
-          'Gesamt:', '253.10',
+          'Gesamt:', '778.10',
           'Bankverbindung:', 'CH93 0076 2011 6238 5295 7',
           'Konto-Nr.::', '4470 (200)'
         ]
@@ -75,13 +75,12 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
 
         let(:expected_texts) do
           [
-            'CHF 10.00/Tag für 27 anrechenbare Tage', '240.00',
-            'Gesamt:', '431.00'
+            'CHF 10.00/Tag für 27 anrechenbare Tage', '240.00'
           ]
         end
 
         it 'renders correct text' do
-          expect(pdf_text_inspector.strings[-8..-5]).to eq expected_texts
+          expect(pdf_text_inspector.strings[-8..-7]).to eq expected_texts
         end
       end
 
