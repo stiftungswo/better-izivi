@@ -5,6 +5,7 @@ module Pdfs
     module GeneratorServiceHelpers
       def self.safe_call(object, *args)
         return object.call(*args) if object.is_a? Proc
+
         object
       end
 

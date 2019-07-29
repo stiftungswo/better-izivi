@@ -43,13 +43,14 @@ module Pdfs
       def box(color, pos, size)
         fill_color color
         fill_rectangle pos, size[:width], size[:height]
-        fill_color Colors::WHITE
+        fill_color Colors::BLACK
       end
 
       def cursor_save
-        save_cursor = cursor
-        yield
-        move_cursor_to save_cursor
+        cursor.tap do |old_cursor|
+          yield
+          move_cursor_to old_cursor
+        end
       end
 
       def cursor_save_text_box(*text_box_args)

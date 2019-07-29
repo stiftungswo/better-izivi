@@ -58,6 +58,12 @@ RSpec.describe Service, type: :model do
 
       it { is_expected.to eq [expense_sheet] }
     end
+
+    context 'when it has multiple expense_sheets' do
+      let(:expense_sheets) { create_list :expense_sheet, 3, user: user, beginning: beginning, ending: ending }
+
+      it { is_expected.to eq expense_sheets }
+    end
   end
 
   describe 'ending_is_friday validation' do

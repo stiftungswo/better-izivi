@@ -23,9 +23,6 @@ module Pdfs
       # :reek:FeatureEnvy
       def draw_header_rows
         Fields::InfoBlock::HEADER_ROWS.each do |row|
-          label = row[:label]
-          content = row[:content]
-
           label = safe_call_value(row[:label])
           content = safe_call_value(row[:content])
 
