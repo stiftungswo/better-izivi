@@ -56,110 +56,61 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
     this.columns[0] = [
       {
         label: 'Aktiv',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'ID',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'Name',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'KN',
         tooltip: 'Kurz-Name',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'Taschengeld',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'Unterkunft',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'Kleider',
-        span: {
-          row: 2,
-        },
+        span: { row: 2 },
       },
       {
         label: 'Frühstück',
-        span: {
-          col: 4,
-        },
+        span: { col: 4 },
       },
       {
         label: 'Mittagessen',
-        span: {
-          col: 4,
-        },
+        span: { col: 4 },
       },
       {
         label: 'Abendessen',
-        span: {
-          col: 6,
-        },
+        span: { col: 6 },
       },
     ];
 
     this.columns[1] = [
-      {
-        label: 'Erster Tag',
-      },
-      {
-        label: 'Arbeit',
-      },
-      {
-        label: 'Frei',
-      },
-      {
-        label: 'Letzter Tag',
-      },
-      {
-        label: 'Erster Tag',
-      },
-      {
-        label: 'Arbeit',
-      },
-      {
-        label: 'Frei',
-      },
-      {
-        label: 'Letzter Tag',
-      },
-      {
-        label: 'Erster Tag',
-      },
-      {
-        label: 'Arbeit',
-      },
-      {
-        label: 'Frei',
-      },
-      {
-        label: 'Letzter Tag',
-      },
-      {
-        label: '',
-        span: {
-          col: 2,
-        },
-      },
+      { label: 'Erster Tag' },
+      { label: 'Arbeit' },
+      { label: 'Frei' },
+      { label: 'Letzter Tag' },
+      { label: 'Erster Tag' },
+      { label: 'Arbeit' },
+      { label: 'Frei' },
+      { label: 'Letzter Tag' },
+      { label: 'Erster Tag' },
+      { label: 'Arbeit' },
+      { label: 'Frei' },
+      { label: 'Letzter Tag' },
+      { label: '', span: { col: 2 } },
     ];
   }
 
@@ -196,7 +147,6 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
 
               return (
                 <tr key={colI}>
-                  {/*{' '}*/}
                   {col.map((th, thI) => {
                     let content = <>{th.label}</>;
 
@@ -238,25 +188,14 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
                 identification_number: '',
                 name: '',
                 short_name: '',
-                accommodation: 0,
+                work_clothing_expenses: 0,
+                work_days_expenses: { breakfast: 0, lunch: 0, dinner: 0 },
+                paid_vacation_expenses: { breakfast: 0, lunch: 0, dinner: 0 },
+                first_day_expenses: { breakfast: 0, lunch: 0, dinner: 0 },
+                last_day_expenses: { breakfast: 0, lunch: 0, dinner: 0 },
+                accommodation_expenses: 0,
                 active: false,
-                firstday_breakfast_expenses: 0,
-                firstday_dinner_expenses: 0,
-                firstday_lunch_expenses: 0,
-                lastday_breakfast_expenses: 0,
-                lastday_dinner_expenses: 0,
-                lastday_lunch_expenses: 0,
-                pocket: 0,
-                sparetime_breakfast_expenses: 0,
-                sparetime_dinner_expenses: 0,
-                sparetime_lunch_expenses: 0,
-                working_breakfast_expenses: 0,
-                working_clothes_expense: 0,
-                working_clothes_payment: '',
-                working_dinner_expenses: 0,
-                working_lunch_expenses: 0,
-                working_time_model: 0,
-                working_time_weekly: '',
+                pocket_money: 5,
               }}
               onSubmit={this.handleAdd}
               render={formikProps => (
@@ -306,15 +245,13 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
   }
 }
 
-interface SpecFormFieldProps extends WithSheet<typeof serviceSpecificationStyles> {}
-
-const ServiceSpecificationFormFields = ({ classes }: SpecFormFieldProps) => (
+const ServiceSpecificationFormFields = ({ classes }: WithSheet<typeof serviceSpecificationStyles>) => (
   <>
     <td className={classes.rowTd}>
       <WiredField className={classes.checkboxes} component={CheckboxField} name={'active'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'id'} size={'3'} />
+      <WiredField className={classes.inputs} component={TextField} name={'identification_number'} size={'3'} />
     </td>
     <td className={classes.rowTd}>
       <WiredField className={classes.inputs} component={TextField} name={'name'} size={'20'} />
@@ -323,49 +260,49 @@ const ServiceSpecificationFormFields = ({ classes }: SpecFormFieldProps) => (
       <WiredField className={classes.inputs} component={TextField} name={'short_name'} size={'1'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'pocket'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'pocket_money'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'accommodation'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'accommodation_expenses'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'working_clothes_expense'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'work_clothing_expenses'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'firstday_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'first_day_expenses.breakfast'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'working_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'work_days_expenses.breakfast'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'sparetime_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'paid_vacation_expenses.breakfast'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'lastday_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'last_day_expenses.breakfast'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'firstday_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'first_day_expenses.lunch'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'working_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'work_days_expenses.lunch'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'sparetime_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'paid_vacation_expenses.lunch'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'lastday_breakfast_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'last_day_expenses.lunch'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'firstday_dinner_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'first_day_expenses.dinner'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'working_dinner_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'work_days_expenses.dinner'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'sparetime_dinner_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'paid_vacation_expenses.dinner'} size={'5'} />
     </td>
     <td className={classes.rowTd}>
-      <WiredField className={classes.inputs} component={TextField} name={'lastday_dinner_expenses'} size={'5'} />
+      <WiredField className={classes.inputs} component={TextField} name={'last_day_expenses.dinner'} size={'5'} />
     </td>
   </>
 );
