@@ -26,7 +26,7 @@ module Pdfs
           label = row[:label]
           content = row[:content]
 
-          label = safe_call_value(label)
+          label = safe_call_value(row[:label])
           content = safe_call_value(row[:content])
 
           draw_info_block_line(label, content)
