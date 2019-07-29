@@ -27,7 +27,7 @@ interface ServiceSpecificationState {
   openThTooltips: boolean[][];
 }
 
-interface Th<T> {
+interface TableHeader {
   label: string;
   tooltip?: string;
   span?: {
@@ -39,7 +39,7 @@ interface Th<T> {
 
 @inject('serviceSpecificationStore', 'mainStore')
 export class ServiceSpecificationsOverviewInner extends React.Component<ServiceSpecificationProps, ServiceSpecificationState> {
-  columns: Array<Array<Th<ServiceSpecification>>> = [];
+  columns: TableHeader[][] = [];
 
   constructor(props: ServiceSpecificationProps) {
     super(props);
@@ -114,7 +114,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
     ];
   }
 
-  handleThTooltip = (row: number, id: number): void => {
+  handleTableHeaderTooltip = (row: number, id: number): void => {
     const opens = this.state.openThTooltips;
 
     opens[row][id] = opens[row][id] ? !opens[row][id] : true;
@@ -142,25 +142,25 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
       <IziviContent loading={this.state.loading} title={'Pflichtenheft'} card={true}>
         <Table hover={true} responsive={true}>
           <thead>
-            {this.columns.map((col, colI) => {
-              const thClass = colI === 0 ? classes.th : classes.secondTh;
+            {this.columns.map((column, columnIndex) => {
+              const thClass = columnIndex === 0 ? classes.th : classes.secondTh;
 
               return (
-                <tr key={colI}>
-                  {col.map((th, thI) => {
-                    let content = <>{th.label}</>;
+                <tr key={columnIndex}>
+                  {column.map((tableHeader, tableHeaderIndex) => {
+                    let content = <>{tableHeader.label}</>;
 
-                    if (th.tooltip) {
+                    if (tableHeader.tooltip) {
                       content = (
                         <>
-                          <div id={'thTooltips' + thI}>{th.label}</div>
+                          <div id={'thTooltips' + tableHeaderIndex}>{tableHeader.label}</div>
                           <Tooltip
                             placement="bottom"
-                            target={'thTooltips' + thI}
-                            isOpen={(openThTooltips[colI] && openThTooltips[colI][thI]) || false}
-                            toggle={() => this.handleThTooltip(thI, colI)}
+                            target={'thTooltips' + tableHeaderIndex}
+                            isOpen={(openThTooltips[columnIndex] && openThTooltips[columnIndex][tableHeaderIndex]) || false}
+                            toggle={() => this.handleTableHeaderTooltip(tableHeaderIndex, columnIndex)}
                           >
-                            {th.tooltip}
+                            {tableHeader.tooltip}
                           </Tooltip>
                         </>
                       );
@@ -169,9 +169,9 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
                     return (
                       <th
                         className={thClass}
-                        key={thI}
-                        rowSpan={th.span ? th.span.row || 1 : 1}
-                        colSpan={th.span ? th.span.col || 1 : 1}
+                        key={tableHeaderIndex}
+                        rowSpan={tableHeader.span ? tableHeader.span.row || 1 : 1}
+                        colSpan={tableHeader.span ? tableHeader.span.col || 1 : 1}
                       >
                         {content}
                       </th>
