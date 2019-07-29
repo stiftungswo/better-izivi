@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'prawn'
+
 module Pdfs
   class PhoneListService
     include Prawn::View

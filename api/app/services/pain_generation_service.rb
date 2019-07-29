@@ -41,12 +41,11 @@ class PainGenerationService
     )
   end
 
-  # TODO: Add correct data
   def sepa_credit_transfer
     @sepa_credit_transfer ||= SEPA::CreditTransfer.new(
-      name: 'Lou GmbH',
-      bic: 'POFICHBEXXX',
-      iban: 'CH2409000000800040679'
+      name: ENV['PAIN_CREDITOR_NAME'],
+      bic: ENV['PAIN_CREDITOR_BIC'],
+      iban: ENV['PAIN_CREDITOR_IBAN']
     )
   end
 end

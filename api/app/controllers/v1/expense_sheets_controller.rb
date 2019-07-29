@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'prawn'
-
 module V1
   class ExpenseSheetsController < ApplicationController
     include V1::Concerns::AdminAuthorizable
