@@ -29,6 +29,7 @@ fr:
       service_specification: spécification du service
       user: Utilisateur
       expense_sheet: Note de frais
+      holiday: Vaccances
     attributes:
       expense_sheet:
         attributes:
@@ -74,12 +75,17 @@ fr:
       user:
         address: Adresse
         bank_iban: Compte en banque
-        email: e-mail
+        email: E-Mail
         first_name: Prénom
         last_name: Nom de famille
         phone: Numéro de téléphone
         zdp: N° de civiliste
         zip_with_city: Code postal / Ville
+      holiday:
+        beginning: Début
+        ending: Fin
+        holiday_type: Type de vacances
+        description: Description
   date:
     formats:
       default: "%d.%m.%Y"

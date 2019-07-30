@@ -29,6 +29,7 @@ de:
       service_specification: Pflichtenheft
       user: Benutzer
       expense_sheet: Spesenblatt
+      holiday: Ferien
     attributes:
       expense_sheet:
         beginning: Anfang
@@ -80,6 +81,11 @@ de:
         phone: Telefonnummer
         zdp: ZDP-Nr.
         zip_with_city: PLZ / Ort
+      holiday:
+        beginning: Anfang
+        ending: Ende
+        holiday_type: Ferien Typ
+        description: Beschreibung
   date:
     formats:
       default: "%d.%m.%Y"

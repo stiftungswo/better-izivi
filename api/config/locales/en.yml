@@ -29,6 +29,7 @@ en:
       service_specification: service specification
       user: User
       expense_sheet: Expense sheet
+      holiday: Holiday
     attributes:
       expense_sheet:
         attributes:
@@ -80,6 +81,11 @@ en:
         phone: Phone
         zdp: Civil servant number
         zip_with_city: ZIP / City
+      holiday:
+        beginning: Beginning
+        ending: Ending
+        holiday_type: Holiday type
+        description: Description
   date:
     formats:
       default: "%d.%m.%Y"
