@@ -3,7 +3,7 @@
 json.array! @payments do |payment_timestamp, expense_sheets|
   json.payment_timestamp payment_timestamp.to_i
   json.state expense_sheets.first.state
-  json.full_amount expense_sheets.sum(&:full_amount)
+  json.total expense_sheets.sum(&:calculate_full_expenses)
 end
 
 

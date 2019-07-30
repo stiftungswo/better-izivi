@@ -5,13 +5,18 @@ module V1
     include V1::Concerns::AdminAuthorizable
     include V1::Concerns::ParamsAuthenticatable
 
-    before_action :authenticate_from_params!, only: :export
-    before_action :authenticate_user!, except: :export
+    before_action :authenticate_from_params!, if: -> { request.format.xml? }
+    before_action :authenticate_user!, unless: -> { request.format.xml? }
     before_action :authorize_admin!
-    before_action :set_expense_sheet, only: :show
+    before_action :set_expense_sheets, only: :show
 
     def show
-      @sheets = ExpenseSheet.in_payment(payment_timestamp_param)
+      respond_to do |format|
+        format.json
+        format.xml do
+          render plain: generate_pain, content_type: :xml
+        end
+      end
     end
 
     def index
@@ -40,32 +45,14 @@ module V1
       render :show
     end
 
-    def export
-      sheets = ExpenseSheet.in_payment(payment_timestamp_param)
-      render plain: PainGenerationService.new(sheets).generate_pain.to_xml('pain.001.001.03.ch.02'), content_type: :xml
-    end
-    def show
-      respond_to do |format|
-        format.xml do
-          render plain: generate_pain, content_type: :xml
-        end
-      end
-    end
-
     private
-
-    # def payment_params
-    #   params.require(:payment).permit(:payment_timestamp)
-    # end
 
     def payment_timestamp_param
       Time.at(params[:payment_timestamp].to_i)
     end
 
-    private
-
-    def set_expense_sheet
-      @sheets = ExpenseSheet.includes(:user).ready_for_payment
+    def set_expense_sheets
+      @sheets = ExpenseSheet.in_payment(payment_timestamp_param)
     end
 
     def generate_pain
