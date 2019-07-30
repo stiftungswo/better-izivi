@@ -31,6 +31,7 @@ fr:
       expense_sheet: Note de frais
       holiday: Vaccances
       regional_center: Centre régional
+      service: Service
     attributes:
       expense_sheet:
         attributes:
@@ -102,6 +103,15 @@ fr:
         name: Nom
         address: Adresse
         short_name: Nom court
+      service:
+        beginning: Début
+        ending: Fin
+        confirmation_date: date de confirmation
+        service_type: Type de service
+        first_swo_service: Premier service de SWO
+        long_service: Service long
+        probation_service: Jours d’affectation à l’essai
+        feedback_mail_sent: E-mail de feedback envoyé
   date:
     formats:
       default: "%d.%m.%Y"

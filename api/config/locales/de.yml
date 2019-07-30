@@ -31,6 +31,7 @@ de:
       expense_sheet: Spesenblatt
       holiday: Ferien
       regional_center: Regionalzentrum
+      service: Einsatz
     attributes:
       expense_sheet:
         beginning: Anfang
@@ -101,6 +102,15 @@ de:
         name: Name
         address: Adresse
         short_name: Kurzname
+      service:
+        beginning: Anfang
+        ending: Ende
+        confirmation_date: Bestätigungsdatum
+        service_type: Einsatztyp
+        first_swo_service: Erster SWO Einsatz
+        long_service: Langer Einsatz
+        probation_service: Probeeinsatz
+        feedback_mail_sent: Feedback E-Mail versendet
   date:
     formats:
       default: "%d.%m.%Y"

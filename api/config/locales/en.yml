@@ -31,6 +31,7 @@ en:
       expense_sheet: Expense sheet
       holiday: Holiday
       regional_center: Regional center
+      service: Service
     attributes:
       expense_sheet:
         attributes:
@@ -102,6 +103,15 @@ en:
         name: Name
         address: Address
         short_name: Short name
+      service:
+        beginning: Beginning
+        ending: Ending
+        confirmation_date: Confirmation date
+        service_type: Service type
+        first_swo_service: First SWO service
+        long_service: Long service
+        probation_service: Probation service
+        feedback_mail_sent: Feedback mail sent
   date:
     formats:
       default: "%d.%m.%Y"
