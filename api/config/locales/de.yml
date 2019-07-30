@@ -93,6 +93,17 @@ de:
         phone: Telefonnummer
         zdp: ZDP-Nr.
         zip_with_city: PLZ / Ort
+        zip: PLZ
+        role: Rolle
+        city: Stadt
+        hometown: Heimatstadt
+        birthday: Geburtstag
+        health_insurance: Krankenkasse
+        work_experience: Arbeitserfahrung
+        driving_licence_b: Führerschein Kat. B
+        driving_licence_be: Führerschein Kat. BE
+        internal_note: Interne Notiz
+        chainsaw_workshop: Motorsägenworkshop
       holiday:
         beginning: Anfang
         ending: Ende

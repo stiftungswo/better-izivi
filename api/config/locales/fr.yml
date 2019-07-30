@@ -94,6 +94,17 @@ fr:
         phone: Numéro de téléphone
         zdp: N° de civiliste
         zip_with_city: Code postal / Ville
+        zip: Code postal
+        role: Rôle
+        city: Ville
+        hometown: Ville natale
+        birthday: Anniversaire
+        health_insurance: L'assurance maladie
+        work_experience: Expérience de travail
+        driving_licence_b: Permis de conduire catégorie B
+        driving_licence_be: Permis de conduire catégorie BE
+        internal_note: Note interne
+        chainsaw_workshop: Atelier de scie à chaîne
       holiday:
         beginning: Début
         ending: Fin
@@ -121,7 +132,7 @@ fr:
     format_error: Vous avez demandé un format invalide
   expense_sheet_calculator:
     errors:
-      unknown_day_type: Ungültiger Spesentagestyp
+      unknown_day_type: Type de problème invalide
   payment:
     expenses_from: Frais du %{from_date}
   pdfs:

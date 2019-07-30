@@ -87,13 +87,24 @@ en:
           lunch: Lunch
       user:
         address: Address
-        bank_iban: Bank account
+        bank_iban: IBAN account number
         email: Email
         first_name: First name
         last_name: Last name
         phone: Phone
         zdp: Civil servant number
         zip_with_city: ZIP / City
+        zip: Zip
+        role: Role
+        city: City
+        hometown: Hometown
+        birthday: Birthday
+        health_insurance: Health insurance
+        work_experience: Work experience
+        driving_licence_b: Driving licence B
+        driving_licence_be: Driving licence BE
+        internal_note: Internal note
+        chainsaw_workshop: Chainsaw workshop
       holiday:
         beginning: Beginning
         ending: Ending
