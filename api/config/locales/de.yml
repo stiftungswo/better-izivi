@@ -68,11 +68,21 @@ de:
           one: Arbeitsfreier Tag
           other: Arbeitsfreie Tage
       service_specification:
+        name: Name
+        short_name: Kurzname
+        work_clothing_expenses: Kleiderspesen
+        accommodation_expenses: Unterkunftsspesen
+        work_days_expenses: Arbeitstagesspesen
+        paid_vacation_expenses: Bezahlte Ferienspesen
+        first_day_expenses: Spesen für den ersten Tag
+        last_day_expenses: Spesen für den letzten Tag
+        location: Ort
+        active: Aktiv
+        identification_number: Identifikationsnummer
         expense_keys:
           breakfast: Morgen
           dinner: Abend
           lunch: Mittag
-        identification_number: Identifikationsnummer
       user:
         address: Adresse
         bank_iban: Bankverbindung

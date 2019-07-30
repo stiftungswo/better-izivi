@@ -69,6 +69,17 @@ fr:
             one: Jour de congé
             other: Jours de congé
       service_specification:
+        name: Nom
+        short_name: Nom court
+        work_clothing_expenses: les frais d'habillement
+        accommodation_expenses: frais d'hébergement
+        work_days_expenses: frais par jour
+        paid_vacation_expenses: Frais de vacances payés
+        first_day_expenses: Frais pour le premier jour
+        last_day_expenses: Frais pour le dernier jour
+        location: lieu
+        active: activé
+        identification_number: Identifikationsnummer
         expense_keys:
           breakfast: Matinée
           dinner: Soir

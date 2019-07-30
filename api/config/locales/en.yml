@@ -26,7 +26,7 @@ en:
             base:
               cant_delete_himself: You cannot delete yourself
     models:
-      service_specification: service specification
+      service_specification: Service specification
       user: User
       expense_sheet: Expense sheet
       holiday: Holiday
@@ -69,6 +69,17 @@ en:
             one: Workfree day
             other: Workfree days
       service_specification:
+        name: Name
+        short_name: Short name
+        work_clothing_expenses: Work clothing expenses
+        accommodation_expenses: Accommodation expenses
+        work_days_expenses: Work days expenses
+        paid_vacation_expenses: Paid vacation expenses
+        first_day_expenses: First day expenses
+        last_day_expenses: Last day expenses
+        location: Location
+        active: Active
+        identification_number: Identification number
         expense_keys:
           breakfast: Breakfast
           dinner: Dinner
