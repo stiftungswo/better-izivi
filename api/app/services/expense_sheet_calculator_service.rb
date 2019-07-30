@@ -57,12 +57,17 @@ class ExpenseSheetCalculatorService
       calculate_unpaid_vacation_days
     ].sum { |values| values[:total] }
 
-    day_sum + @expense_sheet.driving_expenses + calculate_work_clothing_expenses
+    day_sum + calculate_static_expenses
   end
 
+  # TODO: Extract this to suggested_values_calculator or something similar
   def calculate_work_clothing_expenses
+    return 0 if @expense_sheet.service.service_specification.work_clothing_expenses.zero?
+
     sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
-    already_paid = sheets.sum { |sheet| sheet.public_send :calculate_work_clothing_expenses }
+    # already_paid = sheets.sum { |sheet| sheet.public_send :calculate_work_clothing_expenses }
+
+    already_paid = sheets.sum(&:clothing_expenses)
 
     per_day = @expense_sheet.service.service_specification.work_clothing_expenses
     value = calculate_chargeable_days * per_day
@@ -78,6 +83,10 @@ class ExpenseSheetCalculatorService
   end
 
   private
+
+  def calculate_static_expenses
+    @expense_sheet.driving_expenses + @expense_sheet.clothing_expenses + @expense_sheet.extraordinary_expenses
+  end
 
   def calculate_default_days(count)
     calculate_values(count, @specification.work_days_expenses)
