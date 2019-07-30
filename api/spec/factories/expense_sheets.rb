@@ -35,11 +35,17 @@ FactoryBot.define do
     end
 
     trait :payment_in_progress do
+      to_create { |instance| instance.save(validate: false) }
+
       state { :payment_in_progress }
+      payment_timestamp { Time.at(1_564_471_897) }
     end
 
     trait :paid do
+      to_create { |instance| instance.save(validate: false) }
+
       state { :paid }
+      payment_timestamp { Time.at(1_564_471_897) }
     end
   end
 end

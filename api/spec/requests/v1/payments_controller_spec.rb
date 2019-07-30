@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe V1::PaymentsController, type: :request do
   describe '#show' do
-    let(:request) { get v1_pain_export_path(format: :xml), params: { token: token } }
+    let(:request) { get v1_payment_path(format: :xml, payment_timestamp: '1564471897'), params: { token: token } }
     let!(:user) { create :user }
 
     context 'when a token is provided' do
@@ -14,7 +14,10 @@ RSpec.describe V1::PaymentsController, type: :request do
       let(:ending) { (Time.zone.today - 1.week).end_of_week - 2.days }
 
       before do
-        create :expense_sheet, :ready_for_payment, user: user, beginning: beginning, ending: ending
+        create :expense_sheet, :payment_in_progress,
+               user: user,
+               beginning: beginning,
+               ending: ending
         create :service, user: user, beginning: beginning, ending: ending
       end
 
