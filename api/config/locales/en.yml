@@ -28,9 +28,24 @@ en:
     models:
       service_specification: service specification
       user: User
+      expense_sheet: Expense sheet
     attributes:
       expense_sheet:
         attributes:
+          beginning: Beginning
+          ending: Ending
+          unpaid_company_holiday_days: Unpaid company holiday days
+          paid_company_holiday_days: Paid company holiday days
+          company_holiday_comment:  Company holiday comment
+          sick_comment: Sick comment
+          paid_vacation_comment: Paid vacation comment
+          unpaid_vacation_comment: Unpaid vacation comment
+          driving_expenses_comment: Driving expenses comment
+          extraordinary_expenses: Extraordinary expenses
+          extraordinary_expenses_comment: Extraordinary expenses comment
+          clothing_expenses: Clothing expenses
+          clothing_expenses_comment: Clothing expenses comment
+          bank_account_number: Bank account number
           accommodation_expenses: Accommodation
           driving_expenses: Driving expenses
           paid_vacation_days:
@@ -40,8 +55,7 @@ en:
           sick_days:
             one: Sick day
             other: Sick days
-          state:
-            invalid_state_change: Invalid state change
+          state: Status
           unpaid_vacation_days:
             one: Unpaid vacation day
             other: Unpaid vacation days

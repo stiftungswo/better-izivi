@@ -33,6 +33,18 @@ de:
       expense_sheet:
         beginning: Anfang
         ending: Ende
+        unpaid_company_holiday_days: Unbezahlte Betriebsferientage
+        paid_company_holiday_days: Bezahlte Betriebsferientage
+        company_holiday_comment:  Betriebsferien Kommentar
+        sick_comment: Krankheitskommentar
+        paid_vacation_comment: Bezahlte Ferien - Kommentar
+        unpaid_vacation_comment: Unbezahlte Ferien - Kommentar
+        driving_expenses_comment: Fahrspesenkommentar
+        extraordinary_expenses: Ausserordentliche Spesen
+        extraordinary_expenses_comment: Ausserordentliche Spesen - Kommentar
+        clothing_expenses: Kleiderspesen
+        clothing_expenses_comment: Kleiderspesen - Kommentar
+        bank_account_number: Bankkonto Nummer
         accommodation_expenses: Unterkunft
         driving_expenses: Fahrspesen
         paid_vacation_days:
@@ -42,8 +54,7 @@ de:
         sick_days:
           one: Krankheitstag
           other: Krankheitstage
-        state:
-          invalid_state_change: Ungültige Statusänderung
+        state: Status
         unpaid_vacation_days:
           one: Urlaubstag
           other: Urlaubstage

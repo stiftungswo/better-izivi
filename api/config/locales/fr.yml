@@ -28,9 +28,24 @@ fr:
     models:
       service_specification: spécification du service
       user: Utilisateur
+      expense_sheet: Note de frais
     attributes:
       expense_sheet:
         attributes:
+          beginning: Début
+          ending: Fin
+          unpaid_company_holiday_days: Congés d'entreprise non payés
+          paid_company_holiday_days: Congés payés
+          company_holiday_comment:  Commentaire sur les vacances en entreprise
+          sick_comment: Commentaire sur la maladie
+          paid_vacation_comment: Congés payés - commentaire
+          unpaid_vacation_comment: Unbezahlte Ferien - Commentaire
+          driving_expenses_comment: Commentaire sur les frais de déplacement
+          extraordinary_expenses: Frais extraordinaires
+          extraordinary_expenses_comment: Frais extraordinaires - Commentaire
+          clothing_expenses: Frais d'habillement
+          clothing_expenses_comment: Frais d'habillement - Commentaire
+          bank_account_number: Numéro de compte bancaire
           accommodation_expenses: Hébergement
           driving_expenses: Frais de conduite
           paid_vacation_days:
@@ -40,8 +55,7 @@ fr:
           sick_days:
             one: Jour de congé de maladie
             other: Jours de congé de maladie
-          state:
-            invalid_state_change: changement de statut invalide
+          state: Statut
           unpaid_vacation_days:
             one: Jour de congé
             other: Jours de congé
