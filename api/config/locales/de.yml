@@ -73,11 +73,17 @@ de:
   errors:
     authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
     format_error: Sie haben ein ungültiges Format angefordert
+  expense_sheet:
+    errors:
+      already_paid: Spesenblatt wurde bereits ausgezahlt
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp
   payment:
     expenses_from: Spesen vom %{from_date}
+    errors:
+      unconfirmed_not_found: Unbestätigte Auszahlung nicht gefunden
+      not_found: Auszahlung nicht gefunden
   pdfs:
     expense_sheet:
       expense_table:

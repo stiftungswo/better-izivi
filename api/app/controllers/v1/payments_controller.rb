@@ -24,23 +24,37 @@ module V1
     end
 
     def create
-      @sheets = ExpenseSheet.includes(:user).ready_for_payment.to_a
+      query = ExpenseSheet.includes(:user).ready_for_payment
+      @sheets = query.to_a
       @payment_timestamp = Time.zone.now
-      @sheets.each { |sheet| sheet.update state: :payment_in_progress, payment_timestamp: @payment_timestamp }
+      @state = :payment_in_progress
+      query.update_all state: @state, payment_timestamp: @payment_timestamp
 
       render :show
     end
 
     def destroy
-      @sheets = ExpenseSheet.in_payment(payment_timestamp_param).payment_in_progress.to_a
-      @sheets.each { |sheet| sheet.update state: :ready_for_payment, payment_timestamp: '' }
+      query = ExpenseSheet.in_payment(payment_timestamp_param).payment_in_progress
+      @sheets = query.to_a
+
+      raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.unconfirmed_not_found') if @sheets.empty?
+
+      @payment_timestamp = ''
+      @state = :ready_for_payment
+      query.update_all state: @state, payment_timestamp: @payment_timestamp
 
       render :show
     end
 
     def confirm
-      @sheets = ExpenseSheet.in_payment(payment_timestamp_param).payment_in_progress.to_a
-      @sheets.each { |sheet| sheet.update state: :paid }
+      query = ExpenseSheet.in_payment(payment_timestamp_param).payment_in_progress
+      @sheets = query.to_a
+
+      raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.unconfirmed_not_found') if @sheets.empty?
+
+      @payment_timestamp = payment_timestamp_param
+      @state = :paid
+      query.update_all state: @state
 
       render :show
     end
@@ -53,6 +67,11 @@ module V1
 
     def set_expense_sheets
       @sheets = ExpenseSheet.in_payment(payment_timestamp_param)
+
+      raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.not_found') if @sheets.empty?
+
+      @payment_timestamp = payment_timestamp_param
+      @state = @sheets.empty? ? nil : @sheets.first.state
     end
 
     def generate_pain

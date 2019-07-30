@@ -73,11 +73,17 @@ fr:
   errors:
     authorization_error: Vous n'avez pas les droits requis pour cette demande.
     format_error: Vous avez demandé un format invalide
+  expense_sheet:
+    errors:
+      already_paid: Feuille de dépenses déjà payée
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp
   payment:
     expenses_from: Frais du %{from_date}
+    errors:
+      unconfirmed_not_found: Paiement non confirmé non trouvé
+      not_found: Paiement non trouvé
   pdfs:
     expense_sheet:
       expense_table:

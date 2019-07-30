@@ -73,11 +73,17 @@ en:
   errors:
     authorization_error: You are not authorized to perform this action
     format_error: You requested an invalid format
+  expense_sheet:
+    errors:
+      already_paid: Expense sheet has already been paid
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp
   payment:
     expenses_from: Expenses from %{from_date}
+    errors:
+      unconfirmed_not_found: Unconfirmed payment not found
+      not_found: Payment not found
   pdfs:
     expense_sheet:
       expense_table:

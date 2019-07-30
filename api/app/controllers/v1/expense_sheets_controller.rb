@@ -55,6 +55,7 @@ module V1
     end
 
     def destroy
+      raise ValidationError, I18n.t('expense_sheet.errors.already_paid') if @expense_sheet.paid?
       raise ValidationError, @expense_sheet.errors unless @expense_sheet.destroy
     end
 
