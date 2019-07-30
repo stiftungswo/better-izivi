@@ -26,46 +26,46 @@ fr:
             base:
               cant_delete_himself: Tu ne peux pas t'effacer toi-même
     models:
-      attributes:
-        expense_sheet:
-          attributes:
-            accommodation_expenses: Hébergement
-            driving_expenses: Frais de conduite
-            paid_vacation_days:
-              one: Jour fériés
-              other: Jours fériés
-            pocket_money: Argent de poche
-            sick_days:
-              one: Jour de congé de maladie
-              other: Jours de congé de maladie
-            state:
-              invalid_state_change: changement de statut invalide
-            unpaid_vacation_days:
-              one: Jour de congé
-              other: Jours de congé
-            work_clothing_expenses: Vêtements de travail
-            work_days:
-              one: Jour de travail
-              other: Jours de travail
-            workfree_days:
-              one: Jour de congé
-              other: Jours de congé
-        service_specification:
-          expense_keys:
-            breakfast: Matinée
-            dinner: Soir
-            lunch: Midi
-        user:
-          address: Adresse
-          bank_iban: Compte en banque
-          email: e-mail
-          first_name: Prénom
-          last_name: Nom de famille
-          phone: Numéro de téléphone
-          zdp: N° de civiliste
-          zip_with_city: Code postal / Ville
       service_specification: spécification du service
       user: Utilisateur
+    attributes:
+      expense_sheet:
+        attributes:
+          accommodation_expenses: Hébergement
+          driving_expenses: Frais de conduite
+          paid_vacation_days:
+            one: Jour fériés
+            other: Jours fériés
+          pocket_money: Argent de poche
+          sick_days:
+            one: Jour de congé de maladie
+            other: Jours de congé de maladie
+          state:
+            invalid_state_change: changement de statut invalide
+          unpaid_vacation_days:
+            one: Jour de congé
+            other: Jours de congé
+          work_clothing_expenses: Vêtements de travail
+          work_days:
+            one: Jour de travail
+            other: Jours de travail
+          workfree_days:
+            one: Jour de congé
+            other: Jours de congé
+      service_specification:
+        expense_keys:
+          breakfast: Matinée
+          dinner: Soir
+          lunch: Midi
+      user:
+        address: Adresse
+        bank_iban: Compte en banque
+        email: e-mail
+        first_name: Prénom
+        last_name: Nom de famille
+        phone: Numéro de téléphone
+        zdp: N° de civiliste
+        zip_with_city: Code postal / Ville
   date:
     formats:
       default: "%d.%m.%Y"

@@ -26,46 +26,49 @@ de:
             base:
               cant_delete_himself: Du kannst dich nicht selbst löschen
     models:
-      attributes:
-        expense_sheet:
-          attributes:
-            accommodation_expenses: Unterkunft
-            driving_expenses: Fahrspesen
-            paid_vacation_days:
-              one: Ferientag
-              other: Ferientage
-            pocket_money: Taschengeld
-            sick_days:
-              one: Krankheitstag
-              other: Krankheitstage
-            state:
-              invalid_state_change: Ungültige Statusänderung
-            unpaid_vacation_days:
-              one: Urlaubstag
-              other: Urlaubstage
-            work_clothing_expenses: Arbeitskleider
-            work_days:
-              one: Arbeitstag
-              other: Arbeitstage
-            workfree_days:
-              one: Arbeitsfreier Tag
-              other: Arbeitsfreie Tage
-        service_specification:
-          expense_keys:
-            breakfast: Morgen
-            dinner: Abend
-            lunch: Mittag
-        user:
-          address: Adresse
-          bank_iban: Bankverbindung
-          email: Email
-          first_name: Vorname
-          last_name: Nachname
-          phone: Telefonnummer
-          zdp: ZDP-Nr.
-          zip_with_city: PLZ / Ort
       service_specification: Pflichtenheft
       user: Benutzer
+      expense_sheet: Spesenblatt
+    attributes:
+      expense_sheet:
+        beginning: Anfang
+        ending: Ende
+        accommodation_expenses: Unterkunft
+        driving_expenses: Fahrspesen
+        paid_vacation_days:
+          one: Ferientag
+          other: Ferientage
+        pocket_money: Taschengeld
+        sick_days:
+          one: Krankheitstag
+          other: Krankheitstage
+        state:
+          invalid_state_change: Ungültige Statusänderung
+        unpaid_vacation_days:
+          one: Urlaubstag
+          other: Urlaubstage
+        work_clothing_expenses: Arbeitskleider
+        work_days:
+          one: Arbeitstag
+          other: Arbeitstage
+        workfree_days:
+          one: Arbeitsfreier Tag
+          other: Arbeitsfreie Tage
+      service_specification:
+        expense_keys:
+          breakfast: Morgen
+          dinner: Abend
+          lunch: Mittag
+        identification_number: Identifikationsnummer
+      user:
+        address: Adresse
+        bank_iban: Bankverbindung
+        email: Email
+        first_name: Vorname
+        last_name: Nachname
+        phone: Telefonnummer
+        zdp: ZDP-Nr.
+        zip_with_city: PLZ / Ort
   date:
     formats:
       default: "%d.%m.%Y"

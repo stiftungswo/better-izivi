@@ -1,4 +1,5 @@
 // tslint:disable:no-console
+import { forEach } from 'lodash';
 import { action, observable } from 'mobx';
 import { noop } from '../utilities/helpers';
 import { MainStore } from './mainStore';
@@ -68,7 +69,15 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
         await this.doPost(entity);
         this.mainStore.displaySuccess(`${this.entityName.singular} wurde gespeichert.`);
       } catch (e) {
-        this.mainStore.displayError(`${this.entityName.singular} konnte nicht gespeichert werden.`);
+        let errorMessage = `${this.entityName.singular} konnte nicht gespeichert werden`;
+        if (e.messages) {
+          if ('error' in e.messages) {
+            errorMessage += `\n${e.messages.error}`;
+          } else if ('errors' in e.messages) {
+            forEach(e.messages.errors, (field) => { errorMessage += `\n<b>${field}</b>`; });
+          }
+        }
+        this.mainStore.displayError(errorMessage);
         console.error(e);
         throw e;
       }

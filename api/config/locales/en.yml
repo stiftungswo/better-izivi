@@ -26,46 +26,46 @@ en:
             base:
               cant_delete_himself: You cannot delete yourself
     models:
-      attributes:
-        expense_sheet:
-          attributes:
-            accommodation_expenses: Accommodation
-            driving_expenses: Driving expenses
-            paid_vacation_days:
-              one: Paid vacation day
-              other: Paid vacation days
-            pocket_money: Pocket money
-            sick_days:
-              one: Sick day
-              other: Sick days
-            state:
-              invalid_state_change: Invalid state change
-            unpaid_vacation_days:
-              one: Unpaid vacation day
-              other: Unpaid vacation days
-            work_clothing_expenses: Work clothing expenses
-            work_days:
-              one: Work day
-              other: Work days
-            workfree_days:
-              one: Workfree day
-              other: Workfree days
-        service_specification:
-          expense_keys:
-            breakfast: Breakfast
-            dinner: Dinner
-            lunch: Lunch
-        user:
-          address: Address
-          bank_iban: Bank account
-          email: Email
-          first_name: First name
-          last_name: Last name
-          phone: Phone
-          zdp: Civil servant number
-          zip_with_city: ZIP / City
       service_specification: service specification
       user: User
+    attributes:
+      expense_sheet:
+        attributes:
+          accommodation_expenses: Accommodation
+          driving_expenses: Driving expenses
+          paid_vacation_days:
+            one: Paid vacation day
+            other: Paid vacation days
+          pocket_money: Pocket money
+          sick_days:
+            one: Sick day
+            other: Sick days
+          state:
+            invalid_state_change: Invalid state change
+          unpaid_vacation_days:
+            one: Unpaid vacation day
+            other: Unpaid vacation days
+          work_clothing_expenses: Work clothing expenses
+          work_days:
+            one: Work day
+            other: Work days
+          workfree_days:
+            one: Workfree day
+            other: Workfree days
+      service_specification:
+        expense_keys:
+          breakfast: Breakfast
+          dinner: Dinner
+          lunch: Lunch
+      user:
+        address: Address
+        bank_iban: Bank account
+        email: Email
+        first_name: First name
+        last_name: Last name
+        phone: Phone
+        zdp: Civil servant number
+        zip_with_city: ZIP / City
   date:
     formats:
       default: "%d.%m.%Y"
