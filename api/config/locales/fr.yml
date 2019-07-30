@@ -30,6 +30,7 @@ fr:
       user: Utilisateur
       expense_sheet: Note de frais
       holiday: Vaccances
+      regional_center: Centre régional
     attributes:
       expense_sheet:
         attributes:
@@ -86,6 +87,10 @@ fr:
         ending: Fin
         holiday_type: Type de vacances
         description: Description
+      regional_center:
+        name: Nom
+        address: Adresse
+        short_name: Nom court
   date:
     formats:
       default: "%d.%m.%Y"

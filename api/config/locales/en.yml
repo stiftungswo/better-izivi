@@ -30,6 +30,7 @@ en:
       user: User
       expense_sheet: Expense sheet
       holiday: Holiday
+      regional_center: Regional center
     attributes:
       expense_sheet:
         attributes:
@@ -86,6 +87,10 @@ en:
         ending: Ending
         holiday_type: Holiday type
         description: Description
+      regional_center:
+        name: Name
+        address: Address
+        short_name: Short name
   date:
     formats:
       default: "%d.%m.%Y"

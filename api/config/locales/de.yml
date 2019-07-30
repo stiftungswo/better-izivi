@@ -30,6 +30,7 @@ de:
       user: Benutzer
       expense_sheet: Spesenblatt
       holiday: Ferien
+      regional_center: Regionalzentrum
     attributes:
       expense_sheet:
         beginning: Anfang
@@ -86,6 +87,10 @@ de:
         ending: Ende
         holiday_type: Ferien Typ
         description: Beschreibung
+      regional_center:
+        name: Name
+        address: Adresse
+        short_name: Kurzname
   date:
     formats:
       default: "%d.%m.%Y"
