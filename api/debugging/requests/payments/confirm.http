@@ -1,0 +1,4 @@
+PUT {{url}}/payments/confirm/1564472351
+Authorization: {{auth_token}}
+
+###

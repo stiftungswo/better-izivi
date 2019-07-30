@@ -1,0 +1,4 @@
+GET {{url}}/payments
+Authorization: {{auth_token}}
+
+###

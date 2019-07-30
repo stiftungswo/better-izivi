@@ -30,6 +30,10 @@ class ExpenseSheet < ApplicationRecord
     paid: 3
   }
 
+  scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp: payment_timestamp) }
+
+  scope :payment_issued, -> { where.not(payment_timestamp: [nil]) }
+
   def full_amount
     10_000 # TODO: implement correct calculator
   end
