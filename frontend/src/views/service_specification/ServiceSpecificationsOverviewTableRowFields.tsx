@@ -6,7 +6,6 @@ import { WiredField } from '../../form/formik';
 import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
 
 const STANDARD_INPUT_ROW_NAME_KEYS = Object.freeze([
-  'pocket_money',
   'accommodation_expenses',
   'work_clothing_expenses',
   'first_day_expenses.breakfast',
@@ -29,6 +28,7 @@ interface OverviewTableRowParams {
   component: React.ElementType;
   name: string;
   size?: string;
+  disabled?: boolean;
 }
 
 const OverviewTableRow = ({ tableDataClassName, ...other }: OverviewTableRowParams) => {
@@ -57,6 +57,7 @@ export const ServiceSpecificationOverviewTableRowFields = ({ classes }: WithShee
       <OverviewTableRow {...inputDefaultParams} name={'identification_number'} size={'3'}/>
       <OverviewTableRow {...inputDefaultParams} name={'name'} size={'20'} />
       <OverviewTableRow {...inputDefaultParams} name={'short_name'} size={'1'} />
+      <OverviewTableRow {...inputDefaultParams} name={'pocket_money'} disabled={true} />
 
       {STANDARD_INPUT_ROW_NAME_KEYS.map(name => <OverviewTableRow {...inputDefaultParams} name={name} key={name} />)}
     </>
