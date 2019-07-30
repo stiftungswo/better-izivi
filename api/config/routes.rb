@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get 'payments/pain/:payment_timestamp', to: 'payments#export', as: 'pain_export'
     put 'payments/confirm/:payment_timestamp', to: 'payments#confirm', as: 'payment_confirm'
     resources :payments, only: %i[index show create destroy], param: :payment_timestamp
-    get 'phone_list', to: 'phone_list#index'
+    get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
+    get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'
   end
 end
