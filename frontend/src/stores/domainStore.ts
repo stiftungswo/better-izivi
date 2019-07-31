@@ -31,10 +31,26 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
 
   private static buildErrorMessage(e: { messages: any }, defaultMessage: string) {
     if ('messages' in e) {
-      if ('error' in e.messages) {
-        return `${defaultMessage}: ${e.messages.error}`;
-      } else if ('human_readable_descriptions' in e.messages) {
-        const errorMessageTemplate = `
+      return this.buildServerErrorMessage(e, defaultMessage);
+    }
+
+    return defaultMessage;
+  }
+
+  private static buildServerErrorMessage(e: { messages: any }, defaultMessage: string) {
+    if ('error' in e.messages) {
+      return `${defaultMessage}: ${e.messages.error}`;
+    } else if ('human_readable_descriptions' in e.messages) {
+      return this.buildHumanReadableErrorList(e, defaultMessage);
+    } else if ('errors' in e.messages && typeof e.messages.errors === 'string') {
+      return `${defaultMessage}: ${e.messages.errors}`;
+    }
+
+    return defaultMessage;
+  }
+
+  private static buildHumanReadableErrorList(e: { messages: any }, defaultMessage: string) {
+    const errorMessageTemplate = `
               <ul class="mt-1 mb-0">
                 <% _.forEach(messages, message => {%>
                     <li><%- message %></li>
@@ -42,12 +58,7 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
               </ul>
             `;
 
-        return `${defaultMessage}:` + template(errorMessageTemplate)({ messages: e.messages.human_readable_descriptions });
-      } else if ('errors' in e.messages && typeof e.messages.errors === 'string') {
-        return `${defaultMessage}: ${e.messages.errors}`;
-      }
-    }
-    return defaultMessage;
+    return `${defaultMessage}:` + template(errorMessageTemplate)({ messages: e.messages.human_readable_descriptions });
   }
 
   @observable
