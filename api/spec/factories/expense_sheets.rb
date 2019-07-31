@@ -38,14 +38,14 @@ FactoryBot.define do
       to_create { |instance| instance.save(validate: false) }
 
       state { :payment_in_progress }
-      payment_timestamp { Time.at(1_564_471_897) }
+      payment_timestamp { Time.zone.at(1_564_471_897) }
     end
 
     trait :paid do
       to_create { |instance| instance.save(validate: false) }
 
       state { :paid }
-      payment_timestamp { Time.at(1_564_471_897) }
+      payment_timestamp { Time.zone.at(1_564_471_897) }
     end
   end
 end

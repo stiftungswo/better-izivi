@@ -41,7 +41,7 @@ module V1
       payment_timestamp = Time.zone.now
       state = :payment_in_progress
 
-      query.update_all state: state, payment_timestamp: payment_timestamp
+      query.update state: state, payment_timestamp: payment_timestamp
 
       render :show, locals: { state: state, payment_timestamp: payment_timestamp }
     end
@@ -67,7 +67,7 @@ module V1
     private
 
     def payment_timestamp_param
-      Time.at(params[:payment_timestamp].to_i)
+      Time.zone.at(params[:payment_timestamp].to_i)
     end
 
     def set_unconfirmed_expense_sheets
