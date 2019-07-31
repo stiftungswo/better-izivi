@@ -50,7 +50,7 @@ module V1
       payment_timestamp = ''
       state = :ready_for_payment
 
-      unconfirmed_expense_sheets_query.update_all state: state, payment_timestamp: payment_timestamp
+      unconfirmed_expense_sheets_query.update state: state, payment_timestamp: payment_timestamp
 
       render :show, locals: { state: state, payment_timestamp: payment_timestamp }
     end
@@ -59,7 +59,7 @@ module V1
       payment_timestamp = payment_timestamp_param
       state = :paid
 
-      unconfirmed_expense_sheets_query.update_all state: state
+      unconfirmed_expense_sheets_query.update state: state
 
       render :show, locals: { state: state, payment_timestamp: payment_timestamp }
     end
