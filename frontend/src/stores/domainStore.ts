@@ -30,7 +30,7 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
   }
 
   private static buildErrorMessage(e: { messages: any }, defaultMessage: string) {
-    if ('messages' in e) {
+    if ('messages' in e && typeof e.messages === 'object') {
       return this.buildServerErrorMessage(e, defaultMessage);
     }
 
