@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-json.payment_timestamp @payment_timestamp.to_i
-json.state @state
+json.payment_timestamp payment_timestamp.to_i
+json.state state
 json.expense_sheets do
   json.array! @sheets do |sheet|
     json.extract! sheet, :id

@@ -84,6 +84,7 @@ de:
     errors:
       unconfirmed_not_found: Unbestätigte Auszahlung nicht gefunden
       not_found: Auszahlung nicht gefunden
+      ready_not_found: Keine für Auszahlung bereiten Spesenblätter gefunden
   pdfs:
     expense_sheet:
       expense_table:

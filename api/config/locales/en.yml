@@ -84,6 +84,7 @@ en:
     errors:
       unconfirmed_not_found: Unconfirmed payment not found
       not_found: Payment not found
+      ready_not_found: No ready for payment expense sheets found
   pdfs:
     expense_sheet:
       expense_table:
