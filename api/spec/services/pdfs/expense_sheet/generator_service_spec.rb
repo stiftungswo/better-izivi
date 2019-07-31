@@ -63,9 +63,6 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
       end
 
       it 'renders correct texts' do
-        p I18n.locale
-        pp pdf_text_inspector.strings
-        pp expected_texts
         expect(pdf_text_inspector.strings).to eq expected_texts
       end
 
