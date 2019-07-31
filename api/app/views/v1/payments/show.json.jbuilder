@@ -11,5 +11,3 @@ json.expense_sheets do
     end
   end
 end
-
-

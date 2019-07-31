@@ -5,10 +5,3 @@ json.array! @payments do |payment_timestamp, expense_sheets|
   json.state expense_sheets.first.state
   json.total expense_sheets.sum(&:calculate_full_expenses)
 end
-
-
-
-
-
-
-

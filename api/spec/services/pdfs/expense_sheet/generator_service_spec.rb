@@ -82,7 +82,6 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
         it 'renders correct text' do
           p expense_sheet
 
-
           expect(pdf_text_inspector.strings[-8..-7]).to eq expected_texts
         end
       end

@@ -30,7 +30,7 @@ class ExpenseSheet < ApplicationRecord
     payment_in_progress: 2,
     paid: 3
   }
-  
+
   scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp: payment_timestamp) }
 
   scope :payment_issued, -> { where.not(payment_timestamp: [nil]) }
@@ -48,7 +48,6 @@ class ExpenseSheet < ApplicationRecord
            :calculate_work_days,
            :calculate_workfree_days,
            to: :values_calculator
-
 
   def service
     @service ||= user.services.including_date_range(beginning, ending).first
