@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     get 'services/calculate_ending', to: 'service_calculator#calculate_ending'
     resources :services
     resources :users, except: :create
-    put 'payments/confirm/:payment_timestamp', to: 'payments#confirm', as: 'payment_confirm'
+    put 'payments/:payment_timestamp/confirm', to: 'payments#confirm', as: 'payment_confirm'
     resources :payments, only: %i[index show create destroy], param: :payment_timestamp
     get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
     get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'
