@@ -71,7 +71,10 @@ RSpec.describe V1::PaymentsController, type: :request do
 
         context 'when there is a payment' do
           let!(:payment) do
-            build :payment, expense_sheets: expense_sheets, state: :payment_in_progress, payment_timestamp: payment_timestamp
+            build :payment,
+                  expense_sheets: expense_sheets,
+                  state: :payment_in_progress,
+                  payment_timestamp: payment_timestamp
           end
           let(:expense_sheets) do
             [
