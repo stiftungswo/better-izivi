@@ -1,5 +1,8 @@
 ---
 de:
+  attributes:
+    payment_timestamp: Auszahlungszeitstempel
+    state: Status
   activerecord:
     errors:
       messages:
@@ -10,7 +13,7 @@ de:
         expense_sheet:
           attributes:
             state:
-              invalid_state_change: Ungültiger Statuswechsel
+              invalid_state_change: ungültiger Statuswechsel
         holiday:
           attributes:
             ending:
@@ -57,7 +60,6 @@ de:
         sick_days:
           one: Krankheitstag
           other: Krankheitstage
-        state: Status
         unpaid_vacation_days:
           one: Urlaubstag
           other: Urlaubstage
