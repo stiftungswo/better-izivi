@@ -23,6 +23,8 @@ class ExpenseSheet < ApplicationRecord
             numericality: { only_integer: true }
 
   validate :legitimate_state_change, if: :state_changed?
+  validates :payment_timestamp, presence: true, if: -> { state.in?(%w[payment_in_progress paid]) }
+  validates :payment_timestamp, inclusion: { in: [nil] }, if: -> { state.in?(%w[open ready_for_payment]) }
 
   enum state: {
     open: 0,
