@@ -42,14 +42,22 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
       return `${defaultMessage}: ${e.messages.error}`;
     } else if ('human_readable_descriptions' in e.messages) {
       return this.buildErrorList(e.messages.human_readable_descriptions, defaultMessage);
-    } else if ('errors' in e.messages && typeof e.messages.errors === 'string') {
-      return `${defaultMessage}: ${e.messages.errors}`;
-    } else if ('errors' in e.messages && typeof e.messages.errors) {
-      const errors: { [index: string]: string } = e.messages.errors;
-      return this.buildErrorList(_.map(errors, (value, key) => this.humanize(key) + ' ' + value), defaultMessage);
+    } else if ('errors' in e.messages) {
+      return this.buildMiscErrorListMessage(e, defaultMessage);
     }
 
     return defaultMessage;
+  }
+
+  private static buildMiscErrorListMessage(e: { messages: any }, defaultMessage: string) {
+    if (typeof e.messages.errors === 'string') {
+      return `${defaultMessage}: ${e.messages.errors}`;
+    } else if (typeof e.messages.errors === 'object') {
+      const errors: { [index: string]: string } = e.messages.errors;
+      return this.buildErrorList(_.map(errors, (value, key) => this.humanize(key) + ' ' + value), defaultMessage);
+    } else {
+      return defaultMessage;
+    }
   }
 
   private static buildErrorList(messages: string[], defaultMessage: string) {
