@@ -7,18 +7,6 @@ class Payment
 
   validate :validate_expense_sheets
 
-  def initialize(expense_sheets)
-    @expense_sheets = expense_sheets
-    @payment_timestamp = Time.zone.now
-    @state = :payment_in_progress
-  end
-
-  def save
-    return false unless valid?
-
-    @expense_sheets.each(&:save)
-  end
-
   def self.find(payment_timestamp)
     payment = allocate
 
@@ -31,22 +19,51 @@ class Payment
     payment
   end
 
+  def self.all
+    ExpenseSheet.payment_issued.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|
+      payment = Payment.new(expense_sheets)
+      payment.state = expense_sheets.first.state
+      payment.payment_timestamp = payment_timestamp
+      payment
+    end
+  end
+
+  def initialize(expense_sheets)
+    @expense_sheets = expense_sheets
+    @payment_timestamp = Time.zone.now
+    @state = :payment_in_progress
+  end
+
+  def save
+    update_expense_sheets
+
+    return false unless valid?
+
+    @expense_sheets.each(&:save)
+  end
+
   def confirm
     @state = :paid
-    update_expense_sheets
+    save
   end
 
   def cancel
     @payment_timestamp = nil
     @state = :ready_for_payment
-    update_expense_sheets
+    save
+  end
+
+  def total
+    @expense_sheets.sum(&:calculate_full_expenses)
   end
 
   private
 
   def update_expense_sheets
-    @expense_sheets.each { |expense_sheet| expense_sheet.state = @state }
-    @expense_sheets.each { |expense_sheet| expense_sheet.payment_timestamp = @payment_timestamp }
+    @expense_sheets.each do |expense_sheet|
+      expense_sheet.state = @state
+      expense_sheet.payment_timestamp = @payment_timestamp
+    end
   end
 
   def validate_expense_sheets
