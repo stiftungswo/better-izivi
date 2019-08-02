@@ -28,8 +28,8 @@ class Payment
     end
   end
 
-  def initialize(expense_sheets)
-    @expense_sheets = expense_sheets
+  def initialize
+    @expense_sheets = ExpenseSheet.includes(:user).ready_for_payment.all
     @payment_timestamp = Time.zone.now
     @state = :payment_in_progress
   end
