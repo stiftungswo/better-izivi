@@ -133,7 +133,5 @@ RSpec.describe V1::PaymentsController, type: :request do
         it_behaves_like 'login protected resource'
       end
     end
-
-
   end
 end
