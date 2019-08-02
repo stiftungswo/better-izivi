@@ -35,7 +35,7 @@ class ExpenseSheet < ApplicationRecord
 
   scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp: payment_timestamp) }
 
-  scope :payment_issued, -> { where.not(payment_timestamp: [nil]) }
+  scope :payment_issued, -> { includes(:user).where.not(payment_timestamp: [nil]) }
 
   scope :before_date, (->(date) { where(arel_table[:ending].lt(date)) })
 
