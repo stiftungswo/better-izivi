@@ -104,6 +104,7 @@ de:
         driving_licence_be: Führerschein Kat. BE
         internal_note: Interne Notiz
         chainsaw_workshop: Motorsägenworkshop
+        current_password: Momentanes Passwort
       holiday:
         beginning: Anfang
         ending: Ende
