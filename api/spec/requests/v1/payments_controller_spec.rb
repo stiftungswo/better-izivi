@@ -70,7 +70,10 @@ RSpec.describe V1::PaymentsController, type: :request do
         before { sign_in user }
 
         context 'when there is a payment' do
-          let!(:expense_sheets) do
+          let!(:payment) do
+            build :payment, expense_sheets: expense_sheets, state: :payment_in_progress, payment_timestamp: payment_timestamp
+          end
+          let(:expense_sheets) do
             [
               create(:expense_sheet, :payment_in_progress,
                      user: user,
@@ -91,9 +94,10 @@ RSpec.describe V1::PaymentsController, type: :request do
           end
           let(:expected_response) do
             {
-              payment_timestamp: payment_timestamp.to_i,
+              payment_timestamp: payment.payment_timestamp.to_i,
               state: 'payment_in_progress',
-              expense_sheets: expense_sheets.map do |expense_sheet|
+              total: payment.total,
+              expense_sheets: payment.expense_sheets.map do |expense_sheet|
                 extract_to_json(expense_sheet, :id)
                   .merge(full_expenses: expense_sheet.calculate_full_expenses)
                   .merge(user: expected_user_response)
