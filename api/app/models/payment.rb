@@ -69,12 +69,14 @@ class Payment
   def validate_expense_sheets
     return if @expense_sheets.all?(&:valid?)
 
-    expense_sheets_errors.each do |error|
-      error.each { |key, value| errors.add(key, *value) }
-    end
+    expense_sheets_errors.each(&method(:add_error))
   end
 
   def expense_sheets_errors
     @expense_sheets.map { |expense_sheet| expense_sheet.errors.messages }.uniq
+  end
+
+  def add_error(error)
+    error.each { |key, value| errors.add(key, *value) }
   end
 end
