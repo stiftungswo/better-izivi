@@ -6,14 +6,15 @@ import Button from 'reactstrap/lib/Button';
 import Container from 'reactstrap/lib/Container';
 import Form from 'reactstrap/lib/Form';
 import * as yup from 'yup';
-import { CheckboxField } from '../form/CheckboxField';
-import { NumberField, PasswordField, TextField } from '../form/common';
-import { WiredField } from '../form/formik';
-import IziviContent from '../layout/IziviContent';
-import { ApiStore } from '../stores/apiStore';
-import { MainStore } from '../stores/mainStore';
+import { CheckboxField } from '../../form/CheckboxField';
+import { NumberField, PasswordField, TextField } from '../../form/common';
+import { WiredField } from '../../form/formik';
+import IziviContent from '../../layout/IziviContent';
+import { ApiStore } from '../../stores/apiStore';
+import { MainStore } from '../../stores/mainStore';
+import { RegisterFormHeader } from './RegisterFormHeader';
 
-const loginSchema = yup.object({
+const registerSchema = yup.object({
   zdp: yup.number().required(),
   first_name: yup.string().required(),
   last_name: yup.string().required(),
@@ -95,39 +96,12 @@ class Register extends React.Component<RegisterProps> {
     return (
       <IziviContent card showBackgroundImage title={'Registrieren'}>
         <div>
-          <p>
-            Als zukünftiger Zivi musst du dich zuerst erkundigen, ob zum gewünschten Zeitpunkt ein Einsatz möglich ist.
-            Kontaktiere hierfür
-            bitte direkt{' '}
-            <a href="//stiftungswo.ch/about/meet-the-team#jumptomarc" target="_blank" rel="noopener noreferrer">
-              {' '}
-              Marc Pfeuti{' '}
-            </a>
-            (<a href={'tel:+41774385761'}>+41 77 438 57 61</a>) unter{' '}
-            <a
-              href="mailto:zivildienst@stiftungswo.ch?subject=Einsatzplanung Zivildienst&body=Guten Tag Herr Pfeuti!
-              %0D%0A%0D%0AIch schreibe Ihnen betreffend meiner Einsatzplanung als FELDZIVI / BÜROZIVI (EINS AUSWÄHLEN)
-              vom DD.MM.YYYY bis DD.MM.YYYY, wäre dieser Zeitraum möglich?
-              %0D%0A%0D%0A
-              %0D%0A%0D%0ABesten Dank und freundliche Grüsse"
-            >
-              {' '}
-              zivildienst@stiftungswo.ch{' '}
-            </a>
-            .
-          </p>
-          <ul>
-            <li>
-              Nach Eingabe deiner persönlichen Daten kannst du die Einsatzplanung ausdrucken, unterschreiben und an den Einsatzbetrieb
-              zurückzuschicken. Nach erfolgreicher Prüfung werden wir diese direkt an dein zuständiges Regionalzentrum weiterleiten. Das
-              Aufgebot erhältst du dann automatisch von deinem zuständigen Regionalzentrum.
-            </li>
-          </ul>
+          <RegisterFormHeader/>
           <Container>
             <hr />
             <Formik
               initialValues={template}
-              validationSchema={loginSchema}
+              validationSchema={registerSchema}
               onSubmit={this.login}
               render={formikProps => (
                 <Form onSubmit={formikProps.handleSubmit}>

@@ -17,7 +17,7 @@ import { NotFound } from './views/NotFound';
 import { PaymentDetail } from './views/payments/PaymentDetail';
 import { PaymentOverview } from './views/payments/PaymentOverview';
 import { PhoneListView } from './views/PhoneList';
-import { Register } from './views/Register';
+import { Register } from './views/register/Register';
 import { ReportSheetOverview } from './views/report_sheets/ReportSheetOverview';
 import { ReportSheetUpdate } from './views/report_sheets/ReportSheetUpdate';
 import { ServiceOverview } from './views/service_overview/ServiceOverview';
