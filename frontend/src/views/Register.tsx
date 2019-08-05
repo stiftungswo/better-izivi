@@ -15,8 +15,8 @@ import { MainStore } from '../stores/mainStore';
 
 const loginSchema = yup.object({
   zdp: yup.number().required(),
-  firstname: yup.string().required(),
-  lastname: yup.string().required(),
+  first_name: yup.string().required(),
+  last_name: yup.string().required(),
   email: yup
     .string()
     .email()
@@ -36,8 +36,8 @@ const loginSchema = yup.object({
 
 const template = {
   zdp: '',
-  firstname: '',
-  lastname: '',
+  first_name: '',
+  last_name: '',
   email: '',
   password: '',
   password_confirm: '',
@@ -140,8 +140,8 @@ class Register extends React.Component<RegisterProps> {
                     label={'Zivildienstnummer (ZDP)'}
                     placeholder={'Dies ist deine Zivildienst-Nummer, welche du auf deinem Aufgebot wiederfindest'}
                   />
-                  <WiredField horizontal={true} component={TextField} name={'firstname'} label={'Vorname'} placeholder={'Dein Vorname'} />
-                  <WiredField horizontal={true} component={TextField} name={'lastname'} label={'Nachname'} placeholder={'Dein Nachname'} />
+                  <WiredField horizontal={true} component={TextField} name={'first_name'} label={'Vorname'} placeholder={'Dein Vorname'} />
+                  <WiredField horizontal={true} component={TextField} name={'last_name'} label={'Nachname'} placeholder={'Dein Nachname'} />
                   <WiredField
                     horizontal={true}
                     component={TextField}

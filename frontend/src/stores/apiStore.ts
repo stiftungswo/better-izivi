@@ -112,8 +112,8 @@ export class ApiStore {
   @action
   async postRegister(values: {
     zdp: string;
-    firstname: string;
-    lastname: string;
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
     password_confirm: string;
