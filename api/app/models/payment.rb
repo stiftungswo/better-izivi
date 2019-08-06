@@ -10,12 +10,12 @@ class Payment
   def self.find(payment_timestamp)
     payment = allocate
 
-    payment.payment_timestamp = payment_timestamp
+    payment.payment_timestamp = payment_timestamp.round
     payment.expense_sheets = ExpenseSheet.in_payment(payment.payment_timestamp)
 
     raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.not_found') if payment.expense_sheets.empty?
 
-    payment.state = payment.expense_sheets.first.state
+    payment.state = payment.expense_sheets.first.state.to_sym
     payment
   end
 
@@ -28,7 +28,7 @@ class Payment
 
   def initialize(expense_sheets:, payment_timestamp: Time.zone.now, state: :payment_in_progress)
     @expense_sheets = expense_sheets
-    @payment_timestamp = payment_timestamp
+    @payment_timestamp = payment_timestamp.round
     @state = state
   end
 
