@@ -325,7 +325,6 @@ RSpec.describe V1::PaymentsController, type: :request do
     let(:request) { post v1_payments_path }
     let(:payment_timestamp) { Payment.floor_time Time.zone.now }
 
-
     context 'when user is an admin' do
       let(:user) { create :user, :admin }
 
@@ -404,7 +403,6 @@ RSpec.describe V1::PaymentsController, type: :request do
       it_behaves_like 'login protected resource'
     end
   end
-
 
   describe '#index' do
     let(:request) { get v1_payments_path }
