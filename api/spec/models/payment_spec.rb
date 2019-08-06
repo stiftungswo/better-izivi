@@ -212,7 +212,7 @@ RSpec.describe Payment, type: :model do
       let!(:payments) do
         payment_in_progress_payments = Array.new(4).map { create_payment }
         paid_payments = Array.new(2).map { create_payment state: :paid }
-        
+
         payment_in_progress_payments.push(*paid_payments)
       end
 

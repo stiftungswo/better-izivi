@@ -3,13 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe V1::PaymentsController, type: :request do
+  let!(:user) { create :user }
+
+  let(:beginning) { Date.parse('2018-01-01') }
+  let(:ending) { Date.parse('2018-02-23') }
+
+  let!(:payment_timestamp) { Time.zone.now }
+
   describe '#show' do
-    let!(:user) { create :user }
-
-    let(:beginning) { Date.parse('2018-01-01') }
-    let(:ending) { Date.parse('2018-02-23') }
-    let!(:payment_timestamp) { Time.zone.now }
-
     context 'with token authentication' do
       let(:request) do
         get v1_payment_path(format: :xml, payment_timestamp: payment_timestamp.to_i), params: { token: token }
@@ -110,7 +111,7 @@ RSpec.describe V1::PaymentsController, type: :request do
 
           it 'renders the correct response' do
             request
-            expect(parse_response_json(response)).to include(expected_response)
+            expect(parse_response_json(response)).to eq(expected_response)
           end
         end
 
@@ -128,6 +129,261 @@ RSpec.describe V1::PaymentsController, type: :request do
       context 'when no user is logged in' do
         it_behaves_like 'login protected resource'
       end
+    end
+  end
+
+  describe '#destroy' do
+    let(:request) { delete v1_payment_path(payment_timestamp: payment_timestamp.to_i) }
+
+    context 'when user is an admin' do
+      let(:user) { create :user, :admin }
+
+      before { sign_in user }
+
+      context 'when there is a payment' do
+        let!(:payment) do
+          Payment.new(expense_sheets: expense_sheets, payment_timestamp: payment_timestamp).tap(&:save)
+        end
+        let(:expense_sheets) do
+          [
+            create(:expense_sheet, :payment_in_progress,
+                   user: user,
+                   beginning: beginning,
+                   ending: beginning.at_end_of_month),
+            create(:expense_sheet, :payment_in_progress,
+                   user: user,
+                   beginning: ending.at_beginning_of_month,
+                   ending: ending)
+          ]
+        end
+
+        let(:expected_user_attributes) { %i[id zdp bank_iban] }
+        let(:expected_user_response) do
+          extract_to_json(user, *expected_user_attributes).merge(full_name: user.full_name)
+        end
+        let(:expected_response) do
+          {
+            payment_timestamp: 0,
+            state: 'ready_for_payment',
+            total: payment.total,
+            expense_sheets: payment.expense_sheets.map do |expense_sheet|
+              extract_to_json(expense_sheet, :id)
+                .merge(full_expenses: expense_sheet.calculate_full_expenses)
+                .merge(user: expected_user_response)
+            end
+          }
+        end
+
+        before do
+          create :service, user: user, beginning: beginning, ending: ending
+        end
+
+        it_behaves_like 'renders a successful http status code'
+
+        it 'returns a content type json' do
+          request
+          expect(response.headers['Content-Type']).to include 'json'
+        end
+
+        it 'renders the correct response' do
+          request
+          expect(parse_response_json(response)).to eq(expected_response)
+        end
+
+        it 'changes expense_sheets states' do
+          expect { request }.to change { expense_sheets.map(&:reload).map(&:state).uniq }.to ['ready_for_payment']
+        end
+
+        it 'changes expense_sheets payment_timestamps' do
+          expect { request }.to change { expense_sheets.map(&:reload).map(&:payment_timestamp).uniq }.to [nil]
+        end
+
+        context 'when the payment is confirmed' do
+          before { payment.confirm }
+
+          it 'renders all validation errors' do
+            request
+            expect(parse_response_json(response)[:errors]).to include(
+                                                                state: be_an_instance_of(Array)
+                                                              )
+          end
+
+          it 'doesnt update expense_sheets' do
+            expect { request }.not_to change(-> { expense_sheets.map(&:reload) }, :call)
+          end
+        end
+      end
+
+      context 'when there is no payment' do
+        it_behaves_like 'renders a not found error response'
+      end
+    end
+
+    context 'when user is a civil servant' do
+      before { sign_in user }
+
+      it_behaves_like 'admin protected resource'
+    end
+
+    context 'when no user is logged in' do
+      it_behaves_like 'login protected resource'
+    end
+  end
+
+  describe '#confirm' do
+    let(:request) { put v1_payment_confirm_path(payment_timestamp: payment_timestamp.to_i) }
+
+    context 'when user is an admin' do
+      let(:user) { create :user, :admin }
+
+      before { sign_in user }
+
+      context 'when there is a payment' do
+        let!(:payment) do
+          Payment.new(expense_sheets: expense_sheets, payment_timestamp: payment_timestamp).tap(&:save)
+        end
+        let(:expense_sheets) do
+          [
+            create(:expense_sheet, :payment_in_progress,
+                   user: user,
+                   beginning: beginning,
+                   ending: beginning.at_end_of_month),
+            create(:expense_sheet, :payment_in_progress,
+                   user: user,
+                   beginning: ending.at_beginning_of_month,
+                   ending: ending)
+          ]
+        end
+
+        let(:expected_user_attributes) { %i[id zdp bank_iban] }
+        let(:expected_user_response) do
+          extract_to_json(user, *expected_user_attributes).merge(full_name: user.full_name)
+        end
+        let(:expected_response) do
+          {
+            payment_timestamp: payment.payment_timestamp.to_i,
+            state: 'paid',
+            total: payment.total,
+            expense_sheets: payment.expense_sheets.map do |expense_sheet|
+              extract_to_json(expense_sheet, :id)
+                .merge(full_expenses: expense_sheet.calculate_full_expenses)
+                .merge(user: expected_user_response)
+            end
+          }
+        end
+
+        before do
+          create :service, user: user, beginning: beginning, ending: ending
+        end
+
+        it_behaves_like 'renders a successful http status code'
+
+        it 'returns a content type json' do
+          request
+          expect(response.headers['Content-Type']).to include 'json'
+        end
+
+        it 'renders the correct response' do
+          request
+          expect(parse_response_json(response)).to eq(expected_response)
+        end
+
+        it 'changes expense_sheets states' do
+          expect { request }.to change { expense_sheets.map(&:reload).map(&:state).uniq }.to ['paid']
+        end
+
+        it 'doesnt change expense_sheets payment_timestamps' do
+          expect { request }.not_to change(-> { expense_sheets.map(&:reload).map(&:payment_timestamp).uniq }, :call)
+        end
+
+        context 'when the payment is confirmed' do
+          before { payment.confirm }
+
+          it 'doesnt update expense_sheets' do
+            expect { request }.not_to change(-> { expense_sheets.map(&:reload) }, :call)
+          end
+        end
+      end
+
+      context 'when there is no payment' do
+        it_behaves_like 'renders a not found error response'
+      end
+    end
+
+    context 'when user is a civil servant' do
+      before { sign_in user }
+
+      it_behaves_like 'admin protected resource'
+    end
+
+    context 'when no user is logged in' do
+      it_behaves_like 'login protected resource'
+    end
+  end
+
+  describe '#index' do
+    let(:request) { get v1_payments_path }
+
+    context 'when user is an admin' do
+      let(:user) { create :user, :admin }
+
+      before { sign_in user }
+
+      context 'when there are payments' do
+        let!(:payments) do
+          payment_in_progress_payments = Array.new(4).map { create_payment }
+          paid_payments = Array.new(4).map { create_payment state: :paid }
+
+          payment_in_progress_payments.push(*paid_payments)
+        end
+
+        let(:expected_user_attributes) { %i[id zdp bank_iban] }
+        let(:expected_user_response) do
+          extract_to_json(user, *expected_user_attributes).merge(full_name: user.full_name)
+        end
+        let(:expected_response) do
+          payments.map do |payment|
+            {
+              payment_timestamp: payment.payment_timestamp.to_i,
+              state: payment.state.to_s,
+              total: payment.total
+            }
+          end
+        end
+
+        before do
+          create :service, user: user, beginning: beginning, ending: ending
+        end
+
+        it_behaves_like 'renders a successful http status code'
+
+        it 'returns a content type json' do
+          request
+          expect(response.headers['Content-Type']).to include 'json'
+        end
+
+        it 'renders the correct response' do
+          request
+          expect(parse_response_json(response)).to eq(expected_response)
+        end
+      end
+
+      context 'when there are no payments' do
+        it 'returns an empty array' do
+          request
+          expect(parse_response_json(response)).to eq []
+        end
+      end
+    end
+
+    context 'when user is a civil servant' do
+      before { sign_in user }
+
+      it_behaves_like 'admin protected resource'
+    end
+
+    context 'when no user is logged in' do
+      it_behaves_like 'login protected resource'
     end
   end
 end
