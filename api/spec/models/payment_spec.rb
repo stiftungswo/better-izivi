@@ -33,13 +33,13 @@ RSpec.describe Payment, type: :model do
     end
 
     it 'doesnt update expense sheets' do
-      expect(all_states_of_payment(payment)).to eq expected_states
+      expect(all_expense_sheet_states_of_payment(payment)).to eq expected_states
     end
   end
 
   describe '#save' do
-    let(:all_states_lambda) { -> { all_states_of_payment(payment) } }
-    let(:all_payment_timestamps_lambda) { -> { all_payment_timestamps_of_payment(payment) } }
+    let(:all_states_lambda) { -> { all_expense_sheet_states_of_payment(payment) } }
+    let(:all_payment_timestamps_lambda) { -> { all_expense_sheet_payment_timestamps_of_payment(payment) } }
     let(:expected_payment_timestamps) { [payment.payment_timestamp.to_i] }
 
     context 'when it is a new payment' do
@@ -102,11 +102,11 @@ RSpec.describe Payment, type: :model do
       before { created_payment.state = new_state }
 
       it 'doesnt update expense sheets state' do
-        expect(all_states_of_payment(created_payment)).to eq expected_states
+        expect(all_expense_sheet_states_of_payment(created_payment)).to eq expected_states
       end
 
       it 'doesnt update expense sheets payment timestamp' do
-        expect(all_payment_timestamps_of_payment(created_payment)).to eq expected_payment_timestamps
+        expect(all_expense_sheet_payment_timestamps_of_payment(created_payment)).to eq expected_payment_timestamps
       end
     end
   end
@@ -148,11 +148,11 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'updates expense sheets state' do
-        expect(all_states_of_payment(created_payment)).to eq expected_states
+        expect(all_expense_sheet_states_of_payment(created_payment)).to eq expected_states
       end
 
       it 'removes expense sheets payment_timestamp' do
-        expect(all_payment_timestamps_of_payment(created_payment)).to eq expected_payment_timestamps
+        expect(all_expense_sheet_payment_timestamps_of_payment(created_payment)).to eq expected_payment_timestamps
       end
     end
 
@@ -162,11 +162,11 @@ RSpec.describe Payment, type: :model do
       let(:expected_payment_timestamps) { [payment.payment_timestamp.to_i] }
 
       it 'doesnt change expense sheets state' do
-        expect(all_states_of_payment(created_payment)).to eq expected_states
+        expect(all_expense_sheet_states_of_payment(created_payment)).to eq expected_states
       end
 
       it 'doesnt change expense sheets payment_timestamp' do
-        expect(all_payment_timestamps_of_payment(created_payment)).to eq expected_payment_timestamps
+        expect(all_expense_sheet_payment_timestamps_of_payment(created_payment)).to eq expected_payment_timestamps
       end
     end
   end
@@ -210,14 +210,9 @@ RSpec.describe Payment, type: :model do
 
     context 'with existing payments' do
       let!(:payments) do
-        payment_in_progress_payments = Array.new(4).map do
-          create_payment
-        end
-
-        paid_payments = Array.new(2).map do
-          create_payment state: :paid
-        end
-
+        payment_in_progress_payments = Array.new(4).map { create_payment }
+        paid_payments = Array.new(2).map { create_payment state: :paid }
+        
         payment_in_progress_payments.push(*paid_payments)
       end
 
