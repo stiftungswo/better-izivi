@@ -321,6 +321,91 @@ RSpec.describe V1::PaymentsController, type: :request do
     end
   end
 
+  describe '#create' do
+    let(:request) { post v1_payments_path }
+    let(:payment_timestamp) { Payment.floor_time Time.zone.now }
+
+
+    context 'when user is an admin' do
+      let(:user) { create :user, :admin }
+
+      before { sign_in user }
+
+      context 'when there are ready expense_sheets' do
+        let!(:expense_sheets) do
+          [
+            create(:expense_sheet, :ready_for_payment,
+                   user: user,
+                   beginning: beginning,
+                   ending: beginning.at_end_of_month),
+            create(:expense_sheet, :ready_for_payment,
+                   user: user,
+                   beginning: ending.at_beginning_of_month,
+                   ending: ending)
+          ]
+        end
+
+        let(:expected_user_attributes) { %i[id zdp bank_iban] }
+        let(:expected_user_response) do
+          extract_to_json(user, *expected_user_attributes).merge(full_name: user.full_name)
+        end
+        let(:expected_response) do
+          {
+            payment_timestamp: payment_timestamp.to_i,
+            state: 'payment_in_progress',
+            total: expense_sheets.sum(&:calculate_full_expenses),
+            expense_sheets: expense_sheets.map do |expense_sheet|
+              extract_to_json(expense_sheet, :id)
+                .merge(full_expenses: expense_sheet.calculate_full_expenses)
+                .merge(user: expected_user_response)
+            end
+          }
+        end
+
+        before do
+          create :service, user: user, beginning: beginning, ending: ending
+          allow(Time.zone).to receive(:now).and_return(payment_timestamp)
+        end
+
+        it_behaves_like 'renders a successful http status code'
+
+        it 'returns a content type json' do
+          request
+          expect(response.headers['Content-Type']).to include 'json'
+        end
+
+        it 'renders the correct response' do
+          request
+          expect(parse_response_json(response)).to eq(expected_response)
+        end
+
+        it 'changes expense_sheets states' do
+          expect { request }.to change { expense_sheets.map(&:reload).map(&:state).uniq }.to ['payment_in_progress']
+        end
+
+        it 'changes expense_sheets payment_timestamps' do
+          expect { request }
+            .to change { expense_sheets.map(&:reload).map(&:payment_timestamp).uniq }.to [payment_timestamp]
+        end
+      end
+
+      context 'when there are no expense sheets' do
+        it_behaves_like 'renders a not found error response'
+      end
+    end
+
+    context 'when user is a civil servant' do
+      before { sign_in user }
+
+      it_behaves_like 'admin protected resource'
+    end
+
+    context 'when no user is logged in' do
+      it_behaves_like 'login protected resource'
+    end
+  end
+
+
   describe '#index' do
     let(:request) { get v1_payments_path }
 
