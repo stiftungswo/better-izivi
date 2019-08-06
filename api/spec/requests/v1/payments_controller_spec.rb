@@ -3,17 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe V1::PaymentsController, type: :request do
-  context 'with token authentication' do
-    describe '#show' do
+  describe '#show' do
+    let!(:user) { create :user }
+
+    let(:beginning) { Date.parse('2018-01-01') }
+    let(:ending) { Date.parse('2018-02-23') }
+    let!(:payment_timestamp) { Time.zone.now }
+
+    context 'with token authentication' do
       let(:request) do
         get v1_payment_path(format: :xml, payment_timestamp: payment_timestamp.to_i), params: { token: token }
       end
-      let!(:user) { create :user }
       let(:token) { generate_jwt_token_for_user(user) }
-
-      let(:beginning) { Date.parse('2018-01-01') }
-      let(:ending) { Date.parse('2018-01-26') }
-      let!(:payment_timestamp) { Time.now }
 
       before do
         create :expense_sheet, :payment_in_progress,
@@ -53,16 +54,9 @@ RSpec.describe V1::PaymentsController, type: :request do
         it_behaves_like 'admin protected resource'
       end
     end
-  end
 
-  context 'with normal authentication' do
-    describe '#show' do
+    context 'with normal authentication' do
       let(:request) { get v1_payment_path(payment_timestamp: payment_timestamp.to_i) }
-      let!(:user) { create :user }
-
-      let(:beginning) { Date.parse('2018-01-01') }
-      let(:ending) { Date.parse('2018-02-23') }
-      let(:payment_timestamp) { Time.zone.now }
 
       context 'when user is an admin' do
         let(:user) { create :user, :admin }
