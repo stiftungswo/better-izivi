@@ -142,7 +142,6 @@ fr:
   payment:
     expenses_from: Frais du %{from_date}
     errors:
-      unconfirmed_not_found: Paiement non confirmé non trouvé
       not_found: Paiement non trouvé
       ready_not_found: Aucune feuille de dépenses prête à être payée n'a été trouvée
   pdfs:
