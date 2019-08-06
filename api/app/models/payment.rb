@@ -25,6 +25,8 @@ class Payment
   end
 
   def initialize(expense_sheets:, payment_timestamp: Time.zone.now, state: :payment_in_progress)
+    raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.ready_not_found') if expense_sheets.empty?
+
     @expense_sheets = expense_sheets
     @payment_timestamp = Payment.floor_time payment_timestamp
     @state = state.to_sym
