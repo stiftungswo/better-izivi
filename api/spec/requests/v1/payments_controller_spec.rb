@@ -71,7 +71,7 @@ RSpec.describe V1::PaymentsController, type: :request do
 
         context 'when there is a payment' do
           let!(:payment) do
-            Payment.new(expense_sheets: expense_sheets).tap(&:save)
+            Payment.new(expense_sheets: expense_sheets, payment_timestamp: payment_timestamp).tap(&:save)
           end
           let(:expense_sheets) do
             [
