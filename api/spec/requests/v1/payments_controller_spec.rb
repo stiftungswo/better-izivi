@@ -204,8 +204,8 @@ RSpec.describe V1::PaymentsController, type: :request do
           it 'renders all validation errors' do
             request
             expect(parse_response_json(response)[:errors]).to include(
-                                                                state: be_an_instance_of(Array)
-                                                              )
+              state: be_an_instance_of(Array)
+            )
           end
 
           it 'doesnt update expense_sheets' do
