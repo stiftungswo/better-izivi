@@ -62,7 +62,7 @@ RSpec.describe V1::PaymentsController, type: :request do
 
       let(:beginning) { Date.parse('2018-01-01') }
       let(:ending) { Date.parse('2018-02-23') }
-      let!(:payment_timestamp) { Time.now }
+      let(:payment_timestamp) { Time.zone.now }
 
       context 'when user is an admin' do
         let(:user) { create :user, :admin }
@@ -78,13 +78,11 @@ RSpec.describe V1::PaymentsController, type: :request do
               create(:expense_sheet, :payment_in_progress,
                      user: user,
                      beginning: beginning,
-                     ending: beginning.at_end_of_month,
-                     payment_timestamp: payment_timestamp),
+                     ending: beginning.at_end_of_month),
               create(:expense_sheet, :payment_in_progress,
                      user: user,
                      beginning: ending.at_beginning_of_month,
-                     ending: ending,
-                     payment_timestamp: payment_timestamp)
+                     ending: ending)
             ]
           end
 

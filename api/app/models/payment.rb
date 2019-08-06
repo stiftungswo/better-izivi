@@ -8,7 +8,7 @@ class Payment
   validate :validate_expense_sheets
 
   def self.find(payment_timestamp)
-    payment_timestamp = payment_timestamp.round
+    payment_timestamp = floor_time(payment_timestamp)
     expense_sheets = ExpenseSheet.in_payment(payment_timestamp)
 
     raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.not_found') if expense_sheets.empty?
@@ -26,7 +26,7 @@ class Payment
 
   def initialize(expense_sheets:, payment_timestamp: Time.zone.now, state: :payment_in_progress)
     @expense_sheets = expense_sheets
-    @payment_timestamp = payment_timestamp.round
+    @payment_timestamp = Payment.floor_time payment_timestamp
     @state = state.to_sym
   end
 
@@ -62,6 +62,10 @@ class Payment
 
   def total
     @expense_sheets.sum(&:calculate_full_expenses)
+  end
+
+  def self.floor_time(time)
+    time.change usec: 0
   end
 
   private
