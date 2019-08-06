@@ -300,7 +300,7 @@ RSpec.describe V1::PaymentsController, type: :request do
           before { payment.confirm }
 
           it 'doesnt update expense_sheets' do
-            expect { request }.not_to change(-> { expense_sheets.map(&:reload) }, :call)
+            expect { request }.not_to(change { expense_sheets.map(&:reload) })
           end
         end
       end
