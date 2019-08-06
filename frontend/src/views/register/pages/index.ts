@@ -1,4 +1,6 @@
-import { FirstPage } from './FirstPage';
-import { SecondPage } from './SecondPage';
+import { BankAndInsurancePage } from './BankAndInsurancePage';
+import { CommunityPasswordPage } from './CommunityPasswordPage';
+import { ContactPage } from './ContactPage';
+import { PersonalDetailsPage } from './PersonalDetailsPage';
 
-export const RegisterFormPages = [FirstPage, SecondPage];
+export const RegisterFormPages = [CommunityPasswordPage, PersonalDetailsPage, ContactPage, BankAndInsurancePage];

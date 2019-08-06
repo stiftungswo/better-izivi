@@ -9,28 +9,28 @@ import { MainStore } from '../../stores/mainStore';
 import { FormValues, RegisterForm } from './RegisterForm';
 import { RegisterFormHeader } from './RegisterFormHeader';
 
-interface RegisterProps extends RouteComponentProps {
+interface RegisterProps extends RouteComponentProps<{ page?: string | undefined }> {
   apiStore?: ApiStore;
   mainStore?: MainStore;
 }
 
 @inject('apiStore', 'mainStore')
 @observer
-class Register extends React.Component<RegisterProps> {
+export class Register extends React.Component<RegisterProps> {
   login = async (values: FormValues, actions: FormikActions<FormValues>) => {
-    console.dir(values);
-    // try {
-    //   await this.props.apiStore!.postRegister(values);
-    //   this.props.history.push(this.getReferrer());
-    // } catch ({ error }) {
-    //   if (error.toString().includes('400')) {
-    //     this.props.mainStore!.displayError('Ungültiger Benutzername/Passwort');
-    //   } else {
-    //     this.props.mainStore!.displayError('Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
-    //   }
-    // } finally {
-    //   actions.setSubmitting(false);
-    // }
+    // console.dir(values);
+    try {
+      await this.props.apiStore!.postRegister(values);
+      this.props.history.push(this.getReferrer());
+    } catch ({ error }) {
+      if (error.toString().includes('400')) {
+        this.props.mainStore!.displayError('Ungültiger Benutzername/Passwort');
+      } else {
+        this.props.mainStore!.displayError('Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      }
+    } finally {
+      actions.setSubmitting(false);
+    }
   }
 
   getReferrer() {
@@ -61,12 +61,10 @@ class Register extends React.Component<RegisterProps> {
           <RegisterFormHeader/>
           <Container>
             <hr />
-            <RegisterForm onSubmit={this.login}/>
+            <RegisterForm onSubmit={this.login} match={this.props.match} history={this.props.history} location={this.props.location}/>
           </Container>
         </div>
       </IziviContent>
     );
   }
 }
-
-export { Register };

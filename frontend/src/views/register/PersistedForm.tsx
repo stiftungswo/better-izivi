@@ -24,7 +24,11 @@ class PersistedFormInner extends React.Component<FormikConnectedProps, {}> {
   componentDidMount() {
     const restoredState = window.sessionStorage.getItem(this.props.name);
     if (restoredState && restoredState.length >= 0) {
-      this.props.formik.setFormikState(JSON.parse(restoredState));
+      this.props.formik.setFormikState({
+        ...JSON.parse(restoredState),
+        isSubmitting: false,
+        isValidating: false,
+      });
     }
   }
 

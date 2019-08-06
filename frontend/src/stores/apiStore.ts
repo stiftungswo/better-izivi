@@ -117,7 +117,7 @@ export class ApiStore {
     email: string;
     password: string;
     password_confirm: string;
-    community_pw: string;
+    community_password: string;
     newsletter: boolean;
   }) {
     const res = await this._api.post<LoginResponse>('/users', values);

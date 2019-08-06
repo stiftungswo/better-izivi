@@ -1,16 +1,17 @@
 import * as React from 'react';
 import { CheckboxField } from '../../../form/CheckboxField';
 import { NumberField, PasswordField, TextField } from '../../../form/common';
+import { DatePickerField } from '../../../form/DatePickerField';
 import { WiredField } from '../../../form/formik';
 
-export const SecondPage = () => {
+export const PersonalDetailsPage = () => {
   return (
     <>
       <h3>Persönliche Informationen</h3>
       <br />
       <WiredField
         horizontal={true}
-        component={(p: any) => <NumberField {...p} autofocus />}
+        component={NumberField}
         name={'zdp'}
         label={'Zivildienstnummer (ZDP)'}
         placeholder={'Dies ist deine Zivildienst-Nummer, welche du auf deinem Aufgebot wiederfindest'}
@@ -23,6 +24,13 @@ export const SecondPage = () => {
         name={'email'}
         label={'Email'}
         placeholder={'Wird für das zukünftige Login sowie das Versenden von Systemnachrichten benötigt'}
+      />
+      <WiredField
+        horizontal={true}
+        component={DatePickerField}
+        name={'birthday'}
+        label={'Geburtstag'}
+        placeholder={'dd.mm.yyyy'}
       />
       <WiredField
         horizontal={true}

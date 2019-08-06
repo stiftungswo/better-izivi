@@ -37,7 +37,7 @@ class App extends React.Component {
         <Switch>
           <Route component={Home} exact path={'/'} />
           <Route component={Login} exact path={'/login'} />
-          <Route component={Register} exact path={'/register'} />
+          <Route component={Register} exact path={'/register/:page'} />
           <Route component={ForgotPassword} exact path={'/forgotPassword'} />
           <Route component={HolidayOverview} exact path={'/holidays'} />
           <Route component={PhoneListView} exact path={'/phones'} />
