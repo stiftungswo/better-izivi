@@ -189,17 +189,9 @@ RSpec.describe Payment, type: :model do
     let(:payment_timestamp_to_find) { created_payment.payment_timestamp }
     let(:found_payment) { Payment.find(payment_timestamp_to_find) }
 
-    context 'with an existing payment timestamp' do
-      it 'returns a payment with the expense sheets of the according payment_timestamp' do
-        expect(found_payment.expense_sheets.map(&:attributes)).to eq created_payment.expense_sheets.map(&:attributes)
-      end
-
-      it 'returns a payment with the same correct state' do
-        expect(found_payment.payment_timestamp).to eq created_payment.payment_timestamp
-      end
-
-      it 'returns a payment with the same correct payment_timestamp' do
-        expect(found_payment.state).to eq created_payment.state
+    context 'with an existing payment_timestamp' do
+      it 'returns the correct payment' do
+        expect(hash_of_payment(found_payment)).to eq hash_of_payment(created_payment)
       end
     end
 
@@ -209,6 +201,34 @@ RSpec.describe Payment, type: :model do
 
       it 'raises a RecordNotFound exception' do
         expect { found_payment }.to raise_exception ActiveRecord::RecordNotFound
+      end
+    end
+  end
+
+  describe '.all' do
+    let(:found_payments) { Payment.all }
+
+    context 'with existing payments' do
+      let!(:payments) do
+        payment_in_progress_payments = Array.new(4).map do
+          create_payment
+        end
+
+        paid_payments = Array.new(2).map do
+          create_payment state: :paid
+        end
+
+        payment_in_progress_payments.push *paid_payments
+      end
+
+      it 'returns all corresponding payments' do
+        expect(found_payments.map(&method(:hash_of_payment))).to eq payments.map(&method(:hash_of_payment))
+      end
+    end
+
+    context 'with no payments' do
+      it 'returns an empty array' do
+        expect(found_payments).to eq []
       end
     end
   end
