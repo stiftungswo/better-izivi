@@ -131,8 +131,6 @@ RSpec.describe Payment, type: :model do
 
   describe '#cancel' do
     before { created_payment.cancel }
-      created_payment.cancel
-    end
 
     context 'with payment in progress state' do
       let(:new_payment_timestamp) { nil }
@@ -210,8 +208,15 @@ RSpec.describe Payment, type: :model do
 
     context 'with existing payments' do
       let!(:payments) do
-        payment_in_progress_payments = Array.new(4).map { create_payment }
-        paid_payments = Array.new(2).map { create_payment state: :paid }
+        iota = 0
+        payment_in_progress_payments = Array.new(4).map do
+          iota += 1
+          create_payment payment_timestamp: Time.zone.now + iota.hours
+        end
+        paid_payments = Array.new(2).map do
+          iota += 1
+          create_payment state: :paid, payment_timestamp: Time.zone.now + iota.hours
+        end
 
         payment_in_progress_payments.push(*paid_payments)
       end

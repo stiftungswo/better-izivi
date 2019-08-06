@@ -414,8 +414,15 @@ RSpec.describe V1::PaymentsController, type: :request do
 
       context 'when there are payments' do
         let!(:payments) do
-          payment_in_progress_payments = Array.new(4).map { create_payment }
-          paid_payments = Array.new(4).map { create_payment state: :paid }
+          iota = 0
+          payment_in_progress_payments = Array.new(4).map do
+            iota += 1
+            create_payment payment_timestamp: Time.zone.now + iota.hours
+          end
+          paid_payments = Array.new(4).map do
+            iota += 1
+            create_payment state: :paid, payment_timestamp: Time.zone.now + iota.hours
+          end
 
           payment_in_progress_payments.push(*paid_payments)
         end
