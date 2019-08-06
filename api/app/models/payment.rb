@@ -21,25 +21,27 @@ class Payment
 
   def self.all
     ExpenseSheet.payment_issued.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|
-      payment = Payment.new(expense_sheets)
-      payment.state = expense_sheets.first.state
-      payment.payment_timestamp = payment_timestamp
-      payment
+      state = expense_sheets.first.state
+      Payment.new(expense_sheets: expense_sheets, state: state, payment_timestamp: payment_timestamp)
     end
   end
 
-  def initialize
-    @expense_sheets = ExpenseSheet.includes(:user).ready_for_payment.all
-    @payment_timestamp = Time.zone.now
-    @state = :payment_in_progress
+  def initialize(expense_sheets:, payment_timestamp: Time.zone.now, state: :payment_in_progress)
+    @expense_sheets = expense_sheets
+    @payment_timestamp = payment_timestamp
+    @state = state
   end
 
-  def save
+  def save(validate: true)
     update_expense_sheets
 
-    return false unless valid?
+    return false unless valid? || !validate
 
-    @expense_sheets.each(&:save)
+    @expense_sheets.each do |expense_sheet|
+      expense_sheet.save(validate: validate)
+    end
+
+    true
   end
 
   def confirm
