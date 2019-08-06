@@ -32,16 +32,12 @@ class Payment
     @state = state
   end
 
-  def save(validate: true)
+  def save
     update_expense_sheets
 
-    return false unless valid? || !validate
+    return false unless valid?
 
-    @expense_sheets.each do |expense_sheet|
-      expense_sheet.save(validate: validate)
-    end
-
-    true
+    @expense_sheets.map(&:save).all?
   end
 
   def confirm
@@ -50,9 +46,20 @@ class Payment
   end
 
   def cancel
-    @payment_timestamp = nil
+    state_was = @state
+    payment_timestamp_was = @payment_timestamp
+
     @state = :ready_for_payment
-    save
+    @payment_timestamp = nil
+
+    return true if save
+
+    @state = state_was
+    @payment_timestamp = payment_timestamp_was
+
+    update_expense_sheets
+
+    false
   end
 
   def total
