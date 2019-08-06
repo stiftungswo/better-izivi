@@ -27,7 +27,7 @@ const registerSchema = yup.object({
   community_password: yup.string().required(),
   address: yup.string().required(),
   bank_iban: yup.string().required(),
-  birthday: yup.string().required(),
+  birthday: yup.date().required(),
   city: yup.string().required(),
   zip: yup.number().required(),
   hometown: yup.string().required(),
@@ -68,7 +68,9 @@ export const RegisterForm = ({ onSubmit, match }: RegisterFormProps) => {
       onSubmit={onSubmit}
       initialValues={template}
       validationSchema={registerSchema}
-      render={withFormPersistence('register-form')(componentOnPage(currentPage))}
+      render={withFormPersistence(RegisterForm.SESSION_STORAGE_FORM_PERSISTENCE_KEY)(componentOnPage(currentPage))}
     />
   );
 };
+
+RegisterForm.SESSION_STORAGE_FORM_PERSISTENCE_KEY = 'register-form';

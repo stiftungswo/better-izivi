@@ -2,10 +2,12 @@ import * as React from 'react';
 import { NumberField, TextField } from '../../../form/common';
 import { WiredField } from '../../../form/formik';
 
+export const ContactPageTitle = 'Kontaktinformationen';
+
 export const ContactPage = () => {
   return (
     <>
-      <h3>Kontaktinformationen</h3>
+      <h3>{ContactPageTitle}</h3>
       <br />
       <WiredField
         horizontal={true}

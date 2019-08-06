@@ -8,7 +8,7 @@ import { FormValues } from './RegisterForm';
 
 interface PagedFormProps {
   formikProps: FormikProps<FormValues>;
-  pages: React.ComponentType[];
+  pages: Array<React.ComponentType<any>>;
   currentPage: number;
 }
 

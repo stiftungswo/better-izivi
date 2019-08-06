@@ -3,10 +3,12 @@ import { CheckboxField } from '../../../form/CheckboxField';
 import { NumberField, PasswordField, TextField } from '../../../form/common';
 import { WiredField } from '../../../form/formik';
 
+export const BankAndInsurancePageTitle = 'Bank- und Versicherungsinformationen';
+
 export const BankAndInsurancePage = () => {
   return (
     <>
-      <h3>Bank- und Versicherungsinformationen</h3>
+      <h3>{BankAndInsurancePageTitle}</h3>
       <br />
       <WiredField
         horizontal={true}
