@@ -7,9 +7,9 @@ RSpec.describe Payment, type: :model do
   let(:ending) { Date.parse('2018-06-29') }
   let!(:service) { create :service, :long, beginning: beginning, ending: ending }
   let!(:initial_expense_sheets) do
-    ExpenseSheetGenerator.new(service).create_expense_sheets.each do |expense_sheet|
-      expense_sheet.state = initial_expense_sheet_state
-      expense_sheet.save(validate: false)
+    expense_sheets_array = ExpenseSheetGenerator.new(service).create_expense_sheets
+    ExpenseSheet.where(id: expense_sheets_array.map(&:id)).all.tap do |relation|
+      relation.update_all state: initial_expense_sheet_state
     end
   end
   let(:initial_expense_sheet_state) { :ready_for_payment }
@@ -182,6 +182,34 @@ RSpec.describe Payment, type: :model do
       end
       created_payment.total
       expect(created_payment.expense_sheets).to all have_received :calculate_full_expenses
+    end
+  end
+
+  describe '.find' do
+    let(:payment_timestamp_to_find) { created_payment.payment_timestamp }
+    let(:found_payment) { Payment.find(payment_timestamp_to_find) }
+
+    context 'with an existing payment timestamp' do
+      it 'returns a payment with the expense sheets of the according payment_timestamp' do
+        expect(found_payment.expense_sheets.map(&:attributes)).to eq created_payment.expense_sheets.map(&:attributes)
+      end
+
+      it 'returns a payment with the same correct state' do
+        expect(found_payment.payment_timestamp).to eq created_payment.payment_timestamp
+      end
+
+      it 'returns a payment with the same correct payment_timestamp' do
+        expect(found_payment.state).to eq created_payment.state
+      end
+    end
+
+    context 'with a non-existent payment_timestamp' do
+      let(:payment_timestamp_to_find) { 1.hour.ago }
+      let(:found_payment) { Payment.find(payment_timestamp_to_find) }
+
+      it 'raises a RecordNotFound exception' do
+        expect { found_payment }.to raise_exception ActiveRecord::RecordNotFound
+      end
     end
   end
 
