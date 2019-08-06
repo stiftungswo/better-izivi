@@ -17,13 +17,21 @@ def hash_of_payment(payment)
 end
 
 def create_payment(state: :payment_in_progress)
-  beginning = Date.parse('2018-01-01')
-  ending = Date.parse('2018-06-29')
-  service = create :service, :long, beginning: beginning, ending: ending, user: create(:user)
-  expense_sheets_array = ExpenseSheetGenerator.new(service).create_expense_sheets
-  expense_sheets = ExpenseSheet.where(id: expense_sheets_array.map(&:id)).all.tap do |relation|
-    relation.update_all state: state
-  end
+  expense_sheets = create_expense_sheets(state: state)
   payment_timestamp = rand(1.day.ago..Time.zone.now)
   Payment.new(expense_sheets: expense_sheets, state: state, payment_timestamp: payment_timestamp).tap(&:save)
+end
+
+def create_expense_sheets(state:)
+  service = create_service
+  expense_sheets_array = ExpenseSheetGenerator.new(service).create_expense_sheets
+  ExpenseSheet.where(id: expense_sheets_array.map(&:id)).all.tap do |relation|
+    relation.update_all state: state
+  end
+end
+
+def create_service
+  beginning = Date.parse('2018-01-01')
+  ending = Date.parse('2018-06-29')
+  create :service, :long, beginning: beginning, ending: ending, user: create(:user)
 end

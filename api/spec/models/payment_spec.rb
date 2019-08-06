@@ -218,7 +218,7 @@ RSpec.describe Payment, type: :model do
           create_payment state: :paid
         end
 
-        payment_in_progress_payments.push *paid_payments
+        payment_in_progress_payments.push(*paid_payments)
       end
 
       it 'returns all corresponding payments' do
