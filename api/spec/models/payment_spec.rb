@@ -130,7 +130,7 @@ RSpec.describe Payment, type: :model do
   end
 
   describe '#cancel' do
-    before do
+    before { created_payment.cancel }
       created_payment.cancel
     end
 
