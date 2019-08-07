@@ -43,8 +43,8 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
     return (
       <>
         {this.props.validatableFields.map(field => (
-          <div style={{color: 'red'}}>
-            <ErrorMessage name={field} key={field}/>
+          <div style={{color: 'red'}} key={field}>
+            <ErrorMessage name={field} />
           </div>
         ))}
 

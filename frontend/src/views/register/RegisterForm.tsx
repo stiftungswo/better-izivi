@@ -2,8 +2,8 @@ import { Formik, FormikActions } from 'formik';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import * as yup from 'yup';
+import { withFormPersistence } from '../../utilities/PersistedForm';
 import { withPage } from './PagedForm';
-import { withFormPersistence } from './PersistedForm';
 import { RegisterFormInner } from './RegisterFormInner';
 
 const emptyMessage = (field: string) => `${field} ist leer`;
