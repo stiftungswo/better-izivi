@@ -4,6 +4,7 @@ import { CheckboxField } from '../../../form/CheckboxField';
 import { NumberField, PasswordField, SelectField, TextField } from '../../../form/common';
 import { DatePickerField } from '../../../form/DatePickerField';
 import { WiredField } from '../../../form/formik';
+import { LoadingInformation } from '../../../layout/LoadingInformation';
 import { RegionalCenterStore } from '../../../stores/regionalCenterStore';
 
 export const PersonalDetailsPageTitle = 'Persönliche Informationen';
@@ -24,7 +25,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
 
   render() {
     if (this.state.loading) {
-      return <p>Loading...</p>;
+      return <LoadingInformation message="Lade Formular" className="mb-3" />;
     }
 
     return (
