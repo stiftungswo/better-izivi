@@ -10,6 +10,7 @@ const emptyMessage = (field: string) => `${field} ist leer`;
 
 const registerSchema = yup.object({
   zdp: yup.number().required(emptyMessage('ZDP')),
+  regional_center_id: yup.number().required(emptyMessage('Regionalzentrum')),
   first_name: yup.string().required(emptyMessage('Vorname')),
   last_name: yup.string().required(emptyMessage('Nachname')),
   email: yup
@@ -39,6 +40,7 @@ const registerSchema = yup.object({
 
 const template = {
   zdp: '',
+  regional_center_id: 1,
   first_name: '',
   last_name: '',
   email: '',

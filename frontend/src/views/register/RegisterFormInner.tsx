@@ -64,14 +64,14 @@ const RegisterFormInnerImplementation = (props: FormikProps<FormValues> & Regist
   const { currentPage, ...formikProps } = props;
 
   return (
-    <React.Fragment>
+    <>
       <Breadcrumb>
         {
-          [...REGISTER_FORM_PAGES, { title: 'Registrieren' }]
+          [...REGISTER_FORM_PAGES, { title: 'Registration' }]
             .map(({ title }, index) => getBreadcrumbItem(index, title, currentPage, props.classes))}
       </Breadcrumb>
       <PagedForm formikProps={formikProps} currentPage={currentPage} pages={REGISTER_FORM_PAGES.map(({ component }) => component)}/>
-    </React.Fragment>
+    </>
   );
 };
 export const RegisterFormInner = injectSheet(breadcrumbStyles)(RegisterFormInnerImplementation);
