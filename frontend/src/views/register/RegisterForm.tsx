@@ -6,33 +6,35 @@ import { withPage } from './PagedForm';
 import { withFormPersistence } from './PersistedForm';
 import { RegisterFormInner } from './RegisterFormInner';
 
+const emptyMessage = (field: string) => `${field} ist leer`;
+
 const registerSchema = yup.object({
-  zdp: yup.number().required(),
-  first_name: yup.string().required(),
-  last_name: yup.string().required(),
+  zdp: yup.number().required(emptyMessage('ZDP')),
+  first_name: yup.string().required(emptyMessage('Vorname')),
+  last_name: yup.string().required(emptyMessage('Nachname')),
   email: yup
     .string()
     .email()
-    .required(),
+    .required(emptyMessage('Email')),
   password: yup
     .string()
-    .required()
+    .required(emptyMessage('Passwort'))
     .min(6, 'Passwort muss mindestens 6 Zeichen sein'),
   password_confirm: yup
     .string()
-    .required()
+    .required(emptyMessage('Passwort wiederholung'))
     .test('passwords-match', 'Passwörter müssen übereinstimmen', function(value) {
       return this.parent.password === value;
     }),
-  community_password: yup.string().required(),
-  address: yup.string().required(),
-  bank_iban: yup.string().required(),
-  birthday: yup.date().required(),
-  city: yup.string().required(),
-  zip: yup.number().required(),
-  hometown: yup.string().required(),
-  phone: yup.string().required(),
-  health_insurance: yup.string().required(),
+  community_password: yup.string().required(emptyMessage('Community passwort')),
+  address: yup.string().required(emptyMessage('Addresse')),
+  bank_iban: yup.string().required(emptyMessage('IBAN')),
+  birthday: yup.date().required(emptyMessage('Geburtstag')),
+  city: yup.string().required(emptyMessage('Stadt')),
+  zip: yup.number().required(emptyMessage('Postleitzahl')),
+  hometown: yup.string().required(emptyMessage('Heimatort')),
+  phone: yup.string().required(emptyMessage('Telefon')),
+  health_insurance: yup.string().required(emptyMessage('Krankenkasse')),
 });
 
 const template = {
