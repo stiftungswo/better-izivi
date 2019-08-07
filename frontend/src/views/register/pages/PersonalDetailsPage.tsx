@@ -7,8 +7,6 @@ import { WiredField } from '../../../form/formik';
 import { LoadingInformation } from '../../../layout/LoadingInformation';
 import { RegionalCenterStore } from '../../../stores/regionalCenterStore';
 
-export const PersonalDetailsPageTitle = 'Persönliche Informationen';
-
 interface PersonalDetailsPageProps {
   regionalCenterStore?: RegionalCenterStore;
 }
@@ -16,6 +14,8 @@ interface PersonalDetailsPageProps {
 @inject('regionalCenterStore')
 @observer
 export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProps, { loading: boolean }> {
+  static Title = 'Persönliche Informationen';
+
   constructor(props: PersonalDetailsPageProps) {
     super(props);
 
@@ -30,7 +30,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
 
     return (
       <>
-        <h3 className={'mb-3'}>{PersonalDetailsPageTitle}</h3>
+        <h3 className={'mb-3'}>{PersonalDetailsPage.Title}</h3>
         <WiredField
           horizontal={true}
           component={NumberField}
@@ -59,7 +59,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           horizontal={true}
           component={PasswordField}
           name={'password'}
-          label={'Passwort (mind. 7 Zeichen)'}
+          label={'Passwort (mind. 6 Zeichen)'}
           placeholder={'Passwort mit mindestens 7 Zeichen'}
         />
         <WiredField
