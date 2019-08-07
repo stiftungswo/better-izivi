@@ -1,23 +1,45 @@
-import { BankAndInsurancePage, BankAndInsurancePageTitle } from './BankAndInsurancePage';
-import { CommunityPasswordPage, CommunityPasswordPageTitle } from './CommunityPasswordPage';
-import { ContactPage, ContactPageTitle } from './ContactPage';
-import { PersonalDetailsPage, PersonalDetailsPageTitle } from './PersonalDetailsPage';
+import { withPageValidations } from '../ValidatablePage';
+import { BankAndInsurancePage } from './BankAndInsurancePage';
+import { CommunityPasswordPage } from './CommunityPasswordPage';
+import { ContactPage } from './ContactPage';
+import { PersonalDetailsPage } from './PersonalDetailsPage';
 
 export const REGISTER_FORM_PAGES = [
   {
-    title: CommunityPasswordPageTitle,
-    component: CommunityPasswordPage,
+    title: CommunityPasswordPage.Title,
+    component: withPageValidations([
+      'community_password',
+    ])(CommunityPasswordPage),
   },
   {
-    title: PersonalDetailsPageTitle,
-    component: PersonalDetailsPage,
+    title: PersonalDetailsPage.Title,
+    component: withPageValidations([
+      'zdp',
+      'regional_center_id',
+      'first_name',
+      'last_name',
+      'email',
+      'birthday',
+      'password',
+      'password_confirm',
+      'newsletter',
+    ])(PersonalDetailsPage),
   },
   {
-    title: ContactPageTitle,
-    component: ContactPage,
+    title: ContactPage.Title,
+    component: withPageValidations([
+      'phone',
+      'address',
+      'city',
+      'zip',
+      'hometown',
+    ])(ContactPage),
   },
   {
-    title: BankAndInsurancePageTitle,
-    component: BankAndInsurancePage,
+    title: BankAndInsurancePage.Title,
+    component: withPageValidations([
+      'bank_iban',
+      'health_insurance',
+    ])(BankAndInsurancePage),
   },
 ];
