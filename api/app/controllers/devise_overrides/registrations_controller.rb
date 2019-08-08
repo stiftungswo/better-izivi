@@ -9,7 +9,7 @@ module DeviseOverrides
     end
 
     def validate
-      validation_error = ValidationError.new filtered_signup_params
+      validation_error = ValidationError.new User.validate_given_params(sign_up_params)
 
       should_display_community_error = community_password.present? && !valid_community_password?
       validation_error.merge! invalid_community_password_error if should_display_community_error
@@ -20,10 +20,6 @@ module DeviseOverrides
     end
 
     private
-
-    def filtered_signup_params
-      User.validate_given_params sign_up_params
-    end
 
     # :reek:UtilityFunction
     def invalid_community_password_error
