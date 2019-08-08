@@ -4,7 +4,6 @@ class ServiceCalculator
   LINEAR_CALCULATION_THRESHOLD = 26
   SERVICE_DAYS_PER_SICK_DAY = 5
 
-
   def initialize(beginning_date)
     @beginning_date = beginning_date
   end
