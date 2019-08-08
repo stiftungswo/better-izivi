@@ -83,7 +83,7 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def values_calculator
-    @values_calculator ||= ExpenseSheetCalculatorService.new(self)
+    @values_calculator ||= ExpenseSheetCalculators::ExpensesCalculator.new(self)
   end
 
   def legitimate_state_change
