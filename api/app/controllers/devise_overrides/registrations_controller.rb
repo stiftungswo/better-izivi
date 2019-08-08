@@ -22,14 +22,7 @@ module DeviseOverrides
     private
 
     def filtered_signup_params
-      user_params = sign_up_params
-      errors = User.new(user_params).tap(&:validate).errors
-
-      errors.each do |attribute, _error|
-        errors.delete attribute unless attribute.to_s.in?(user_params.keys)
-      end
-
-      errors
+      User.validate_given_params sign_up_params
     end
 
     # :reek:UtilityFunction
