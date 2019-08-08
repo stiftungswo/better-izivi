@@ -8,7 +8,29 @@ module DeviseOverrides
       super
     end
 
+    def validate
+      validation_error = ValidationError.new filtered_signup_params
+
+      should_display_community_error = community_password.present? && !valid_community_password?
+      validation_error.merge! invalid_community_password_error if should_display_community_error
+
+      raise validation_error unless validation_error.empty?
+
+      head :no_content
+    end
+
     private
+
+    def filtered_signup_params
+      user_params = sign_up_params
+      errors = User.new(user_params).tap(&:validate).errors
+
+      errors.each do |attribute, _error|
+        errors.delete attribute unless attribute.to_s.in?(user_params.keys)
+      end
+
+      errors
+    end
 
     # :reek:UtilityFunction
     def invalid_community_password_error
