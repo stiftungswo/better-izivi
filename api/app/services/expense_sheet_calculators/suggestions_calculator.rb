@@ -13,30 +13,25 @@ module ExpenseSheetCalculators
       @expense_sheet = expense_sheet
     end
 
-    # def suggested_workfree_days
-    #   day_calculator.calculate_workfree_days
-    # end
-    #
-    # def suggested_work_days
-    #   day_calculator.calculate_work_days
-    # end
-
     def suggested_clothing_expenses
       return 0 if @expense_sheet.service.service_specification.work_clothing_expenses.zero?
 
-      sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
-
-      already_paid = sheets.sum(&:clothing_expenses)
       per_day = @expense_sheet.service.service_specification.work_clothing_expenses
       max_possible_value = @expense_sheet.calculate_chargeable_days * per_day
 
-      difference_to_max = WORK_CLOTHING_MAX_PER_SERVICE - already_paid
+      difference_to_max = WORK_CLOTHING_MAX_PER_SERVICE - already_paid_clothing_expenses
       value = [max_possible_value, difference_to_max].min
 
       value.positive? ? value : 0
     end
 
     private
+
+    def already_paid_clothing_expenses
+      sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
+
+      sheets.sum(&:clothing_expenses)
+    end
 
     def day_calculator
       @day_calculator ||= DayCalculator.new(@expense_sheet.beginning, @expense_sheet.ending)
