@@ -25,18 +25,23 @@ RSpec.describe Service, type: :model do
 
     before do
       allow(ExpenseSheetCalculators::UsedDaysCalculator).to receive(:new).and_return used_days_calculator
+      allow(used_days_calculator).to receive(:used_sick_days)
+      allow(used_days_calculator).to receive(:used_paid_vacation_days)
+
       allow(ExpenseSheetCalculators::RemainingDaysCalculator).to receive(:new).and_return remaining_days_calculator
+      allow(remaining_days_calculator).to receive(:remaining_sick_days)
+      allow(remaining_days_calculator).to receive(:remaining_paid_vacation_days)
     end
 
     it 'creates a used_days_calculator' do
-      service.send(:used_days_calculator)
-      service.send(:used_days_calculator)
+      service.used_sick_days
+      service.used_paid_vacation_days
       expect(ExpenseSheetCalculators::UsedDaysCalculator).to have_received(:new).exactly(1).times
     end
 
     it 'creates a remaining_days_calculator' do
-      service.send(:remaining_days_calculator)
-      service.send(:remaining_days_calculator)
+      service.remaining_sick_days
+      service.remaining_paid_vacation_days
       expect(ExpenseSheetCalculators::RemainingDaysCalculator).to have_received(:new).exactly(1).times
     end
   end
