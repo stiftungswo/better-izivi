@@ -27,14 +27,20 @@ class Service < ApplicationRecord
   scope :chronologically, -> { order(:beginning, :ending) }
   scope :at_year, ->(year) { overlapping_date_range(Date.new(year), Date.new(year).at_end_of_year) }
 
+  delegate :used_paid_vacation_days, :used_sick_days, to: :used_days_calculator
+  delegate :remaining_paid_vacation_days, :remaining_sick_days, to: :remaining_days_calculator
   delegate :identification_number, to: :service_specification
 
   def service_days
-    ServiceCalculator.new(beginning).calculate_chargeable_service_days(ending)
+    service_calculator.calculate_chargeable_service_days(ending)
   end
 
   def eligible_paid_vacation_days
-    ServiceCalculator.new(beginning).calculate_eligible_paid_vacation_days(service_days)
+    service_calculator.calculate_eligible_paid_vacation_days(service_days)
+  end
+
+  def eligible_sick_days
+    service_calculator.calculate_eligible_sick_days(service_days)
   end
 
   def conventional_service?
@@ -46,6 +52,18 @@ class Service < ApplicationRecord
   end
 
   private
+
+  def remaining_days_calculator
+    @remaining_days_calculator ||= ExpenseSheetCalculators::RemainingDaysCalculator.new(self)
+  end
+
+  def used_days_calculator
+    @used_days_calculator ||= ExpenseSheetCalculators::UsedDaysCalculator.new(self)
+  end
+
+  def service_calculator
+    @service_calculator ||= ServiceCalculator.new(beginning)
+  end
 
   def beginning_is_monday
     errors.add(:beginning, :not_a_monday) unless beginning.present? && beginning.wday == MONDAY_WEEKDAY
