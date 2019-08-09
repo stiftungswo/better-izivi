@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
-  let(:calculator) { ExpenseSheetCalculators::ExpensesCalculator.new(expense_sheet) }
+  let(:calculator) { described_class.new(expense_sheet) }
 
   let(:expense_sheet) { create :expense_sheet, expense_sheet_data }
   let(:service) { create :service, service_data }
