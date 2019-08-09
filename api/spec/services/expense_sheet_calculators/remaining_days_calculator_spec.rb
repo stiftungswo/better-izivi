@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ExpenseSheetCalculators::RemainingDaysCalculator, type: :service do
-  let(:calculator) { ExpenseSheetCalculators::RemainingDaysCalculator.new(service) }
+  let(:calculator) { described_class.new(service) }
   let(:service) { instance_double Service }
 
   describe '#remaining_sick_days' do
