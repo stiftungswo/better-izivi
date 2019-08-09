@@ -53,7 +53,7 @@ RSpec.describe Devise::RegistrationsController, type: :request do
   describe '#validate' do
     subject(:response_json) { parse_response_json(response) }
 
-    let(:request) { get users_validate_path params: { user: params } }
+    let(:request) { post users_validate_path params: { user: params } }
 
     before { request }
 
