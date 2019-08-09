@@ -1,7 +1,11 @@
+import axios from 'axios';
 import { connect, ErrorMessage, FormikProps } from 'formik';
-import { curry, debounce, isEmpty, pick } from 'lodash';
+import { curry, isEmpty, pick } from 'lodash';
 import * as React from 'react';
+import { ApiStore, baseUrl } from '../../stores/apiStore';
+import { DomainStore } from '../../stores/domainStore';
 import { UserStore } from '../../stores/userStore';
+import { displayError } from '../../utilities/notification';
 
 type ValidityCallback = (valid: boolean) => void;
 
@@ -16,29 +20,44 @@ export interface ValidatablePageInnerProps {
 
 interface ValidatablePageInnerState {
   isValid: boolean;
+  dirty: boolean;
 }
 
 type ValidatablePageInnerFullProps = ValidatablePageInnerProps & { formik: FormikProps<any> };
 
 class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps, ValidatablePageInnerState> {
-  localValidate = debounce((prevState: Readonly<ValidatablePageInnerState>) => {
-    const isValid = this.isValid();
-
-    if (isValid !== prevState.isValid) {
-      this.props.onValidityChange(isValid);
-      this.setState({ isValid });
-    }
-  }, 100);
+  private axiosClient = axios.create({ baseURL: baseUrl });
 
   constructor(props: ValidatablePageInnerFullProps) {
     super(props);
 
-    this.state = { isValid: false };
+    this.state = { isValid: false, dirty: false };
   }
 
   async validateWithServer() {
-    // await this.mainStore!.api.get('/users/validate', { params: { user } });
-    console.log('validation');
+    const fieldsToBeValidated = pick(this.props.formik.values, this.props.validatableFields);
+    if ('bank_iban' in fieldsToBeValidated) {
+      fieldsToBeValidated.bank_iban = ApiStore.formatIBAN(fieldsToBeValidated.bank_iban);
+    }
+
+    try {
+      await this.axiosClient.post('/users/validate', { user: fieldsToBeValidated });
+
+      this.setState({ isValid: false });
+      this.props.onValidityChange(true);
+
+      return true;
+    } catch (error) {
+      const { response: { data } } = error;
+
+      this.setState({ isValid: false });
+      this.props.onValidityChange(false);
+
+      displayError(DomainStore.buildErrorMessage({ messages: data }, 'Ein Fehler ist aufgetreten'));
+      return false;
+    } finally {
+      this.setState({ dirty: true });
+    }
   }
 
   componentDidMount() {
@@ -46,7 +65,12 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
   }
 
   componentDidUpdate(prevProps: any, prevState: Readonly<ValidatablePageInnerState>) {
-    this.localValidate(prevState);
+    const isValid = this.isValid();
+
+    if (isValid !== prevState.isValid  || this.state.dirty) {
+      this.props.onValidityChange(isValid);
+      this.setState({ isValid, dirty: false });
+    }
   }
 
   isValid() {

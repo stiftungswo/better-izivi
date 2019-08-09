@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import { clamp } from 'lodash';
 import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import Breadcrumb from 'reactstrap/lib/Breadcrumb';
 import BreadcrumbItem from 'reactstrap/lib/BreadcrumbItem';
 import createStyles from '../../utilities/createStyles';
@@ -57,7 +57,7 @@ function getBreadcrumbItem(index: number, title: string, currentPage: number, cl
   );
 }
 
-interface RegisterFormInnerProps extends WithSheet<typeof breadcrumbStyles> {
+interface RegisterFormInnerProps extends WithSheet<typeof breadcrumbStyles>, RouteComponentProps<object> {
   currentPage: number;
 }
 
@@ -70,8 +70,13 @@ const RegisterFormInnerImplementation = (props: FormikProps<FormValues> & Regist
         {[...REGISTER_FORM_PAGES, { title: 'Registration' }]
             .map(({ title }, index) => getBreadcrumbItem(index, title, clamp(currentPage, 1, REGISTER_FORM_PAGES.length), props.classes))}
       </Breadcrumb>
-      <PagedForm formikProps={formikProps} currentPage={currentPage} pages={REGISTER_FORM_PAGES.map(({ component }) => component)}/>
+      <PagedForm
+        history={props.history}
+        formikProps={formikProps}
+        currentPage={currentPage}
+        pages={REGISTER_FORM_PAGES.map(({ component }) => component)}
+      />
     </>
   );
 };
-export const RegisterFormInner = injectSheet(breadcrumbStyles)(RegisterFormInnerImplementation);
+export const RegisterFormInner = injectSheet(breadcrumbStyles)(withRouter(RegisterFormInnerImplementation));
