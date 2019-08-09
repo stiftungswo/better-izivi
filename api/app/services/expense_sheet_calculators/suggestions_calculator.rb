@@ -13,6 +13,13 @@ module ExpenseSheetCalculators
       @expense_sheet = expense_sheet
     end
 
+    def suggested_paid_company_holiday_expenses
+      company_holiday_days = day_calculator.calculate_company_holiday_days
+      return 0 if company_holiday_days.zero?
+
+      [company_holiday_days, @expense_sheet.service.remaining_paid_vacation_days].min
+    end
+
     def suggested_clothing_expenses
       return 0 if @expense_sheet.service.service_specification.work_clothing_expenses.zero?
 

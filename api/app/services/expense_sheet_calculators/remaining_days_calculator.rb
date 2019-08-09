@@ -2,12 +2,20 @@
 
 module ExpenseSheetCalculators
   class RemainingDaysCalculator
-    def initialize(service)
+    def initialize(service:)
       @service = service
     end
 
     def remaining_sick_days
+      eligible = @service.eligible_sick_days
+      used = @service.used_sick_days
+      eligible - used
+    end
 
+    def remaining_paid_vacation_days
+      eligible = @service.eligible_paid_vacation_days
+      used = @service.used_paid_vacation_days
+      eligible - used
     end
   end
 end
