@@ -1,23 +1,23 @@
 import { FormikProps } from 'formik';
-import { curryRight } from 'lodash';
+import { clamp, curryRight } from 'lodash';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import Form from 'reactstrap/lib/Form';
 import { FormValues as RegisterFormValues } from './RegisterForm';
-import { WithPageValidationsProps } from './ValidatablePage';
+import { ValidatablePageRefType, WithPageValidationsProps } from './ValidatablePage';
 
 interface PagedFormProps {
   formikProps: FormikProps<RegisterFormValues>;
-  pages: Array<React.ComponentType<WithPageValidationsProps>>;
+  pages: Array<React.RefForwardingComponent<ValidatablePageRefType, WithPageValidationsProps>>;
   currentPage: number;
 }
 
-function getNextButton(toPage: number, currentPageIsValid: boolean) {
+function getNextButton(toPage: number, currentPageIsValid: boolean, ref: React.MutableRefObject<ValidatablePageRefType | undefined>) {
   const title = currentPageIsValid ? undefined : 'Das Formular hat noch ungültige Felder';
   return (
     <Link to={`/register/${toPage}`}>
-      <Button disabled={!currentPageIsValid} title={title}>Vorwärts</Button>
+      <Button disabled={!currentPageIsValid} onClick={() => ref.current!.validateWithServer()} title={title}>Vorwärts</Button>
     </Link>
   );
 }
@@ -37,17 +37,18 @@ function getSubmitButton(formikProps: FormikProps<RegisterFormValues>, currentPa
 export const PagedForm: React.FunctionComponent<PagedFormProps> = props => {
   const { formikProps, pages, currentPage } = props;
   const [currentPageIsValid, setCurrentPageValidity] = React.useState(false);
+  const ref = React.useRef<ValidatablePageRefType>();
 
-  const sanitizedPage = Math.max(Math.min(currentPage, pages.length), 1);
-  const CurrentPage = pages[sanitizedPage - 1];
+  const sanitizedPage = clamp(currentPage, 1, pages.length);
+  const CurrentPageComponent = pages[sanitizedPage - 1];
   const isLast = currentPage === pages.length;
 
-  const nextButton = getNextButton(sanitizedPage + 1, currentPageIsValid);
+  const nextButton = getNextButton(sanitizedPage + 1, currentPageIsValid, ref);
   const submitButton = getSubmitButton(formikProps, currentPageIsValid);
 
   return (
     <Form onSubmit={formikProps.handleSubmit}>
-      <CurrentPage onValidityChange={setCurrentPageValidity}/>
+      <CurrentPageComponent onValidityChange={setCurrentPageValidity} ref={ref}/>
       <Link to={`/register/${sanitizedPage - 1}`}>
         <Button disabled={sanitizedPage === 1} className={'mr-2'}>Zurück</Button>
       </Link>

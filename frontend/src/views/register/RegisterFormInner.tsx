@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { clamp } from 'lodash';
 import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import { Link } from 'react-router-dom';
@@ -66,9 +67,8 @@ const RegisterFormInnerImplementation = (props: FormikProps<FormValues> & Regist
   return (
     <>
       <Breadcrumb>
-        {
-          [...REGISTER_FORM_PAGES, { title: 'Registration' }]
-            .map(({ title }, index) => getBreadcrumbItem(index, title, currentPage, props.classes))}
+        {[...REGISTER_FORM_PAGES, { title: 'Registration' }]
+            .map(({ title }, index) => getBreadcrumbItem(index, title, clamp(currentPage, 1, REGISTER_FORM_PAGES.length), props.classes))}
       </Breadcrumb>
       <PagedForm formikProps={formikProps} currentPage={currentPage} pages={REGISTER_FORM_PAGES.map(({ component }) => component)}/>
     </>
