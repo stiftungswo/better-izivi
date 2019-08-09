@@ -85,6 +85,20 @@ RSpec.describe Devise::RegistrationsController, type: :request do
       end
     end
 
+    context 'when the community password is empty' do
+      let(:params) { { community_password: '' } }
+
+      it_behaves_like 'renders a validation error response'
+      it 'renders the correct error', :aggregate_failures do
+        expect(response_json[:errors]).to eq(
+          community_password: I18n.t('registrations.errors.community_password.not_valid.single')
+        )
+        expect(response_json[:human_readable_descriptions]).to eq(
+          [I18n.t('registrations.errors.community_password.not_valid.full')]
+        )
+      end
+    end
+
     context 'when all fields are valid' do
       let(:params) { attributes_for(:user).merge(community_password: actual_community_password) }
 
