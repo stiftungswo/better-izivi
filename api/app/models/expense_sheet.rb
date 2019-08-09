@@ -64,6 +64,10 @@ class ExpenseSheet < ApplicationRecord
     (ending - beginning).to_i + 1
   end
 
+  def used_paid_vacation_days
+    paid_vacation_days + paid_company_holiday_days
+  end
+
   def work_days_count
     work_days - [at_service_beginning?, at_service_ending?].count(&:itself)
   end

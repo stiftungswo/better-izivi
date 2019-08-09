@@ -7,7 +7,7 @@ module ExpenseSheetCalculators
     end
 
     def used_paid_vacation_days
-      @expense_sheets.sum { |expense_sheet| expense_sheet.paid_vacation_days + expense_sheet.paid_company_holiday_days }
+      @expense_sheets.sum(&:used_paid_vacation_days)
     end
 
     def used_sick_days
