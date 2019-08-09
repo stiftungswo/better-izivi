@@ -13,7 +13,17 @@ module ExpenseSheetCalculators
       @expense_sheet = expense_sheet
     end
 
-    def suggested_paid_company_holiday_expenses
+    def suggested_unpaid_company_holiday_days
+      company_holiday_days = day_calculator.calculate_company_holiday_days
+      return 0 if company_holiday_days.zero?
+
+      remaining_paid_vacation_days = @expense_sheet.service.remaining_paid_vacation_days
+      extra_company_holiday_days = company_holiday_days - remaining_paid_vacation_days
+
+      [0, extra_company_holiday_days].max
+    end
+
+    def suggested_paid_company_holiday_days
       company_holiday_days = day_calculator.calculate_company_holiday_days
       return 0 if company_holiday_days.zero?
 
@@ -21,15 +31,15 @@ module ExpenseSheetCalculators
     end
 
     def suggested_clothing_expenses
-      return 0 if @expense_sheet.service.service_specification.work_clothing_expenses.zero?
-
       per_day = @expense_sheet.service.service_specification.work_clothing_expenses
+      return 0 if per_day.zero?
+
       max_possible_value = @expense_sheet.calculate_chargeable_days * per_day
 
       difference_to_max = WORK_CLOTHING_MAX_PER_SERVICE - already_paid_clothing_expenses
       value = [max_possible_value, difference_to_max].min
 
-      value.positive? ? value : 0
+      [0, value].max
     end
 
     private
