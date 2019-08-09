@@ -3,7 +3,7 @@
 module ExpenseSheetCalculators
   class UsedDaysCalculator
     def initialize(service)
-      @expense_sheets = service.expense_sheets.calculable
+      @expense_sheets = service.expense_sheets.relevant_for_calculations
     end
 
     def used_paid_vacation_days

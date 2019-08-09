@@ -13,13 +13,13 @@ RSpec.describe ExpenseSheetCalculators::UsedDaysCalculator, type: :service do
   describe '#used_sick_days' do
     subject { calculator.used_sick_days }
 
-    context 'with no calculable expense_sheets' do
+    context 'with no relevant_for_calculations expense_sheets' do
       before { created_expense_sheets.each { |expense_sheet| expense_sheet.update sick_days: 10 } }
 
       it { is_expected.to eq 0 }
     end
 
-    context 'with calculable expense_sheets' do
+    context 'with relevant_for_calculations expense_sheets' do
       before { created_expense_sheets.each { |expense_sheet| expense_sheet.update state: :ready_for_payment } }
 
       context 'with no previous sick_days' do
@@ -36,11 +36,11 @@ RSpec.describe ExpenseSheetCalculators::UsedDaysCalculator, type: :service do
     end
 
     describe 'scope usage' do
-      before { allow(service.expense_sheets).to receive(:calculable).and_return [] }
+      before { allow(service.expense_sheets).to receive(:relevant_for_calculations).and_return [] }
 
-      it 'uses the ExpenseSheets#calculable scope' do
+      it 'uses the ExpenseSheets#relevant_for_calculations scope' do
         calculator.used_sick_days
-        expect(service.expense_sheets).to have_received(:calculable)
+        expect(service.expense_sheets).to have_received(:relevant_for_calculations)
       end
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe ExpenseSheetCalculators::UsedDaysCalculator, type: :service do
   describe '#used_paid_vacation_days' do
     subject { calculator.used_paid_vacation_days }
 
-    context 'with no calculable expense_sheets' do
+    context 'with no relevant_for_calculations expense_sheets' do
       before do
         created_expense_sheets.each do |expense_sheet|
           expense_sheet.update paid_vacation_days: 2, paid_company_holiday_days: 3
@@ -58,7 +58,7 @@ RSpec.describe ExpenseSheetCalculators::UsedDaysCalculator, type: :service do
       it { is_expected.to eq 0 }
     end
 
-    context 'with calculable expense_sheets' do
+    context 'with relevant_for_calculations expense_sheets' do
       before { created_expense_sheets.each { |expense_sheet| expense_sheet.update state: :ready_for_payment } }
 
       context 'with no previous paid_vacation_days or paid_company_holiday_days' do
@@ -91,11 +91,11 @@ RSpec.describe ExpenseSheetCalculators::UsedDaysCalculator, type: :service do
     end
 
     describe 'scope usage' do
-      before { allow(service.expense_sheets).to receive(:calculable).and_return [] }
+      before { allow(service.expense_sheets).to receive(:relevant_for_calculations).and_return [] }
 
-      it 'uses the ExpenseSheets#calculable scope' do
+      it 'uses the ExpenseSheets#relevant_for_calculations scope' do
         calculator.used_paid_vacation_days
-        expect(service.expense_sheets).to have_received(:calculable)
+        expect(service.expense_sheets).to have_received(:relevant_for_calculations)
       end
     end
   end
