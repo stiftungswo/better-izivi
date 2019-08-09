@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
-  let(:calculator) { ExpenseSheetCalculators::SuggestionsCalculator.new(expense_sheet) }
+  let(:calculator) { described_class.new(expense_sheet) }
   let(:user) { create :user }
   let(:beginning) { Date.parse('2018-01-01') }
   let(:ending) { Date.parse('2018-01-26') }
