@@ -18,6 +18,29 @@ RSpec.describe Service, type: :model do
     it { is_expected.to delegate_method(:remaining_paid_vacation_days).to(:remaining_days_calculator) }
   end
 
+  describe 'memoization' do
+    let(:service) { create :service }
+    let(:used_days_calculator) { instance_double ExpenseSheetCalculators::UsedDaysCalculator }
+    let(:remaining_days_calculator) { instance_double ExpenseSheetCalculators::RemainingDaysCalculator }
+
+    before do
+      allow(ExpenseSheetCalculators::UsedDaysCalculator).to receive(:new).and_return used_days_calculator
+      allow(ExpenseSheetCalculators::RemainingDaysCalculator).to receive(:new).and_return remaining_days_calculator
+    end
+
+    it 'creates a used_days_calculator' do
+      service.send(:used_days_calculator)
+      service.send(:used_days_calculator)
+      expect(ExpenseSheetCalculators::UsedDaysCalculator).to have_received(:new).exactly(1).times
+    end
+
+    it 'creates a remaining_days_calculator' do
+      service.send(:remaining_days_calculator)
+      service.send(:remaining_days_calculator)
+      expect(ExpenseSheetCalculators::RemainingDaysCalculator).to have_received(:new).exactly(1).times
+    end
+  end
+
   it_behaves_like 'validates that the ending is after beginning' do
     let(:model) { build(:service, beginning: beginning, ending: ending) }
   end
