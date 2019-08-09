@@ -9,6 +9,15 @@ RSpec.describe Service, type: :model do
   it { is_expected.to validate_presence_of :service_specification }
   it { is_expected.to validate_presence_of :service_type }
 
+  describe 'delegated methods' do
+    subject { create :service }
+
+    it { is_expected.to delegate_method(:used_sick_days).to(:used_days_calculator) }
+    it { is_expected.to delegate_method(:used_paid_vacation_days).to(:used_days_calculator) }
+    it { is_expected.to delegate_method(:remaining_sick_days).to(:remaining_days_calculator) }
+    it { is_expected.to delegate_method(:remaining_paid_vacation_days).to(:remaining_days_calculator) }
+  end
+
   it_behaves_like 'validates that the ending is after beginning' do
     let(:model) { build(:service, beginning: beginning, ending: ending) }
   end
