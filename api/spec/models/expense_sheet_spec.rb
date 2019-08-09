@@ -159,8 +159,8 @@ RSpec.describe ExpenseSheet, type: :model do
     end
   end
 
-  describe '#used_paid_vacation_days' do
-    subject { expense_sheet.used_paid_vacation_days }
+  describe '#total_paid_vacation_days' do
+    subject { expense_sheet.total_paid_vacation_days }
 
     let(:expense_sheet) do
       create :expense_sheet, paid_vacation_days: 2, paid_company_holiday_days: 1, unpaid_company_holiday_days: 3

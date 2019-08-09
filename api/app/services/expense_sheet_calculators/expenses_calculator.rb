@@ -60,7 +60,7 @@ module ExpenseSheetCalculators
     end
 
     def calculate_chargeable_days
-      @expense_sheet.duration - @expense_sheet.unpaid_vacation_days - @expense_sheet.unpaid_company_holiday_days
+      @expense_sheet.duration - @expense_sheet.total_unpaid_vacation_days
     end
 
     private
