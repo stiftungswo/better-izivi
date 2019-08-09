@@ -2,7 +2,7 @@
 
 module ExpenseSheetCalculators
   class RemainingDaysCalculator
-    def initialize(service:)
+    def initialize(service)
       @service = service
     end
 
