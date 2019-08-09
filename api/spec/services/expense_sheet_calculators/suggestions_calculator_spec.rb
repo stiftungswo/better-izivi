@@ -41,6 +41,100 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
     end
   end
 
+  describe '#suggested_paid_company_holiday_days' do
+    subject { calculator.suggested_paid_company_holiday_days }
+
+    let(:remaining_paid_vacation_days) { 0 }
+    let(:company_holiday_days) { 0 }
+    let(:day_calculator) { instance_double DayCalculator }
+
+    before do
+      allow(expense_sheet.service).to receive(:remaining_paid_vacation_days).and_return remaining_paid_vacation_days
+
+      allow(DayCalculator).to receive(:new).and_return day_calculator
+      allow(day_calculator).to receive(:calculate_company_holiday_days).and_return company_holiday_days
+    end
+
+    context 'with remaining_paid_vacation_days' do
+      let(:remaining_paid_vacation_days) { 8 }
+
+      context 'with no company holidays' do
+        it { is_expected.to eq 0 }
+      end
+
+      context 'with company holidays' do
+        let(:company_holiday_days) { 2 }
+
+        it { is_expected.to eq company_holiday_days }
+      end
+
+      context 'with more company holiday days than remaining_paid_vacation_days' do
+        let(:company_holiday_days) { 10 }
+
+        it { is_expected.to eq remaining_paid_vacation_days }
+      end
+    end
+
+    context 'with no remaining_paid_vacation_days' do
+      context 'with no company holidays' do
+        it { is_expected.to eq 0 }
+      end
+
+      context 'with company holidays' do
+        let(:company_holiday_days) { 2 }
+
+        it { is_expected.to eq 0 }
+      end
+    end
+  end
+
+  describe '#suggested_unpaid_company_holiday_days' do
+    subject { calculator.suggested_unpaid_company_holiday_days }
+
+    let(:remaining_paid_vacation_days) { 0 }
+    let(:company_holiday_days) { 0 }
+    let(:day_calculator) { instance_double DayCalculator }
+
+    before do
+      allow(expense_sheet.service).to receive(:remaining_paid_vacation_days).and_return remaining_paid_vacation_days
+
+      allow(DayCalculator).to receive(:new).and_return day_calculator
+      allow(day_calculator).to receive(:calculate_company_holiday_days).and_return company_holiday_days
+    end
+
+    context 'with remaining_paid_vacation_days' do
+      let(:remaining_paid_vacation_days) { 8 }
+
+      context 'with no company holidays' do
+        it { is_expected.to eq 0 }
+      end
+
+      context 'with company holidays' do
+        let(:company_holiday_days) { 2 }
+
+        it { is_expected.to eq 0 }
+      end
+
+      context 'with more company holiday days than remaining_paid_vacation_days' do
+        let(:company_holiday_days) { 10 }
+
+        it { is_expected.to eq 2 }
+      end
+    end
+
+    context 'with no remaining_paid_vacation_days' do
+      context 'with no company holidays' do
+        it { is_expected.to eq 0 }
+      end
+
+      context 'with company holidays' do
+        let(:company_holiday_days) { 2 }
+
+        it { is_expected.to eq 2 }
+      end
+    end
+  end
+
   describe '#suggested_clothing_expenses' do
     subject { calculator.suggested_clothing_expenses }
 
