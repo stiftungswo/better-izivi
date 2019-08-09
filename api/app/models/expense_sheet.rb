@@ -41,6 +41,9 @@ class ExpenseSheet < ApplicationRecord
 
   scope :before_date, (->(date) { where(arel_table[:ending].lt(date)) })
 
+  # ExpenseSheets which can be used in calculations
+  scope :calculable, -> { where.not(state: :open) }
+
   delegate :calculate_chargeable_days,
            :calculate_first_day,
            :calculate_full_expenses,
