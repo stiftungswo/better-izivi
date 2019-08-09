@@ -36,7 +36,7 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
 
   async validateWithServer() {
     const fieldsToBeValidated = pick(this.props.formik.values, this.props.validatableFields);
-    if ('bank_iban' in fieldsToBeValidated) {
+    if (fieldsToBeValidated.bank_iban) {
       fieldsToBeValidated.bank_iban = ApiStore.formatIBAN(fieldsToBeValidated.bank_iban);
     }
 

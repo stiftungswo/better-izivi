@@ -69,7 +69,7 @@ export class ApiStore {
   }
 
   static formatIBAN(iban: string) {
-    iban.replace(/\s+/g, '');
+    return iban.replace(/\s+/g, '');
   }
 
   private _api: AxiosInstance; // tslint:disable-line:variable-name
