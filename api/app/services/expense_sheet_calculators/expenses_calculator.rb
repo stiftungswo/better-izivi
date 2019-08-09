@@ -59,9 +59,8 @@ module ExpenseSheetCalculators
       day_sum + calculate_static_expenses
     end
 
-    # TODO: fix this, should also subtract unpaid_company_holiday_days
     def calculate_chargeable_days
-      @expense_sheet.duration - @expense_sheet.unpaid_vacation_days
+      @expense_sheet.duration - @expense_sheet.unpaid_vacation_days - @expense_sheet.unpaid_company_holiday_days
     end
 
     private

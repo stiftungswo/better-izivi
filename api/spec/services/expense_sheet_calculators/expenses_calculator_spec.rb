@@ -123,8 +123,13 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     end
 
     describe '#calculate_chargeable_days' do
+      before do
+        expense_sheet.unpaid_company_holiday_days = 1
+        expense_sheet.unpaid_vacation_days = 2
+      end
+
       it 'returns correct number of chareable days' do
-        expect(calculator.calculate_chargeable_days).to eq 31
+        expect(calculator.calculate_chargeable_days).to eq 28
       end
     end
   end
