@@ -14,28 +14,22 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
   let(:expected_workfree_days) { 6 }
 
   describe '#suggested_work_days' do
-    let(:day_calculator) { instance_double(DayCalculator) }
+    let(:day_calculator) { instance_double(DayCalculator, calculate_work_days: expected_work_days) }
 
-    before do
-      allow(DayCalculator).to receive(:new).and_return day_calculator
-      allow(day_calculator).to receive(:calculate_work_days).and_return expected_work_days
-    end
+    before { allow(DayCalculator).to receive(:new).and_return day_calculator }
 
-    it 'delegates the correct method' do
+    it 'delegates the correct method', :aggregate_failures do
       expect(calculator.suggested_work_days).to eq expected_work_days
       expect(day_calculator).to have_received :calculate_work_days
     end
   end
 
   describe '#suggested_workfree_days' do
-    let(:day_calculator) { instance_double(DayCalculator) }
+    let(:day_calculator) { instance_double(DayCalculator, calculate_workfree_days: expected_workfree_days) }
 
-    before do
-      allow(DayCalculator).to receive(:new).and_return day_calculator
-      allow(day_calculator).to receive(:calculate_workfree_days).and_return expected_workfree_days
-    end
+    before { allow(DayCalculator).to receive(:new).and_return day_calculator }
 
-    it 'delegates the correct method' do
+    it 'delegates the correct method', :aggregate_failures do
       expect(calculator.suggested_workfree_days).to eq expected_workfree_days
       expect(day_calculator).to have_received :calculate_workfree_days
     end
@@ -46,13 +40,12 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
     let(:remaining_paid_vacation_days) { 0 }
     let(:company_holiday_days) { 0 }
-    let(:day_calculator) { instance_double DayCalculator }
+    let(:day_calculator) { instance_double(DayCalculator, calculate_company_holiday_days: company_holiday_days) }
 
     before do
       allow(expense_sheet.service).to receive(:remaining_paid_vacation_days).and_return remaining_paid_vacation_days
 
       allow(DayCalculator).to receive(:new).and_return day_calculator
-      allow(day_calculator).to receive(:calculate_company_holiday_days).and_return company_holiday_days
     end
 
     context 'with remaining_paid_vacation_days' do
@@ -93,13 +86,12 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
     let(:remaining_paid_vacation_days) { 0 }
     let(:company_holiday_days) { 0 }
-    let(:day_calculator) { instance_double DayCalculator }
+    let(:day_calculator) { instance_double(DayCalculator, calculate_company_holiday_days: company_holiday_days) }
 
     before do
       allow(expense_sheet.service).to receive(:remaining_paid_vacation_days).and_return remaining_paid_vacation_days
 
       allow(DayCalculator).to receive(:new).and_return day_calculator
-      allow(day_calculator).to receive(:calculate_company_holiday_days).and_return company_holiday_days
     end
 
     context 'with remaining_paid_vacation_days' do
