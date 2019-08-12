@@ -61,7 +61,6 @@ module V1
     private
 
     def filtered_expense_sheets
-      p filter_param
       case filter_param
       when 'current'
         ExpenseSheet.open.before_date(Time.zone.today.at_end_of_month + 1.day)
