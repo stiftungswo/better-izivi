@@ -7,7 +7,7 @@ import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
-import { Column, ReportSheetListing } from '../../types';
+import { Column, ExpenseSheetListing } from '../../types';
 import { ReportSheetStatisticFormDialog } from './ReportSheetStatisticFormDialog';
 
 interface Props {
@@ -24,7 +24,7 @@ interface State {
 @inject('mainStore', 'expenseSheetStore')
 @observer
 export class ReportSheetOverview extends React.Component<Props, State> {
-  columns: Array<Column<ReportSheetListing>>;
+  columns: Array<Column<ExpenseSheetListing>>;
 
   constructor(props: Props) {
     super(props);
@@ -32,24 +32,24 @@ export class ReportSheetOverview extends React.Component<Props, State> {
       {
         id: 'zdp',
         label: 'ZDP',
-        format: (r: ReportSheetListing) => r.user.zdp,
+        format: (r: ExpenseSheetListing) => r.user.zdp,
       },
       {
         id: 'first_name',
         label: 'Name',
-        format: (r: ReportSheetListing) => (
+        format: (r: ExpenseSheetListing) => (
           <Link to={'/users/' + r.user_id!}>{r.user.first_name} {r.user.last_name}</Link>
         ),
       },
       {
         id: 'start',
         label: 'Von',
-        format: (r: ReportSheetListing) => this.props.mainStore!.formatDate(r.start),
+        format: (r: ExpenseSheetListing) => this.props.mainStore!.formatDate(r.start),
       },
       {
         id: 'end',
         label: 'Bis',
-        format: (r: ReportSheetListing) => this.props.mainStore!.formatDate(r.end),
+        format: (r: ExpenseSheetListing) => this.props.mainStore!.formatDate(r.end),
       },
     ];
 
@@ -107,7 +107,7 @@ export class ReportSheetOverview extends React.Component<Props, State> {
         <OverviewTable
           columns={this.columns}
           data={this.props.expenseSheetStore!.reportSheets}
-          renderActions={(e: ReportSheetListing) => <Link to={'/report_sheets/' + e.id}>Spesenblatt bearbeiten</Link>}
+          renderActions={(e: ExpenseSheetListing) => <Link to={'/report_sheets/' + e.id}>Spesenblatt bearbeiten</Link>}
         />
       </IziviContent>
     );

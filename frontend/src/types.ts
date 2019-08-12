@@ -62,7 +62,7 @@ export interface ReportSheetWithProposedValues extends ExpenseSheet {
   proposed_values: ProposedReportSheetValues;
 }
 
-export interface ReportSheetListing {
+export interface ExpenseSheetListing {
   id: number;
   end: string;
   start: string;

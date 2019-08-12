@@ -1,10 +1,10 @@
 // tslint:disable:no-console
 import { action, computed, observable } from 'mobx';
-import { ExpenseSheet, ReportSheetListing } from '../types';
+import { ExpenseSheet, ExpenseSheetListing } from '../types';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
-export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ReportSheetListing> {
+export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetListing> {
   protected get entityName() {
     return {
       singular: 'Das Spesenblatt',
@@ -13,7 +13,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ReportSheetList
   }
 
   @computed
-  get entities(): ReportSheetListing[] {
+  get entities(): ExpenseSheetListing[] {
     return this.reportSheets;
   }
 
@@ -30,7 +30,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ReportSheetList
   toBePaidReportSheets: ExpenseSheet[] = [];
 
   @observable
-  reportSheets: ReportSheetListing[] = [];
+  reportSheets: ExpenseSheetListing[] = [];
 
   @observable
   reportSheet?: ExpenseSheet;
@@ -65,7 +65,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ReportSheetList
   }
 
   protected async doFetchAll(params: object = {}): Promise<void> {
-    const res = await this.mainStore.api.get<ReportSheetListing[]>('/report_sheets', { params: { ...params } });
+    const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/report_sheets', { params: { ...params } });
     this.reportSheets = res.data;
   }
 
