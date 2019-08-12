@@ -6,20 +6,20 @@ import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ReportSheetStore } from '../../stores/reportSheetStore';
+import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { Column, Payment, ExpenseSheet } from '../../types';
 
 interface Props {
   mainStore?: MainStore;
   paymentStore?: PaymentStore;
-  reportSheetStore?: ReportSheetStore;
+  expenseSheetStore?: ExpenseSheetStore;
 }
 
 interface State {
   loading: boolean;
 }
 
-@inject('mainStore', 'paymentStore', 'reportSheetStore')
+@inject('mainStore', 'paymentStore', 'expenseSheetStore')
 @observer
 export class PaymentOverview extends React.Component<Props, State> {
   paymentColumns: Array<Column<Payment>>;
@@ -90,7 +90,7 @@ export class PaymentOverview extends React.Component<Props, State> {
   }
 
   componentDidMount(): void {
-    Promise.all([this.props.paymentStore!.fetchAll(), this.props.reportSheetStore!.fetchToBePaidAll()]).then(() => {
+    Promise.all([this.props.paymentStore!.fetchAll(), this.props.expenseSheetStore!.fetchToBePaidAll()]).then(() => {
       this.setState({ loading: false });
     });
   }
@@ -98,11 +98,11 @@ export class PaymentOverview extends React.Component<Props, State> {
   render() {
     return (
       <IziviContent card loading={this.state.loading} title={'Auszahlungen'}>
-        {this.props.reportSheetStore!.toBePaidReportSheets.length > 0 ? (
+        {this.props.expenseSheetStore!.toBePaidReportSheets.length > 0 ? (
           <>
             <OverviewTable
               columns={this.reportSheetColumns}
-              data={this.props.reportSheetStore!.toBePaidReportSheets}
+              data={this.props.expenseSheetStore!.toBePaidReportSheets}
               renderActions={(r: ExpenseSheet) => <Link to={'/report_sheets/' + r.id}>Spesenblatt</Link>}
             />
             <Button

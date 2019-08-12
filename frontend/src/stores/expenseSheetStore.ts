@@ -4,7 +4,7 @@ import { ExpenseSheet, ReportSheetListing } from '../types';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
-export class ReportSheetStore extends DomainStore<ExpenseSheet, ReportSheetListing> {
+export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ReportSheetListing> {
   protected get entityName() {
     return {
       singular: 'Das Spesenblatt',

@@ -4,7 +4,7 @@ import * as React from 'react';
 import Button from 'reactstrap/lib/Button';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ReportSheetStore } from '../../stores/reportSheetStore';
+import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { PaymentEntry } from '../../types';
 import { CheckSolidIcon, ExclamationSolidIcon, SquareRegularIcon, SyncSolidIcon } from '../../utilities/Icon';
 
@@ -12,14 +12,14 @@ interface Props {
   mainStore?: MainStore;
   paymentEntry: PaymentEntry;
   paymentStore?: PaymentStore;
-  reportSheetStore?: ReportSheetStore;
+  expenseSheetStore?: ExpenseSheetStore;
 }
 
 interface State {
   reportSheetState: number;
 }
 
-@inject('mainStore', 'paymentStore', 'reportSheetStore')
+@inject('mainStore', 'paymentStore', 'expenseSheetStore')
 @observer
 export class ReportSheetConfirmer extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -32,7 +32,7 @@ export class ReportSheetConfirmer extends React.Component<Props, State> {
 
   updateState(sheetId: number, state: number) {
     this.props
-      .reportSheetStore!.putState(sheetId, state)
+      .expenseSheetStore!.putState(sheetId, state)
       .then(() => this.setState({ reportSheetState: state }))
       .catch(error => {
         this.props.mainStore!.displayError('Der Eintrag konnte nicht aktualisiert werden.');

@@ -6,7 +6,7 @@ import { HolidayStore } from '../stores/holidayStore';
 import { MainStore } from '../stores/mainStore';
 import { PaymentStore } from '../stores/paymentStore';
 import { RegionalCenterStore } from '../stores/regionalCenterStore';
-import { ReportSheetStore } from '../stores/reportSheetStore';
+import { ExpenseSheetStore } from '../stores/expenseSheetStore';
 import { ServiceSpecificationStore } from '../stores/serviceSpecificationStore';
 import { ServiceStore } from '../stores/serviceStore';
 import { UserFeedbackStore } from '../stores/userFeedbackStore';
@@ -23,7 +23,7 @@ export class StoreProvider extends React.Component<Props> {
     mainStore: MainStore;
     holidayStore: HolidayStore;
     paymentStore: PaymentStore;
-    reportSheetStore: ReportSheetStore;
+    expenseSheetStore: ExpenseSheetStore;
     userFeedbackStore: UserFeedbackStore;
     userStore: UserStore;
     serviceStore: ServiceStore;
@@ -43,7 +43,7 @@ export class StoreProvider extends React.Component<Props> {
       mainStore,
       holidayStore: new HolidayStore(mainStore),
       paymentStore: new PaymentStore(mainStore),
-      reportSheetStore: new ReportSheetStore(mainStore),
+      expenseSheetStore: new ExpenseSheetStore(mainStore),
       userFeedbackStore: new UserFeedbackStore(mainStore),
       userStore: new UserStore(mainStore),
       serviceStore: new ServiceStore(mainStore),

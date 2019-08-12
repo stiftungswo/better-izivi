@@ -2,7 +2,7 @@ import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { ReportSheetStore } from '../../stores/reportSheetStore';
+import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { FormValues, ExpenseSheet } from '../../types';
 import { ReportSheetForm } from './ReportSheetForm';
 
@@ -11,23 +11,23 @@ interface ReportSheetDetailRouterProps {
 }
 
 interface Props extends RouteComponentProps<ReportSheetDetailRouterProps> {
-  reportSheetStore?: ReportSheetStore;
+  expenseSheetStore?: ExpenseSheetStore;
 }
 
-@inject('reportSheetStore')
+@inject('expenseSheetStore')
 @observer
 export class ReportSheetUpdate extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    props.reportSheetStore!.fetchOne(Number(props.match.params.id));
+    props.expenseSheetStore!.fetchOne(Number(props.match.params.id));
   }
 
   handleSubmit = (reportSheet: ExpenseSheet) => {
-    return this.props.reportSheetStore!.put(reportSheet);
+    return this.props.expenseSheetStore!.put(reportSheet);
   }
 
   get reportSheet() {
-    const reportSheet = this.props.reportSheetStore!.reportSheet;
+    const reportSheet = this.props.expenseSheetStore!.reportSheet;
     if (reportSheet) {
       return toJS(reportSheet);
       // it's important to detach the mobx proxy before passing it into formik

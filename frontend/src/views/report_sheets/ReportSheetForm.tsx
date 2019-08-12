@@ -14,7 +14,7 @@ import { WiredField } from '../../form/formik';
 import { FormView, FormViewProps } from '../../form/FormView';
 import { SolidHorizontalRow } from '../../layout/SolidHorizontalRow';
 import { MainStore } from '../../stores/mainStore';
-import { ReportSheetStore } from '../../stores/reportSheetStore';
+import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { FormValues, ReportSheetWithProposedValues } from '../../types';
 import { empty } from '../../utilities/helpers';
 import { reportSheetSchema } from './reportSheetSchema';
@@ -22,7 +22,7 @@ import { reportSheetSchema } from './reportSheetSchema';
 type Props = {
   mainStore?: MainStore;
   reportSheet: ReportSheetWithProposedValues;
-  reportSheetStore?: ReportSheetStore;
+  expenseSheetStore?: ExpenseSheetStore;
 } & FormViewProps<ReportSheetWithProposedValues> &
   RouteComponentProps;
 
@@ -30,7 +30,7 @@ interface ReportSheetFormState {
   safeOverride: boolean;
 }
 
-@inject('mainStore', 'reportSheetStore')
+@inject('mainStore', 'expenseSheetStore')
 @observer
 class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> {
   constructor(props: Props) {
@@ -41,7 +41,7 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
   }
 
   render() {
-    const { mainStore, onSubmit, reportSheet, reportSheetStore, title } = this.props;
+    const { mainStore, onSubmit, reportSheet, expenseSheetStore, title } = this.props;
 
     const template = {
       safe_override: false,
@@ -222,7 +222,7 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
                   block
                   color={'danger'}
                   onClick={async () => {
-                    await reportSheetStore!.delete(reportSheet.id!);
+                    await expenseSheetStore!.delete(reportSheet.id!);
                     this.props.history.push('/report_sheets');
                   }}
                 >

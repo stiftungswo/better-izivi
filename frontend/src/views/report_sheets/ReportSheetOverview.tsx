@@ -6,13 +6,13 @@ import ButtonGroup from 'reactstrap/lib/ButtonGroup';
 import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
-import { ReportSheetStore } from '../../stores/reportSheetStore';
+import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { Column, ReportSheetListing } from '../../types';
 import { ReportSheetStatisticFormDialog } from './ReportSheetStatisticFormDialog';
 
 interface Props {
   mainStore?: MainStore;
-  reportSheetStore?: ReportSheetStore;
+  expenseSheetStore?: ExpenseSheetStore;
 }
 
 interface State {
@@ -21,7 +21,7 @@ interface State {
   reportSheetStateFilter: string | null;
 }
 
-@inject('mainStore', 'reportSheetStore')
+@inject('mainStore', 'expenseSheetStore')
 @observer
 export class ReportSheetOverview extends React.Component<Props, State> {
   columns: Array<Column<ReportSheetListing>>;
@@ -65,7 +65,7 @@ export class ReportSheetOverview extends React.Component<Props, State> {
   }
 
   loadContent = () => {
-    this.props.reportSheetStore!.fetchAll({ state: this.state.reportSheetStateFilter }).then(() => this.setState({ loading: false }));
+    this.props.expenseSheetStore!.fetchAll({ state: this.state.reportSheetStateFilter }).then(() => this.setState({ loading: false }));
   }
 
   updateSheetFilter = (state: string | null) => {
@@ -106,7 +106,7 @@ export class ReportSheetOverview extends React.Component<Props, State> {
         <br /> <br />
         <OverviewTable
           columns={this.columns}
-          data={this.props.reportSheetStore!.reportSheets}
+          data={this.props.expenseSheetStore!.reportSheets}
           renderActions={(e: ReportSheetListing) => <Link to={'/report_sheets/' + e.id}>Spesenblatt bearbeiten</Link>}
         />
       </IziviContent>
