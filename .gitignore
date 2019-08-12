@@ -4,3 +4,4 @@
 *.sw?
 /database
 .vscode/
+frontend/cypress/videos/
