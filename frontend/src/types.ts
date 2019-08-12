@@ -17,7 +17,7 @@ export interface Payment {
 
 export interface PaymentEntry {
   id?: number;
-  report_sheet: ReportSheet;
+  report_sheet: ExpenseSheet;
   user: User;
 }
 export interface ProposedReportSheetValues {
@@ -30,7 +30,7 @@ export interface ProposedReportSheetValues {
   workdays: number;
 }
 
-export interface ReportSheet {
+export interface ExpenseSheet {
   id?: number;
   additional_workfree: number;
   additional_workfree_comment: string;
@@ -58,7 +58,7 @@ export interface ReportSheet {
   workfree: number;
 }
 
-export interface ReportSheetWithProposedValues extends ReportSheet {
+export interface ReportSheetWithProposedValues extends ExpenseSheet {
   proposed_values: ProposedReportSheetValues;
 }
 
@@ -110,7 +110,7 @@ export interface User {
   last_name: string;
   phone: string;
   regional_center_id: number;
-  report_sheets: ReportSheet[];
+  report_sheets: ExpenseSheet[];
   role: 'admin' | 'civil_servant';
   services: Service[];
   beginning: null | string;

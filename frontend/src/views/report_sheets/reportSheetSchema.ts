@@ -1,6 +1,6 @@
 import moment from 'moment';
 import * as yup from 'yup';
-import { ReportSheet } from '../../types';
+import { ExpenseSheet } from '../../types';
 import { apiDate } from '../../utilities/validationHelpers';
 
 const errorMsg = 'Das Total der Tage muss gleich der Spesenblattdauer sein.';
@@ -73,7 +73,7 @@ export const reportSheetSchema = yup.object({
   safe_override: yup.bool(),
 });
 
-interface ReportSheetShemaWithSafeOverride extends ReportSheet {
+interface ReportSheetShemaWithSafeOverride extends ExpenseSheet {
   safe_override: boolean;
 }
 

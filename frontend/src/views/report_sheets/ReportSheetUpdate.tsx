@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ReportSheetStore } from '../../stores/reportSheetStore';
-import { FormValues, ReportSheet } from '../../types';
+import { FormValues, ExpenseSheet } from '../../types';
 import { ReportSheetForm } from './ReportSheetForm';
 
 interface ReportSheetDetailRouterProps {
@@ -22,7 +22,7 @@ export class ReportSheetUpdate extends React.Component<Props> {
     props.reportSheetStore!.fetchOne(Number(props.match.params.id));
   }
 
-  handleSubmit = (reportSheet: ReportSheet) => {
+  handleSubmit = (reportSheet: ExpenseSheet) => {
     return this.props.reportSheetStore!.put(reportSheet);
   }
 

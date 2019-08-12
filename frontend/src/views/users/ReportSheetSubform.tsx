@@ -7,7 +7,7 @@ import Button from 'reactstrap/lib/Button';
 import Tooltip from 'reactstrap/lib/Tooltip';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
-import { ReportSheet, User } from '../../types';
+import { ExpenseSheet, User } from '../../types';
 import createStyles from '../../utilities/createStyles';
 import { CheckSquareRegularIcon, ClockRegularIcon, EditSolidIcon, HourGlassRegularIcon, PrintSolidIcon } from '../../utilities/Icon';
 
@@ -59,17 +59,17 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
                 {
                   id: 'start',
                   label: 'Von',
-                  format: (reportSheet: ReportSheet) => (reportSheet.start ? mainStore!.formatDate(reportSheet.start) : ''),
+                  format: (reportSheet: ExpenseSheet) => (reportSheet.start ? mainStore!.formatDate(reportSheet.start) : ''),
                 },
                 {
                   id: 'end',
                   label: 'Bis',
-                  format: (reportSheet: ReportSheet) => (reportSheet.end ? mainStore!.formatDate(reportSheet.end) : ''),
+                  format: (reportSheet: ExpenseSheet) => (reportSheet.end ? mainStore!.formatDate(reportSheet.end) : ''),
                 },
                 {
                   id: 'days',
                   label: 'Anzahl Tage',
-                  format: (reportSheet: ReportSheet) =>
+                  format: (reportSheet: ExpenseSheet) =>
                     reportSheet.end && reportSheet.start
                       ? moment(reportSheet.end).diff(moment(reportSheet.start), 'd') +
                         1 -
@@ -148,7 +148,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
                     ),
                 },
               ]}
-              renderActions={(reportSheet: ReportSheet) => (
+              renderActions={(reportSheet: ExpenseSheet) => (
                 <div>
                   {mainStore!.isAdmin() ? (
                     <div className={classes.hideButtonText}>

@@ -7,7 +7,7 @@ import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
 import { ReportSheetStore } from '../../stores/reportSheetStore';
-import { Column, Payment, ReportSheet } from '../../types';
+import { Column, Payment, ExpenseSheet } from '../../types';
 
 interface Props {
   mainStore?: MainStore;
@@ -23,7 +23,7 @@ interface State {
 @observer
 export class PaymentOverview extends React.Component<Props, State> {
   paymentColumns: Array<Column<Payment>>;
-  reportSheetColumns: Array<Column<ReportSheet>>;
+  reportSheetColumns: Array<Column<ExpenseSheet>>;
 
   constructor(props: Props) {
     super(props);
@@ -45,27 +45,27 @@ export class PaymentOverview extends React.Component<Props, State> {
       {
         id: 'zdp',
         label: 'ZDP',
-        format: (r: ReportSheet) => (r.user ? r.user.zdp : ''),
+        format: (r: ExpenseSheet) => (r.user ? r.user.zdp : ''),
       },
       {
         id: 'full_name',
         label: 'Name',
-        format: (r: ReportSheet) => (r.user ? `${r.user.first_name} ${r.user.last_name}` : ''),
+        format: (r: ExpenseSheet) => (r.user ? `${r.user.first_name} ${r.user.last_name}` : ''),
       },
       {
         id: 'iban',
         label: 'IBAN',
-        format: (r: ReportSheet) => (r.user ? r.user.bank_iban : ''),
+        format: (r: ExpenseSheet) => (r.user ? r.user.bank_iban : ''),
       },
       {
         id: 'total_costs',
         label: 'Betrag',
-        format: (r: ReportSheet) => this.props.mainStore!.formatCurrency(r.total_costs),
+        format: (r: ExpenseSheet) => this.props.mainStore!.formatCurrency(r.total_costs),
       },
       {
         id: 'notices',
         label: 'Bemerkungen',
-        format: (r: ReportSheet) => (
+        format: (r: ExpenseSheet) => (
           <>
             {r.user && (r.user.address === '' || r.user.city === '' || !r.user.zip) && (
               <>
@@ -103,7 +103,7 @@ export class PaymentOverview extends React.Component<Props, State> {
             <OverviewTable
               columns={this.reportSheetColumns}
               data={this.props.reportSheetStore!.toBePaidReportSheets}
-              renderActions={(r: ReportSheet) => <Link to={'/report_sheets/' + r.id}>Spesenblatt</Link>}
+              renderActions={(r: ExpenseSheet) => <Link to={'/report_sheets/' + r.id}>Spesenblatt</Link>}
             />
             <Button
               color={'primary'}
