@@ -4,7 +4,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { FormValues, ExpenseSheet } from '../../types';
-import { ReportSheetForm } from './ReportSheetForm';
+import { ExpenseSheetForm } from './ExpenseSheetForm';
 
 interface ReportSheetDetailRouterProps {
   id?: string;
@@ -41,9 +41,9 @@ export class ReportSheetUpdate extends React.Component<Props> {
     const reportSheet = this.reportSheet;
 
     return (
-      <ReportSheetForm
+      <ExpenseSheetForm
         onSubmit={this.handleSubmit}
-        reportSheet={reportSheet as FormValues}
+        expenseSheet={reportSheet as FormValues}
         title={
           reportSheet
             ? reportSheet.user

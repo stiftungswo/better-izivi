@@ -58,7 +58,7 @@ export interface ExpenseSheet {
   workfree: number;
 }
 
-export interface ReportSheetWithProposedValues extends ExpenseSheet {
+export interface ExpenseSheetWithProposedValues extends ExpenseSheet {
   proposed_values: ProposedReportSheetValues;
 }
 

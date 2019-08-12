@@ -5,7 +5,7 @@ import { apiDate } from '../../utilities/validationHelpers';
 
 const errorMsg = 'Das Total der Tage muss gleich der Spesenblattdauer sein.';
 
-export const reportSheetSchema = yup.object({
+export const expenseSheetSchema = yup.object({
   additional_workfree: yup
     .number()
     .required()

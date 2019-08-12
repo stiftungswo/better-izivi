@@ -13,26 +13,26 @@ import { DatePickerField } from '../../form/DatePickerField';
 import { WiredField } from '../../form/formik';
 import { FormView, FormViewProps } from '../../form/FormView';
 import { SolidHorizontalRow } from '../../layout/SolidHorizontalRow';
-import { MainStore } from '../../stores/mainStore';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
-import { FormValues, ReportSheetWithProposedValues } from '../../types';
+import { MainStore } from '../../stores/mainStore';
+import { ExpenseSheetWithProposedValues, FormValues } from '../../types';
 import { empty } from '../../utilities/helpers';
-import { reportSheetSchema } from './reportSheetSchema';
+import { expenseSheetSchema } from './expenseSheetSchema';
 
 type Props = {
   mainStore?: MainStore;
-  reportSheet: ReportSheetWithProposedValues;
+  expenseSheet: ExpenseSheetWithProposedValues;
   expenseSheetStore?: ExpenseSheetStore;
-} & FormViewProps<ReportSheetWithProposedValues> &
+} & FormViewProps<ExpenseSheetWithProposedValues> &
   RouteComponentProps;
 
-interface ReportSheetFormState {
+interface ExpenseSheetFormState {
   safeOverride: boolean;
 }
 
 @inject('mainStore', 'expenseSheetStore')
 @observer
-class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> {
+class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -41,26 +41,26 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
   }
 
   render() {
-    const { mainStore, onSubmit, reportSheet, expenseSheetStore, title } = this.props;
+    const { mainStore, onSubmit, expenseSheet, expenseSheetStore, title } = this.props;
 
     const template = {
       safe_override: false,
-      ...reportSheet,
+      ...expenseSheet,
     };
 
     return (
       <FormView
         card
-        loading={empty(reportSheet) || this.props.loading}
+        loading={empty(expenseSheet) || this.props.loading}
         initialValues={template}
         onSubmit={(fv: FormValues) => {
-          const rs: ReportSheetWithProposedValues = {
+          const rs: ExpenseSheetWithProposedValues = {
             ...fv,
           };
           return onSubmit(rs);
         }}
         title={title}
-        validationSchema={reportSheetSchema}
+        validationSchema={expenseSheetSchema}
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
           <Form>
             <WiredField disabled horizontal component={TextField} name={'service.serviceSpecification.name'} label={'Pflichtenheft'} />
@@ -83,21 +83,21 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${reportSheet.proposed_values.workdays} Tage`]}
+              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.workdays} Tage`]}
               component={NumberField}
               name={'work'}
               label={'Gearbeitet'}
             />
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${reportSheet.proposed_values.work_free_days} Tage`]}
+              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.work_free_days} Tage`]}
               component={NumberField}
               name={'workfree'}
               label={'Arbeitsfrei'}
             />
             <WiredField
               horizontal
-              appendedLabels={[`Übriges Guthaben: ${reportSheet.proposed_values.illness_days_left} Tage`]}
+              appendedLabels={[`Übriges Guthaben: ${expenseSheet.proposed_values.illness_days_left} Tage`]}
               component={NumberField}
               name={'ill'}
               label={'Krank'}
@@ -112,14 +112,14 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${reportSheet.proposed_values.company_holidays_as_zivi_vacations} Tage`]}
+              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.company_holidays_as_zivi_vacations} Tage`]}
               component={NumberField}
               name={'company_holiday_vacation'}
               label={'Betriebsferien (Urlaub)'}
             />
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${reportSheet.proposed_values.company_holidays_as_zivi_holidays} Tage`]}
+              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.company_holidays_as_zivi_holidays} Tage`]}
               component={NumberField}
               name={'company_holiday_holiday'}
               label={'Betriebsferien (Ferien)'}
@@ -139,7 +139,7 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${reportSheet.proposed_values.costs_clothes} CHF`]}
+              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.costs_clothes} CHF`]}
               component={CurrencyField}
               name={'clothes'}
               label={'Kleiderspesen'}
@@ -173,10 +173,7 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
               options={[
                 { id: '0', name: 'Offen' },
                 { id: '1', name: 'Bereit für Auszahlung' },
-                {
-                  id: '2',
-                  name: 'Auszahlung in Verarbeitung',
-                },
+                { id: '2', name: 'Auszahlung in Verarbeitung' },
                 { id: '3', name: 'Erledigt' },
               ]}
               label={'Status'}
@@ -222,8 +219,8 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
                   block
                   color={'danger'}
                   onClick={async () => {
-                    await expenseSheetStore!.delete(reportSheet.id!);
-                    this.props.history.push('/report_sheets');
+                    await expenseSheetStore!.delete(expenseSheet.id!);
+                    this.props.history.push('/expense_sheets');
                   }}
                 >
                   Löschen
@@ -234,8 +231,8 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
                 <Button
                   block
                   color={'warning'}
-                  disabled={!reportSheet.id}
-                  href={mainStore!.apiURL('report_sheets/' + String(reportSheet.id!) + '/download')}
+                  disabled={!expenseSheet.id}
+                  href={mainStore!.apiURL('expense_sheets/' + String(expenseSheet.id!) + '/download')}
                   tag={'a'}
                   target={'_blank'}
                 >
@@ -254,4 +251,4 @@ class ReportSheetFormInner extends React.Component<Props, ReportSheetFormState> 
   }
 }
 
-export const ReportSheetForm = withRouter(ReportSheetFormInner);
+export const ExpenseSheetForm = withRouter(ExpenseSheetFormInner);
