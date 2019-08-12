@@ -5,3 +5,4 @@
 /database
 .vscode/
 frontend/cypress/videos/
+frontend/cypress/screenshots/
