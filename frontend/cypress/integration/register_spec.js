@@ -11,7 +11,6 @@ describe('Registering', function() {
     // Community Password
     cy.get('input[type="password"].mt-2').type('password');
     cy.get('form > [type="button"]').click();
-    cy.wait(2);
 
     // Personal Information
     cy.get('input[name="zdp"]').type('120000');
@@ -23,7 +22,6 @@ describe('Registering', function() {
     cy.get('input[name="password"]').type('Pa$$w0rd');
     cy.get('input[name="password_confirm"]').type('Pa$$w0rd');
     cy.get('.container > form > button').contains('Vorwärts').click();
-    cy.wait(2);
 
     // Contact Information
     cy.get('input[name="phone"]').type('0791234567');
@@ -32,13 +30,11 @@ describe('Registering', function() {
     cy.get('input[name="zip"]').type('1234');
     cy.get('input[name="hometown"]').type('Gotham');
     cy.get('.container > form > button').contains('Vorwärts').click();
-    cy.wait(2);
 
     // Bank and Insurance Information
     cy.get('input[name="bank_iban"]').type('CH93 0076 2011 6238 52957');
     cy.get('input[name="health_insurance"]').type('Ziviinsurance, Zivistrasse 95');
     cy.get('.container > form > button').contains('Registrieren').click();
-    cy.wait(2);
     cy.contains('Erfolgreich registriert');
     cy.url().should('include', '/profile');
   });
