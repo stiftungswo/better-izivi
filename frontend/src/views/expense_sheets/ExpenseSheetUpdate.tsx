@@ -2,7 +2,10 @@ import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import IziviContent from '../../layout/IziviContent';
+import { LoadingInformation } from '../../layout/LoadingInformation';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
+import { UserStore } from '../../stores/userStore';
 import { ExpenseSheet, FormValues } from '../../types';
 import { ExpenseSheetForm } from './ExpenseSheetForm';
 
@@ -12,21 +15,32 @@ interface ExpenseSheetDetailRouterProps {
 
 interface Props extends RouteComponentProps<ExpenseSheetDetailRouterProps> {
   expenseSheetStore?: ExpenseSheetStore;
+  userStore?: UserStore;
 }
 
-@inject('expenseSheetStore')
+@inject('expenseSheetStore', 'userStore')
 @observer
-export class ExpenseSheetUpdate extends React.Component<Props> {
+export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolean }> {
   constructor(props: Props) {
     super(props);
-    props.expenseSheetStore!.fetchOne(Number(props.match.params.id));
+
+    this.state = { loading: true };
+
+    const expenseSheetId = Number(props.match.params.id);
+
+    Promise.all([
+      props.expenseSheetStore!.fetchOne(expenseSheetId),
+      props.expenseSheetStore!.fetchHints(expenseSheetId),
+    ]).then(() => {
+      props.userStore!.fetchOne(Number(props.expenseSheetStore!.expenseSheet!.user_id)).then(() => this.setState({ loading: false }));
+    });
   }
 
   handleSubmit = (expenseSheet: ExpenseSheet) => {
     return this.props.expenseSheetStore!.put(expenseSheet);
-  }
+  };
 
-  get reportSheet() {
+  get expenseSheet() {
     const expenseSheet = this.props.expenseSheetStore!.expenseSheet;
     if (expenseSheet) {
       return toJS(expenseSheet);
@@ -37,18 +51,24 @@ export class ExpenseSheetUpdate extends React.Component<Props> {
     }
   }
 
+  get user() {
+    return this.props.userStore!.user;
+  }
+
   render() {
-    const expenseSheet = this.reportSheet;
+    const expenseSheet = this.expenseSheet;
 
     return (
       <ExpenseSheetForm
+        loading={this.state.loading}
         onSubmit={this.handleSubmit}
         expenseSheet={expenseSheet as FormValues}
+        hints={this.props.expenseSheetStore!.hints!}
         title={
           expenseSheet
-            ? expenseSheet.user
-              ? `Spesenblatt von ${expenseSheet.user.first_name} ${expenseSheet.user.last_name} bearbeiten`
-              : 'Spesenblatt bearbeiten'
+            ? this.user
+            ? `Spesenblatt von ${this.user.first_name} ${this.user.last_name} bearbeiten`
+            : 'Spesenblatt bearbeiten'
             : 'Spesenblatt wird geladen'
         }
       />

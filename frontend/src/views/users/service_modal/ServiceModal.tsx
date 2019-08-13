@@ -60,7 +60,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
       long_service: false,
       probation_period: false,
       confirmation_date: null,
-      eligible_holiday: 0,
+      eligible_paid_vacation_days: 0,
       feedback_done: false,
       feedback_mail_sent: false,
       user_id: props.user.id,

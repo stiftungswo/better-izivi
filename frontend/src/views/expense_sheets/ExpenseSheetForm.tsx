@@ -15,15 +15,16 @@ import { FormView, FormViewProps } from '../../form/FormView';
 import { SolidHorizontalRow } from '../../layout/SolidHorizontalRow';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
-import { ExpenseSheetWithProposedValues, FormValues } from '../../types';
+import { ExpenseSheet, ExpenseSheetHints, FormValues } from '../../types';
 import { empty } from '../../utilities/helpers';
 import { expenseSheetSchema } from './expenseSheetSchema';
 
 type Props = {
   mainStore?: MainStore;
-  expenseSheet: ExpenseSheetWithProposedValues;
+  expenseSheet: ExpenseSheet;
+  hints: ExpenseSheetHints;
   expenseSheetStore?: ExpenseSheetStore;
-} & FormViewProps<ExpenseSheetWithProposedValues> &
+} & FormViewProps<ExpenseSheet> &
   RouteComponentProps;
 
 interface ExpenseSheetFormState {
@@ -41,7 +42,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
   }
 
   render() {
-    const { mainStore, onSubmit, expenseSheet, expenseSheetStore, title } = this.props;
+    const { mainStore, onSubmit, expenseSheet, hints, expenseSheetStore, title } = this.props;
 
     const template = {
       safe_override: false,
@@ -53,12 +54,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
         card
         loading={empty(expenseSheet) || this.props.loading}
         initialValues={template}
-        onSubmit={(fv: FormValues) => {
-          const rs: ExpenseSheetWithProposedValues = {
-            ...fv,
-          };
-          return onSubmit(rs);
-        }}
+        onSubmit={(formValues: FormValues) => onSubmit({ ...formValues })}
         title={title}
         validationSchema={expenseSheetSchema}
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
@@ -74,7 +70,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               disabled
               horizontal
               component={NumberField}
-              name={'service.eligible_holiday'}
+              name={'service.eligible_paid_vacation_days'}
               label={'Ferienanspruch für Einsatz'}
             />
             <WiredField disabled horizontal component={NumberField} name={'duration'} label={'Dauer Spesenblattperiode'} />
@@ -83,21 +79,21 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.workdays} Tage`]}
+              appendedLabels={[`Vorschlag: ${hints.suggestions.work_days} Tage`]}
               component={NumberField}
               name={'work_days'}
               label={'Gearbeitet'}
             />
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.work_free_days} Tage`]}
+              appendedLabels={[`Vorschlag: ${hints.suggestions.workfree_days} Tage`]}
               component={NumberField}
               name={'workfree_days'}
               label={'Arbeitsfrei'}
             />
             <WiredField
               horizontal
-              appendedLabels={[`Übriges Guthaben: ${expenseSheet.proposed_values.illness_days_left} Tage`]}
+              appendedLabels={[`Übriges Guthaben: ${hints.remaining_days.sick_days} Tage`]}
               component={NumberField}
               name={'sick_days'}
               label={'Krank'}
@@ -112,16 +108,16 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.company_holidays_as_zivi_vacations} Tage`]}
+              appendedLabels={[`Vorschlag: ${hints.suggestions.unpaid_company_holiday_days} Tage`]}
               component={NumberField}
-              name={'paid_company_holiday_days'}
+              name={'unpaid_company_holiday_days'}
               label={'Betriebsferien (Urlaub)'}
             />
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.company_holidays_as_zivi_holidays} Tage`]}
+              appendedLabels={[`Vorschlag: ${hints.suggestions.paid_company_holiday_days} Tage`]}
               component={NumberField}
-              name={'unpaid_company_holiday_days'}
+              name={'paid_company_holiday_days'}
               label={'Betriebsferien (Ferien)'}
             />
 
@@ -139,7 +135,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.costs_clothes} CHF`]}
+              appendedLabels={[`Vorschlag: ${hints.suggestions.clothing_expenses} CHF`]}
               component={CurrencyField}
               name={'clothing_expenses'}
               label={'Kleiderspesen'}

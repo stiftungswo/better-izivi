@@ -5,7 +5,7 @@ import Button from 'reactstrap/lib/Button';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { PaymentEntry } from '../../types';
+import { ExpenseSheetState, PaymentEntry } from '../../types';
 import { CheckSolidIcon, ExclamationSolidIcon, SquareRegularIcon, SyncSolidIcon } from '../../utilities/Icon';
 
 interface Props {
@@ -15,8 +15,13 @@ interface Props {
   expenseSheetStore?: ExpenseSheetStore;
 }
 
+enum TransmissionState {
+  invalid = 'invalid',
+  loading = 'loading',
+}
+
 interface State {
-  reportSheetState: number;
+  expenseSheetState: ExpenseSheetState | TransmissionState;
 }
 
 @inject('mainStore', 'paymentStore', 'expenseSheetStore')
@@ -26,28 +31,29 @@ export class ReportSheetConfirmer extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      reportSheetState: this.props.paymentEntry.expense_sheet.state,
+      expenseSheetState: this.props.paymentEntry.expense_sheet.state,
     };
   }
 
-  updateState(sheetId: number, state: number) {
+  updateState(sheetId: number, state: ExpenseSheetState) {
+    this.setState({ expenseSheetState: TransmissionState.loading });
     this.props
       .expenseSheetStore!.putState(sheetId, state)
-      .then(() => this.setState({ reportSheetState: state }))
+      .then(() => this.setState({ expenseSheetState: state }))
       .catch(error => {
         this.props.mainStore!.displayError('Der Eintrag konnte nicht aktualisiert werden.');
-        this.setState({ reportSheetState: -2 });
+        this.setState({ expenseSheetState: TransmissionState.invalid });
         throw error;
       });
   }
 
   render() {
-    switch (this.state.reportSheetState) {
-      case -2:
+    switch (this.state.expenseSheetState) {
+      case TransmissionState.invalid:
         return (
           <>
             <Button
-              onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, 3)}
+              onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, ExpenseSheetState.paid)}
               color={'link'}
               style={{ margin: 0, padding: 0 }}
             >
@@ -56,19 +62,19 @@ export class ReportSheetConfirmer extends React.Component<Props, State> {
             <FontAwesomeIcon icon={ExclamationSolidIcon} title={'Fehler bei der Übertragung.'} />
           </>
         );
-      case -1:
+      case TransmissionState.loading:
         return <FontAwesomeIcon spin icon={SyncSolidIcon} />;
-      case 2:
+      case ExpenseSheetState.ready_for_payment:
         return (
           <Button
-            onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, 3)}
+            onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, ExpenseSheetState.paid)}
             color={'link'}
             style={{ margin: 0, padding: 0 }}
           >
             <FontAwesomeIcon icon={SquareRegularIcon} />
           </Button>
         );
-      case 3:
+      case ExpenseSheetState.paid:
         return <FontAwesomeIcon icon={CheckSolidIcon} />;
       default:
         return <FontAwesomeIcon icon={ExclamationSolidIcon} title={'Ungültiger Zustand'} />;

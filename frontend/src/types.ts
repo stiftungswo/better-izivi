@@ -20,15 +20,6 @@ export interface PaymentEntry {
   expense_sheet: ExpenseSheet;
   user: User;
 }
-export interface ProposedExpenseSheetValues {
-  company_holidays_as_zivi_holidays: number;
-  company_holidays_as_zivi_vacations: number;
-  costs_clothes: number;
-  holidays_left: number;
-  illness_days_left: number;
-  work_free_days: number;
-  workdays: number;
-}
 
 export interface ExpenseSheet {
   id?: number;
@@ -62,8 +53,18 @@ export interface ExpenseSheet {
   workfree_days: number;
 }
 
-export interface ExpenseSheetWithProposedValues extends ExpenseSheet {
-  proposed_values: ProposedExpenseSheetValues;
+export interface ExpenseSheetHints {
+  suggestions: {
+    work_days: number;
+    workfree_days: number;
+    paid_company_holiday_days: number;
+    unpaid_company_holiday_days: number;
+    clothing_expenses: number;
+  };
+  remaining_days: {
+    sick_days: number;
+    paid_vacation_days: number;
+  }
 }
 
 export enum ExpenseSheetState {
@@ -150,7 +151,7 @@ export interface Service {
   beginning: string | null;
   days: number;
   confirmation_date: null | string;
-  eligible_holiday: number;
+  eligible_paid_vacation_days: number;
   ending: string | null;
   feedback_done: boolean;
   feedback_mail_sent: boolean;

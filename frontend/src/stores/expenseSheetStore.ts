@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 import { action, computed, observable } from 'mobx';
-import { ExpenseSheet, ExpenseSheetListing } from '../types';
+import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState } from '../types';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
@@ -35,6 +35,8 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   @observable
   expenseSheet?: ExpenseSheet;
 
+  hints?: ExpenseSheetHints;
+
   constructor(mainStore: MainStore) {
     super(mainStore);
   }
@@ -53,11 +55,16 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   }
 
   @action
-  async putState(id: number, state: number): Promise<void> {
+  async putState(id: number, state: ExpenseSheetState): Promise<void> {
     return this.displayLoading(async () => {
       await this.mainStore.api.put<ExpenseSheet>('/expense_sheets/' + id + '/state', { state });
       this.mainStore.displaySuccess(`${this.entityName.singular} wurde bestätigt.`);
     });
+  }
+
+  async fetchHints(expenseSheetId: number) {
+    const response = await this.mainStore.api.get<ExpenseSheetHints>(`/expense_sheets/${expenseSheetId}/hints`);
+    this.hints = response.data;
   }
 
   protected async doDelete(id: number) {
