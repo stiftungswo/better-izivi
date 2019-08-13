@@ -274,6 +274,21 @@ RSpec.describe V1::ServicesController, type: :request do
             expect(parse_response_json(response)).to include(expected_attributes)
           end
         end
+
+        context 'when an admin user updates the ending of a service' do
+          let(:user) { create :user, :admin }
+          let!(:service) { create :service, user: create(:user) }
+          let(:params) { { ending: new_ending } }
+          let(:new_ending) { (service.ending + 2.months).at_end_of_week - 2.days }
+          let(:expense_sheet_generator) { instance_double(ExpenseSheetGenerator, create_missing_expense_sheets: nil) }
+
+          before { allow(ExpenseSheetGenerator).to receive(:new).with(service).and_return(expense_sheet_generator) }
+
+          it 'calls create_missing_expense_sheets' do
+            put_request
+            expect(expense_sheet_generator).to have_received(:create_missing_expense_sheets)
+          end
+        end
       end
 
       context 'with invalid params' do
