@@ -27,7 +27,7 @@ export class ReportSheetUpdate extends React.Component<Props> {
   }
 
   get reportSheet() {
-    const reportSheet = this.props.expenseSheetStore!.reportSheet;
+    const reportSheet = this.props.expenseSheetStore!.expenseSheet;
     if (reportSheet) {
       return toJS(reportSheet);
       // it's important to detach the mobx proxy before passing it into formik

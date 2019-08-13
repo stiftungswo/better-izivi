@@ -14,26 +14,26 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
 
   @computed
   get entities(): ExpenseSheetListing[] {
-    return this.reportSheets;
+    return this.expenseSheets;
   }
 
   @computed
   get entity(): ExpenseSheet | undefined {
-    return this.reportSheet;
+    return this.expenseSheet;
   }
 
   set entity(reportSheet: ExpenseSheet | undefined) {
-    this.reportSheet = reportSheet;
+    this.expenseSheet = reportSheet;
   }
 
   @observable
-  toBePaidReportSheets: ExpenseSheet[] = [];
+  toBePaidExpenseSheets: ExpenseSheet[] = [];
 
   @observable
-  reportSheets: ExpenseSheetListing[] = [];
+  expenseSheets: ExpenseSheetListing[] = [];
 
   @observable
-  reportSheet?: ExpenseSheet;
+  expenseSheet?: ExpenseSheet;
 
   constructor(mainStore: MainStore) {
     super(mainStore);
@@ -42,9 +42,9 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   @action
   async fetchToBePaidAll(): Promise<void> {
     try {
-      this.toBePaidReportSheets = [];
-      const response = await this.mainStore.api.get<ExpenseSheet[]>('/report_sheets', { params: { state: 'ready_for_payment' } });
-      this.toBePaidReportSheets = response.data;
+      this.toBePaidExpenseSheets = [];
+      const response = await this.mainStore.api.get<ExpenseSheet[]>('/expense_sheets', { params: { state: 'ready_for_payment' } });
+      this.toBePaidExpenseSheets = response.data;
     } catch (e) {
       this.mainStore.displayError(`${this.entityName.plural} konnten nicht geladen werden.`);
       console.error(e);
@@ -55,27 +55,27 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   @action
   async putState(id: number, state: number): Promise<void> {
     return this.displayLoading(async () => {
-      await this.mainStore.api.put<ExpenseSheet>('/report_sheets/' + id + '/state', { state });
+      await this.mainStore.api.put<ExpenseSheet>('/expense_sheets/' + id + '/state', { state });
       this.mainStore.displaySuccess(`${this.entityName.singular} wurde bestätigt.`);
     });
   }
 
   protected async doDelete(id: number) {
-    await this.mainStore.api.delete('/report_sheets/' + id);
+    await this.mainStore.api.delete('/expense_sheets/' + id);
   }
 
   protected async doFetchAll(params: object = {}): Promise<void> {
-    const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/report_sheets', { params: { ...params } });
-    this.reportSheets = res.data;
+    const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { ...params } });
+    this.expenseSheets = res.data;
   }
 
   protected async doFetchOne(id: number) {
-    const res = await this.mainStore.api.get<ExpenseSheet>('/report_sheets/' + id);
-    this.reportSheet = res.data;
+    const res = await this.mainStore.api.get<ExpenseSheet>('/expense_sheets/' + id);
+    this.expenseSheet = res.data;
   }
 
   protected async doPut(entity: ExpenseSheet): Promise<void> {
-    const res = await this.mainStore.api.put<ExpenseSheet>('/report_sheets/' + entity.id, entity);
-    this.reportSheet = res.data;
+    const res = await this.mainStore.api.put<ExpenseSheet>('/expense_sheets/' + entity.id, entity);
+    this.expenseSheet = res.data;
   }
 }

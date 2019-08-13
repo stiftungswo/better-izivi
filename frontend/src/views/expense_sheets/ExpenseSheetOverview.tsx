@@ -5,8 +5,8 @@ import Button from 'reactstrap/lib/Button';
 import ButtonGroup from 'reactstrap/lib/ButtonGroup';
 import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
-import { MainStore } from '../../stores/mainStore';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
+import { MainStore } from '../../stores/mainStore';
 import { Column, ExpenseSheetListing } from '../../types';
 import { ReportSheetStatisticFormDialog } from './ReportSheetStatisticFormDialog';
 
@@ -18,12 +18,12 @@ interface Props {
 interface State {
   loading: boolean;
   modalOpen: boolean;
-  reportSheetStateFilter: string | null;
+  expenseSheetStateFilter: string | null;
 }
 
 @inject('mainStore', 'expenseSheetStore')
 @observer
-export class ReportSheetOverview extends React.Component<Props, State> {
+export class ExpenseSheetOverview extends React.Component<Props, State> {
   columns: Array<Column<ExpenseSheetListing>>;
 
   constructor(props: Props) {
@@ -56,7 +56,7 @@ export class ReportSheetOverview extends React.Component<Props, State> {
     this.state = {
       loading: true,
       modalOpen: false,
-      reportSheetStateFilter: 'pending',
+      expenseSheetStateFilter: 'pending',
     };
   }
 
@@ -65,11 +65,11 @@ export class ReportSheetOverview extends React.Component<Props, State> {
   }
 
   loadContent = () => {
-    this.props.expenseSheetStore!.fetchAll({ state: this.state.reportSheetStateFilter }).then(() => this.setState({ loading: false }));
+    this.props.expenseSheetStore!.fetchAll({ state: this.state.expenseSheetStateFilter }).then(() => this.setState({ loading: false }));
   }
 
   updateSheetFilter = (state: string | null) => {
-    this.setState({ loading: true, reportSheetStateFilter: state }, () => this.loadContent());
+    this.setState({ loading: true, expenseSheetStateFilter: state }, () => this.loadContent());
   }
 
   render() {
@@ -81,22 +81,22 @@ export class ReportSheetOverview extends React.Component<Props, State> {
         <br /> <br />
         <ButtonGroup>
           <Button
-            outline={this.state.reportSheetStateFilter !== null}
-            color={this.state.reportSheetStateFilter === null ? 'primary' : 'secondary'}
+            outline={this.state.expenseSheetStateFilter !== null}
+            color={this.state.expenseSheetStateFilter === null ? 'primary' : 'secondary'}
             onClick={() => this.updateSheetFilter(null)}
           >
             Alle Spesenblätter
           </Button>
           <Button
-            outline={this.state.reportSheetStateFilter !== 'pending'}
-            color={this.state.reportSheetStateFilter === 'pending' ? 'primary' : 'secondary'}
+            outline={this.state.expenseSheetStateFilter !== 'pending'}
+            color={this.state.expenseSheetStateFilter === 'pending' ? 'primary' : 'secondary'}
             onClick={() => this.updateSheetFilter('pending')}
           >
             Pendente Spesenblätter
           </Button>
           <Button
-            outline={this.state.reportSheetStateFilter !== 'current'}
-            color={this.state.reportSheetStateFilter === 'current' ? 'primary' : 'secondary'}
+            outline={this.state.expenseSheetStateFilter !== 'current'}
+            color={this.state.expenseSheetStateFilter === 'current' ? 'primary' : 'secondary'}
             onClick={() => this.updateSheetFilter('current')}
           >
             Aktuelle Spesenblätter
@@ -106,8 +106,8 @@ export class ReportSheetOverview extends React.Component<Props, State> {
         <br /> <br />
         <OverviewTable
           columns={this.columns}
-          data={this.props.expenseSheetStore!.reportSheets}
-          renderActions={(e: ExpenseSheetListing) => <Link to={'/report_sheets/' + e.id}>Spesenblatt bearbeiten</Link>}
+          data={this.props.expenseSheetStore!.expenseSheets}
+          renderActions={(e: ExpenseSheetListing) => <Link to={'/expense_sheets/' + e.id}>Spesenblatt bearbeiten</Link>}
         />
       </IziviContent>
     );

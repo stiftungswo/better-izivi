@@ -98,11 +98,11 @@ export class PaymentOverview extends React.Component<Props, State> {
   render() {
     return (
       <IziviContent card loading={this.state.loading} title={'Auszahlungen'}>
-        {this.props.expenseSheetStore!.toBePaidReportSheets.length > 0 ? (
+        {this.props.expenseSheetStore!.toBePaidExpenseSheets.length > 0 ? (
           <>
             <OverviewTable
               columns={this.reportSheetColumns}
-              data={this.props.expenseSheetStore!.toBePaidReportSheets}
+              data={this.props.expenseSheetStore!.toBePaidExpenseSheets}
               renderActions={(r: ExpenseSheet) => <Link to={'/report_sheets/' + r.id}>Spesenblatt</Link>}
             />
             <Button
