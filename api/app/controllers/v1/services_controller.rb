@@ -31,11 +31,13 @@ module V1
     end
 
     def update
-      generate_sheets = @service.confirmation_date.blank? && service_params[:confirmation_date].present?
+      generate_all_sheets = generate_all_sheets?
+      generate_missing_sheets = generate_missing_sheets?
 
       raise ValidationError, @service.errors unless @service.update(service_params)
 
-      ExpenseSheetGenerator.new(@service).create_expense_sheets if generate_sheets
+      ExpenseSheetGenerator.new(@service).create_expense_sheets if generate_all_sheets
+      ExpenseSheetGenerator.new(@service).create_missing_expense_sheets if generate_missing_sheets
 
       render :show
     end
@@ -45,6 +47,17 @@ module V1
     end
 
     private
+
+    def generate_all_sheets?
+      @service.confirmation_date.blank? && service_params[:confirmation_date].present?
+    end
+
+    def generate_missing_sheets?
+      new_ending = service_params[:ending]
+      return false if new_ending.blank?
+
+      @service.confirmation_date.present? && Date.parse(new_ending) > @service.ending_was
+    end
 
     def protect_foreign_resource!
       raise AuthorizationError unless @service.user.id == current_user.id
