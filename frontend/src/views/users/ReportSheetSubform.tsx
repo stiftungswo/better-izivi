@@ -54,7 +54,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
         {user && (
           <>
             <OverviewTable
-              data={user.report_sheets}
+              data={user.expense_sheets}
               columns={[
                 {
                   id: 'start',

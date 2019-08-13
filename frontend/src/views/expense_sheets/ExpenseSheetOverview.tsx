@@ -44,12 +44,12 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       {
         id: 'start',
         label: 'Von',
-        format: (r: ExpenseSheetListing) => this.props.mainStore!.formatDate(r.start),
+        format: (r: ExpenseSheetListing) => this.props.mainStore!.formatDate(r.beginning),
       },
       {
         id: 'end',
         label: 'Bis',
-        format: (r: ExpenseSheetListing) => this.props.mainStore!.formatDate(r.end),
+        format: (r: ExpenseSheetListing) => this.props.mainStore!.formatDate(r.ending),
       },
     ];
 

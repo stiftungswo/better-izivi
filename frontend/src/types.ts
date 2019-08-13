@@ -20,7 +20,7 @@ export interface PaymentEntry {
   report_sheet: ExpenseSheet;
   user: User;
 }
-export interface ProposedReportSheetValues {
+export interface ProposedExpenseSheetValues {
   company_holidays_as_zivi_holidays: number;
   company_holidays_as_zivi_vacations: number;
   costs_clothes: number;
@@ -59,13 +59,13 @@ export interface ExpenseSheet {
 }
 
 export interface ExpenseSheetWithProposedValues extends ExpenseSheet {
-  proposed_values: ProposedReportSheetValues;
+  proposed_values: ProposedExpenseSheetValues;
 }
 
 export interface ExpenseSheetListing {
   id: number;
-  end: string;
-  start: string;
+  ending: string;
+  beginning: string;
   state: number;
   user_id?: number;
   user: User;
@@ -110,7 +110,7 @@ export interface User {
   last_name: string;
   phone: string;
   regional_center_id: number;
-  report_sheets: ExpenseSheet[];
+  expense_sheets: ExpenseSheet[];
   role: 'admin' | 'civil_servant';
   services: Service[];
   beginning: null | string;
@@ -192,11 +192,6 @@ export interface UserQuestionAnswers {
   4: number;
   5: number;
   6: number;
-}
-
-export enum UserRoleName {
-  Admin = 'admin',
-  Zivi = 'civil_servant',
 }
 
 export interface Listing {
