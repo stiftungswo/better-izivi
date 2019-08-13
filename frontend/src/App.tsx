@@ -19,7 +19,7 @@ import { PaymentOverview } from './views/payments/PaymentOverview';
 import { PhoneListView } from './views/PhoneList';
 import { Register } from './views/register/Register';
 import { ExpenseSheetOverview } from './views/expense_sheets/ExpenseSheetOverview';
-import { ReportSheetUpdate } from './views/expense_sheets/ReportSheetUpdate';
+import { ExpenseSheetUpdate } from './views/expense_sheets/ExpenseSheetUpdate';
 import { ServiceOverview } from './views/service_overview/ServiceOverview';
 import { ServiceSpecificationsOverview } from './views/service_specification/ServiceSpecificationsOverview';
 import { UserFeedbackOverview } from './views/user_feedback_overview/UserFeedbackOverview';
@@ -48,7 +48,7 @@ class App extends React.Component {
           <ProtectedRoute requiresAdmin component={ServiceOverview} exact path={'/services'} />
           <ProtectedRoute requiresAdmin component={PaymentDetail} exact path={'/payments/:id'} />
           <ProtectedRoute requiresAdmin component={ExpenseSheetOverview} exact path={'/expense_sheets'} />
-          <ProtectedRoute requiresAdmin component={ReportSheetUpdate} exact path={'/report_sheets/:id'} />
+          <ProtectedRoute requiresAdmin component={ExpenseSheetUpdate} exact path={'/report_sheets/:id'} />
           <ProtectedRoute requiresAdmin component={UserFeedbackOverview} exact path={'/user_feedbacks'} />
           <ProtectedRoute requiresAdmin component={UserOverview} exact path={'/users'} />
           <ProtectedRoute requiresAdmin component={UserUpdate} exact path={'/users/:id'} />
