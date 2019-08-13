@@ -12,7 +12,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
   let(:expected_work_days) { 20 }
   let(:expected_workfree_days) { 6 }
-  
+
   describe '#suggestions' do
     subject { calculator.suggestions }
 

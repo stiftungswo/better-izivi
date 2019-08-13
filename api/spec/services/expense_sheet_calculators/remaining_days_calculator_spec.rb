@@ -25,7 +25,6 @@ RSpec.describe ExpenseSheetCalculators::RemainingDaysCalculator, type: :service 
     let(:eligible_paid_vacation_days) { 8 }
     let(:used_paid_vacation_days) { 7 }
 
-
     let(:expected_remaining_days) do
       {
         paid_vacation_days: 1,
