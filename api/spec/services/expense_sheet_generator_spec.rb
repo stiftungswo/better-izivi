@@ -28,6 +28,10 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     end
 
     context 'with a single month service' do
+      subject do
+        -> { expense_sheet_generator.create_expense_sheets beginning: service.beginning, ending: service.ending }
+      end
+
       let(:service) { create :service, beginning: '2018-01-01', ending: '2018-01-26' }
 
       it { is_expected.to change(ExpenseSheet, :count).by(1) }
@@ -145,15 +149,29 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
   end
 
   describe '#create_missing_expense_sheets' do
-    before do
-      expense_sheet_generator.create_expense_sheets
-      service.update ending: service.ending + 28.days
-      allow(expense_sheet_generator).to receive(:create_expense_sheets)
+    context 'when there are previous expense_sheets' do
+      before do
+        expense_sheet_generator.create_expense_sheets
+        service.update ending: service.ending + 28.days
+        allow(expense_sheet_generator).to receive(:create_expense_sheets)
+      end
+
+      it 'calls create_expense_sheets with the correct arguments' do
+        expense_sheet_generator.create_missing_expense_sheets
+        # expect { expense_sheet_generator.create_missing_expense_sheets }.to change(ExpenseSheet, :count).by(2)
+        expect(expense_sheet_generator).to have_received(:create_expense_sheets)
+          .with(beginning: Date.parse('2018-06-30'))
+      end
     end
 
-    it 'calls create_expense_sheets with the correct arguments' do
-      expense_sheet_generator.create_missing_expense_sheets
-      expect(expense_sheet_generator).to have_received(:create_expense_sheets).with(beginning: Date.parse('2018-06-30'))
+    context 'when there are no previous expense_sheets' do
+      before { allow(expense_sheet_generator).to receive(:create_expense_sheets) }
+
+      it 'calls create_expense_sheets with the correct arguments' do
+        expense_sheet_generator.create_missing_expense_sheets
+        # expect { expense_sheet_generator.create_missing_expense_sheets }.to change(ExpenseSheet, :count).by(2)
+        expect(expense_sheet_generator).to have_received(:create_expense_sheets).with(no_args)
+      end
     end
   end
 end
