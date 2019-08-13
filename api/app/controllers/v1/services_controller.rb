@@ -14,6 +14,7 @@ module V1
     before_action :set_service, only: %i[show update destroy]
     before_action :protect_foreign_resource!, except: %i[index create], unless: -> { current_user.admin? }
     before_action :authorize_admin!, only: :index
+    before_action :protect_confirmed_service!, only: :update, unless: -> { current_user.admin? }
 
     def index
       year = filter_params[:year]
@@ -61,6 +62,10 @@ module V1
 
     def protect_foreign_resource!
       raise AuthorizationError unless @service.user.id == current_user.id
+    end
+
+    def protect_confirmed_service!
+      raise AuthorizationError if @service.confirmation_date.present?
     end
 
     def set_service
