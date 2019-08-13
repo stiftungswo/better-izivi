@@ -54,7 +54,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
         id: 'total_costs',
         label: 'Betrag',
         format: (p: PaymentEntry) => (
-          <Link to={'/report_sheets/' + p.report_sheet.id}>{this.props.mainStore!.formatCurrency(p.report_sheet.total_costs)}</Link>
+          <Link to={'/expense_sheets/' + p.expense_sheet.id}>{this.props.mainStore!.formatCurrency(p.expense_sheet.total_costs)}</Link>
         ),
       },
     ];

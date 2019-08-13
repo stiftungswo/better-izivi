@@ -17,7 +17,7 @@ export interface Payment {
 
 export interface PaymentEntry {
   id?: number;
-  report_sheet: ExpenseSheet;
+  expense_sheet: ExpenseSheet;
   user: User;
 }
 export interface ProposedExpenseSheetValues {
@@ -35,27 +35,31 @@ export interface ExpenseSheet {
   additional_workfree: number;
   additional_workfree_comment: string;
   bank_account_number: string;
-  clothes: number;
-  company_holiday_holiday: number;
-  company_holiday_vacation: number;
-  driving_charges: number;
-  driving_charges_comment: string;
-  extraordinarily: number;
-  extraordinarily_comment: string;
-  end: string;
-  holiday: number;
-  holiday_comment: string;
+  clothing_expenses: number;
+  clothing_expenses_comment: string;
+  unpaid_company_holiday_days: number;
+  paid_company_holiday_days: number;
+  company_holiday_comment: string;
+  driving_expenses: number;
+  driving_expenses_comment: string;
+  extraordinary_expenses: number;
+  extraordinary_expenses_comment: string;
+  ending: string;
+  unpaid_vacation_days: number;
+  unpaid_vacation_comment: string;
   ignore_first_last_day: boolean;
-  ill: number;
+  sick_days: number;
+  sick_comment: string;
   service?: Service;
+  payment_timestamp?: Date;
   beginning: string;
-  state: number;
+  state: ExpenseSheetState;
   total_costs?: number;
-  user?: User;
-  vacation: number;
-  vacation_comment: string;
-  work: number;
-  workfree: number;
+  user_id: number;
+  paid_vacation_days: number;
+  paid_vacation_comment: string;
+  work_days: number;
+  workfree_days: number;
 }
 
 export interface ExpenseSheetWithProposedValues extends ExpenseSheet {

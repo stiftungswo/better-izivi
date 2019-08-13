@@ -14,57 +14,58 @@ export const expenseSheetSchema = yup.object({
     }),
   additional_workfree_comment: yup.string().nullable(true),
   bank_account_number: yup.string().required(),
-  clothes: yup.number().required(),
-  clothes_comment: yup.string().nullable(true),
-  company_holiday_holiday: yup
+  clothing_expenses: yup.number().required(),
+  clothing_expenses_comment: yup.string().nullable(true),
+  unpaid_company_holiday_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
       return validateTotal(this.parent);
     }),
-  company_holiday_vacation: yup
+  paid_company_holiday_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
       return validateTotal(this.parent);
     }),
+  company_holiday_comment: yup.string().nullable(true),
   document_number: yup.number().nullable(true),
-  driving_charges: yup.number().required(),
-  driving_charges_comment: yup.string().nullable(true),
-  end: apiDate().required(),
-  extraordinarily: yup.number().required(),
-  extraordinarily_comment: yup.string().nullable(true),
-  holiday: yup
+  driving_expenses: yup.number().required(),
+  driving_expenses_comment: yup.string().nullable(true),
+  ending: apiDate().required(),
+  extraordinary_expenses: yup.number().required(),
+  extraordinary_expenses_comment: yup.string().nullable(true),
+  unpaid_vacation_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
       return validateTotal(this.parent);
     }),
-  holiday_comment: yup.string().nullable(true),
+  unpaid_vacation_comment: yup.string().nullable(true),
   ignore_first_last_day: yup.boolean(),
-  ill: yup
+  sick_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
       return validateTotal(this.parent);
     }),
-  ill_comment: yup.string().nullable(true),
+  sick_comment: yup.string().nullable(true),
   beginning: apiDate().required(),
   state: yup.number().required(),
-  vacation: yup
+  paid_vacation_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
       return validateTotal(this.parent);
     }),
-  vacation_comment: yup.string().nullable(true),
-  work: yup
+  paid_vacation_comment: yup.string().nullable(true),
+  work_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
       return validateTotal(this.parent);
     }),
-  workfree: yup
+  workfree_days: yup
     .number()
     .required()
     .test('test-total-days', errorMsg, function() {
@@ -81,11 +82,11 @@ const validateTotal = (parent: ReportSheetSchemaWithSafeOverride) => {
   if (parent.safe_override) {
     return true;
   }
-  const duration = moment.duration(moment(parent.end).diff(moment(parent.beginning))).asDays() + 1;
+  const duration = moment.duration(moment(parent.ending).diff(moment(parent.beginning))).asDays() + 1;
   let totalDays = 0;
-  totalDays += parent.work + parent.workfree + parent.additional_workfree + parent.ill;
-  totalDays += parent.holiday + parent.vacation;
-  totalDays += parent.company_holiday_holiday + parent.company_holiday_vacation;
+  totalDays += parent.work_days + parent.workfree_days + parent.additional_workfree + parent.sick_days;
+  totalDays += parent.unpaid_vacation_days + parent.paid_vacation_days;
+  totalDays += parent.unpaid_company_holiday_days + parent.paid_company_holiday_days;
 
   return totalDays === duration;
 };

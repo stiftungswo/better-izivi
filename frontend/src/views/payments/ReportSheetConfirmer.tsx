@@ -26,7 +26,7 @@ export class ReportSheetConfirmer extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      reportSheetState: this.props.paymentEntry.report_sheet.state,
+      reportSheetState: this.props.paymentEntry.expense_sheet.state,
     };
   }
 
@@ -47,7 +47,7 @@ export class ReportSheetConfirmer extends React.Component<Props, State> {
         return (
           <>
             <Button
-              onClick={() => this.updateState(this.props.paymentEntry.report_sheet.id!, 3)}
+              onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, 3)}
               color={'link'}
               style={{ margin: 0, padding: 0 }}
             >
@@ -61,7 +61,7 @@ export class ReportSheetConfirmer extends React.Component<Props, State> {
       case 2:
         return (
           <Button
-            onClick={() => this.updateState(this.props.paymentEntry.report_sheet.id!, 3)}
+            onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, 3)}
             color={'link'}
             style={{ margin: 0, padding: 0 }}
           >

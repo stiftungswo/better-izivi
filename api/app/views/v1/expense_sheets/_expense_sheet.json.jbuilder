@@ -6,3 +6,4 @@ json.extract! expense_sheet, :id, :beginning, :ending, :work_days,
               :unpaid_vacation_comment, :driving_expenses, :driving_expenses_comment, :payment_timestamp,
               :extraordinary_expenses, :extraordinary_expenses_comment, :clothing_expenses,
               :clothing_expenses_comment, :bank_account_number, :state, :user_id
+# TODO: Do we really need the payment_timestamp in frontend?

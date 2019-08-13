@@ -68,7 +68,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
             <WiredField disabled horizontal component={DatePickerField} name={'service.ending'} label={'Ende Einsatz'} />
 
             <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Start Spesenblattperiode'} />
-            <WiredField horizontal component={DatePickerField} name={'end'} label={'Ende Spesenblattperiode'} />
+            <WiredField horizontal component={DatePickerField} name={'ending'} label={'Ende Spesenblattperiode'} />
 
             <WiredField
               disabled
@@ -85,21 +85,21 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               horizontal
               appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.workdays} Tage`]}
               component={NumberField}
-              name={'work'}
+              name={'work_days'}
               label={'Gearbeitet'}
             />
             <WiredField
               horizontal
               appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.work_free_days} Tage`]}
               component={NumberField}
-              name={'workfree'}
+              name={'workfree_days'}
               label={'Arbeitsfrei'}
             />
             <WiredField
               horizontal
               appendedLabels={[`Übriges Guthaben: ${expenseSheet.proposed_values.illness_days_left} Tage`]}
               component={NumberField}
-              name={'ill'}
+              name={'sick_days'}
               label={'Krank'}
             />
 
@@ -114,26 +114,26 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               horizontal
               appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.company_holidays_as_zivi_vacations} Tage`]}
               component={NumberField}
-              name={'company_holiday_vacation'}
+              name={'paid_company_holiday_days'}
               label={'Betriebsferien (Urlaub)'}
             />
             <WiredField
               horizontal
               appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.company_holidays_as_zivi_holidays} Tage`]}
               component={NumberField}
-              name={'company_holiday_holiday'}
+              name={'unpaid_company_holiday_days'}
               label={'Betriebsferien (Ferien)'}
             />
 
             <SolidHorizontalRow />
 
-            <WiredField horizontal component={NumberField} name={'vacation'} label={'Ferien'} />
-            <WiredField horizontal component={TextField} name={'vacation_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'paid_vacation_days'} label={'Ferien'} />
+            <WiredField horizontal component={TextField} name={'paid_vacation_comment'} label={'Bemerkung'} />
 
             <SolidHorizontalRow />
 
-            <WiredField horizontal component={NumberField} name={'holiday'} label={'Persönlicher Urlaub'} />
-            <WiredField horizontal component={TextField} name={'holiday_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'unpaid_vacation_days'} label={'Persönlicher Urlaub'} />
+            <WiredField horizontal component={TextField} name={'unpaid_vacation_comment'} label={'Bemerkung'} />
 
             <SolidHorizontalRow />
 
@@ -141,19 +141,19 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               horizontal
               appendedLabels={[`Vorschlag: ${expenseSheet.proposed_values.costs_clothes} CHF`]}
               component={CurrencyField}
-              name={'clothes'}
+              name={'clothing_expenses'}
               label={'Kleiderspesen'}
             />
 
             <SolidHorizontalRow />
 
-            <WiredField horizontal component={NumberField} name={'driving_charges'} label={'Fahrspesen'} />
-            <WiredField horizontal component={TextField} name={'driving_charges_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'driving_expenses'} label={'Fahrspesen'} />
+            <WiredField horizontal component={TextField} name={'driving_expenses_comment'} label={'Bemerkung'} />
 
             <SolidHorizontalRow />
 
-            <WiredField horizontal component={NumberField} name={'extraordinarily'} label={'Ausserordentliche Spesen'} />
-            <WiredField horizontal component={TextField} name={'extraordinarily_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'extraordinary_expenses'} label={'Ausserordentliche Spesen'} />
+            <WiredField horizontal component={TextField} name={'extraordinary_expenses_comment'} label={'Bemerkung'} />
 
             <SolidHorizontalRow />
 
@@ -241,7 +241,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               </Col>
 
               <Col md={3}>
-                <Button block>Profil anzeigen (TODO)</Button>
+                <Button block>Profil anzeigen (TODO)</Button> {/*TODO: Show profile*/}
               </Col>
             </Row>
           </Form>

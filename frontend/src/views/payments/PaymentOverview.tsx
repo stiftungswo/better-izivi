@@ -103,7 +103,7 @@ export class PaymentOverview extends React.Component<Props, State> {
             <OverviewTable
               columns={this.reportSheetColumns}
               data={this.props.expenseSheetStore!.toBePaidExpenseSheets}
-              renderActions={(r: ExpenseSheet) => <Link to={'/report_sheets/' + r.id}>Spesenblatt</Link>}
+              renderActions={(r: ExpenseSheet) => <Link to={'/expense_sheets/' + r.id}>Spesenblatt</Link>}
             />
             <Button
               color={'primary'}
