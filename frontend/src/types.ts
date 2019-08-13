@@ -48,7 +48,7 @@ export interface ExpenseSheet {
   ignore_first_last_day: boolean;
   ill: number;
   service?: Service;
-  start: string;
+  beginning: string;
   state: number;
   total_costs?: number;
   user?: User;

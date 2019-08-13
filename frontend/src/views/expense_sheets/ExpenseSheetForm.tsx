@@ -67,7 +67,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
             <WiredField disabled horizontal component={DatePickerField} name={'service.beginning'} label={'Beginn Einsatz'} />
             <WiredField disabled horizontal component={DatePickerField} name={'service.ending'} label={'Ende Einsatz'} />
 
-            <WiredField horizontal component={DatePickerField} name={'start'} label={'Start Spesenblattperiode'} />
+            <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Start Spesenblattperiode'} />
             <WiredField horizontal component={DatePickerField} name={'end'} label={'Ende Spesenblattperiode'} />
 
             <WiredField

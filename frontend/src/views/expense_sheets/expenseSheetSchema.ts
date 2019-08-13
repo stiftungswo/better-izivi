@@ -49,7 +49,7 @@ export const expenseSheetSchema = yup.object({
       return validateTotal(this.parent);
     }),
   ill_comment: yup.string().nullable(true),
-  start: apiDate().required(),
+  beginning: apiDate().required(),
   state: yup.number().required(),
   vacation: yup
     .number()
@@ -81,7 +81,7 @@ const validateTotal = (parent: ReportSheetShemaWithSafeOverride): boolean => {
   if (parent.safe_override) {
     return true;
   }
-  const duration = moment.duration(moment(parent.end).diff(moment(parent.start))).asDays() + 1;
+  const duration = moment.duration(moment(parent.end).diff(moment(parent.beginning))).asDays() + 1;
   let totalDays = 0;
   totalDays += parent.work + parent.workfree + parent.additional_workfree + parent.ill;
   totalDays += parent.holiday + parent.vacation;

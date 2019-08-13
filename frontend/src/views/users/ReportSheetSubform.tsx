@@ -55,7 +55,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
               data={user.expense_sheets}
               columns={[
                 {
-                  id: 'start',
+                  id: 'beginning',
                   label: 'Von',
                   format: expenseSheet => (expenseSheet.beginning ? mainStore!.formatDate(expenseSheet.beginning) : ''),
                 },
