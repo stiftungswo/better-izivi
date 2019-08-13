@@ -7,7 +7,7 @@ import Button from 'reactstrap/lib/Button';
 import Tooltip from 'reactstrap/lib/Tooltip';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
-import { ExpenseSheet, User } from '../../types';
+import { ExpenseSheet, ExpenseSheetListing, ExpenseSheetState, User } from '../../types';
 import createStyles from '../../utilities/createStyles';
 import { CheckSquareRegularIcon, ClockRegularIcon, EditSolidIcon, HourGlassRegularIcon, PrintSolidIcon } from '../../utilities/Icon';
 
@@ -48,9 +48,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
 
     return (
       <>
-        <h3>Spesenblätter</h3>
-        <br />
-        <br />
+        <h3 className="mb-3">Spesenblätter</h3>
         {user && (
           <>
             <OverviewTable
@@ -59,55 +57,41 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
                 {
                   id: 'start',
                   label: 'Von',
-                  format: (reportSheet: ExpenseSheet) => (reportSheet.start ? mainStore!.formatDate(reportSheet.start) : ''),
+                  format: expenseSheet => (expenseSheet.beginning ? mainStore!.formatDate(expenseSheet.beginning) : ''),
                 },
                 {
                   id: 'end',
                   label: 'Bis',
-                  format: (reportSheet: ExpenseSheet) => (reportSheet.end ? mainStore!.formatDate(reportSheet.end) : ''),
+                  format: expenseSheet => (expenseSheet.ending ? mainStore!.formatDate(expenseSheet.ending) : ''),
                 },
                 {
                   id: 'days',
                   label: 'Anzahl Tage',
-                  format: (reportSheet: ExpenseSheet) =>
-                    reportSheet.end && reportSheet.start
-                      ? moment(reportSheet.end).diff(moment(reportSheet.start), 'd') +
-                        1 -
-                        reportSheet.company_holiday_holiday -
-                        reportSheet.holiday
-                      : 0,
+                  format: expenseSheet => expenseSheet.duration,
                 },
                 {
                   id: 'state',
                   label: 'Status',
                   format: reportSheet => {
-                    let icon;
-                    let tooltip: string;
+                    let icon = ClockRegularIcon;
+                    let tooltip = 'Noch nicht fällig';
                     let color = 'black';
 
                     switch (reportSheet.state) {
-                      case 0:
-                        icon = ClockRegularIcon;
-                        tooltip = 'Noch nicht fällig';
-                        break;
-                      case 1:
+                      case ExpenseSheetState.payment_in_progress:
                         icon = HourGlassRegularIcon;
                         tooltip = 'In Bearbeitung';
                         color = 'orange';
                         break;
-                      case 2:
+                      case ExpenseSheetState.ready_for_payment:
                         icon = HourGlassRegularIcon;
                         tooltip = 'In Bearbeitung';
                         color = 'orange';
                         break;
-                      case 3:
+                      case ExpenseSheetState.paid:
                         icon = CheckSquareRegularIcon;
                         tooltip = 'Erledigt';
                         color = 'green';
-                        break;
-                      default:
-                        icon = ClockRegularIcon;
-                        tooltip = 'Noch nicht fällig';
                         break;
                     }
 
@@ -131,12 +115,12 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
                 {
                   id: 'print',
                   label: 'Drucken',
-                  format: reportSheet =>
-                    reportSheet.state === 3 && mainStore!.isAdmin() ? (
+                  format: expenseSheet =>
+                    expenseSheet.state === ExpenseSheetState.paid && mainStore!.isAdmin() ? (
                       <div className={classes.hideButtonText}>
                         <Button
                           color={'link'}
-                          href={mainStore!.apiURL('report_sheets/' + String(reportSheet.id!) + '/download')}
+                          href={mainStore!.apiURL('expense_sheets/' + String(expenseSheet.id!) + '/download')}
                           tag={'a'}
                           target={'_blank'}
                         >
@@ -148,11 +132,11 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
                     ),
                 },
               ]}
-              renderActions={(reportSheet: ExpenseSheet) => (
+              renderActions={(expenseSheet: ExpenseSheetListing) => (
                 <div>
                   {mainStore!.isAdmin() ? (
                     <div className={classes.hideButtonText}>
-                      <Button color={'warning'} href={'/report_sheets/' + reportSheet.id} tag={'a'} target={'_blank'}>
+                      <Button color={'warning'} href={'/expense_sheets/' + expenseSheet.id} tag={'a'} target={'_blank'}>
                         <FontAwesomeIcon icon={EditSolidIcon} /> <span>Bearbeiten</span>
                       </Button>
                     </div>
@@ -172,7 +156,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
   handleOpenTooltip = (id: number): void => {
     const opens = this.state.openTooltips;
 
-    opens[id] = opens[id] ? !opens[id] : true;
+    opens[id] = !opens[id];
 
     this.setState({ openTooltips: opens });
   }

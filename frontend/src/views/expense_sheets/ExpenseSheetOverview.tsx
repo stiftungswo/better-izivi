@@ -32,13 +32,14 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       {
         id: 'zdp',
         label: 'ZDP',
-        format: (r: ExpenseSheetListing) => r.user.zdp,
+        format: (r: ExpenseSheetListing) => 'r.user.zdp', // TODO: Fix it
       },
       {
         id: 'first_name',
         label: 'Name',
         format: (r: ExpenseSheetListing) => (
-          <Link to={'/users/' + r.user_id!}>{r.user.first_name} {r.user.last_name}</Link>
+          /*<Link to={'/users/' + r.user_id!}>{r.user.first_name} {r.user.last_name}</Link> TODO: Fix it*/
+          <p>Empty</p>
         ),
       },
       {

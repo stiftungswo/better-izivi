@@ -62,13 +62,19 @@ export interface ExpenseSheetWithProposedValues extends ExpenseSheet {
   proposed_values: ProposedExpenseSheetValues;
 }
 
+export enum ExpenseSheetState {
+  open = 'open',
+  ready_for_payment = 'ready_for_payment',
+  payment_in_progress = 'payment_in_progress',
+  paid = 'paid',
+}
+
 export interface ExpenseSheetListing {
   id: number;
   ending: string;
   beginning: string;
-  state: number;
-  user_id?: number;
-  user: User;
+  state: ExpenseSheetState;
+  duration: number;
 }
 
 export interface DailyExpense {
@@ -110,7 +116,7 @@ export interface User {
   last_name: string;
   phone: string;
   regional_center_id: number;
-  expense_sheets: ExpenseSheet[];
+  expense_sheets: ExpenseSheetListing[];
   role: 'admin' | 'civil_servant';
   services: Service[];
   beginning: null | string;
