@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
+import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
-import { Column, Payment, ExpenseSheet } from '../../types';
+import { Column, ExpenseSheet, Payment } from '../../types';
 
 interface Props {
   mainStore?: MainStore;
