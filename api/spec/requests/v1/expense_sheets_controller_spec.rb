@@ -111,19 +111,20 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         subject { -> { request } }
 
         let(:user) { create :user, :admin }
-        let(:suggestions_calculator) { instance_double(ExpenseSheetCalculators::SuggestionsCalculator) }
-        let(:remaining_days_calculator) { instance_double(ExpenseSheetCalculators::RemainingDaysCalculator) }
+        let(:suggestions_calculator) do
+          instance_double(ExpenseSheetCalculators::SuggestionsCalculator, suggestions: expected_suggestions)
+        end
+        let(:remaining_days_calculator) do
+          instance_double(ExpenseSheetCalculators::RemainingDaysCalculator, remaining_days: expected_remaining_days)
+        end
         let(:expected_suggestions) { { work_days: 20 } }
         let(:expected_remaining_days) { { sick_days: 6 } }
 
         before do
           allow(ExpenseSheetCalculators::SuggestionsCalculator).to receive(:new)
             .with(expense_sheet).and_return(suggestions_calculator)
-          allow(suggestions_calculator).to receive(:suggestions).and_return(expected_suggestions)
-
           allow(ExpenseSheetCalculators::RemainingDaysCalculator).to receive(:new)
             .with(service).and_return(remaining_days_calculator)
-          allow(remaining_days_calculator).to receive(:remaining_days).and_return(expected_remaining_days)
         end
 
         it_behaves_like 'renders a successful http status code'
