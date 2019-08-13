@@ -13,7 +13,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
       let!(:services) do
         [
-          (create :service, beginning: '2018-11-05', ending: '2018-11-30', user: user),
+          create(:service, beginning: '2018-11-05', ending: '2018-11-30', user: user),
           (create :service, beginning: '2018-12-03', ending: '2018-12-28', user: user)
         ]
       end
