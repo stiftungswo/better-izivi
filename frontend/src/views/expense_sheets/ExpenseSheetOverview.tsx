@@ -8,7 +8,7 @@ import { OverviewTable } from '../../layout/OverviewTable';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { Column, ExpenseSheetListing } from '../../types';
-import { ReportSheetStatisticFormDialog } from './ReportSheetStatisticFormDialog';
+import { ExpenseSheetStatisticFormDialog } from './ExpenseSheetStatisticFormDialog';
 
 interface Props {
   mainStore?: MainStore;
@@ -102,7 +102,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
             Aktuelle Spesenblätter
           </Button>
         </ButtonGroup>
-        <ReportSheetStatisticFormDialog isOpen={this.state.modalOpen} mainStore={this.props.mainStore!} toggle={() => this.toggle()} />
+        <ExpenseSheetStatisticFormDialog isOpen={this.state.modalOpen} mainStore={this.props.mainStore!} toggle={() => this.toggle()} />
         <br /> <br />
         <OverviewTable
           columns={this.columns}
