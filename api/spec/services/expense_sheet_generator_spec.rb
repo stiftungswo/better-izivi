@@ -158,7 +158,6 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
 
       it 'calls create_expense_sheets with the correct arguments' do
         expense_sheet_generator.create_missing_expense_sheets
-        # expect { expense_sheet_generator.create_missing_expense_sheets }.to change(ExpenseSheet, :count).by(2)
         expect(expense_sheet_generator).to have_received(:create_expense_sheets)
           .with(beginning: Date.parse('2018-06-30'))
       end
@@ -169,7 +168,6 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
 
       it 'calls create_expense_sheets with the correct arguments' do
         expense_sheet_generator.create_missing_expense_sheets
-        # expect { expense_sheet_generator.create_missing_expense_sheets }.to change(ExpenseSheet, :count).by(2)
         expect(expense_sheet_generator).to have_received(:create_expense_sheets).with(no_args)
       end
     end
