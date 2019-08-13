@@ -87,5 +87,14 @@
       },
       "pocket_money": 500
     }
+  ],
+  "expense_sheets": [
+    {
+      "id": 1,
+      "beginning": "2019-07-01",
+      "ending": "2019-07-19",
+      "duration": 19,
+      "state": "open"
+    }
   ]
 }
