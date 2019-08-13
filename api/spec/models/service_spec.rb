@@ -173,10 +173,7 @@ RSpec.describe Service, type: :model do
     context 'when there is no overlapping service' do
       let(:other_ending) { service_range.begin.at_end_of_week - 2.days }
 
-      it do
-        p user.reload.services
-        is_expected.to be true
-      end
+      it { is_expected.to be true }
     end
   end
 end
