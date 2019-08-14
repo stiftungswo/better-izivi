@@ -23,8 +23,6 @@ export interface PaymentEntry {
 
 export interface ExpenseSheet {
   id?: number;
-  additional_workfree: number;
-  additional_workfree_comment: string;
   bank_account_number: string;
   beginning: string;
   clothing_expenses: number;

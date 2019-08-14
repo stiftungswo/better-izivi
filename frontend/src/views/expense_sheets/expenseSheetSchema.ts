@@ -6,13 +6,6 @@ import { apiDate } from '../../utilities/validationHelpers';
 const errorMsg = 'Das Total der Tage muss gleich der Spesenblattdauer sein.';
 
 export const expenseSheetSchema = yup.object({
-  additional_workfree: yup
-    .number()
-    .required()
-    .test('test-total-days', errorMsg, function() {
-      return validateTotal(this.parent);
-    }),
-  additional_workfree_comment: yup.string().nullable(true),
   bank_account_number: yup.string().required(),
   clothing_expenses: yup.number().required(),
   clothing_expenses_comment: yup.string().nullable(true),
@@ -84,7 +77,7 @@ const validateTotal = (parent: ReportSheetSchemaWithSafeOverride) => {
   }
   const duration = moment.duration(moment(parent.ending).diff(moment(parent.beginning))).asDays() + 1;
   let totalDays = 0;
-  totalDays += parent.work_days + parent.workfree_days + parent.additional_workfree + parent.sick_days;
+  totalDays += parent.work_days + parent.workfree_days + parent.sick_days;
   totalDays += parent.unpaid_vacation_days + parent.paid_vacation_days;
   totalDays += parent.unpaid_company_holiday_days + parent.paid_company_holiday_days;
 
