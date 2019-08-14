@@ -1,23 +1,15 @@
 # frozen_string_literal: true
 
 class ShortServiceCalculator
-  # rubocop:disable Layout/AlignHash
-  DAY_LOOKUP_TABLE = {
-    (1..5).to_a   => (1..5).to_a,
-    [6, 7]        => [8, 8],
-    (8..10).to_a  => (9..11).to_a,
-    (11..12).to_a => (11..12).to_a,
-    [13]          => [15],
-    (14..17).to_a => (15..18).to_a,
-    [18, 19]      => [18, 19],
-    [20]          => [22],
-    (21..24).to_a => (22..25).to_a,
-    [25]          => [25]
+  DAYS_TO_WORKFREE_DAYS = {
+    (0..6) => 0,
+    (7..10) => 1,
+    (11..13) => 2,
+    (14..17) => 3,
+    (18..20) => 4,
+    (21..24) => 5,
+    (25..25) => 6
   }.freeze
-  # rubocop:enable Layout/AlignHash
-
-  CONVERTED_LOOKUP_TABLE = [DAY_LOOKUP_TABLE.keys.flatten, DAY_LOOKUP_TABLE.values.flatten].transpose.to_h.freeze
-  REVERSED_CONVERTED_LOOKUP_TABLE = CONVERTED_LOOKUP_TABLE.reverse_each.to_h.freeze
 
   def initialize(beginning_date)
     @beginning_date = beginning_date
@@ -26,32 +18,95 @@ class ShortServiceCalculator
   def calculate_ending_date(required_service_days)
     raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
 
-    temp_ending_date = calculate_irregular_ending_date required_service_days
-    unpaid_days = HolidayCalculator
-                  .new(@beginning_date, temp_ending_date)
-                  .calculate_company_holiday_days
-    temp_ending_date + unpaid_days.days
+    ending_date_from_loop(@beginning_date, required_service_days)
   end
 
+  # def loop_to_ending_date(ending_date, leftover_service_days)
+  #   p "Looping", ending_date, leftover_service_days
+  #
+  #   return loop_to_ending_date(ending_date + 1, leftover_service_days) if company_holiday_day?(ending_date)
+  #
+  #   if workfree_day?(ending_date)
+  #     return loop_to_ending_date(ending_date + 1, leftover_service_days) unless @eligible_workfree_days.positive?
+  #
+  #     @eligible_workfree_days -= 1
+  #   end
+  #
+  #   return ending_date if leftover_service_days == 1
+  #
+  #   loop_to_ending_date(ending_date + 1, leftover_service_days - 1)
+  # end
+
+  # def loop_to_ending_date(ending_date, leftover_service_days)
+  #   return ending_date if leftover_service_days.zero?
+  #
+  #   check_date = ending_date + 1.day
+  #   return loop_to_ending_date(check_date, leftover_service_days) if company_holiday_day?(check_date)
+  #
+  #   if workfree_day?(check_date)
+  #     return loop_to_ending_date(check_date, leftover_service_days) unless @eligible_workfree_days.positive?
+  #
+  #     @eligible_workfree_days -= 1
+  #   end
+  #   loop_to_ending_date(check_date, leftover_service_days - 1)
+  # end
+
   def calculate_chargeable_service_days(ending_date)
+    # also implement loop
+
     duration = (ending_date - @beginning_date).to_i + 1
-    unpaid_days = HolidayCalculator
-                  .new(@beginning_date, ending_date)
-                  .calculate_company_holiday_days
-    service_days_lookup(duration) - unpaid_days
+    temp_service_days = duration - HolidayCalculator.new(@beginning_date, ending_date).calculate_company_holiday_days
+
+    eligible_workfree_days = eligible_workfree_days(temp_service_days)
+    workfree_days = workfree_days_in_range(ending_date)
+    days_to_compensate = [0, workfree_days - eligible_workfree_days].max
+
+    temp_service_days -= days_to_compensate
+    temp_service_days - (eligible_workfree_days - eligible_workfree_days(temp_service_days))
   end
 
   private
 
-  def calculate_irregular_ending_date(required_service_days)
-    @beginning_date + duration_lookup(required_service_days).days - 1.day
+  def ending_date_from_loop(start_date, leftover_service_days)
+    eligible_workfree_days = eligible_workfree_days(leftover_service_days)
+    check_date = start_date - 1.day
+
+    until leftover_service_days.zero?
+      check_date += 1.day
+      next if company_holiday_day?(check_date)
+
+      if workfree_day?(check_date)
+        next if eligible_workfree_days.zero?
+
+        eligible_workfree_days -= 1
+      end
+      leftover_service_days -= 1
+    end
+
+    check_date
   end
 
-  def duration_lookup(required_service_days)
-    CONVERTED_LOOKUP_TABLE[required_service_days]
+  def workfree_days_in_range(ending_date)
+    public_holiday_days = HolidayCalculator.new(@beginning_date, ending_date).calculate_public_holiday_days
+    weekend_days = (@beginning_date..ending_date).count(&:on_weekend?)
+
+    public_holiday_days + weekend_days
   end
 
-  def service_days_lookup(service_duration)
-    REVERSED_CONVERTED_LOOKUP_TABLE.key service_duration
+  def company_holiday_day?(day)
+    HolidayCalculator.new(day, day).calculate_company_holiday_days.positive?
+  end
+
+  def workfree_day?(day)
+    [
+      HolidayCalculator.new(day, day).calculate_public_holiday_days.positive?,
+      day.on_weekend?
+    ].any?
+  end
+
+  def eligible_workfree_days(service_days)
+    DAYS_TO_WORKFREE_DAYS.each do |days, workfree_days|
+      return workfree_days if days.include? service_days
+    end
   end
 end

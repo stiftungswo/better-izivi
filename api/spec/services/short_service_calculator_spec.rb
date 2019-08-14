@@ -11,6 +11,26 @@ RSpec.describe ShortServiceCalculator, type: :service do
     let(:required_service_days) { 26 }
     let(:calculated_ending_day) { short_service_calculator.calculate_ending_date(required_service_days) }
 
+    context 'with company holidays' do
+      let(:required_service_days) { 7 }
+
+      before do
+        create :holiday, beginning: beginning, ending: beginning + 7.days
+      end
+
+      it { is_expected.to eq Date.parse('2018-01-16') }
+    end
+
+    context 'with public holidays' do
+      let(:required_service_days) { 6 }
+
+      before do
+        create :holiday, :public_holiday, beginning: beginning, ending: beginning + 1.day
+      end
+
+      it { is_expected.to eq Date.parse('2018-01-10') }
+    end
+
     context 'when service days are between 1 and 5' do
       it 'returns correct ending date', :aggregate_failures do
         (1..5).each do |delta|
@@ -88,6 +108,26 @@ RSpec.describe ShortServiceCalculator, type: :service do
     let(:short_service_calculator) { ShortServiceCalculator.new(beginning) }
     let(:ending) { beginning }
     let(:calculate_chargeable_service_days) { short_service_calculator.calculate_chargeable_service_days(ending) }
+
+    context 'with company holidays' do
+      let(:ending) { beginning + 7.days }
+
+      before do
+        create :holiday, beginning: beginning, ending: beginning + 7.days
+      end
+
+      it { is_expected.to eq 0 }
+    end
+
+    context 'with public holidays' do
+      let(:ending) { beginning + 9.days }
+
+      before do
+        create :holiday, :public_holiday, beginning: beginning, ending: beginning + 1.day
+      end
+
+      it { is_expected.to eq 7 }
+    end
 
     context 'when service end is within weekdays of beginning week' do
       it 'returns correct eligible days', :aggregate_failures do
