@@ -34,6 +34,7 @@ interface Props extends WithSheet<typeof styles> {
   showBackgroundImage?: boolean;
   card?: boolean;
   title?: string;
+  fullscreen?: boolean;
   loading?: boolean;
 }
 
@@ -50,7 +51,7 @@ class IziviContent extends React.Component<Props> {
       this.props.className,
       classes.container,
       { [classes.background]: showBackgroundImage },
-      (!this.props.showBackgroundImage ? 'container' : undefined),
+      (!this.props.showBackgroundImage && !this.props.fullscreen ? 'container' : undefined),
     );
 
     return (
