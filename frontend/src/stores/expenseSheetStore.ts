@@ -63,8 +63,14 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   }
 
   async fetchHints(expenseSheetId: number) {
-    const response = await this.mainStore.api.get<ExpenseSheetHints>(`/expense_sheets/${expenseSheetId}/hints`);
-    this.hints = response.data;
+    try {
+      const response = await this.mainStore.api.get<ExpenseSheetHints>(`/expense_sheets/${expenseSheetId}/hints`);
+      this.hints = response.data;
+    } catch (e) {
+      this.mainStore.displayError('Spesenvorschläge konnten nicht geladen werden');
+      console.error(e);
+      throw e;
+    }
   }
 
   protected async doDelete(id: number) {
