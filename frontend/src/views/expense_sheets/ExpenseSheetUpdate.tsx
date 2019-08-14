@@ -6,7 +6,7 @@ import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { ServiceStore } from '../../stores/serviceStore';
 import { UserStore } from '../../stores/userStore';
 import { ExpenseSheet, FormValues } from '../../types';
-import { ExpenseSheetForm } from './ExpenseSheetForm';
+import { ExpenseSheetForm } from './expense_sheet_form/ExpenseSheetForm';
 
 interface ExpenseSheetDetailRouterProps {
   id?: string;
