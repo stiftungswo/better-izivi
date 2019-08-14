@@ -1,10 +1,13 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
 import Form from 'reactstrap/lib/Form';
+import InputGroupAddon from 'reactstrap/lib/InputGroupAddon';
 import Row from 'reactstrap/lib/Row';
 import { CheckboxField } from '../../form/CheckboxField';
 import { NumberField, SelectField, TextField } from '../../form/common';
@@ -18,6 +21,7 @@ import { MainStore } from '../../stores/mainStore';
 import { ExpenseSheet, ExpenseSheetHints, FormValues, Service } from '../../types';
 import { Formatter } from '../../utilities/formatter';
 import { empty } from '../../utilities/helpers';
+import { ExclamationSolidIcon, PrintSolidIcon, SaveRegularIcon, TrashAltRegularIcon } from '../../utilities/Icon';
 import { expenseSheetSchema } from './expenseSheetSchema';
 
 type Props = {
@@ -120,11 +124,6 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
             <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'additional_workfree'} label={'Zusätzlich arbeitsfrei'}/>
-            <WiredField horizontal component={TextField} name={'additional_workfree_comment'} label={'Bemerkung'}/>
-
-            <SolidHorizontalRow/>
-
             <WiredField
               horizontal
               appendedLabels={[`Vorschlag: ${hints.suggestions.unpaid_company_holiday_days} Tage`]}
@@ -209,7 +208,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                       });
                     }}
                   >
-                    Speichern erzwingen
+                    <FontAwesomeIcon icon={ExclamationSolidIcon}/> Speichern erzwingen
                   </Button>
                 </Col>
               ) : (
@@ -224,7 +223,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                       }
                     }}
                   >
-                    Speichern
+                    <FontAwesomeIcon icon={SaveRegularIcon}/> Speichern
                   </Button>
                 </Col>
               )}
@@ -238,7 +237,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                     this.props.history.push('/expense_sheets');
                   }}
                 >
-                  Löschen
+                  <FontAwesomeIcon icon={TrashAltRegularIcon}/> Löschen
                 </Button>
               </Col>
 
@@ -251,12 +250,14 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                   tag={'a'}
                   target={'_blank'}
                 >
-                  Drucken
+                  <FontAwesomeIcon icon={PrintSolidIcon}/> Drucken
                 </Button>
               </Col>
 
               <Col md={3}>
-                <Button block>Profil anzeigen (TODO)</Button> {/*TODO: Show profile*/}
+                <Link to={'/users/' + service.user_id}>
+                  <Button block>Profil anzeigen</Button>
+                </Link>
               </Col>
             </Row>
           </Form>
