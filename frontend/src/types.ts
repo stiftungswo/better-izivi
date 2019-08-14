@@ -66,7 +66,7 @@ export interface ExpenseSheetHints {
   remaining_days: {
     sick_days: number;
     paid_vacation_days: number;
-  }
+  };
 }
 
 export enum ExpenseSheetState {
