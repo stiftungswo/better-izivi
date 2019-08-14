@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Field, FormikProps } from 'formik';
+import { ErrorMessage, Field, FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -18,7 +18,7 @@ import { FormView, FormViewProps } from '../../form/FormView';
 import { SolidHorizontalRow } from '../../layout/SolidHorizontalRow';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
-import { ExpenseSheet, ExpenseSheetHints, FormValues, Service } from '../../types';
+import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetState, FormValues, Service } from '../../types';
 import { Formatter } from '../../utilities/formatter';
 import { empty } from '../../utilities/helpers';
 import { ExclamationSolidIcon, PrintSolidIcon, SaveRegularIcon, TrashAltRegularIcon } from '../../utilities/Icon';
@@ -153,7 +153,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
             <WiredField
               horizontal
-              appendedLabels={[`Vorschlag: ${hints.suggestions.clothing_expenses} CHF`]}
+              appendedLabels={[`Vorschlag: ${mainStore!.formatCurrency(hints.suggestions.clothing_expenses)}`]}
               component={CurrencyField}
               name={'clothing_expenses'}
               label={'Kleiderspesen'}
@@ -161,12 +161,12 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
             <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'driving_expenses'} label={'Fahrspesen'}/>
+            <WiredField horizontal component={CurrencyField} name={'driving_expenses'} label={'Fahrspesen'}/>
             <WiredField horizontal component={TextField} name={'driving_expenses_comment'} label={'Bemerkung'}/>
 
             <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'extraordinary_expenses'} label={'Ausserordentliche Spesen'}/>
+            <WiredField horizontal component={CurrencyField} name={'extraordinary_expenses'} label={'Ausserordentliche Spesen'}/>
             <WiredField horizontal component={TextField} name={'extraordinary_expenses_comment'} label={'Bemerkung'}/>
 
             <SolidHorizontalRow/>
@@ -177,18 +177,17 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               name={'ignore_first_last_day'}
               label={'Erster / Letzter Tag nicht speziell behandeln'}
             />
-            <WiredField disabled horizontal component={CurrencyField} name={'total_costs'} label={'Total'}/>
+            <WiredField disabled horizontal component={CurrencyField} name={'total'} label={'Total'}/>
             <WiredField horizontal component={TextField} name={'bank_account_number'} label={'Konto-Nr.'}/>
-            <WiredField horizontal component={NumberField} name={'document_number'} label={'Beleg-Nr.'}/>
             <WiredField
               horizontal
               component={SelectField}
               name={'state'}
               options={[
-                { id: '0', name: 'Offen' },
-                { id: '1', name: 'Bereit für Auszahlung' },
-                { id: '2', name: 'Auszahlung in Verarbeitung' },
-                { id: '3', name: 'Erledigt' },
+                { id: ExpenseSheetState.open, name: 'Offen' },
+                { id: ExpenseSheetState.ready_for_payment, name: 'Bereit für Auszahlung' },
+                { id: ExpenseSheetState.payment_in_progress, name: 'Auszahlung in Verarbeitung' },
+                { id: ExpenseSheetState.paid, name: 'Erledigt' },
               ]}
               label={'Status'}
             />
@@ -196,8 +195,8 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
             <SolidHorizontalRow/>
 
             <Row>
-              {this.state.safeOverride ? (
-                <Col md={3}>
+              <Col md={3}>
+                {this.state.safeOverride ? (
                   <Button
                     block
                     color={'primary'}
@@ -210,9 +209,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                   >
                     <FontAwesomeIcon icon={ExclamationSolidIcon}/> Speichern erzwingen
                   </Button>
-                </Col>
-              ) : (
-                <Col md={3}>
+                ) : (
                   <Button
                     block
                     color={'primary'}
@@ -225,8 +222,8 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                   >
                     <FontAwesomeIcon icon={SaveRegularIcon}/> Speichern
                   </Button>
-                </Col>
-              )}
+                )}
+              </Col>
 
               <Col md={3}>
                 <Button
@@ -246,7 +243,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
                   block
                   color={'warning'}
                   disabled={!expenseSheet.id}
-                  href={mainStore!.apiURL('expense_sheets/' + String(expenseSheet.id!) + '/download')}
+                  href={mainStore!.apiURL(`expense_sheets/${expenseSheet.id!}.pdf`)}
                   tag={'a'}
                   target={'_blank'}
                 >
@@ -255,7 +252,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               </Col>
 
               <Col md={3}>
-                <Link to={'/users/' + service.user_id}>
+                <Link to={'/users/' + service.user_id} style={{ textDecoration: 'none' }}>
                   <Button block>Profil anzeigen</Button>
                 </Link>
               </Col>

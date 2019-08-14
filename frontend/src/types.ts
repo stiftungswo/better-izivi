@@ -44,7 +44,7 @@ export interface ExpenseSheet {
   sick_comment: string;
   sick_days: number;
   state: ExpenseSheetState;
-  total_costs?: number;
+  total?: number;
   unpaid_company_holiday_days: number;
   unpaid_vacation_comment: string;
   unpaid_vacation_days: number;

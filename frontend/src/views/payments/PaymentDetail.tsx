@@ -51,10 +51,10 @@ class PaymentDetailInner extends React.Component<Props, State> {
         format: (p: PaymentEntry) => p.user.bank_iban,
       },
       {
-        id: 'total_costs',
+        id: 'total',
         label: 'Betrag',
         format: (p: PaymentEntry) => (
-          <Link to={'/expense_sheets/' + p.expense_sheet.id}>{this.props.mainStore!.formatCurrency(p.expense_sheet.total_costs)}</Link>
+          <Link to={'/expense_sheets/' + p.expense_sheet.id}>{this.props.mainStore!.formatCurrency(p.expense_sheet.total)}</Link>
         ),
       },
     ];

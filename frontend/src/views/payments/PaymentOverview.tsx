@@ -63,9 +63,9 @@ export class PaymentOverview extends React.Component<Props, State> {
   //       format: (r: ExpenseSheet) => (r.user ? r.user.bank_iban : ''),
   //     },
   //     {
-  //       id: 'total_costs',
+  //       id: 'total',
   //       label: 'Betrag',
-  //       format: (r: ExpenseSheet) => this.props.mainStore!.formatCurrency(r.total_costs),
+  //       format: (r: ExpenseSheet) => this.props.mainStore!.formatCurrency(r.total),
   //     },
   //     {
   //       id: 'notices',
