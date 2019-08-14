@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { Field, FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -15,7 +15,8 @@ import { FormView, FormViewProps } from '../../form/FormView';
 import { SolidHorizontalRow } from '../../layout/SolidHorizontalRow';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
-import { ExpenseSheet, ExpenseSheetHints, FormValues } from '../../types';
+import { ExpenseSheet, ExpenseSheetHints, FormValues, Service } from '../../types';
+import { Formatter } from '../../utilities/formatter';
 import { empty } from '../../utilities/helpers';
 import { expenseSheetSchema } from './expenseSheetSchema';
 
@@ -23,6 +24,7 @@ type Props = {
   mainStore?: MainStore;
   expenseSheet: ExpenseSheet;
   hints: ExpenseSheetHints;
+  service: Service;
   expenseSheetStore?: ExpenseSheetStore;
 } & FormViewProps<ExpenseSheet> &
   RouteComponentProps;
@@ -41,8 +43,24 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
     };
   }
 
+  formatDate(date: Date | null) {
+    if (!date) {
+      return 'Unbekannt';
+    }
+
+    return new Formatter().formatDate(date.toString());
+  }
+
   render() {
-    const { mainStore, onSubmit, expenseSheet, hints, expenseSheetStore, title } = this.props;
+    const {
+      mainStore,
+      onSubmit,
+      expenseSheet,
+      service,
+      hints,
+      expenseSheetStore,
+      title,
+    } = this.props;
 
     const template = {
       safe_override: false,
@@ -59,23 +77,24 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
         validationSchema={expenseSheetSchema}
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
           <Form>
-            <WiredField disabled horizontal component={TextField} name={'service.serviceSpecification.name'} label={'Pflichtenheft'} />
-            <WiredField disabled horizontal component={DatePickerField} name={'service.beginning'} label={'Beginn Einsatz'} />
-            <WiredField disabled horizontal component={DatePickerField} name={'service.ending'} label={'Ende Einsatz'} />
+            <h5 className="mb-5 text-secondary">
+              Für den Einsatz
+              "{service.service_specification.name}" vom {this.formatDate(service.beginning)} bis {this.formatDate(service.ending)}
+            </h5>
 
-            <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Start Spesenblattperiode'} />
-            <WiredField horizontal component={DatePickerField} name={'ending'} label={'Ende Spesenblattperiode'} />
+            <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Start Spesenblattperiode'}/>
+            <WiredField horizontal component={DatePickerField} name={'ending'} label={'Ende Spesenblattperiode'}/>
 
-            <WiredField
+            <Field
               disabled
               horizontal
               component={NumberField}
-              name={'service.eligible_paid_vacation_days'}
-              label={'Ferienanspruch für Einsatz'}
+              label="Ferienanspruch für Einsatz"
+              value={service.eligible_paid_vacation_days}
             />
-            <WiredField disabled horizontal component={NumberField} name={'duration'} label={'Dauer Spesenblattperiode'} />
+            <WiredField disabled horizontal component={NumberField} name={'duration'} label={'Dauer Spesenblattperiode'}/>
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
             <WiredField
               horizontal
@@ -99,12 +118,12 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               label={'Krank'}
             />
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'additional_workfree'} label={'Zusätzlich arbeitsfrei'} />
-            <WiredField horizontal component={TextField} name={'additional_workfree_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'additional_workfree'} label={'Zusätzlich arbeitsfrei'}/>
+            <WiredField horizontal component={TextField} name={'additional_workfree_comment'} label={'Bemerkung'}/>
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
             <WiredField
               horizontal
@@ -121,17 +140,17 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               label={'Betriebsferien (Ferien)'}
             />
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'paid_vacation_days'} label={'Ferien'} />
-            <WiredField horizontal component={TextField} name={'paid_vacation_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'paid_vacation_days'} label={'Ferien'}/>
+            <WiredField horizontal component={TextField} name={'paid_vacation_comment'} label={'Bemerkung'}/>
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'unpaid_vacation_days'} label={'Persönlicher Urlaub'} />
-            <WiredField horizontal component={TextField} name={'unpaid_vacation_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'unpaid_vacation_days'} label={'Persönlicher Urlaub'}/>
+            <WiredField horizontal component={TextField} name={'unpaid_vacation_comment'} label={'Bemerkung'}/>
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
             <WiredField
               horizontal
@@ -141,17 +160,17 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               label={'Kleiderspesen'}
             />
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'driving_expenses'} label={'Fahrspesen'} />
-            <WiredField horizontal component={TextField} name={'driving_expenses_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'driving_expenses'} label={'Fahrspesen'}/>
+            <WiredField horizontal component={TextField} name={'driving_expenses_comment'} label={'Bemerkung'}/>
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
-            <WiredField horizontal component={NumberField} name={'extraordinary_expenses'} label={'Ausserordentliche Spesen'} />
-            <WiredField horizontal component={TextField} name={'extraordinary_expenses_comment'} label={'Bemerkung'} />
+            <WiredField horizontal component={NumberField} name={'extraordinary_expenses'} label={'Ausserordentliche Spesen'}/>
+            <WiredField horizontal component={TextField} name={'extraordinary_expenses_comment'} label={'Bemerkung'}/>
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
             <WiredField
               horizontal
@@ -159,9 +178,9 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               name={'ignore_first_last_day'}
               label={'Erster / Letzter Tag nicht speziell behandeln'}
             />
-            <WiredField disabled horizontal component={CurrencyField} name={'total_costs'} label={'Total'} />
-            <WiredField horizontal component={TextField} name={'bank_account_number'} label={'Konto-Nr.'} />
-            <WiredField horizontal component={NumberField} name={'document_number'} label={'Beleg-Nr.'} />
+            <WiredField disabled horizontal component={CurrencyField} name={'total_costs'} label={'Total'}/>
+            <WiredField horizontal component={TextField} name={'bank_account_number'} label={'Konto-Nr.'}/>
+            <WiredField horizontal component={NumberField} name={'document_number'} label={'Beleg-Nr.'}/>
             <WiredField
               horizontal
               component={SelectField}
@@ -175,7 +194,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               label={'Status'}
             />
 
-            <SolidHorizontalRow />
+            <SolidHorizontalRow/>
 
             <Row>
               {this.state.safeOverride ? (

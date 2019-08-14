@@ -2,9 +2,8 @@ import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import IziviContent from '../../layout/IziviContent';
-import { LoadingInformation } from '../../layout/LoadingInformation';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
+import { ServiceStore } from '../../stores/serviceStore';
 import { UserStore } from '../../stores/userStore';
 import { ExpenseSheet, FormValues } from '../../types';
 import { ExpenseSheetForm } from './ExpenseSheetForm';
@@ -16,9 +15,10 @@ interface ExpenseSheetDetailRouterProps {
 interface Props extends RouteComponentProps<ExpenseSheetDetailRouterProps> {
   expenseSheetStore?: ExpenseSheetStore;
   userStore?: UserStore;
+  serviceStore?: ServiceStore;
 }
 
-@inject('expenseSheetStore', 'userStore')
+@inject('expenseSheetStore', 'userStore', 'serviceStore')
 @observer
 export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolean }> {
   constructor(props: Props) {
@@ -32,13 +32,16 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
       props.expenseSheetStore!.fetchOne(expenseSheetId),
       props.expenseSheetStore!.fetchHints(expenseSheetId),
     ]).then(() => {
-      props.userStore!.fetchOne(Number(props.expenseSheetStore!.expenseSheet!.user_id)).then(() => this.setState({ loading: false }));
+      Promise.all([
+        props.userStore!.fetchOne(Number(props.expenseSheetStore!.expenseSheet!.user_id)),
+        props.serviceStore!.fetchOne(Number(props.expenseSheetStore!.expenseSheet!.service_id)),
+      ]).then(() => this.setState({ loading: false }));
     });
   }
 
   handleSubmit = (expenseSheet: ExpenseSheet) => {
     return this.props.expenseSheetStore!.put(expenseSheet);
-  };
+  }
 
   get expenseSheet() {
     const expenseSheet = this.props.expenseSheetStore!.expenseSheet;
@@ -64,6 +67,7 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
         onSubmit={this.handleSubmit}
         expenseSheet={expenseSheet as FormValues}
         hints={this.props.expenseSheetStore!.hints!}
+        service={this.props.serviceStore!.service!}
         title={
           expenseSheet
             ? this.user
