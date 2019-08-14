@@ -24,7 +24,7 @@ interface State {
 // @observer
 export class PaymentOverview extends React.Component<Props, State> {
   render() {
-    return super.render();
+    return <></>;
   }
 
   // paymentColumns: Array<Column<Payment>>;
