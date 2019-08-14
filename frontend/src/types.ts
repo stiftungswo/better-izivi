@@ -26,29 +26,31 @@ export interface ExpenseSheet {
   additional_workfree: number;
   additional_workfree_comment: string;
   bank_account_number: string;
+  beginning: string;
   clothing_expenses: number;
   clothing_expenses_comment: string;
-  unpaid_company_holiday_days: number;
-  paid_company_holiday_days: number;
   company_holiday_comment: string;
   driving_expenses: number;
   driving_expenses_comment: string;
+  duration: number;
+  ending: string;
   extraordinary_expenses: number;
   extraordinary_expenses_comment: string;
-  ending: string;
-  unpaid_vacation_days: number;
-  unpaid_vacation_comment: string;
   ignore_first_last_day: boolean;
-  sick_days: number;
-  sick_comment: string;
-  service?: Service;
+  paid_company_holiday_days: number;
+  paid_vacation_comment: string;
+  paid_vacation_days: number;
   payment_timestamp?: Date;
-  beginning: string;
+  service?: Service;
+  service_id: number;
+  sick_comment: string;
+  sick_days: number;
   state: ExpenseSheetState;
   total_costs?: number;
+  unpaid_company_holiday_days: number;
+  unpaid_vacation_comment: string;
+  unpaid_vacation_days: number;
   user_id: number;
-  paid_vacation_days: number;
-  paid_vacation_comment: string;
   work_days: number;
   workfree_days: number;
 }
@@ -74,12 +76,16 @@ export enum ExpenseSheetState {
   paid = 'paid',
 }
 
-export interface ExpenseSheetListing {
+export interface ShortExpenseSheetListing {
   id: number;
   ending: string;
   beginning: string;
   state: ExpenseSheetState;
   duration: number;
+}
+
+export interface ExpenseSheetListing extends ShortExpenseSheetListing {
+  // TODO: Add this to the index of expense sheets
 }
 
 export interface DailyExpense {
@@ -121,7 +127,7 @@ export interface User {
   last_name: string;
   phone: string;
   regional_center_id: number;
-  expense_sheets: ExpenseSheetListing[];
+  expense_sheets: ShortExpenseSheetListing[];
   role: 'admin' | 'civil_servant';
   services: Service[];
   beginning: null | string;
@@ -148,19 +154,21 @@ export interface UserFilter {
 
 export interface Service {
   id?: number;
-  beginning: string | null;
+  beginning: Date | null;
   days: number;
   confirmation_date: null | string;
   eligible_paid_vacation_days: number;
-  ending: string | null;
+  ending: Date | null;
   feedback_done: boolean;
   feedback_mail_sent: boolean;
   first_swo_service: boolean;
   long_service: boolean;
   service_type: number | null;
   probation_period: boolean;
-  service_specification?: ServiceSpecification;
-  service_specification_identification_number: string;
+  service_specification: {
+    identification_number: string;
+    name: string;
+  };
   user_id: number;
 }
 
