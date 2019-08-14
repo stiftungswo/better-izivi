@@ -88,21 +88,21 @@ export default (params: OverviewTableParams) => {
             const spec = serviceSpecificationStore!
               .entities
               .find((specification: ServiceSpecification) => {
-                  return specification.identification_number === service.service_specification_identification_number;
+                  return specification.identification_number === service.service_specification.identification_number;
                 },
               );
-            return `${spec ? spec.name : ''} (${service.service_specification_identification_number})`;
+            return `${spec ? spec.name : ''} (${service.service_specification.identification_number})`;
           },
         },
         {
           id: 'beginning',
           label: 'Start',
-          format: (service: Service) => (service.beginning ? mainStore!.formatDate(service.beginning) : ''),
+          format: (service: Service) => (service.beginning ? mainStore!.formatDate(moment(service.beginning)) : ''),
         },
         {
           id: 'ending',
           label: 'Ende',
-          format: (service: Service) => (service.ending ? mainStore!.formatDate(service.ending) : ''),
+          format: (service: Service) => (service.ending ? mainStore!.formatDate(moment(service.ending)) : ''),
         },
         {
           id: 'draft_date',
