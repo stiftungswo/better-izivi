@@ -3,10 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe Holiday, type: :model do
-  it { is_expected.to validate_presence_of :beginning }
-  it { is_expected.to validate_presence_of :ending }
-  it { is_expected.to validate_presence_of :holiday_type }
-  it { is_expected.to validate_presence_of :description }
+  describe 'validations' do
+    subject(:model) { described_class.new }
+
+    it 'validates that required fields are present', :aggregate_failures do
+      %i[beginning ending holiday_type description].each do |field|
+        expect(model).to validate_presence_of field
+      end
+    end
+  end
 
   it_behaves_like 'validates that the ending is after beginning' do
     let(:model) { build(:holiday, beginning: beginning, ending: ending) }
