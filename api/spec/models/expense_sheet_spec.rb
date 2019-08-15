@@ -6,7 +6,6 @@ RSpec.describe ExpenseSheet, type: :model do
   describe 'validations' do
     subject(:model) { described_class.new }
 
-    let(:required_fields) { %i[beginning ending user work_days bank_account_number state] }
     let(:only_integer_fields) do
       %i[
         work_days
@@ -22,11 +21,14 @@ RSpec.describe ExpenseSheet, type: :model do
       ]
     end
 
-    it 'validates the presence of required fields', :aggregate_failures do
-      required_fields.each do |field|
-        expect(model).to validate_presence_of field
-      end
-    end
+    it_behaves_like 'validates presence of required fields', %i[
+      beginning
+      ending
+      user
+      work_days
+      bank_account_number
+      state
+    ]
 
     it 'validates the correctness of numerical fields correctly', :aggregate_failures do
       only_integer_fields.each do |field|

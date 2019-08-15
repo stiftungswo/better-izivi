@@ -6,30 +6,22 @@ RSpec.describe User, type: :model do
   describe 'validations' do
     subject(:model) { described_class.new }
 
-    let(:required_fields) do
-      %i[
-        first_name
-        last_name
-        email
-        address
-        bank_iban
-        birthday
-        city
-        health_insurance
-        role
-        zip
-        hometown
-        phone
-      ]
-    end
-
     it { is_expected.to validate_numericality_of(:zip).only_integer }
 
-    it 'validates that required fields are present', :aggregate_failures do
-      required_fields.each do |field|
-        expect(model).to validate_presence_of field
-      end
-    end
+    it_behaves_like 'validates presence of required fields', %i[
+      first_name
+      last_name
+      email
+      address
+      bank_iban
+      birthday
+      city
+      health_insurance
+      role
+      zip
+      hometown
+      phone
+    ]
 
     describe '#bank_iban' do
       it 'does not allow invalid values', :aggregate_failures do

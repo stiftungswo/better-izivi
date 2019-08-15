@@ -6,25 +6,17 @@ RSpec.describe ServiceSpecification, type: :model do
   describe 'validations' do
     subject(:model) { described_class.new }
 
-    let(:required_fields) do
-      %i[
-        short_name
-        name
-        identification_number
-        accommodation_expenses
-        work_clothing_expenses
-        work_days_expenses
-        paid_vacation_expenses
-        first_day_expenses
-        last_day_expenses
-      ]
-    end
-
-    it 'validates that required fields are present', :aggregate_failures do
-      required_fields.each do |field|
-        expect(model).to validate_presence_of field
-      end
-    end
+    it_behaves_like 'validates presence of required fields', %i[
+      short_name
+      name
+      identification_number
+      accommodation_expenses
+      work_clothing_expenses
+      work_days_expenses
+      paid_vacation_expenses
+      first_day_expenses
+      last_day_expenses
+    ]
 
     it 'validates the correctness of numerical fields', :aggregate_failures do
       expect(model).to validate_numericality_of(:accommodation_expenses).only_integer

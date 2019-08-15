@@ -6,11 +6,7 @@ RSpec.describe Holiday, type: :model do
   describe 'validations' do
     subject(:model) { described_class.new }
 
-    it 'validates that required fields are present', :aggregate_failures do
-      %i[beginning ending holiday_type description].each do |field|
-        expect(model).to validate_presence_of field
-      end
-    end
+    it_behaves_like 'validates presence of required fields', %i[beginning ending holiday_type description]
   end
 
   it_behaves_like 'validates that the ending is after beginning' do

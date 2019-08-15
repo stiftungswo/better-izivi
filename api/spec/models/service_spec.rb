@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe Service, type: :model do
   describe 'validations' do
-    subject(:model) { described_class.new }
-
-    it 'validates that required fields are present', :aggregate_failures do
-      %i[ending beginning user service_specification service_type].each do |field|
-        expect(model).to validate_presence_of field
-      end
-    end
+    it_behaves_like 'validates presence of required fields', %i[
+      ending
+      beginning
+      user
+      service_specification
+      service_type
+    ]
   end
 
   describe 'delegated methods' do
