@@ -28,9 +28,9 @@ class ShortServiceCalculator
     max_eligible_workfree_days = ShortServiceCalculator.eligible_workfree_days(max_service_days)
 
     days_to_compensate = [0, workfree_days_in_range(ending_date) - max_eligible_workfree_days].max
-    temp_service_days = max_service_days - days_to_compensate
+    compensated_service_days = max_service_days - days_to_compensate
 
-    temp_service_days - (max_eligible_workfree_days - ShortServiceCalculator.eligible_workfree_days(temp_service_days))
+    compensated_service_days - (max_eligible_workfree_days - ShortServiceCalculator.eligible_workfree_days(compensated_service_days))
   end
 
   def self.eligible_workfree_days(service_days)

@@ -109,7 +109,7 @@ RSpec.describe ShortServiceCalculator, type: :service do
     let(:ending) { beginning }
     let(:calculate_chargeable_service_days) { short_service_calculator.calculate_chargeable_service_days(ending) }
 
-    context 'with company holidays d' do
+    context 'with company holidays' do
       let(:company_holiday_beginning) { beginning }
       let(:company_holiday_ending) { company_holiday_beginning }
 
