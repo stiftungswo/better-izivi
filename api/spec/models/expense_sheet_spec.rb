@@ -28,7 +28,7 @@ RSpec.describe ExpenseSheet, type: :model do
       end
     end
 
-    it 'validates the model correctly', :aggregate_failures do
+    it 'validates the correctness of numerical fields correctly', :aggregate_failures do
       only_integer_fields.each do |field|
         expect(model).to validate_numericality_of(field).only_integer
       end

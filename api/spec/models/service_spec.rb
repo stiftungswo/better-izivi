@@ -16,7 +16,7 @@ RSpec.describe Service, type: :model do
   describe 'delegated methods' do
     subject(:service) { described_class.new }
 
-    it 'works', :aggregate_failures do
+    it 'delegates the correct methods to calculators', :aggregate_failures do
       expect(service).to delegate_method(:used_sick_days).to(:used_days_calculator)
       expect(service).to delegate_method(:used_paid_vacation_days).to(:used_days_calculator)
       expect(service).to delegate_method(:remaining_sick_days).to(:remaining_days_calculator)
