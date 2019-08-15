@@ -47,9 +47,9 @@ RSpec.describe User, type: :model do
 
   it do
     expect(described_class.new).to validate_numericality_of(:zdp)
-                                     .only_integer
-                                     .is_less_than(999_999)
-                                     .is_greater_than(25_000)
+      .only_integer
+      .is_less_than(999_999)
+      .is_greater_than(25_000)
   end
 
   describe '#zip_with_city' do

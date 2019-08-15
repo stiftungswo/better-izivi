@@ -14,13 +14,13 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'delegated methods' do
-    subject { create :service }
+    subject(:service) { described_class.new }
 
     it 'works', :aggregate_failures do
-      expect(subject).to delegate_method(:used_sick_days).to(:used_days_calculator)
-      expect(subject).to delegate_method(:used_paid_vacation_days).to(:used_days_calculator)
-      expect(subject).to delegate_method(:remaining_sick_days).to(:remaining_days_calculator)
-      expect(subject).to delegate_method(:remaining_paid_vacation_days).to(:remaining_days_calculator)
+      expect(service).to delegate_method(:used_sick_days).to(:used_days_calculator)
+      expect(service).to delegate_method(:used_paid_vacation_days).to(:used_days_calculator)
+      expect(service).to delegate_method(:remaining_sick_days).to(:remaining_days_calculator)
+      expect(service).to delegate_method(:remaining_paid_vacation_days).to(:remaining_days_calculator)
     end
   end
 

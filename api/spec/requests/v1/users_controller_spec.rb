@@ -15,11 +15,11 @@ RSpec.describe V1::UsersController, type: :request do
           :reset_password_sent_at, :reset_password_token,
           :updated_at
         ).merge(
-        beginning: nil,
-        ending: nil,
-        services: [],
-        active: false
-      )
+          beginning: nil,
+          ending: nil,
+          services: [],
+          active: false
+        )
     end
 
     context 'when no user is logged in' do
@@ -87,10 +87,10 @@ RSpec.describe V1::UsersController, type: :request do
             ending: convert_to_json_value(current_user.services.chronologically.last.ending.to_s),
             active: false
           ).except(
-          :created_at, :encrypted_password,
-          :reset_password_sent_at, :reset_password_token,
-          :updated_at
-        )
+            :created_at, :encrypted_password,
+            :reset_password_sent_at, :reset_password_token,
+            :updated_at
+          )
       end
     end
 
@@ -167,10 +167,10 @@ RSpec.describe V1::UsersController, type: :request do
           it 'returns the error' do
             request
             expect(parse_response_json(response)).to include(
-                                                       errors: {
-                                                         first_name: be_an_instance_of(Array)
-                                                       }
-                                                     )
+              errors: {
+                first_name: be_an_instance_of(Array)
+              }
+            )
           end
         end
       end
@@ -258,8 +258,8 @@ RSpec.describe V1::UsersController, type: :request do
         it 'renders deletion error message' do
           request
           expect(parse_response_json(response)[:human_readable_descriptions]).to eq(
-                                                                                   [I18n.t('activerecord.errors.models.user.attributes.base.cant_delete_himself')]
-                                                                                 )
+            [I18n.t('activerecord.errors.models.user.attributes.base.cant_delete_himself')]
+          )
         end
       end
 
