@@ -51,6 +51,8 @@ class ShortServiceCalculator
     check_date
   end
 
+  # Takes in a block that should return false if there is no workfree_day available
+  # and that should subtract a day and return true if there is a workfree_day available
   def day_passes(day)
     return false if company_holiday_day?(day)
 
