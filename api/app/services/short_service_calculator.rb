@@ -43,18 +43,43 @@ class ShortServiceCalculator
 
     until leftover_service_days.zero?
       check_date += 1.day
-      next if company_holiday_day?(check_date)
-
-      if workfree_day?(check_date)
-        next if eligible_workfree_days.zero?
-
-        eligible_workfree_days -= 1
+      if day_passes(check_date) { eligible_workfree_days.positive? && (eligible_workfree_days -= 1) }
+        leftover_service_days -= 1
       end
-      leftover_service_days -= 1
     end
 
     check_date
   end
+
+  def day_passes(day)
+    return false if company_holiday_day?(day)
+
+    if workfree_day?(day)
+      return false unless yield
+    end
+    true
+  end
+
+  # def ending_date_from_loop(start_date, leftover_service_days)
+  #   eligible_workfree_days = eligible_workfree_days(leftover_service_days)
+  #
+  #   # Subtracting 1 day because the loop checks the following day
+  #   check_date = start_date - 1.day
+  #
+  #   until leftover_service_days.zero?
+  #     check_date += 1.day
+  #     next if company_holiday_day?(check_date)
+  #
+  #     if workfree_day?(check_date)
+  #       next if eligible_workfree_days.zero?
+  #
+  #       eligible_workfree_days -= 1
+  #     end
+  #     leftover_service_days -= 1
+  #   end
+  #
+  #   check_date
+  # end
 
   def workfree_days_in_range(ending_date)
     public_holiday_days = HolidayCalculator.new(@beginning_date, ending_date).calculate_public_holiday_days
