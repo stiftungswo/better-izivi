@@ -66,11 +66,11 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
 
   loadContent = () => {
     this.props.expenseSheetStore!.fetchAll({ filter: this.state.expenseSheetStateFilter }).then(() => this.setState({ loading: false }));
-  };
+  }
 
   updateSheetFilter = (state: string | null) => {
     this.setState({ loading: true, expenseSheetStateFilter: state }, () => this.loadContent());
-  };
+  }
 
   render() {
     return (
