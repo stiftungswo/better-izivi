@@ -43,23 +43,26 @@ class ShortServiceCalculator
 
     until leftover_service_days.zero?
       check_date += 1.day
-      if day_passes(check_date) { eligible_workfree_days.positive? && (eligible_workfree_days -= 1) }
-        leftover_service_days -= 1
+      case type_of_day(check_date)
+      when :company_holiday_day
+        next
+      when :workfree_day
+        next if eligible_workfree_days.zero?
+
+        eligible_workfree_days -= 1
       end
+
+      leftover_service_days -= 1
     end
 
     check_date
   end
 
-  # Takes in a block that should return false if there is no workfree_day available
-  # and that should subtract a day and return true if there is a workfree_day available
-  def day_passes(day)
-    return false if company_holiday_day?(day)
+  def type_of_day(day)
+    return :company_holiday_day if company_holiday_day?(day)
+    return :workfree_day if workfree_day?(day)
 
-    if workfree_day?(day)
-      return false unless yield
-    end
-    true
+    :work_day
   end
 
   # def ending_date_from_loop(start_date, leftover_service_days)
