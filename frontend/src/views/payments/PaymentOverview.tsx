@@ -28,7 +28,7 @@ export class PaymentOverview extends React.Component<Props, State> {
   }
 
   // paymentColumns: Array<Column<Payment>>;
-  // reportSheetColumns: Array<Column<ExpenseSheet>>;
+  // expenseSheetColumns: Array<Column<ExpenseSheet>>;
   //
   // constructor(props: Props) {
   //   super(props);
@@ -46,7 +46,7 @@ export class PaymentOverview extends React.Component<Props, State> {
   //     },
   //   ];
   //
-  //   this.reportSheetColumns = [
+  //   this.expenseSheetColumns = [
   //     {
   //       id: 'zdp',
   //       label: 'ZDP',
@@ -106,7 +106,7 @@ export class PaymentOverview extends React.Component<Props, State> {
   //       {this.props.expenseSheetStore!.toBePaidExpenseSheets.length > 0 ? (
   //         <>
   //           <OverviewTable
-  //             columns={this.reportSheetColumns}
+  //             columns={this.expenseSheetColumns}
   //             data={this.props.expenseSheetStore!.toBePaidExpenseSheets}
   //             renderActions={(r: ExpenseSheet) => <Link to={'/expense_sheets/' + r.id}>Spesenblatt</Link>}
   //           />

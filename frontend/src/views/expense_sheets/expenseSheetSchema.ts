@@ -66,11 +66,11 @@ export const expenseSheetSchema = yup.object({
   safe_override: yup.bool(),
 });
 
-interface ReportSheetSchemaWithSafeOverride extends ExpenseSheet {
+interface ExpenseSheetSchemaWithSafeOverride extends ExpenseSheet {
   safe_override: boolean;
 }
 
-const validateTotal = (parent: ReportSheetSchemaWithSafeOverride) => {
+const validateTotal = (parent: ExpenseSheetSchemaWithSafeOverride) => {
   if (parent.safe_override) {
     return true;
   }

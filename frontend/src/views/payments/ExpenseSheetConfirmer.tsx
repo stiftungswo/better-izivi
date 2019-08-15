@@ -26,7 +26,7 @@ interface State {
 
 @inject('mainStore', 'paymentStore', 'expenseSheetStore')
 @observer
-export class ReportSheetConfirmer extends React.Component<Props, State> {
+export class ExpenseSheetConfirmer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 

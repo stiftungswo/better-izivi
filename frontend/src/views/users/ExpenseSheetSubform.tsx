@@ -17,7 +17,7 @@ interface Props extends WithSheet<typeof styles> {
   user: User;
 }
 
-interface ReportSheetSubformState {
+interface ExpenseSheetSubformState {
   openTooltips: boolean[];
 }
 
@@ -37,7 +37,7 @@ const styles = () =>
   });
 
 @inject('mainStore')
-class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformState> {
+class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubformState> {
   private static getExpenseSheetColumnProps({ state }: ShortExpenseSheetListing) {
     switch (state) {
       case ExpenseSheetState.payment_in_progress:
@@ -85,7 +85,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
     const { user, mainStore, classes } = this.props;
 
     return (
-      <div id="report-sheets">
+      <div id="expense-sheets">
         <h3 className="mb-3">Spesenblätter</h3>
         {user && (
           <OverviewTable
@@ -159,7 +159,7 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
   }
 
   private formatExpenseSheetStateColumn(expenseSheet: ShortExpenseSheetListing) {
-    const { icon, tooltip, color } = ReportSheetSubformInner.getExpenseSheetColumnProps(expenseSheet);
+    const { icon, tooltip, color } = ExpenseSheetSubformInner.getExpenseSheetColumnProps(expenseSheet);
 
     return (
       <>
@@ -183,4 +183,4 @@ class ReportSheetSubformInner extends React.Component<Props, ReportSheetSubformS
   }
 }
 
-export const ExpenseSheetSubform = injectSheet(styles)(ReportSheetSubformInner);
+export const ExpenseSheetSubform = injectSheet(styles)(ExpenseSheetSubformInner);

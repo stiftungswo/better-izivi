@@ -8,7 +8,7 @@ import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
 import { Column, PaymentEntry } from '../../types';
-import { ReportSheetConfirmer } from './ReportSheetConfirmer';
+import { ExpenseSheetConfirmer } from './ExpenseSheetConfirmer';
 
 interface PaymentDetailRouterProps {
   id?: string;
@@ -81,7 +81,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
             <OverviewTable
               columns={this.columns}
               data={this.props.paymentStore!.payment!.payment_entries}
-              renderActions={(p: PaymentEntry) => <ReportSheetConfirmer paymentEntry={p} />}
+              renderActions={(p: PaymentEntry) => <ExpenseSheetConfirmer paymentEntry={p} />}
             />
           </>
         )}

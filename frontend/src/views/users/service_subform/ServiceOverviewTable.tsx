@@ -109,13 +109,13 @@ export default (params: OverviewTableParams) => {
           label: '',
           format: (service: Service) => (
             <>
-              <span id={`reportSheetState-${service.id}`}>
+              <span id={`expenseSheetState-${service.id}`}>
                 <FontAwesomeIcon
                   icon={service.confirmation_date ? CheckSquareRegularIcon : SquareRegularIcon}
                   color={service.confirmation_date ? 'green' : 'black'}
                 />
               </span>
-              <UncontrolledTooltip target={`reportSheetState-${service.id}`}>Aufgebot erhalten</UncontrolledTooltip>
+              <UncontrolledTooltip target={`expenseSheetState-${service.id}`}>Aufgebot erhalten</UncontrolledTooltip>
             </>
           ),
         },

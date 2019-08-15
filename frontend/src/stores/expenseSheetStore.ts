@@ -22,8 +22,8 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
     return this.expenseSheet;
   }
 
-  set entity(reportSheet: ExpenseSheet | undefined) {
-    this.expenseSheet = reportSheet;
+  set entity(expenseSheet: ExpenseSheet | undefined) {
+    this.expenseSheet = expenseSheet;
   }
 
   @observable
