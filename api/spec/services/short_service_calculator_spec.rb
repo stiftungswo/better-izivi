@@ -109,24 +109,78 @@ RSpec.describe ShortServiceCalculator, type: :service do
     let(:ending) { beginning }
     let(:calculate_chargeable_service_days) { short_service_calculator.calculate_chargeable_service_days(ending) }
 
-    context 'with company holidays' do
-      let(:ending) { beginning + 7.days }
+    context 'with company holidays d' do
+      let(:company_holiday_beginning) { beginning }
+      let(:company_holiday_ending) { company_holiday_beginning }
 
       before do
-        create :holiday, beginning: beginning, ending: beginning + 7.days
+        create :holiday, beginning: company_holiday_beginning, ending: company_holiday_ending
       end
 
-      it { is_expected.to eq 0 }
+      context 'with a long company holiday' do
+        let(:ending) { beginning + 8.days }
+        let(:company_holiday_beginning) { beginning }
+        let(:company_holiday_ending) { company_holiday_beginning + 7.days }
+
+        it { is_expected.to eq 1 }
+      end
+
+      context 'with company holiday on ending' do
+        let(:ending) { beginning + 10.days }
+        let(:company_holiday_beginning) { ending }
+
+        it { is_expected.to eq 9 }
+      end
+
+      context 'with two company holiday days on ending' do
+        let(:ending) { beginning + 11.days }
+        let(:company_holiday_beginning) { ending - 1.day }
+        let(:company_holiday_ending) { ending }
+
+        it { is_expected.to eq 9 }
+      end
     end
 
     context 'with public holidays' do
-      let(:ending) { beginning + 9.days }
+      let(:public_holiday_beginning) { beginning }
+      let(:public_holiday_ending) { public_holiday_beginning }
 
       before do
-        create :holiday, :public_holiday, beginning: beginning, ending: beginning + 1.day
+        create :holiday, :public_holiday, beginning: public_holiday_beginning, ending: public_holiday_ending
       end
 
-      it { is_expected.to eq 7 }
+      context 'with a public holiday on ending which affects the service days' do
+        let(:ending) { beginning + 10.days }
+        let(:public_holiday_beginning) { ending }
+
+        it { is_expected.to eq 9 }
+      end
+
+      context 'with a public holiday on ending which doesnt affect the service days' do
+        let(:ending) { beginning + 11.days }
+        let(:public_holiday_beginning) { ending }
+
+        it { is_expected.to eq 11 }
+      end
+
+      context 'with a public holiday on beginning' do
+        let(:ending) { beginning + 7.days }
+        let(:public_holiday_beginning) { beginning }
+        let(:public_holiday_ending) { public_holiday_beginning + 1.day }
+
+        it { is_expected.to eq 4 }
+      end
+    end
+
+    context 'with public and company holidays' do
+      let(:ending) { beginning + 7.days }
+
+      before do
+        create :holiday, :public_holiday, beginning: beginning, ending: beginning
+        create :holiday, beginning: ending, ending: ending
+      end
+
+      it { is_expected.to eq 4 }
     end
 
     context 'when service end is within weekdays of beginning week' do

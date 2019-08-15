@@ -52,23 +52,36 @@ class ShortServiceCalculator
   # end
 
   def calculate_chargeable_service_days(ending_date)
-    # also implement loop
-
     duration = (ending_date - @beginning_date).to_i + 1
-    temp_service_days = duration - HolidayCalculator.new(@beginning_date, ending_date).calculate_company_holiday_days
 
-    eligible_workfree_days = eligible_workfree_days(temp_service_days)
-    workfree_days = workfree_days_in_range(ending_date)
-    days_to_compensate = [0, workfree_days - eligible_workfree_days].max
+    max_service_days = duration - HolidayCalculator.new(@beginning_date, ending_date).calculate_company_holiday_days
+    max_eligible_workfree_days = eligible_workfree_days(max_service_days)
 
-    temp_service_days -= days_to_compensate
-    temp_service_days - (eligible_workfree_days - eligible_workfree_days(temp_service_days))
+    days_to_compensate = [0, workfree_days_in_range(ending_date) - max_eligible_workfree_days].max
+    temp_service_days = max_service_days - days_to_compensate
+
+    temp_service_days - (max_eligible_workfree_days - eligible_workfree_days(temp_service_days))
   end
+
+  # def calculate_chargeable_service_days(ending_date)
+  #   # also implement loop
+  #
+  #   duration = (ending_date - @beginning_date).to_i + 1
+  #   temp_service_days = duration - HolidayCalculator.new(@beginning_date, ending_date).calculate_company_holiday_days
+  #
+  #   eligible_workfree_days = eligible_workfree_days(temp_service_days)
+  #   workfree_days = workfree_days_in_range(ending_date)
+  #   days_to_compensate = [0, workfree_days - eligible_workfree_days].max
+  #
+  #   temp_service_days -= days_to_compensate
+  #   temp_service_days - (eligible_workfree_days - eligible_workfree_days(temp_service_days))
+  # end
 
   private
 
   def ending_date_from_loop(start_date, leftover_service_days)
     eligible_workfree_days = eligible_workfree_days(leftover_service_days)
+    # Subtracting 1 day because the loop checks the following day
     check_date = start_date - 1.day
 
     until leftover_service_days.zero?
