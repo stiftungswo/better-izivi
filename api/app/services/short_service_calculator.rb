@@ -21,36 +21,6 @@ class ShortServiceCalculator
     ending_date_from_loop(@beginning_date, required_service_days)
   end
 
-  # def loop_to_ending_date(ending_date, leftover_service_days)
-  #   p "Looping", ending_date, leftover_service_days
-  #
-  #   return loop_to_ending_date(ending_date + 1, leftover_service_days) if company_holiday_day?(ending_date)
-  #
-  #   if workfree_day?(ending_date)
-  #     return loop_to_ending_date(ending_date + 1, leftover_service_days) unless @eligible_workfree_days.positive?
-  #
-  #     @eligible_workfree_days -= 1
-  #   end
-  #
-  #   return ending_date if leftover_service_days == 1
-  #
-  #   loop_to_ending_date(ending_date + 1, leftover_service_days - 1)
-  # end
-
-  # def loop_to_ending_date(ending_date, leftover_service_days)
-  #   return ending_date if leftover_service_days.zero?
-  #
-  #   check_date = ending_date + 1.day
-  #   return loop_to_ending_date(check_date, leftover_service_days) if company_holiday_day?(check_date)
-  #
-  #   if workfree_day?(check_date)
-  #     return loop_to_ending_date(check_date, leftover_service_days) unless @eligible_workfree_days.positive?
-  #
-  #     @eligible_workfree_days -= 1
-  #   end
-  #   loop_to_ending_date(check_date, leftover_service_days - 1)
-  # end
-
   def calculate_chargeable_service_days(ending_date)
     duration = (ending_date - @beginning_date).to_i + 1
 
@@ -63,24 +33,11 @@ class ShortServiceCalculator
     temp_service_days - (max_eligible_workfree_days - eligible_workfree_days(temp_service_days))
   end
 
-  # def calculate_chargeable_service_days(ending_date)
-  #   # also implement loop
-  #
-  #   duration = (ending_date - @beginning_date).to_i + 1
-  #   temp_service_days = duration - HolidayCalculator.new(@beginning_date, ending_date).calculate_company_holiday_days
-  #
-  #   eligible_workfree_days = eligible_workfree_days(temp_service_days)
-  #   workfree_days = workfree_days_in_range(ending_date)
-  #   days_to_compensate = [0, workfree_days - eligible_workfree_days].max
-  #
-  #   temp_service_days -= days_to_compensate
-  #   temp_service_days - (eligible_workfree_days - eligible_workfree_days(temp_service_days))
-  # end
-
   private
 
   def ending_date_from_loop(start_date, leftover_service_days)
     eligible_workfree_days = eligible_workfree_days(leftover_service_days)
+
     # Subtracting 1 day because the loop checks the following day
     check_date = start_date - 1.day
 
