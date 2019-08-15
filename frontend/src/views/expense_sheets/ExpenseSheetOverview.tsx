@@ -78,7 +78,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
         <Button outline className="mb-4 d-block" onClick={() => this.toggle()}>
           Spesenstatistik generieren
         </Button>
-        <ButtonGroup>
+        <ButtonGroup className="mb-4">
           <Button
             outline={this.state.expenseSheetStateFilter !== null}
             color={this.state.expenseSheetStateFilter === null ? 'primary' : 'secondary'}
@@ -102,7 +102,6 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
           </Button>
         </ButtonGroup>
         <ExpenseSheetStatisticFormDialog isOpen={this.state.modalOpen} mainStore={this.props.mainStore!} toggle={() => this.toggle()}/>
-        <br/> <br/>
         <OverviewTable
           columns={this.columns}
           data={this.props.expenseSheetStore!.expenseSheets}
