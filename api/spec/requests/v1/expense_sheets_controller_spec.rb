@@ -63,10 +63,10 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           end
 
           before do
-            create(:expense_sheet, :payment_in_progress)
-            create(:expense_sheet, :paid)
-            create(:expense_sheet, :ready_for_payment, beginning: excluded_beginning, ending: excluded_ending)
-            create(:expense_sheet, beginning: excluded_beginning, ending: excluded_ending)
+            create :expense_sheet, :payment_in_progress
+            create :expense_sheet, :paid
+            create :expense_sheet, :ready_for_payment, beginning: excluded_beginning, ending: excluded_ending
+            create :expense_sheet, beginning: excluded_beginning, ending: excluded_ending
           end
 
           it 'returns only the filtered expense_sheets' do
