@@ -5,8 +5,7 @@ import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
 import { ExpenseSheetsReadyForPaymentTable } from './tables/ExpenseSheetsReadyForPaymentTable';
-import { PaidPaymentsTable } from './tables/PaidPaymentsTable';
-import { PaymentsInProgressTable } from './tables/PaymentsInProgressTable';
+import { PaymentsTable } from './tables/PaymentsTable';
 
 interface Props {
   mainStore?: MainStore;
@@ -46,10 +45,10 @@ export class PaymentOverview extends React.Component<Props, State> {
         />
 
         <h1 className="mb-4 mt-5">In Auszahlung</h1>
-        <PaymentsInProgressTable payments={this.props.paymentStore!.paymentsInProgress}/>
+        <PaymentsTable payments={this.props.paymentStore!.paymentsInProgress} emptyNotice={'Keine Zahlung in Bearbeitung'}/>
 
         <h1 className="mb-4 mt-5">Archiv</h1>
-        <PaidPaymentsTable payments={this.props.paymentStore!.paidPayments}/>
+        <PaymentsTable payments={this.props.paymentStore!.paidPayments} emptyNotice={'Keine getätigten Zahlungen'}/>
       </IziviContent>
     );
   }

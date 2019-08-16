@@ -10,7 +10,7 @@ import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ExpenseSheetState, PaymentExpenseSheet } from '../../types';
+import { ExpenseSheetState, Payment, PaymentExpenseSheet } from '../../types';
 import { Formatter } from '../../utilities/formatter';
 import { stateTranslation } from '../../utilities/helpers';
 import { CheckSolidIcon, DownloadIcon, ExclamationSolidIcon } from '../../utilities/Icon';
@@ -96,9 +96,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
 
   render() {
     const payment = this.props.paymentStore!.payment;
-    const title = payment
-      ? `Auszahlung vom ${this.props.mainStore!.formatDate(PaymentStore.convertPaymentTimestamp(payment.payment_timestamp))}`
-      : `Details zur Auszahlung ${this.props.match.params.timestamp}`;
+    const title = this.getTitle(payment);
 
     return (
       <IziviContent card loading={this.state.loading}>
@@ -106,13 +104,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
         <h1 className="mb-4">{title}</h1>
         {payment && (
           <>
-            <Button
-              color="primary"
-              href={this.props.mainStore!.apiURL(`payments/${payment!.payment_timestamp}.xml`)}
-              tag="a"
-              className="mb-4"
-              target="_blank"
-            >
+            <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
               <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
             </Button>
             <div className="float-right">
@@ -127,6 +119,16 @@ class PaymentDetailInner extends React.Component<Props, State> {
         )}
       </IziviContent>
     );
+  }
+
+  private getTitle(payment?: Payment) {
+    return payment
+      ? `Auszahlung vom ${this.props.mainStore!.formatDate(PaymentStore.convertPaymentTimestamp(payment.payment_timestamp))}`
+      : `Details zur Auszahlung ${this.props.match.params.timestamp}`;
+  }
+
+  private getPainURL({ payment_timestamp }: Payment) {
+    return this.props.mainStore!.apiURL(`payments/${payment_timestamp}.xml`);
   }
 }
 

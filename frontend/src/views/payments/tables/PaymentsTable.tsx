@@ -18,14 +18,16 @@ const COLUMNS = [
   },
 ];
 
-export const PaymentsTable = (props: { payments: Payment[] }) => {
-  return (
-    <OverviewTable
-      columns={COLUMNS}
-      data={props.payments}
-      renderActions={(payment: Payment) => (
-        <Link to={'/payments/' + payment.payment_timestamp}>Details</Link>
-      )}
-    />
-  );
+export const PaymentsTable = ({ payments, emptyNotice }: { payments: Payment[], emptyNotice: string }) => {
+  if (payments.length <= 0) {
+    return <span className="text-muted">{emptyNotice}</span>;
+  } else {
+    return (
+      <OverviewTable
+        columns={COLUMNS}
+        data={payments}
+        renderActions={({ payment_timestamp }: Payment) => <Link to={'/payments/' + payment_timestamp}>Details</Link>}
+      />
+    );
+  }
 };
