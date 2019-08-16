@@ -1,4 +1,6 @@
+import { get } from 'lodash';
 import { inject, observer } from 'mobx-react';
+import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
@@ -7,7 +9,7 @@ import { OverviewTable } from '../../layout/OverviewTable';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { Column, ExpenseSheet, Payment } from '../../types';
+import { Column, ExpenseSheetListing, Payment } from '../../types';
 
 interface Props {
   mainStore?: MainStore;
@@ -19,12 +21,11 @@ interface State {
   loading: boolean;
 }
 
-// TODO Implement this and load user from store
 @inject('mainStore', 'paymentStore', 'expenseSheetStore')
 @observer
 export class PaymentOverview extends React.Component<Props, State> {
   paymentColumns: Array<Column<Payment>>;
-  expenseSheetColumns: Array<Column<ExpenseSheet>>;
+  expenseSheetColumns: Array<Column<ExpenseSheetListing>>;
 
   constructor(props: Props) {
     super(props);
@@ -33,12 +34,12 @@ export class PaymentOverview extends React.Component<Props, State> {
       {
         id: 'created_at',
         label: 'Datum',
-        format: (p: Payment) => this.props.mainStore!.formatDate(p.created_at),
+        format: (payment: Payment) => this.props.mainStore!.formatDate(PaymentStore.convertPaymentTimestamp(payment.payment_timestamp)),
       },
       {
         id: 'amount',
         label: 'Betrag',
-        format: (p: Payment) => this.props.mainStore!.formatCurrency(p.amount),
+        format: (payment: Payment) => this.props.mainStore!.formatCurrency(payment.total),
       },
     ];
 
@@ -46,41 +47,40 @@ export class PaymentOverview extends React.Component<Props, State> {
       {
         id: 'zdp',
         label: 'ZDP',
-        format: (r: ExpenseSheet) => `(r.user ? r.user.zdp : '')`,
+        format: (expenseSheet: ExpenseSheetListing) => get(expenseSheet, 'user.zdp', ''),
       },
       {
         id: 'full_name',
         label: 'Name',
-        format: (r: ExpenseSheet) => "(r.user ? `${r.user.first_name} ${r.user.last_name}` : '')",
+        format: (expenseSheet: ExpenseSheetListing) => get(expenseSheet, 'user.full_name', ''),
       },
       {
         id: 'iban',
         label: 'IBAN',
-        format: (r: ExpenseSheet) => "(r.user ? r.user.bank_iban : '')",
+        format: (expenseSheet: ExpenseSheetListing) => get(expenseSheet, 'user.bank_iban', ''),
       },
       {
         id: 'total',
         label: 'Betrag',
-        format: (r: ExpenseSheet) => this.props.mainStore!.formatCurrency(r.total),
+        format: (expenseSheet: ExpenseSheetListing) => this.props.mainStore!.formatCurrency(expenseSheet.total),
       },
       {
         id: 'notices',
         label: 'Bemerkungen',
-        format: (r: ExpenseSheet) => (
+        format: (expenseSheet: ExpenseSheetListing) => (
           <>
-            Blubb
-            {/*{r.user && (r.user.address === '' || r.user.city === '' || !r.user.zip) && (*/}
-            {/*  <>*/}
-            {/*    <p>Adresse unvollständig!</p>*/}
-            {/*    <br />*/}
-            {/*  </>*/}
-            {/*)}*/}
-            {/*{!this.props.mainStore!.validateIBAN(r.user ? r.user.bank_iban : '') && (*/}
-            {/*  <>*/}
-            {/*    <p>IBAN hat ein ungültiges Format!</p>*/}
-            {/*    <br />*/}
-            {/*  </>*/}
-            {/*)}*/}
+            {expenseSheet.user && (expenseSheet.user.address === '' || expenseSheet.user.city === '' || !expenseSheet.user.zip) && (
+              <>
+                <p>Adresse unvollständig!</p>
+                <br/>
+              </>
+            )}
+            {!this.props.mainStore!.validateIBAN(expenseSheet.user ? expenseSheet.user.bank_iban : '') && (
+              <>
+                <p>IBAN hat ein ungültiges Format!</p>
+                <br/>
+              </>
+            )}
           </>
         ),
       },
@@ -105,7 +105,7 @@ export class PaymentOverview extends React.Component<Props, State> {
             <OverviewTable
               columns={this.expenseSheetColumns}
               data={this.props.expenseSheetStore!.toBePaidExpenseSheets}
-              renderActions={(r: ExpenseSheet) => <Link to={'/expense_sheets/' + r.id}>Spesenblatt</Link>}
+              renderActions={({ id }: ExpenseSheetListing) => <Link to={'/expense_sheets/' + id}>Spesenblatt</Link>}
             />
             <Button
               color={'primary'}
@@ -119,15 +119,15 @@ export class PaymentOverview extends React.Component<Props, State> {
         ) : (
           'Keine Spesen zur Auszahlung bereit.'
         )}
-        <br />
-        <br />
-        <h1>Archiv</h1> <br />
+        <br/>
+        <br/>
+        <h1>Archiv</h1> <br/>
         <OverviewTable
           columns={this.paymentColumns}
           data={this.props.paymentStore!.payments}
-          renderActions={(p: Payment) => (
+          renderActions={(payment: Payment) => (
             <>
-              <Link to={'/payments/' + p.id}>Details</Link>
+              <Link to={'/payments/' + payment.payment_timestamp}>Details</Link>
             </>
           )}
         />

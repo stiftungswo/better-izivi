@@ -5,12 +5,12 @@ import Button from 'reactstrap/lib/Button';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ExpenseSheetState, PaymentEntry } from '../../types';
+import { ExpenseSheetState, PaymentExpenseSheet } from '../../types';
 import { CheckSolidIcon, ExclamationSolidIcon, SquareRegularIcon, SyncSolidIcon } from '../../utilities/Icon';
 
 interface Props {
   mainStore?: MainStore;
-  paymentEntry: PaymentEntry;
+  paymentExpenseSheet: PaymentExpenseSheet;
   paymentStore?: PaymentStore;
   expenseSheetStore?: ExpenseSheetStore;
 }
@@ -31,7 +31,7 @@ export class ExpenseSheetConfirmer extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      expenseSheetState: this.props.paymentEntry.expense_sheet.state,
+      expenseSheetState: ExpenseSheetState.payment_in_progress, // TODO: this.props.paymentExpenseSheet.expense_sheet.state,
     };
   }
 
@@ -53,7 +53,7 @@ export class ExpenseSheetConfirmer extends React.Component<Props, State> {
         return (
           <>
             <Button
-              onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, ExpenseSheetState.paid)}
+              onClick={() => this.updateState(this.props.paymentExpenseSheet.id!, ExpenseSheetState.paid)}
               color={'link'}
               style={{ margin: 0, padding: 0 }}
             >
@@ -67,7 +67,7 @@ export class ExpenseSheetConfirmer extends React.Component<Props, State> {
       case ExpenseSheetState.ready_for_payment:
         return (
           <Button
-            onClick={() => this.updateState(this.props.paymentEntry.expense_sheet.id!, ExpenseSheetState.paid)}
+            onClick={() => this.updateState(this.props.paymentExpenseSheet.id!, ExpenseSheetState.paid)}
             color={'link'}
             style={{ margin: 0, padding: 0 }}
           >

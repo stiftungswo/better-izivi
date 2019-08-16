@@ -7,7 +7,7 @@ import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { Column, PaymentEntry } from '../../types';
+import { Column, PaymentExpenseSheet } from '../../types';
 import { ExpenseSheetConfirmer } from './ExpenseSheetConfirmer';
 
 interface PaymentDetailRouterProps {
@@ -26,7 +26,7 @@ interface State {
 @inject('mainStore', 'paymentStore')
 @observer
 class PaymentDetailInner extends React.Component<Props, State> {
-  columns: Array<Column<PaymentEntry>>;
+  columns: Array<Column<PaymentExpenseSheet>>;
 
   constructor(props: Props) {
     super(props);
@@ -36,25 +36,25 @@ class PaymentDetailInner extends React.Component<Props, State> {
       {
         id: 'zdp',
         label: 'ZDP',
-        format: (p: PaymentEntry) => p.user.zdp,
+        format: (p: PaymentExpenseSheet) => p.user.zdp,
       },
       {
         id: 'full_name',
         label: 'Name',
-        format: (p: PaymentEntry) => (
-          <Link to={'/users/' + p.user.id}>{p.user.first_name} {p.user.last_name}</Link>
+        format: (expenseSheet: PaymentExpenseSheet) => (
+          <Link to={'/users/' + expenseSheet.user.id}>{expenseSheet.user.full_name}</Link>
         ),
       },
       {
         id: 'iban',
         label: 'IBAN',
-        format: (p: PaymentEntry) => p.user.bank_iban,
+        format: (p: PaymentExpenseSheet) => p.user.bank_iban,
       },
       {
         id: 'total',
         label: 'Betrag',
-        format: (p: PaymentEntry) => (
-          <Link to={'/expense_sheets/' + p.expense_sheet.id}>{this.props.mainStore!.formatCurrency(p.expense_sheet.total)}</Link>
+        format: (expenseSheet: PaymentExpenseSheet) => (
+          <Link to={'/expense_sheets/' + expenseSheet.id}>{this.props.mainStore!.formatCurrency(expenseSheet.total)}</Link>
         ),
       },
     ];
@@ -67,21 +67,21 @@ class PaymentDetailInner extends React.Component<Props, State> {
   render() {
     const payment = this.props.paymentStore!.payment;
     const title = payment
-      ? `Auszahlung vom ${this.props.mainStore!.formatDate(payment.created_at)}`
+      ? `Auszahlung vom ${this.props.mainStore!.formatDate(PaymentStore.convertPaymentTimestamp(payment.payment_timestamp))}`
       : `Details zur Auszahlung ${this.props.match.params.id}`;
 
     return (
       <IziviContent card loading={this.state.loading} title={title}>
         {payment && (
           <>
-            <Button color={'primary'} href={this.props.mainStore!.apiURL('payments/' + payment!.id + '/xml')} tag={'a'} target={'_blank'}>
+            <Button color="primary" href={this.props.mainStore!.apiURL(`payments/${payment!.payment_timestamp}.xml`)} tag="a" target="_blank">
               Zahlung.xml erneut herunterladen
             </Button>{' '}
             <br /> <br />
             <OverviewTable
               columns={this.columns}
-              data={this.props.paymentStore!.payment!.payment_entries}
-              renderActions={(p: PaymentEntry) => <ExpenseSheetConfirmer paymentEntry={p} />}
+              data={this.props.paymentStore!.payment!.expense_sheets}
+              renderActions={(p: PaymentExpenseSheet) => <ExpenseSheetConfirmer paymentExpenseSheet={p} />}
             />
           </>
         )}

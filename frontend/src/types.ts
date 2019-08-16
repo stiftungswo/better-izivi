@@ -10,15 +10,21 @@ export interface Holiday {
 
 export interface Payment {
   id?: number;
-  amount: number;
-  created_at: string;
-  payment_entries: PaymentEntry[];
+  total: number;
+  state: 'payment_in_progress' | 'paid';
+  payment_timestamp: number;
+  expense_sheets: PaymentExpenseSheet[];
 }
 
-export interface PaymentEntry {
+export interface PaymentExpenseSheet {
   id?: number;
-  expense_sheet: ExpenseSheet;
-  user: User;
+  total: number;
+  user: {
+    id: number;
+    bank_iban: string;
+    full_name: string;
+    zdp: number;
+  };
 }
 
 export interface ExpenseSheet {
@@ -39,7 +45,6 @@ export interface ExpenseSheet {
   paid_vacation_comment: string;
   paid_vacation_days: number;
   payment_timestamp?: Date;
-  service?: Service;
   service_id: number;
   sick_comment: string;
   sick_days: number;
@@ -83,10 +88,15 @@ export interface ShortExpenseSheetListing {
 }
 
 export interface ExpenseSheetListing extends ShortExpenseSheetListing {
+  total: number;
   user: {
     id: number;
+    address: string;
+    bank_iban: string;
+    city: string;
     full_name: string;
     zdp: number;
+    zip: number;
   };
 }
 

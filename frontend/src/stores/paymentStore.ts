@@ -1,4 +1,5 @@
 import { computed, observable } from 'mobx';
+import moment from 'moment';
 import { Payment } from '../types';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
@@ -25,6 +26,10 @@ export class PaymentStore extends DomainStore<Payment> {
     this.payment = payment;
   }
 
+  static convertPaymentTimestamp(timestamp: number) {
+    return moment(timestamp * 1000);
+  }
+
   @observable
   payments: Payment[] = [];
 
@@ -35,13 +40,18 @@ export class PaymentStore extends DomainStore<Payment> {
     super(mainStore);
   }
 
+  protected async doPost(): Promise<void> {
+    const res = await this.mainStore.api.post<Payment>('/payments');
+    this.payment = res.data;
+  }
+
   protected async doFetchAll(): Promise<void> {
     const res = await this.mainStore.api.get<Payment[]>('/payments');
     this.payments = res.data;
   }
 
-  protected async doFetchOne(id: number): Promise<void> {
-    const res = await this.mainStore.api.get<Payment>('/payments/' + id);
+  protected async doFetchOne(timestamp: number): Promise<void> {
+    const res = await this.mainStore.api.get<Payment>('/payments/' + timestamp);
     this.payment = res.data;
   }
 }
