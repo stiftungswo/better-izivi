@@ -17,7 +17,7 @@ ServiceSpecification.create!(
       accommodation_expenses: 0,
       location: :zurich,
       active: true
-    }.merge(default_day_expenses),
+    },
     {
       name: 'Feldarbeiten (ab 06.07.2016)',
       identification_number: '72466',
@@ -26,7 +26,7 @@ ServiceSpecification.create!(
       accommodation_expenses: 0,
       location: :zurich,
       active: true
-    }.merge(default_day_expenses),
+    },
     {
       name: 'VS Feldarbeiten',
       identification_number: '82844',
@@ -35,6 +35,6 @@ ServiceSpecification.create!(
       accommodation_expenses: 0,
       location: :valais,
       active: true
-    }.merge(default_day_expenses)
-  ]
+    }
+  ].map { |service_specification| service_specification.merge(default_day_expenses) }
 )
