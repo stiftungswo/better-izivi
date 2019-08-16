@@ -18,18 +18,6 @@ export const FooterSegment = expenseSheetFormSegment(
       />
       <WiredField disabled horizontal component={CurrencyField} name={'total'} label={'Total'}/>
       <WiredField horizontal component={TextField} name={'bank_account_number'} label={'Konto-Nr.'}/>
-      <WiredField
-        horizontal
-        component={SelectField}
-        name={'state'}
-        options={[
-          { id: ExpenseSheetState.open, name: 'Offen' },
-          { id: ExpenseSheetState.ready_for_payment, name: 'Bereit für Auszahlung' },
-          { id: ExpenseSheetState.payment_in_progress, name: 'Auszahlung in Verarbeitung' },
-          { id: ExpenseSheetState.paid, name: 'Erledigt' },
-        ]}
-        label={'Status'}
-      />
     </>
   ),
 );

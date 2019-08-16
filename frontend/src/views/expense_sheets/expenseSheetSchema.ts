@@ -43,7 +43,6 @@ export const expenseSheetSchema = yup.object({
     }),
   sick_comment: yup.string().nullable(true),
   beginning: apiDate().required(),
-  state: yup.string().required().oneOf(Object.values(ExpenseSheetState)),
   paid_vacation_days: yup
     .number()
     .required()

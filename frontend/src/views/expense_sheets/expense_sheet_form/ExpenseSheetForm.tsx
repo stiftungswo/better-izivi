@@ -65,6 +65,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
             <FormSegments.DrivingExpensesSegment/>
             <FormSegments.ExtraordinaryExpensesSegment/>
             <FormSegments.FooterSegment/>
+            <FormSegments.StateSegment expenseSheet={expenseSheet}/>
 
             <ExpenseSheetFormButtons
               safeOverride={this.state.safeOverride}
