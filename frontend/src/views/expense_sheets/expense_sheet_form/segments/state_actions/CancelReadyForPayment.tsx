@@ -3,7 +3,7 @@ import * as React from 'react';
 import Button from 'reactstrap/lib/Button';
 import { ExpenseSheetStore } from '../../../../../stores/expenseSheetStore';
 import { ExpenseSheetState } from '../../../../../types';
-import { DoubleAngleLeftIcon} from '../../../../../utilities/Icon';
+import { DoubleAngleLeftIcon } from '../../../../../utilities/Icon';
 
 interface CancelReadyForPaymentProps {
   expenseSheetStore: ExpenseSheetStore;
