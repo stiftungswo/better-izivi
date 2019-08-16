@@ -1,10 +1,8 @@
 import * as React from 'react';
-import Form from 'reactstrap/lib/Form';
 import { CheckboxField } from '../../../../form/CheckboxField';
-import { NumberField, SelectField, TextField } from '../../../../form/common';
+import { TextField } from '../../../../form/common';
 import CurrencyField from '../../../../form/CurrencyField';
 import { WiredField } from '../../../../form/formik';
-import { ExpenseSheetState } from '../../../../types';
 import { expenseSheetFormSegment } from './expenseSheetFormSegment';
 
 export const FooterSegment = expenseSheetFormSegment(

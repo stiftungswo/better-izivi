@@ -4,11 +4,9 @@ import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
 import Row from 'reactstrap/lib/Row';
-import { SolidHorizontalRow } from '../../../layout/SolidHorizontalRow';
 import { MainStore } from '../../../stores/mainStore';
 import { ExpenseSheet, Service } from '../../../types';
 import {
-  CheckSquareRegularIcon,
   ExclamationSolidIcon,
   PrintSolidIcon,
   SaveRegularIcon,
