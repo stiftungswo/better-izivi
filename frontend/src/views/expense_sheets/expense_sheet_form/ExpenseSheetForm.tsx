@@ -37,7 +37,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
   }
 
   render() {
-    const { mainStore, onSubmit, expenseSheet, service, hints, title } = this.props;
+    const { mainStore, onSubmit, expenseSheet, service, hints, title, expenseSheetStore } = this.props;
 
     const template = {
       safe_override: false,
@@ -65,7 +65,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
             <FormSegments.DrivingExpensesSegment/>
             <FormSegments.ExtraordinaryExpensesSegment/>
             <FormSegments.FooterSegment/>
-            <FormSegments.StateSegment expenseSheet={expenseSheet}/>
+            <FormSegments.StateSegment expenseSheetState={expenseSheet.state} expenseSheetStore={expenseSheetStore!}/>
 
             <ExpenseSheetFormButtons
               safeOverride={this.state.safeOverride}
