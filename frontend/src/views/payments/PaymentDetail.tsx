@@ -3,14 +3,17 @@ import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import Badge from 'reactstrap/lib/Badge';
 import Button from 'reactstrap/lib/Button';
+import ButtonGroup from 'reactstrap/lib/ButtonGroup';
 import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { PaymentExpenseSheet } from '../../types';
+import { ExpenseSheetState, PaymentExpenseSheet } from '../../types';
 import { Formatter } from '../../utilities/formatter';
-import { DownloadIcon } from '../../utilities/Icon';
+import { stateTranslation } from '../../utilities/helpers';
+import { CheckSolidIcon, DownloadIcon, ExclamationSolidIcon } from '../../utilities/Icon';
 
 interface PaymentDetailRouterProps {
   timestamp?: string;
@@ -62,6 +65,35 @@ class PaymentDetailInner extends React.Component<Props, State> {
     };
   }
 
+  actionButton() {
+    const payment = this.props.paymentStore!.payment!;
+
+    if (payment.state === ExpenseSheetState.payment_in_progress) {
+      return (
+        <ButtonGroup>
+          <Button
+            color="success"
+            onClick={() => this.props.paymentStore!.confirmPayment()}
+            className="mb-4"
+            target="_blank"
+          >
+            <FontAwesomeIcon className="mr-1" icon={CheckSolidIcon}/> Zahlung bestätigen
+          </Button>
+          <Button
+            color="danger"
+            onClick={() => this.props.paymentStore!.cancelPayment()}
+            className="mb-4"
+            target="_blank"
+          >
+            <FontAwesomeIcon className="mr-1" icon={ExclamationSolidIcon}/> Zahlung abbrechen
+          </Button>
+        </ButtonGroup>
+      );
+    } else {
+      return <></>;
+    }
+  }
+
   render() {
     const payment = this.props.paymentStore!.payment;
     const title = payment
@@ -69,7 +101,9 @@ class PaymentDetailInner extends React.Component<Props, State> {
       : `Details zur Auszahlung ${this.props.match.params.timestamp}`;
 
     return (
-      <IziviContent card loading={this.state.loading} title={title}>
+      <IziviContent card loading={this.state.loading}>
+        <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state as ExpenseSheetState) : ''}</Badge>
+        <h1 className="mb-4">{title}</h1>
         {payment && (
           <>
             <Button
@@ -81,6 +115,9 @@ class PaymentDetailInner extends React.Component<Props, State> {
             >
               <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
             </Button>
+            <div className="float-right">
+              {this.actionButton()}
+            </div>
             <OverviewTable
               columns={COLUMNS}
               data={this.props.paymentStore!.payment!.expense_sheets}

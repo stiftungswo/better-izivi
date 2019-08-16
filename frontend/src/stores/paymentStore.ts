@@ -1,6 +1,6 @@
 import { computed, observable } from 'mobx';
 import moment from 'moment';
-import { Payment } from '../types';
+import { ExpenseSheetState, Payment } from '../types';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
@@ -26,6 +26,14 @@ export class PaymentStore extends DomainStore<Payment> {
     this.payment = payment;
   }
 
+  get paymentsInProgress() {
+    return this.payments.filter(payment => payment.state === ExpenseSheetState.payment_in_progress);
+  }
+
+  get paidPayments() {
+    return this.payments.filter(payment => payment.state === ExpenseSheetState.paid);
+  }
+
   static convertPaymentTimestamp(timestamp: number) {
     return moment(timestamp * 1000);
   }
@@ -43,11 +51,38 @@ export class PaymentStore extends DomainStore<Payment> {
   async createPayment() {
     try {
       const res = await this.mainStore.api.post<Payment>('/payments');
-      this.payment = res.data;
+      if (this.payments) {
+        this.payments.push(res.data);
+      }
       this.mainStore.displaySuccess(`${this.entityName.singular} wurde erstellt!`);
     } catch (e) {
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht erstellt werden`),
+      );
+    }
+  }
+
+  async confirmPayment(paymentTimestamp?: number) {
+    try {
+      const timestamp = paymentTimestamp || this.payment!.payment_timestamp;
+      const res = await this.mainStore.api.put<Payment>(`/payments/${timestamp}/confirm`);
+      this.payment = res.data;
+      this.mainStore.displaySuccess(`${this.entityName.singular} wurde bestätigt!`);
+    } catch (e) {
+      this.mainStore.displayError(
+        DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht bestätigt werden`),
+      );
+    }
+  }
+
+  async cancelPayment(paymentTimestamp?: number) {
+    try {
+      const timestamp = paymentTimestamp || this.payment!.payment_timestamp;
+      await this.mainStore.api.delete(`/payments/${timestamp}`);
+      this.mainStore.displaySuccess(`${this.entityName.singular} wurde abgebrochen!`);
+    } catch (e) {
+      this.mainStore.displayError(
+        DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht abgebrochen werden`),
       );
     }
   }

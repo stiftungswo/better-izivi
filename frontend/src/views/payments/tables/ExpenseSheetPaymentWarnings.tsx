@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { MainStore } from '../../stores/mainStore';
-import { ExpenseSheetListing } from '../../types';
+import { MainStore } from '../../../stores/mainStore';
+import { ExpenseSheetListing } from '../../../types';
 
 function addressIsValid(user: { address: string, city: string, zip: number }) {
   return user.address !== '' && user.city !== '' && user.zip && user.zip > 0;

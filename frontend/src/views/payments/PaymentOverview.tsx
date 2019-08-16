@@ -4,8 +4,9 @@ import IziviContent from '../../layout/IziviContent';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ExpenseSheetsReadyForPaymentTable } from './ExpenseSheetsReadyForPaymentTable';
-import { PaymentsInProgressTable } from './PaymentsInProgressTable';
+import { ExpenseSheetsReadyForPaymentTable } from './tables/ExpenseSheetsReadyForPaymentTable';
+import { PaidPaymentsTable } from './tables/PaidPaymentsTable';
+import { PaymentsInProgressTable } from './tables/PaymentsInProgressTable';
 
 interface Props {
   mainStore?: MainStore;
@@ -41,10 +42,14 @@ export class PaymentOverview extends React.Component<Props, State> {
         <ExpenseSheetsReadyForPaymentTable
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
           paymentStore={this.props.paymentStore!}
+          expenseSheetStore={this.props.expenseSheetStore!}
         />
 
         <h1 className="mb-4 mt-5">In Auszahlung</h1>
-        <PaymentsInProgressTable payments={this.props.paymentStore!.payments}/>
+        <PaymentsInProgressTable payments={this.props.paymentStore!.paymentsInProgress}/>
+
+        <h1 className="mb-4 mt-5">Archiv</h1>
+        <PaidPaymentsTable payments={this.props.paymentStore!.paidPayments}/>
       </IziviContent>
     );
   }
