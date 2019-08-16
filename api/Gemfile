@@ -12,6 +12,7 @@ end
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise-jwt', '~> 0.5.9'
 gem 'dotenv-rails'
+gem 'i18n-tasks', '~> 0.9.29'
 gem 'iban-tools'
 gem 'jbuilder'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
@@ -24,7 +25,6 @@ gem 'rails', '~> 5.2.2'
 gem 'rails-i18n'
 gem 'sepa_king', github: 'salesking/sepa_king', ref: '0658339'
 gem 'validates_timeliness'
-gem 'i18n-tasks', '~> 0.9.29'
 
 group :production do
   gem 'lograge'
