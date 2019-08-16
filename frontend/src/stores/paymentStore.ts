@@ -40,9 +40,16 @@ export class PaymentStore extends DomainStore<Payment> {
     super(mainStore);
   }
 
-  protected async doPost(): Promise<void> {
-    const res = await this.mainStore.api.post<Payment>('/payments');
-    this.payment = res.data;
+  async createPayment() {
+    try {
+      const res = await this.mainStore.api.post<Payment>('/payments');
+      this.payment = res.data;
+      this.mainStore.displaySuccess(`${this.entityName.singular} wurde erstellt!`);
+    } catch (e) {
+      this.mainStore.displayError(
+        DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht erstellt werden`),
+      );
+    }
   }
 
   protected async doFetchAll(): Promise<void> {
