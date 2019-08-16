@@ -26,6 +26,7 @@ interface Props extends RouteComponentProps<PaymentDetailRouterProps> {
 
 interface State {
   loading: boolean;
+  canceled: boolean;
 }
 
 const COLUMNS = [
@@ -62,6 +63,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
 
     this.state = {
       loading: true,
+      canceled: false,
     };
   }
 
@@ -72,6 +74,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
       return (
         <ButtonGroup>
           <Button
+            disabled={this.state.canceled}
             color="success"
             onClick={() => this.props.paymentStore!.confirmPayment()}
             className="mb-4"
@@ -81,7 +84,8 @@ class PaymentDetailInner extends React.Component<Props, State> {
           </Button>
           <Button
             color="danger"
-            onClick={() => this.props.paymentStore!.cancelPayment()}
+            disabled={this.state.canceled}
+            onClick={() => this.props.paymentStore!.cancelPayment().then(() => this.setState({ canceled: true }))}
             className="mb-4"
             target="_blank"
           >
@@ -98,15 +102,18 @@ class PaymentDetailInner extends React.Component<Props, State> {
     const payment = this.props.paymentStore!.payment;
     const title = this.getTitle(payment);
 
+    // TODO: Gray out card if payment was cancelled
     return (
       <IziviContent card loading={this.state.loading}>
         <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state) : ''}</Badge>
         <h1 className="mb-4">{title}</h1>
         {payment && (
           <>
-            <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
-              <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
-            </Button>
+            {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
+              <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
+                <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
+              </Button>
+            )}
             <div className="float-right">
               {this.actionButton()}
             </div>
