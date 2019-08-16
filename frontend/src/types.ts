@@ -8,10 +8,15 @@ export interface Holiday {
   description: string;
 }
 
+export enum PaymentState {
+  payment_in_progress = 'payment_in_progress',
+  paid = 'paid',
+}
+
 export interface Payment {
   id?: number;
   total: number;
-  state: 'payment_in_progress' | 'paid';
+  state: PaymentState;
   payment_timestamp: number;
   expense_sheets: PaymentExpenseSheet[];
 }

@@ -1,6 +1,6 @@
 import { computed, observable } from 'mobx';
 import moment from 'moment';
-import { ExpenseSheetState, Payment } from '../types';
+import { ExpenseSheetState, Payment, PaymentState } from '../types';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
@@ -27,11 +27,11 @@ export class PaymentStore extends DomainStore<Payment> {
   }
 
   get paymentsInProgress() {
-    return this.payments.filter(payment => payment.state === ExpenseSheetState.payment_in_progress);
+    return this.payments.filter(payment => payment.state === PaymentState.payment_in_progress);
   }
 
   get paidPayments() {
-    return this.payments.filter(payment => payment.state === ExpenseSheetState.paid);
+    return this.payments.filter(payment => payment.state === PaymentState.paid);
   }
 
   static convertPaymentTimestamp(timestamp: number) {

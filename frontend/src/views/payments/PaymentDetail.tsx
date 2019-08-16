@@ -10,7 +10,7 @@ import IziviContent from '../../layout/IziviContent';
 import { OverviewTable } from '../../layout/OverviewTable';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
-import { ExpenseSheetState, Payment, PaymentExpenseSheet } from '../../types';
+import { Payment, PaymentExpenseSheet, PaymentState } from '../../types';
 import { Formatter } from '../../utilities/formatter';
 import { stateTranslation } from '../../utilities/helpers';
 import { CheckSolidIcon, DownloadIcon, ExclamationSolidIcon } from '../../utilities/Icon';
@@ -68,7 +68,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
   actionButton() {
     const payment = this.props.paymentStore!.payment!;
 
-    if (payment.state === ExpenseSheetState.payment_in_progress) {
+    if (payment.state === PaymentState.payment_in_progress) {
       return (
         <ButtonGroup>
           <Button
@@ -100,7 +100,7 @@ class PaymentDetailInner extends React.Component<Props, State> {
 
     return (
       <IziviContent card loading={this.state.loading}>
-        <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state as ExpenseSheetState) : ''}</Badge>
+        <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state) : ''}</Badge>
         <h1 className="mb-4">{title}</h1>
         {payment && (
           <>
