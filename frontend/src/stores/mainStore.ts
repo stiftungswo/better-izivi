@@ -42,7 +42,7 @@ export class MainStore {
     });
   }
 
-  validateIBAN(value: string) {
+  static validateIBAN(value: string) {
     const regex = new RegExp('^CH\\d{2}\\s?(\\w{4}\\s?){4,7}\\w{0,2}$', 'g');
     return regex.test(value);
   }
