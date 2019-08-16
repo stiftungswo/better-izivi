@@ -9,7 +9,7 @@ interface SwitchToReadyForPaymentProps {
   expenseSheetStore: ExpenseSheetStore;
 }
 
-export const SwitchToReadyForPayment = ({ expenseSheetStore, }: SwitchToReadyForPaymentProps) => {
+export const SwitchToReadyForPayment = ({ expenseSheetStore }: SwitchToReadyForPaymentProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   return (

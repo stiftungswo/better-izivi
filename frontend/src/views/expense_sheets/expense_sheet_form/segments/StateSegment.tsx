@@ -5,7 +5,7 @@ import Col from 'reactstrap/lib/Col';
 import Row from 'reactstrap/lib/Row';
 import { ExpenseSheetStore } from '../../../../stores/expenseSheetStore';
 import { ExpenseSheetState } from '../../../../types';
-import { CheckRegularIcon, HourGlassRegularIcon, } from '../../../../utilities/Icon';
+import { CheckRegularIcon, HourGlassRegularIcon } from '../../../../utilities/Icon';
 import { expenseSheetFormSegment } from './expenseSheetFormSegment';
 import { CancelReadyForPayment } from './state_actions/CancelReadyForPayment';
 import { SwitchToReadyForPayment } from './state_actions/SwitchToReadyForPayment';
