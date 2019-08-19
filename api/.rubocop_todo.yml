@@ -9,8 +9,6 @@
 # Offense count: 35
 RSpec/ImplicitBlockExpectation:
   Exclude:
-    - 'spec/requests/devise/registrations_controller_spec.rb'
-    - 'spec/requests/v1/expense_sheets_controller_spec.rb'
     - 'spec/requests/v1/holidays_controller_spec.rb'
     - 'spec/requests/v1/payments_controller_spec.rb'
     - 'spec/requests/v1/phone_list_controller_spec.rb'
