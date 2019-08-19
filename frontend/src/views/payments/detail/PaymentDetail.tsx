@@ -1,19 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import injectSheet from 'react-jss';
+import { WithSheet } from 'react-jss/lib/injectSheet';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import Badge from 'reactstrap/lib/Badge';
 import Button from 'reactstrap/lib/Button';
 import ButtonGroup from 'reactstrap/lib/ButtonGroup';
-import IziviContent from '../../layout/IziviContent';
-import { OverviewTable } from '../../layout/OverviewTable';
-import { MainStore } from '../../stores/mainStore';
-import { PaymentStore } from '../../stores/paymentStore';
-import { Payment, PaymentExpenseSheet, PaymentState } from '../../types';
-import { Formatter } from '../../utilities/formatter';
-import { stateTranslation } from '../../utilities/helpers';
-import { CheckSolidIcon, DownloadIcon, ExclamationSolidIcon } from '../../utilities/Icon';
+import IziviContent from '../../../layout/IziviContent';
+import { OverviewTable } from '../../../layout/OverviewTable';
+import { MainStore } from '../../../stores/mainStore';
+import { PaymentStore } from '../../../stores/paymentStore';
+import { Payment, PaymentExpenseSheet, PaymentState } from '../../../types';
+import { Formatter } from '../../../utilities/formatter';
+import { stateTranslation } from '../../../utilities/helpers';
+import { CheckSolidIcon, DownloadIcon, ExclamationSolidIcon } from '../../../utilities/Icon';
+import { paymentDetailStyles } from './paymentDetailStyles';
 
 interface PaymentDetailRouterProps {
   timestamp?: string;
@@ -56,8 +59,8 @@ const COLUMNS = [
 
 @inject('mainStore', 'paymentStore')
 @observer
-class PaymentDetailInner extends React.Component<Props, State> {
-  constructor(props: Props) {
+class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymentDetailStyles>, State> {
+  constructor(props: Props & WithSheet<typeof paymentDetailStyles>) {
     super(props);
     props.paymentStore!.fetchOne(Number(props.match.params.timestamp)).then(() => this.setState({ loading: false }));
 
@@ -105,25 +108,32 @@ class PaymentDetailInner extends React.Component<Props, State> {
     // TODO: Gray out card if payment was cancelled
     return (
       <IziviContent card loading={this.state.loading}>
-        <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state) : ''}</Badge>
-        <h1 className="mb-4">{title}</h1>
-        {payment && (
-          <>
-            {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
-              <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
-                <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
-              </Button>
-            )}
-            <div className="float-right">
-              {this.actionButton()}
-            </div>
-            <OverviewTable
-              columns={COLUMNS}
-              data={this.props.paymentStore!.payment!.expense_sheets}
-              renderActions={(expenseSheet: PaymentExpenseSheet) => <Link to={`/expense_sheets/${expenseSheet.id!}`}>Spesenblatt</Link>}
-            />
-          </>
-        )}
+        {this.state.canceled &&
+          <div className={this.props.classes.cancelBadge}>
+            Abgebrochen
+          </div>
+        }
+        <div className={this.state.canceled ? this.props.classes.canceledDetailCard : undefined}>
+          <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state) : ''}</Badge>
+          <h1 className="mb-4">{title}</h1>
+          {payment && (
+            <>
+              {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
+                <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
+                  <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
+                </Button>
+              )}
+              <div className="float-right">
+                {this.actionButton()}
+              </div>
+              <OverviewTable
+                columns={COLUMNS}
+                data={this.props.paymentStore!.payment!.expense_sheets}
+                renderActions={(expenseSheet: PaymentExpenseSheet) => <Link to={`/expense_sheets/${expenseSheet.id!}`}>Spesenblatt</Link>}
+              />
+            </>
+          )}
+        </div>
       </IziviContent>
     );
   }
@@ -139,4 +149,4 @@ class PaymentDetailInner extends React.Component<Props, State> {
   }
 }
 
-export const PaymentDetail = withRouter(PaymentDetailInner);
+export const PaymentDetail = injectSheet(paymentDetailStyles)(withRouter(PaymentDetailInner));
