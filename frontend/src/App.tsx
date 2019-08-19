@@ -16,7 +16,7 @@ import { HolidayOverview } from './views/holidays/HolidayOverview';
 import { Home } from './views/Home';
 import { Login } from './views/Login';
 import { NotFound } from './views/NotFound';
-import { PaymentDetail } from './views/payments/PaymentDetail';
+import { PaymentDetail } from './views/payments/detail/PaymentDetail';
 import { PaymentOverview } from './views/payments/PaymentOverview';
 import { PhoneListView } from './views/PhoneList';
 import { Register } from './views/register/Register';
@@ -46,7 +46,7 @@ class App extends React.Component {
           <ProtectedRoute component={ServiceFeedback} exact path={'/service/:id/feedback'} />
           <ProtectedRoute requiresAdmin component={PaymentOverview} exact path={'/payments'} />
           <ProtectedRoute requiresAdmin component={ServiceOverview} exact path={'/services'} />
-          <ProtectedRoute requiresAdmin component={PaymentDetail} exact path={'/payments/:id'} />
+          <ProtectedRoute requiresAdmin component={PaymentDetail} exact path={'/payments/:timestamp'} />
           <ProtectedRoute requiresAdmin component={ExpenseSheetOverview} exact path={'/expense_sheets'} />
           <ProtectedRoute requiresAdmin component={ExpenseSheetUpdate} exact path={'/expense_sheets/:id'} />
           <ProtectedRoute requiresAdmin component={UserFeedbackOverview} exact path={'/user_feedbacks'} />

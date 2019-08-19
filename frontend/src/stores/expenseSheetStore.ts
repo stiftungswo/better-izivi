@@ -1,6 +1,7 @@
 // tslint:disable:no-console
 import { action, computed, observable } from 'mobx';
 import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState } from '../types';
+import { stateTranslation } from '../utilities/helpers';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
@@ -27,7 +28,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   }
 
   @observable
-  toBePaidExpenseSheets: ExpenseSheet[] = [];
+  toBePaidExpenseSheets: ExpenseSheetListing[] = [];
 
   @observable
   expenseSheets: ExpenseSheetListing[] = [];
@@ -45,7 +46,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   async fetchToBePaidAll(): Promise<void> {
     try {
       this.toBePaidExpenseSheets = [];
-      const response = await this.mainStore.api.get<ExpenseSheet[]>('/expense_sheets', { params: { filter: 'ready_for_payment' } });
+      const response = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { filter: 'ready_for_payment' } });
       this.toBePaidExpenseSheets = response.data;
     } catch (e) {
       this.mainStore.displayError(`${this.entityName.plural} konnten nicht geladen werden.`);
@@ -55,11 +56,25 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   }
 
   @action
-  async putState(id: number, state: ExpenseSheetState): Promise<void> {
-    return this.displayLoading(async () => {
-      await this.mainStore.api.put<ExpenseSheet>('/expense_sheets/' + id + '/state', { state });
-      this.mainStore.displaySuccess(`${this.entityName.singular} wurde bestätigt.`);
-    });
+  async putState(state: ExpenseSheetState, id?: number): Promise<void> {
+    id = id || this.expenseSheet!.id;
+    if (!id) {
+      throw new Error('Expense sheet has no id');
+    }
+
+    try {
+      const res = await this.mainStore.api.put<ExpenseSheet>('/expense_sheets/' + id, { expense_sheet: { state } });
+      this.mainStore.displaySuccess(`${this.entityName.singular} wurde auf ${stateTranslation(state)} geändert.`);
+      if (this.expenseSheet) {
+        this.expenseSheet = res.data;
+      }
+    } catch (e) {
+      this.mainStore.displayError(
+        ExpenseSheetStore.buildErrorMessage(e, `${this.entityName.singular} wurde auf ${stateTranslation(state)} geändert.`),
+      );
+      console.error(e);
+      throw e;
+    }
   }
 
   async fetchHints(expenseSheetId: number) {
