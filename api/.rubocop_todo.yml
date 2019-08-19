@@ -11,7 +11,7 @@ RSpec/ImplicitBlockExpectation:
   Exclude:
 #    - 'spec/requests/v1/payments_controller_spec.rb'
 #    - 'spec/requests/v1/phone_list_controller_spec.rb'
-    - 'spec/requests/v1/service_specifications_controller_spec.rb'
+#    - 'spec/requests/v1/service_specifications_controller_spec.rb'
     - 'spec/requests/v1/services_controller_spec.rb'
     - 'spec/requests/v1/users_controller_spec.rb'
     - 'spec/services/expense_sheet_generator_spec.rb'
