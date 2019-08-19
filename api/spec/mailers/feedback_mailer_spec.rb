@@ -6,22 +6,37 @@ RSpec.describe FeedbackMailer, type: :mailer do
   describe 'feedback_reminder_mail' do
     let(:user) { build_stubbed :user }
     let(:mail) { described_class.feedback_reminder_mail(user) }
-
-    before do
-      allow(ENV).to receive(:[]).with('MAIL_SENDER').and_return 'from@example.com'
-      I18n.locale = :de
+    let(:envs) do
+      {
+        FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?email=%{email}',
+        MAIL_SENDER: 'from@example.com'
+      }
     end
+
+    before { I18n.locale = :de }
 
     after { I18n.locale = I18n.default_locale }
 
-    it 'renders the headers' do
-      expect(mail.subject).to eq I18n.t('feedback_mailer.feedback_reminder_mail.subject')
-      expect(mail.to).to eq([user.email])
-      expect(mail.from).to eq(['from@example.com'])
+    describe 'header' do
+      it 'renders the headers' do
+        ClimateControl.modify envs do
+          expect(mail.subject).to eq I18n.t('feedback_mailer.feedback_reminder_mail.subject')
+          expect(mail.to).to eq([user.email])
+          expect(mail.from).to eq(['from@example.com'])
+        end
+      end
     end
 
-    it 'contains the correct greeting' do
-      expect(mail.body.encoded).to match("Lieber #{user.full_name}")
+    describe 'body' do
+      let(:link) { "http://example.com?email=#{user.email}" }
+
+      it 'contains the correct parts', :aggregate_failures do
+        ClimateControl.modify envs do
+          expect(mail.body.encoded).to match("Lieber #{user.full_name}")
+          expect(mail.text_part.decoded).to include link
+          expect(mail.html_part.decoded).to include link
+        end
+      end
     end
   end
 end
