@@ -1,4 +1,4 @@
-FROM ruby:2.5.1-alpine
+FROM ruby:2.5.5-alpine
 
 LABEL maintainer="SWO"
 LABEL version="0.1"
