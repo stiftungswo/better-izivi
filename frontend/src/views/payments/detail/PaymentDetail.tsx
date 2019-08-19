@@ -76,22 +76,10 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
     if (payment.state === PaymentState.payment_in_progress) {
       return (
         <ButtonGroup>
-          <Button
-            disabled={this.state.canceled}
-            color="success"
-            onClick={() => this.props.paymentStore!.confirmPayment()}
-            className="mb-4"
-            target="_blank"
-          >
+          <Button disabled={this.state.canceled} color="success" onClick={this.confirmButtonClicked} className="mb-4" target="_blank">
             <FontAwesomeIcon className="mr-1" icon={CheckSolidIcon}/> Zahlung bestätigen
           </Button>
-          <Button
-            color="danger"
-            disabled={this.state.canceled}
-            onClick={() => this.props.paymentStore!.cancelPayment().then(() => this.setState({ canceled: true }))}
-            className="mb-4"
-            target="_blank"
-          >
+          <Button color="danger" disabled={this.state.canceled} onClick={this.cancelButtonClicked} className="mb-4" target="_blank">
             <FontAwesomeIcon className="mr-1" icon={ExclamationSolidIcon}/> Zahlung abbrechen
           </Button>
         </ButtonGroup>
@@ -103,19 +91,12 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
 
   render() {
     const payment = this.props.paymentStore!.payment;
-    const title = this.getTitle(payment);
-
-    // TODO: Gray out card if payment was cancelled
     return (
       <IziviContent card loading={this.state.loading}>
-        {this.state.canceled &&
-          <div className={this.props.classes.cancelBadge}>
-            Abgebrochen
-          </div>
-        }
+        {this.state.canceled && <div className={this.props.classes.cancelBadge}>Abgebrochen</div>}
         <div className={this.state.canceled ? this.props.classes.canceledDetailCard : undefined}>
           <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state) : ''}</Badge>
-          <h1 className="mb-4">{title}</h1>
+          <h1 className="mb-4">{this.getTitle(payment)}</h1>
           {payment && (
             <>
               {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
@@ -123,9 +104,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
                   <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
                 </Button>
               )}
-              <div className="float-right">
-                {this.actionButton()}
-              </div>
+              <div className="float-right">{this.actionButton()}</div>
               <OverviewTable
                 columns={COLUMNS}
                 data={this.props.paymentStore!.payment!.expense_sheets}
@@ -136,6 +115,14 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
         </div>
       </IziviContent>
     );
+  }
+
+  private cancelButtonClicked = () => {
+    return this.props.paymentStore!.cancelPayment().then(() => this.setState({ canceled: true }));
+  }
+
+  private confirmButtonClicked = () => {
+    return this.props.paymentStore!.confirmPayment();
   }
 
   private getTitle(payment?: Payment) {
