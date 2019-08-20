@@ -56,9 +56,7 @@ class Service < ApplicationRecord
     FeedbackMailer.feedback_reminder_mail(self).deliver_now
     update feedback_mail_sent: true
 
-    # rubocop:disable Rails/Output
-    puts "Sent reminder to #{user.email} (Service id ##{id})"
-    # rubocop:enable Rails/Output
+    Rails.logger.info "Sent reminder to #{user.email} (Service id ##{id})"
   end
 
   private

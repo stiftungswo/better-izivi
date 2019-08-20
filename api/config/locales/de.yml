@@ -139,6 +139,9 @@ de:
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp
+  feedback_mailer:
+    feedback_reminder_mail:
+      subject: Deine Meinung ist uns wichtig
   payment:
     errors:
       not_found: Auszahlung nicht gefunden
@@ -184,6 +187,3 @@ de:
   service_calculator:
     end_date_cannot_be_on_weekend: Einsatzende kann nicht an einem Wochenende sein
     invalid_required_service_days: Ungültige Einsatztage
-  feedback_mailer:
-    feedback_reminder_mail:
-      subject: Deine Meinung ist uns wichtig

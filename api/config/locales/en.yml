@@ -139,6 +139,9 @@ en:
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp
+  feedback_mailer:
+    feedback_reminder_mail:
+      subject: Your opinion matters to us
   payment:
     errors:
       not_found: Payment not found
@@ -184,6 +187,3 @@ en:
   service_calculator:
     end_date_cannot_be_on_weekend: Service end date can't be on a weekend
     invalid_required_service_days: Invalid service days
-  feedback_mailer:
-    feedback_reminder_mail:
-      subject: Your opinion matters to us
