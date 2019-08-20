@@ -121,8 +121,6 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
         let(:user) { create :user, :admin }
 
         context 'with valid params' do
-          subject { -> { put_request } }
-
           let(:params) { { name: 'New name' } }
           let(:expected_attributes) do
             extract_to_json(service_specification,

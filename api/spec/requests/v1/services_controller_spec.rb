@@ -144,7 +144,7 @@ RSpec.describe V1::ServicesController, type: :request do
         end
 
         it 'creates a new Service' do
-          expect { request }.to change(Service, :count).by(1)
+          expect { post_request }.to change(Service, :count).by(1)
         end
 
         it 'returns the created service' do
@@ -228,8 +228,6 @@ RSpec.describe V1::ServicesController, type: :request do
       let(:put_request) { put v1_service_path(service, params: { service: params }) }
 
       context 'with valid params' do
-        subject { -> { put_request } }
-
         let(:new_service_date) { service.beginning - 7.days }
         let(:new_confirmation_date) { service.beginning - 8.days }
         let(:params) { { beginning: new_service_date, confirmation_date: new_confirmation_date } }
@@ -242,7 +240,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
         context 'when a non-admin user updates their own service' do
           it 'updates the service' do
-            expect { request }.to(change { service.reload.beginning }.to(new_service_date))
+            expect { put_request }.to(change { service.reload.beginning }.to(new_service_date))
           end
 
           it_behaves_like 'renders a successful http status code' do
@@ -268,7 +266,7 @@ RSpec.describe V1::ServicesController, type: :request do
           end
 
           it 'does not update the service' do
-            expect { request }.not_to(change { service.reload.confirmation_date })
+            expect { put_request }.not_to(change { service.reload.confirmation_date })
           end
         end
 
@@ -280,7 +278,7 @@ RSpec.describe V1::ServicesController, type: :request do
           end
 
           it 'does not update the service' do
-            expect { request }.not_to(change { service.reload.confirmation_date })
+            expect { put_request }.not_to(change { service.reload.confirmation_date })
           end
         end
 
@@ -344,8 +342,6 @@ RSpec.describe V1::ServicesController, type: :request do
     end
 
     describe '#destroy' do
-      subject { -> { delete_request } }
-
       let(:delete_request) { delete v1_service_path service }
       let(:service) { create :service, user: user }
 
@@ -353,7 +349,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
       context 'when the user deletes his own service' do
         it 'does delete the Service' do
-          expect { request }.to change(Service, :count).by(-1)
+          expect { delete_request }.to change(Service, :count).by(-1)
         end
 
         it_behaves_like 'renders a successful http status code' do
@@ -365,7 +361,7 @@ RSpec.describe V1::ServicesController, type: :request do
         let(:service) { create :service, user: create(:user) }
 
         it 'does not delete the Service' do
-          expect { request }.not_to change(Service, :count)
+          expect { delete_request }.not_to change(Service, :count)
         end
 
         it_behaves_like 'admin protected resource' do
@@ -378,7 +374,7 @@ RSpec.describe V1::ServicesController, type: :request do
         let(:service) { create :service, user: create(:user) }
 
         it 'deletes the Service' do
-          expect { request }.to change(Service, :count).by(-1)
+          expect { delete_request }.to change(Service, :count).by(-1)
         end
 
         it_behaves_like 'renders a successful http status code' do

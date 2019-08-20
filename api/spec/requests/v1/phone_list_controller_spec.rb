@@ -42,7 +42,7 @@ RSpec.describe V1::PhoneListController, type: :request do
           let(:ending) { '' }
 
           it 'raises ParameterMissing exception' do
-            expected { request }.to raise_exception ActionController::ParameterMissing
+            expect { request }.to raise_exception ActionController::ParameterMissing
           end
         end
 
@@ -62,7 +62,7 @@ RSpec.describe V1::PhoneListController, type: :request do
       let(:token) { nil }
 
       it 'raises ParameterMissing exception' do
-        expected { request }.to raise_exception ActionController::ParameterMissing
+        expect { request }.to raise_exception ActionController::ParameterMissing
       end
     end
 
