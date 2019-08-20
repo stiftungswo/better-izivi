@@ -8,7 +8,7 @@ RSpec.describe FeedbackMailer, type: :mailer do
     let(:mail) { described_class.feedback_reminder_mail(service) }
     let(:envs) do
       {
-        FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%{service_id}',
+        FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%<service_id>s',
         MAIL_SENDER: 'from@example.com'
       }
     end
