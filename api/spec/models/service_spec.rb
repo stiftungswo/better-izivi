@@ -127,6 +127,18 @@ RSpec.describe Service, type: :model do
     end
   end
 
+  describe '#send_feedback_reminder' do
+    subject(:service) { build :service, user: build(:user) }
+
+    it 'sends a mail to the user' do
+      expect { service.send_feedback_reminder }.to(
+        change { ActionMailer::Base.deliveries.count }.by(1).and(
+          change(service, :feedback_mail_sent).from(false).to(true)
+        )
+      )
+    end
+  end
+
   describe 'ending_is_friday validation' do
     subject { build(:service, ending: ending).tap(&:validate).errors.added? :ending, :not_a_friday }
 

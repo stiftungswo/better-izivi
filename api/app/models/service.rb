@@ -52,6 +52,15 @@ class Service < ApplicationRecord
     @expense_sheets ||= user.expense_sheets.in_date_range(beginning, ending)
   end
 
+  def send_feedback_reminder
+    FeedbackMailer.feedback_reminder_mail(self).deliver_now
+    update feedback_mail_sent: true
+
+    # rubocop:disable Rails/Output
+    puts "Sent reminder to #{user.email} (Service id ##{id})"
+    # rubocop:enable Rails/Output
+  end
+
   private
 
   def remaining_days_calculator
