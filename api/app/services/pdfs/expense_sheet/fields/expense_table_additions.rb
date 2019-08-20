@@ -56,9 +56,7 @@ module Pdfs
             ExpenseTable::COLUMN_WIDTHS[1] => lambda do |expense_sheet|
               return '' if expense_sheet.extraordinary_expenses.zero?
 
-              I18n.t(
-                'activerecord.attributes.expense_sheet.extraordinary_expenses'
-              )
+              I18n.t('activerecord.attributes.expense_sheet.extraordinary_expenses')
             end,
             ExpenseTable::COLUMN_WIDTHS[2..4].sum => ->(expense_sheet) { expense_sheet.extraordinary_expenses_comment },
             ExpenseTable::COLUMN_WIDTHS[5..-2].sum => '',

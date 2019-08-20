@@ -103,13 +103,13 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
       context 'when extraordinary_expenses is not empty' do
         let(:expense_sheet_data) do
           expense_sheet_data_defaults.merge(
-            extraordinary_expenses: -15_000,
+            extraordinary_expenses: 15_000,
             extraordinary_expenses_comment: 'MyString',
             user: service.user
           )
         end
         let(:expected_texts) do
-          ['+', 'Ausserordentliche', 'Spesen', 'MyString', '-150.00']
+          %w[+ Ausserordentliche Spesen MyString 150.00]
         end
 
         it 'renders correct text' do
