@@ -2,7 +2,9 @@ SET sql_mode = '';
 
 USE stiftun8_izivi;
 
--- === Drop all foreign keys ===
+-- -----------------------------
+-- === DROP ALL FOREIGN KEYS ===
+-- -----------------------------
 
 ALTER TABLE missions
     DROP FOREIGN KEY missions_user_foreign,
@@ -31,7 +33,9 @@ DROP INDEX users_regional_center_foreign ON users;
 DROP INDEX users_email_unique ON users;
 
 
--- === Drop unused tables ===
+-- --------------------------
+-- === DROP UNUSED TABLES ===
+-- --------------------------
 
 DROP TABLE
     no_iban,
@@ -44,14 +48,21 @@ DROP TABLE
     roles,
     migrations;
 
--- === Drop all deleted records ===
+
+-- --------------------------------
+-- === DROP ALL DELETED RECORDS ===
+-- --------------------------------
+
 DELETE FROM report_sheets WHERE deleted_at IS NOT NULL;
 DELETE report_sheets FROM report_sheets
     INNER JOIN missions ON missions.id = report_sheets.mission
     WHERE missions.deleted_at IS NOT NULL;
 DELETE FROM missions WHERE deleted_at IS NOT NULL;
 
--- === Alter users table ===
+
+-- -------------------------
+-- === ALTER USERS TABLE ===
+-- -------------------------
 
 UPDATE users
     SET birthday = '2019-08-23'
@@ -90,7 +101,11 @@ ALTER TABLE users
     ADD COLUMN reset_password_token VARCHAR(255) NULL,
     ADD COLUMN reset_password_sent_at DATETIME NULL;
 
--- === Alter specifications ==> service specifications ===
+
+-- -------------------------------------------------------
+-- === ALTER SPECIFICATIONS ==> SERVICE SPECIFICATIONS ===
+-- -------------------------------------------------------
+
 RENAME TABLE specifications TO service_specifications;
 
 ALTER TABLE service_specifications
@@ -116,6 +131,7 @@ ALTER TABLE service_specifications
     ADD COLUMN created_at DATETIME NOT NULL,
     ADD COLUMN updated_at DATETIME NOT NULL;
 
+# Convert to newer JSON format
 UPDATE service_specifications SET work_days_expenses = CONCAT(
     '{',
         '"breakfast":', working_breakfast_expenses, ',',
@@ -166,7 +182,9 @@ ALTER TABLE service_specifications
     DROP COLUMN lastday_dinner_expenses;
 
 
--- === Alter missions ==> services ===
+-- -----------------------------------
+-- === ALTER MISSIONS ==> SERVICES ===
+-- -----------------------------------
 
 RENAME TABLE missions TO services;
 
@@ -174,7 +192,7 @@ DELETE FROM report_sheets
     WHERE mission IN (SELECT id FROM services WHERE deleted_at IS NOT NULL);
 DELETE FROM report_sheets WHERE deleted_at IS NOT NULL;
 
--- Use db id for foreign key
+# Use db id for foreign key
 
 ALTER TABLE services
     ADD COLUMN service_specification_id BIGINT NOT NULL;
@@ -184,7 +202,7 @@ UPDATE services
 SET services.service_specification_id = service_specifications.id
 WHERE 1;
 
--- Convert updated_at and created_at to a datetime: Remove not null values
+# Convert updated_at and created_at to a datetime: Remove not null values
 
 UPDATE services SET created_at = '2000-01-01 00:00:01' WHERE created_at IS NULL;
 UPDATE services SET updated_at = '2000-01-01 00:00:01' WHERE updated_at IS NULL;
@@ -213,7 +231,11 @@ ALTER TABLE services
     DROP COLUMN feedback_done,
     DROP COLUMN deleted_at;
 
--- === Holidays ===
+
+-- ----------------
+-- === HOLIDAYS ===
+-- ----------------
+
 UPDATE holidays SET created_at = '2000-01-01 00:00:01' WHERE created_at IS NULL;
 UPDATE holidays SET updated_at = '2000-01-01 00:00:01' WHERE updated_at IS NULL;
 
@@ -227,7 +249,10 @@ ALTER TABLE holidays
     RENAME COLUMN date_to TO ending,
     DROP COLUMN deleted_at; -- It has no deleted holidays
 
--- === Regional Centers ===
+
+-- ------------------------
+-- === REGIONAL CENTERS ===
+-- ------------------------
 
 ALTER TABLE regional_centers
     DROP PRIMARY KEY,
@@ -235,7 +260,11 @@ ALTER TABLE regional_centers
     ADD COLUMN created_at DATETIME NOT NULL,
     ADD COLUMN updated_at DATETIME NOT NULL;
 
--- === Expense Sheets ===
+
+-- ----------------------
+-- === EXPENSE SHEETS ===
+-- ----------------------
+
 RENAME TABLE report_sheets TO expense_sheets;
 
 UPDATE expense_sheets SET created_at = '2000-01-01 00:00:01' WHERE created_at IS NULL;
@@ -292,21 +321,25 @@ ALTER TABLE expense_sheets
     DROP COLUMN work_comment,
     DROP COLUMN workfree_comment;
 
--- Generate payment timestamps
+# Generate payment timestamps
 UPDATE expense_sheets
     LEFT JOIN payment_entries ON payment_entries.report_sheet = expense_sheets.id
     LEFT JOIN payments ON payment_entries.payment = payments.id
     SET expense_sheets.payment_timestamp = payments.created_at;
 
--- To prevent huge payment with all legacy payments, we take ending of expense sheet and choose first day
--- of next month as payment timestamp
+# To prevent huge payment with all legacy payments, we take ending of expense sheet and choose first day
+# of next month as payment timestamp
 UPDATE expense_sheets
     SET payment_timestamp = DATE_ADD(LAST_DAY(`ending`), INTERVAL 1 DAY)
     WHERE payment_timestamp IS NULL AND state = 3;
 
 DROP TABLE payments, payment_entries;
 
--- === Configure foreign Keys and Indices ===
+
+-- ------------------------------------------
+-- === CONFIGURE FOREIGN KEYS AND INDICES ===
+-- ------------------------------------------
+
 ALTER TABLE users
     ADD CONSTRAINT index_users_on_email UNIQUE (email),
     ADD CONSTRAINT index_users_on_reset_password_token UNIQUE (reset_password_token),
@@ -325,6 +358,3 @@ ALTER TABLE service_specifications
 ALTER TABLE expense_sheets
     ADD CONSTRAINT fk_rails_7fa777c334 FOREIGN KEY (user_id) REFERENCES users (id);
 CREATE INDEX index_expense_sheets_on_user_id ON expense_sheets (user_id);
-
-
--- === Reorder columns ===
