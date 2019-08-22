@@ -58,6 +58,14 @@ DROP TABLE
     migrations;
 
 
+-- ------------------------------------------
+-- === DROP OUTDATED TIME-BARRED SERVICES ===
+-- ------------------------------------------
+
+DELETE FROM missions WHERE end < '2009-01-01';
+DELETE FROM report_sheets WHERE end < '2009-01-01';
+DELETE FROM users WHERE id NOT IN (SELECT user FROM missions GROUP BY user) AND updated_at IS NULL;
+
 -- --------------------------------
 -- === DROP ALL DELETED RECORDS ===
 -- --------------------------------
@@ -334,7 +342,8 @@ ALTER TABLE expense_sheets
 UPDATE expense_sheets
     LEFT JOIN payment_entries ON payment_entries.report_sheet = expense_sheets.id
     LEFT JOIN payments ON payment_entries.payment = payments.id
-    SET expense_sheets.payment_timestamp = payments.created_at;
+    SET expense_sheets.payment_timestamp = payments.created_at
+    WHERE 1;
 
 # To prevent huge payment with all legacy payments, we take ending of expense sheet and choose first day
 # of next month as payment timestamp
