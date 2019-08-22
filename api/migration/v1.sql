@@ -1,4 +1,4 @@
-# migration.sql
+# v1.sql
 #
 # This script migrates all data from the legacy version of iZivi (https://github.com/stiftungswo/izivi) to the newer format
 # However, it does that with no regards on data validity.
