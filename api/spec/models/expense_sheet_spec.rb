@@ -282,7 +282,7 @@ RSpec.describe ExpenseSheet, type: :model do
       let(:expense_sheet) { create :expense_sheet, :payment_in_progress }
 
       it 'prevents an update' do
-        expect { expense_sheet.update(state: 'paid') }.to_not raise_error
+        expect { expense_sheet.update(state: 'paid') }.not_to raise_error
       end
     end
 
@@ -290,7 +290,7 @@ RSpec.describe ExpenseSheet, type: :model do
       let(:expense_sheet) { create :expense_sheet, :payment_in_progress }
 
       it 'prevents an update' do
-        expect { expense_sheet.update(sick_comment: 'blubb') }.to_not raise_error
+        expect { expense_sheet.update(sick_comment: 'blubb') }.not_to raise_error
       end
     end
   end
