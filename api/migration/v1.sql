@@ -6,6 +6,8 @@
 # and then load all data with `mysql -u[User] -p < dump.sql`.
 # To generate a Dump, convert the data with this script and then export using
 # `mysqldump --no-create-info --complete-insert [database] > dump.sql -u[User] -p`
+#
+# This file can be deleted as soon as we can be sure that the new version is stable
 
 SET sql_mode = '';
 
