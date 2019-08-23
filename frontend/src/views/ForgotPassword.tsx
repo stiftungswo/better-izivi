@@ -39,7 +39,7 @@ export class ForgotPassword extends React.Component<Props> {
 
   handleSubmit = async (values: FormValues, actions: FormikActions<FormValues>) => {
     try {
-      await this.props.apiStore!.postForgotPassword(values.email);
+      await this.props.apiStore!.postForgotPassword({ email: values.email });
       this.setState({ success: true, error: null });
     } catch (error) {
       this.props.mainStore!.displayError(DomainStore.buildErrorMessage(error, 'Konnte Passwort nicht zurücksetzen'));
@@ -72,9 +72,9 @@ export class ForgotPassword extends React.Component<Props> {
                 placeholder={'zivi@example.org'}
               />
               {!this.state.success &&
-                <Button color={'primary'} disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>
-                  Weiter
-                </Button>
+              <Button color={'primary'} disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>
+                Weiter
+              </Button>
               }
             </Form>
           )}
