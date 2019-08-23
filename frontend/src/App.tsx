@@ -38,7 +38,7 @@ class App extends React.Component {
           <Route component={Home} exact path={'/'} />
           <Route component={Login} exact path={'/login'} />
           <Route component={Register} exact path={'/register/:page'} />
-          <Route component={ForgotPassword} exact path={'/forgotPassword'} />
+          <Route component={ForgotPassword} exact path={'/users/password/reset'} />
           <Route component={HolidayOverview} exact path={'/holidays'} />
           <Route component={PhoneListView} exact path={'/phones'} />
           <Route component={ProfileOverview} exact path={'/profile'} />
