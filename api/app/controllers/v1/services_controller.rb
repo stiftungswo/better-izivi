@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module V1
-  class ServicesController < APIController
+  class ServicesController < ApplicationController
     include V1::Concerns::AdminAuthorizable
+    include V1::Concerns::ParamsAuthenticatable
 
     PERMITTED_SERVICE_SPECIFICATION_PARAMS = %i[service_specification_identification_number].freeze
     PERMITTED_SERVICE_PARAMS = %i[
@@ -11,17 +12,31 @@ module V1
       feedback_mail_sent
     ].freeze
 
+    before_action :authenticate_user!, unless: -> { request.format.pdf? }
+    before_action :authenticate_from_params!, only: :show, if: -> { request.format.pdf? }
     before_action :set_service, only: %i[show update destroy]
-    before_action :protect_foreign_resource!, except: %i[index create], unless: -> { current_user.admin? }
+    before_action :protect_foreign_resource!, except: %i[index create],
+                                              unless: -> { current_user.admin? }
     before_action :authorize_admin!, only: :index
-    before_action :protect_confirmed_service!, only: :update, unless: -> { current_user.admin? }
+    before_action :protect_confirmed_service!, only: :update, unless: -> { request.format.pdf? || current_user.admin? }
 
     def index
       year = filter_params[:year]
       @services = year.present? ? Service.at_year(year.to_i).order(:beginning) : Service.all
     end
 
-    def show; end
+    def show
+      respond_to do |format|
+        format.json
+        format.pdf do
+          pdf = Pdfs::ServiceAgreement::GlueService.new(@service)
+          send_data pdf.render,
+                    filename: I18n.t('pdfs.service_agreement.filename', full_name: @service.user.full_name),
+                    type: 'application/pdf',
+                    disposition: 'inline'
+        end
+      end
+    end
 
     def create
       @service = Service.new(service_params)

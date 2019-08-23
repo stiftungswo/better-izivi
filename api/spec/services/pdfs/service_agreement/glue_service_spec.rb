@@ -1,0 +1,87 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
+  describe '#render' do
+    context 'when locale is german' do
+      before { I18n.locale = :de }
+
+      after { I18n.locale = I18n.default_locale }
+
+      let(:pdf) { described_class.new(service).render }
+      let(:service) { create :service, service_data }
+      let(:service_specification) { create :service_specification, identification_number: 82_846 }
+      let(:service_data) do
+        {
+          beginning: Date.parse('2018-01-01'),
+          ending: Date.parse('2018-02-23'),
+          service_specification: service_specification
+        }
+      end
+
+      let(:pdf_strings) do
+        ClimateControl.modify envs do
+          PDF::Inspector::Text.analyze(pdf).strings
+        end
+      end
+      let(:pdf_page_inspector) { PDF::Inspector::Page.analyze(pdf) }
+
+      let(:sender_name) { 'SWO Stiftung Wirtschaft und Öl' }
+      let(:sender_address) { 'Hauptstrasse 23d' }
+      let(:sender_zip_city) { '9542 Schwerzenbach' }
+      let(:envs) do
+        {
+          LETTER_SENDER_NAME: sender_name,
+          LETTER_SENDER_ADDRESS: sender_address,
+          LETTER_SENDER_ZIP_CITY: sender_zip_city
+        }
+      end
+
+      let(:page_text_check_indices) do
+        [
+          0..2,
+          18..20,
+          236..240,
+          608..608,
+          720..720
+        ]
+      end
+      let(:page_text_check_texts) do
+        [
+          [sender_name, sender_address, sender_zip_city].join(''),
+          'Einsatzvereinbarung ',
+          'Unterkunft, Verpflegung und Entschädigung',
+          'Anstellungsbedingungen der SWO',
+          'Absenzen: '
+        ]
+      end
+
+      it 'renders five pages' do
+        expect(pdf_page_inspector.pages.size).to eq 5
+      end
+
+      it 'renders pages in correct order', :aggregate_failures do
+        page_text_check_indices.each_with_index do |indices, index|
+          expect(
+            pdf_strings[indices].is_a?(Array) ? pdf_strings[indices].join('') : pdf_strings[indices]
+          ).to eq page_text_check_texts[index]
+        end
+      end
+
+      # it 'renders second pages correct' do
+      #   ClimateControl.modify envs do
+      #     expect(
+      #       pdf_text_inspector.strings[second_page_first_text_indices].join('').trim
+      #     ).to eq expected_second_page_texts
+      #   end
+      # end
+      #
+      # it 'renders third pages correct' do
+      #   ClimateControl.modify envs do
+      #     expect(pdf_text_inspector.strings[third_page_first_text_indices]).to eq expected_first_page_texts
+      #   end
+      # end
+    end
+  end
+end

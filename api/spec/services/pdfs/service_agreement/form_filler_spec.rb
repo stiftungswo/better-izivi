@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe Pdfs::ServiceFormFiller, type: :service do
+RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
   describe '#fill_service_agreement' do
     subject(:form_filler) { instance_double(PdfForms::PdftkWrapper, fill_form: true) }
 
     let(:fill_service) { described_class.new(service) }
     let(:service) { create :service, beginning: '2018-12-24', ending: '2019-01-04' }
     let(:user) { service.user }
-    let(:file_path) { Pdfs::ServiceFormFiller::GERMAN_FILE_PATH }
+    let(:file_path) { Pdfs::ServiceAgreement::FormFiller::GERMAN_FILE_PATH }
     let(:company_holiday) { create :holiday, beginning: '2018-12-28', ending: '2019-01-02' }
 
     before do
@@ -51,7 +51,7 @@ RSpec.describe Pdfs::ServiceFormFiller, type: :service do
 
     context 'when it is french' do
       let(:service) { create(:service, :valais, beginning: '2018-12-24', ending: '2019-01-04') }
-      let(:file_path) { Pdfs::ServiceFormFiller::FRENCH_FILE_PATH }
+      let(:file_path) { Pdfs::ServiceAgreement::FormFiller::FRENCH_FILE_PATH }
 
       let(:expected_fields) do
         {
