@@ -87,7 +87,7 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def readonly?
-    paid? && ExpenseSheet.states[state_was] == ExpenseSheet.states[:paid]
+    paid? && !state_changed?
   end
 
   private
