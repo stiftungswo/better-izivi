@@ -15,10 +15,9 @@ module V1
     before_action :authenticate_user!, unless: -> { request.format.pdf? }
     before_action :authenticate_from_params!, only: :show, if: -> { request.format.pdf? }
     before_action :set_service, only: %i[show update destroy]
-    before_action :protect_foreign_resource!, except: %i[index create],
-                                              unless: -> { current_user.admin? }
+    before_action :protect_foreign_resource!, except: %i[index create], unless: -> { current_user.admin? }
     before_action :authorize_admin!, only: :index
-    before_action :protect_confirmed_service!, only: :update, unless: -> { request.format.pdf? || current_user.admin? }
+    before_action :protect_confirmed_service!, only: :update, unless: -> { current_user.admin? }
 
     def index
       year = filter_params[:year]
@@ -29,8 +28,7 @@ module V1
       respond_to do |format|
         format.json
         format.pdf do
-          pdf = Pdfs::ServiceAgreement::GlueService.new(@service)
-          send_data pdf.render,
+          send_data Pdfs::ServiceAgreement::GlueService.new(@service).render,
                     filename: I18n.t('pdfs.service_agreement.filename', full_name: @service.user.full_name),
                     type: 'application/pdf',
                     disposition: 'inline'

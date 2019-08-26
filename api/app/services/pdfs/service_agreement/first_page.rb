@@ -4,6 +4,7 @@ module Pdfs
   module ServiceAgreement
     class FirstPage
       include Prawn::View
+      include ::Pdfs::PrawnHelper
 
       def initialize(service)
         @service = service
@@ -54,13 +55,6 @@ module Pdfs
 
       def document
         @document ||= Prawn::Document.new(page_size: 'A4')
-      end
-
-      def cursor_save
-        cursor.tap do |old_cursor|
-          yield
-          move_cursor_to old_cursor
-        end
       end
 
       def draw_address_lines(address_data, leading = 7)

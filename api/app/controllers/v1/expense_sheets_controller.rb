@@ -28,9 +28,7 @@ module V1
       respond_to do |format|
         format.json
         format.pdf do
-          pdf = Pdfs::ExpenseSheet::GeneratorService.new(@expense_sheet)
-
-          send_data pdf.render,
+          send_data Pdfs::ExpenseSheet::GeneratorService.new(@expense_sheet).render,
                     filename: I18n.t('pdfs.expense_sheet.filename', today: @expense_sheet.user.full_name),
                     type: 'application/pdf',
                     disposition: 'inline'

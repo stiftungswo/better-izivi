@@ -68,20 +68,6 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
           ).to eq page_text_check_texts[index]
         end
       end
-
-      # it 'renders second pages correct' do
-      #   ClimateControl.modify envs do
-      #     expect(
-      #       pdf_text_inspector.strings[second_page_first_text_indices].join('').trim
-      #     ).to eq expected_second_page_texts
-      #   end
-      # end
-      #
-      # it 'renders third pages correct' do
-      #   ClimateControl.modify envs do
-      #     expect(pdf_text_inspector.strings[third_page_first_text_indices]).to eq expected_first_page_texts
-      #   end
-      # end
     end
   end
 end
