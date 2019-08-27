@@ -4,6 +4,7 @@ module V1
   class ServicesController < ApplicationController
     include V1::Concerns::AdminAuthorizable
     include V1::Concerns::ParamsAuthenticatable
+    include V1::Concerns::JsonAndPdfRespondable
 
     PERMITTED_SERVICE_SPECIFICATION_PARAMS = %i[service_specification_identification_number].freeze
     PERMITTED_SERVICE_PARAMS = %i[
@@ -25,15 +26,11 @@ module V1
     end
 
     def show
-      respond_to do |format|
-        format.json
-        format.pdf do
-          send_data Pdfs::ServiceAgreement::GlueService.new(@service).render,
-                    filename: I18n.t('pdfs.service_agreement.filename', full_name: @service.user.full_name),
-                    type: 'application/pdf',
-                    disposition: 'inline'
-        end
-      end
+      respond_to_json_and_pdf(
+        Pdfs::ServiceAgreement::GlueService,
+        I18n.t('pdfs.service_agreement.filename', full_name: @service.user.full_name),
+        @service
+      )
     end
 
     def create

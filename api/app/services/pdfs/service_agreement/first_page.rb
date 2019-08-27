@@ -11,6 +11,12 @@ module Pdfs
 
         update_font_families
 
+        generate_page
+      end
+
+      private
+
+      def generate_page
         font_size 11 do
           indent 30 do
             header
@@ -20,22 +26,26 @@ module Pdfs
         end
       end
 
-      private
-
       def header
         move_down 125
-        address_data = [ENV['SERVICE_AGREEMENT_LETTER_SENDER_NAME'], ENV['SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS'], ENV['SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY']]
-
         global_indent = bounds.left
         [20, 275].each do |current_indent|
           global_indent += current_indent
 
           indent(global_indent) do
             cursor_save do
-              draw_address_lines(address_data)
+              draw_address_lines(header_sender_info)
             end
           end
         end
+      end
+
+      def header_sender_info
+        [
+          ENV['SERVICE_AGREEMENT_LETTER_SENDER_NAME'],
+          ENV['SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS'],
+          ENV['SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY']
+        ]
       end
 
       def body
