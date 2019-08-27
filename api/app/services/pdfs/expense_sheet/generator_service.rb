@@ -17,6 +17,8 @@ module Pdfs
       def initialize(expense_sheet)
         @expense_sheet = expense_sheet
 
+        update_font_families
+
         header
         body
         footer

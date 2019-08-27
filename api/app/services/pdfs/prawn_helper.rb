@@ -8,5 +8,14 @@ module Pdfs
         move_cursor_to old_cursor
       end
     end
+
+    def update_font_families
+      font_families.update(
+        'RobotoCondensed' => {
+          normal: Rails.root.join('assets', 'fonts', 'RobotoCondensed-Regular.ttf'),
+          bold: Rails.root.join('assets', 'fonts', 'RobotoCondensed-Bold.ttf')
+        }
+      )
+    end
   end
 end

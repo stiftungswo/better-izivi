@@ -9,6 +9,8 @@ module Pdfs
       def initialize(service)
         @service = service
 
+        update_font_families
+
         font_size 11 do
           indent 30 do
             header
