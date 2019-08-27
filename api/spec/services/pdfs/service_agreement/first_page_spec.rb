@@ -34,9 +34,9 @@ RSpec.describe Pdfs::ServiceAgreement::FirstPage, type: :service do
 
       let(:envs) do
         {
-          LETTER_SENDER_NAME: sender_name,
-          LETTER_SENDER_ADDRESS: sender_address,
-          LETTER_SENDER_ZIP_CITY: sender_zip_city
+          SERVICE_AGREEMENT_LETTER_SENDER_NAME: sender_name,
+          SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS: sender_address,
+          SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY: sender_zip_city
         }
       end
 

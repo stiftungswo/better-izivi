@@ -22,7 +22,7 @@ module Pdfs
 
       def header
         move_down 125
-        address_data = [ENV['LETTER_SENDER_NAME'], ENV['LETTER_SENDER_ADDRESS'], ENV['LETTER_SENDER_ZIP_CITY']]
+        address_data = [ENV['SERVICE_AGREEMENT_LETTER_SENDER_NAME'], ENV['SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS'], ENV['SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY']]
 
         global_indent = bounds.left
         [20, 275].each do |current_indent|
