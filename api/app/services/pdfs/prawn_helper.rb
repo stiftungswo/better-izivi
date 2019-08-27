@@ -12,10 +12,12 @@ module Pdfs
     def update_font_families
       font_families.update(
         'RobotoCondensed' => {
-          normal: Rails.root.join('assets', 'fonts', 'RobotoCondensed-Regular.ttf'),
-          bold: Rails.root.join('assets', 'fonts', 'RobotoCondensed-Bold.ttf')
+          normal: Rails.root.join('app', 'assets', 'fonts', 'RobotoCondensed-Regular.ttf'),
+          bold: Rails.root.join('app', 'assets', 'fonts', 'RobotoCondensed-Bold.ttf'),
+          italic: Rails.root.join('app', 'assets', 'fonts', 'RobotoCondensed-RegularItalic.ttf')
         }
       )
+      font 'RobotoCondensed'
     end
   end
 end
