@@ -41,10 +41,10 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
       let(:page_text_check_indices) do
         [
           0..2,
-          18..20,
-          236..240,
-          608..608,
-          720..720
+          17..19,
+          235..239,
+          607..607,
+          719..719
         ]
       end
       let(:page_text_check_texts) do
