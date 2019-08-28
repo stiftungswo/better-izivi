@@ -10,6 +10,7 @@ module Pdfs
 
       def initialize(service)
         @service = service
+        @combiner = CombinePDF.new
       end
 
       def render
@@ -17,7 +18,7 @@ module Pdfs
         fill_and_load_form
         load_info_text
 
-        combiner.to_pdf
+        @combiner.to_pdf
       end
 
       private
@@ -25,22 +26,18 @@ module Pdfs
       def generate_and_load_first_page
         first_page = FirstPage.new(@service)
 
-        combiner << CombinePDF.parse(first_page.render)
+        @combiner << CombinePDF.parse(first_page.render)
       end
 
       def fill_and_load_form
         form_filler = FormFiller.new(@service)
         form_filler.fill_service_agreement
 
-        combiner << CombinePDF.load(form_filler.result_file_path)
+        @combiner << CombinePDF.load(form_filler.result_file_path)
       end
 
       def load_info_text
-        combiner << CombinePDF.load(valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH)
-      end
-
-      def combiner
-        @combiner ||= CombinePDF.new
+        @combiner << CombinePDF.load(valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH)
       end
 
       def valais?
