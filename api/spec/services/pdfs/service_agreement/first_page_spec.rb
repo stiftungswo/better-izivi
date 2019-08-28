@@ -21,10 +21,12 @@ RSpec.describe Pdfs::ServiceAgreement::FirstPage, type: :service do
           sender_name, sender_address, sender_zip_city,
           'Lieber Zivi',
           'Bitte sende die unterzeichnete Einsatzvereinbarung an obige Adresse. Wenn du ein Fenstercouvert mit Fenster',
-          'links oder rechts verwendest, kannst du dieses Deckblatt falten und in das Couvert stecken. Die Adresse ist richtig',
+          'links oder rechts verwendest, kannst du dieses Deckblatt falten ' \
+           'und in das Couvert stecken. Die Adresse ist richtig',
           'platziert. Die Adresse unten rechts wird von uns benutzt um die Einsatzvereinbarung an die Regionalstelle',
-          'weiterzuleiten. Ganz am Ende findest du ein Informationsblatt, das dir Auskunft über den Ablauf deines Einsatzes',
-          'gibt. Gib bitte den Talon darin am ersten Einsatztag unterschrieben dem Einsatzleiter ab.',
+          'weiterzuleiten. Ganz am Ende findest du ein Informationsblatt, ' \
+          'das dir Auskunft über den Ablauf deines Einsatzes',
+          'gibt. Gib bitte den Talon darin am ersten Einsatztag unterschrieben dem Einsatzleiter ab.'
         ].push(*service.user.regional_center.address.split(', '))
       end
       let(:sender_name) { 'SWO Stiftung Wirtschaft und Öl' }
