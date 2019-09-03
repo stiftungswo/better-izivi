@@ -18,7 +18,7 @@ module Pdfs
         fill_and_load_form
         load_info_text
 
-        pdf_io = StringIO.new()
+        pdf_io = StringIO.new
         @combined.write(pdf_io)
         pdf_io
       end
@@ -29,20 +29,20 @@ module Pdfs
         first_page = FirstPage.new(@service)
         pdf_io = StringIO.new(first_page.render)
 
-        HexaPDF::Document.new(io: pdf_io).pages.each {|page| @combined.pages << @combined.import(page)}
+        HexaPDF::Document.new(io: pdf_io).pages.each { |page| @combined.pages << @combined.import(page) }
       end
 
       def fill_and_load_form
         form_filler = FormFiller.new(@service)
         pdf_io = StringIO.new(form_filler.render)
 
-        HexaPDF::Document.new(io: pdf_io).pages.each {|page| @combined.pages << @combined.import(page)}
+        HexaPDF::Document.new(io: pdf_io).pages.each { |page| @combined.pages << @combined.import(page) }
       end
 
       def load_info_text
         HexaPDF::Document.open(
           valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
-        ).pages.each {|page| @combined.pages << @combined.import(page)}
+        ).pages.each { |page| @combined.pages << @combined.import(page) }
       end
 
       def valais?

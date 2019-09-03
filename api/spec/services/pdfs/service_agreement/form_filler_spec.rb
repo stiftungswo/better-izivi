@@ -57,7 +57,6 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
     end
 
     context 'when is german' do
-
       it 'renders correct texts', :aggregate_failures do
         expected_strings.each do |value|
           escaped_value = value.to_s.dup
