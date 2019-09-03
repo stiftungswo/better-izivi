@@ -14,46 +14,55 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
 
     let(:pdf_page_inspector) { PDF::Inspector::Page.analyze(pdf) }
     let(:pdf_xobjects_inspector) { PDF::Inspector::XObject.analyze(pdf) }
+    let(:xobjects_values) do
+      pdf_xobjects_inspector.page_xobjects[0].values.map(&:unfiltered_data).map do |data|
+        next checkbox_checked if data.include?(checkbox_checked)
+        next '' unless data.include?('(') && data.include?(')')
+
+        data[/\(.*\)/]&.strip
+      end.join(' ')
+    end
 
     let(:checkbox_checked) do
       "0 0 0 rg\n1.56 1.56 5.64 5.64 re\nf"
     end
 
+    let(:expected_strings) do
+      company_holiday.nil? ? expected_strings_default : expected_strings_default.push(*expected_strings_holiday)
+    end
+    let(:expected_strings_default) do
+      [
+        user.zdp,
+        user.last_name,
+        user.first_name,
+        user.address,
+        user.zip_with_city,
+        user.phone,
+        user.bank_iban,
+        user.email,
+        user.health_insurance,
+        I18n.l(service.beginning),
+        I18n.l(service.ending),
+        service.service_specification.title,
+        service.conventional_service? ? checkbox_checked : '',
+        service.probation_service? ? checkbox_checked : '',
+        service.long_service ? checkbox_checked : ''
+      ]
+    end
+    let(:expected_strings_holiday) do
+      [
+        I18n.l(company_holiday.beginning),
+        I18n.l(company_holiday.ending)
+      ]
+    end
+
     context 'when is german' do
-      let(:expected_strings) do
-        company_holiday.nil? ? expected_strings_default : expected_strings_default.merge(expected_strings_holiday)
-      end
-      let(:expected_strings_default) do
-        {
-          Xi33: user.zdp,
-          Xi38: user.last_name,
-          Xi34: user.first_name,
-          Xi39: user.address,
-          Xi35: user.zip_with_city,
-          Xi36: user.phone,
-          Xi12: user.bank_iban,
-          Xi37: user.email,
-          Xi13: user.health_insurance,
-          Xi46: I18n.l(service.beginning),
-          Xi45: I18n.l(service.ending),
-          Xi47: service.service_specification.title,
-          Xi0: service.conventional_service? ? checkbox_checked : '',
-          Xi9: service.probation_service? ? checkbox_checked : '',
-          Xi1: service.long_service ? checkbox_checked : ''
-        }
-      end
-      let(:expected_strings_holiday) do
-        {
-          Xi48: I18n.l(company_holiday.beginning),
-          Xi51: I18n.l(company_holiday.ending)
-        }
-      end
 
       it 'renders correct texts', :aggregate_failures do
-        expected_strings.map do |index, value|
+        expected_strings.each do |value|
           escaped_value = value.to_s.dup
           [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-          expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+          expect(xobjects_values).to include escaped_value
         end
       end
 
@@ -61,10 +70,10 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         let(:service_data) { { beginning: '2018-11-05', ending: '2019-05-03', long_service: true } }
 
         it 'renders correct texts', :aggregate_failures do
-          expected_strings.map do |index, value|
+          expected_strings.each do |value|
             escaped_value = value.to_s.dup
             [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+            expect(xobjects_values).to include escaped_value
           end
         end
       end
@@ -73,10 +82,10 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         let(:service_data) { { probation_service: true } }
 
         it 'renders correct texts', :aggregate_failures do
-          expected_strings.map do |index, value|
+          expected_strings.each do |value|
             escaped_value = value.to_s.dup
             [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+            expect(xobjects_values).to include escaped_value
           end
         end
       end
@@ -85,10 +94,10 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         let(:company_holiday) { nil }
 
         it 'renders correct texts', :aggregate_failures do
-          expected_strings.map do |index, value|
+          expected_strings.each do |value|
             escaped_value = value.to_s.dup
             [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+            expect(xobjects_values).to include escaped_value
           end
         end
       end
@@ -101,40 +110,11 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
     context 'when it is french' do
       let(:service) { create :service, :valais, service_data.merge(service_data_defaults) }
 
-      let(:expected_strings) do
-        company_holiday.nil? ? expected_strings_default : expected_strings_default.merge(expected_strings_holiday)
-      end
-      let(:expected_strings_default) do
-        {
-          Xi46: user.zdp,
-          Xi25: user.last_name,
-          Xi47: user.first_name,
-          Xi8: user.address,
-          Xi11: user.zip_with_city,
-          Xi52: user.phone,
-          Xi19: user.bank_iban,
-          Xi18: user.email,
-          Xi9: user.health_insurance,
-          Xi13: I18n.l(service.beginning),
-          Xi6: I18n.l(service.ending),
-          Xi51: service.service_specification.title,
-          Xi12: service.conventional_service? ? checkbox_checked : '',
-          Xi54: service.probation_service? ? checkbox_checked : '',
-          Xi50: service.long_service ? checkbox_checked : ''
-        }
-      end
-      let(:expected_strings_holiday) do
-        {
-          Xi4: I18n.l(company_holiday.beginning),
-          Xi5: I18n.l(company_holiday.ending)
-        }
-      end
-
       it 'renders correct texts', :aggregate_failures do
-        expected_strings.map do |index, value|
+        expected_strings.each do |value|
           escaped_value = value.to_s.dup
           [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-          expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+          expect(xobjects_values).to include escaped_value
         end
       end
 
@@ -142,10 +122,10 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         let(:service_data) { { beginning: '2018-11-05', ending: '2019-05-03', long_service: true } }
 
         it 'renders correct texts', :aggregate_failures do
-          expected_strings.map do |index, value|
+          expected_strings.each do |value|
             escaped_value = value.to_s.dup
             [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+            expect(xobjects_values).to include escaped_value
           end
         end
       end
@@ -154,41 +134,22 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         let(:service_data) { { probation_service: true } }
 
         it 'renders correct texts', :aggregate_failures do
-          expected_strings.map do |index, value|
+          expected_strings.each do |value|
             escaped_value = value.to_s.dup
             [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+            expect(xobjects_values).to include escaped_value
           end
         end
       end
 
       context 'when there is no company_holiday during the service' do
         let(:company_holiday) { nil }
-        let(:expected_strings_default) do
-          {
-            Xi44: user.zdp,
-            Xi23: user.last_name,
-            Xi45: user.first_name,
-            Xi6: user.address,
-            Xi9: user.zip_with_city,
-            Xi50: user.phone,
-            Xi17: user.bank_iban,
-            Xi16: user.email,
-            Xi7: user.health_insurance,
-            Xi11: I18n.l(service.beginning),
-            Xi4: I18n.l(service.ending),
-            Xi49: service.service_specification.title,
-            Xi10: service.conventional_service? ? checkbox_checked : '',
-            Xi52: service.probation_service? ? checkbox_checked : '',
-            Xi48: service.long_service ? checkbox_checked : ''
-          }
-        end
 
         it 'renders correct texts', :aggregate_failures do
-          expected_strings.map do |index, value|
+          expected_strings.each do |value|
             escaped_value = value.to_s.dup
             [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(pdf_xobjects_inspector.page_xobjects[0][index].unfiltered_data).to include escaped_value
+            expect(xobjects_values).to include escaped_value
           end
         end
       end
