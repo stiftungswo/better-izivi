@@ -31,9 +31,8 @@ module Pdfs
 
       def fill_and_load_form
         form_filler = FormFiller.new(@service)
-        form_filler.fill_service_agreement
 
-        @combiner << CombinePDF.load(form_filler.result_file_path)
+        @combiner << CombinePDF.parse(form_filler.render)
       end
 
       def load_info_text

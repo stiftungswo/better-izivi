@@ -8,26 +8,31 @@ module Pdfs
       FRENCH_FILE_PATH = Rails.root.join('app', 'assets', 'pdfs', 'french_service_agreement_form.pdf').freeze
       GERMAN_FILE_PATH = Rails.root.join('app', 'assets', 'pdfs', 'german_service_agreement_form.pdf').freeze
 
-      attr_reader :result_file_path
-
       def initialize(service)
         @service = service
+        @pdftk = PdfForms.new('/usr/bin/pdftk')
       end
 
-      def fill_service_agreement
-        I18n.locale = valais? ? :fr : :de
-
-        file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
-        result_file_name = "#{Time.now.in_time_zone.strftime '%Y%m%d%H%M%S'}.pdf"
-        @result_file_path = Rails.root.join('tmp', result_file_name)
-
-        pdftk.fill_form file_path, result_file_path, load_fields, flatten: true
+      def render
+        fill_form
+        pdf = pdf_file.read
+        pdf_file.close
+        pdf_file.unlink
+        pdf
       end
 
       private
 
-      def pdftk
-        @pdftk ||= PdfForms.new('/usr/bin/pdftk')
+      def fill_form
+        I18n.locale = valais? ? :fr : :de
+
+        file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
+
+        @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
+      end
+
+      def pdf_file
+        @pdf_file ||= Tempfile.new('service_agreement_form')
       end
 
       def load_fields
