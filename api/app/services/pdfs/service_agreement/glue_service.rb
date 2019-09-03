@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pdf_forms'
+require 'hexapdf'
 
 module Pdfs
   module ServiceAgreement
@@ -20,7 +21,7 @@ module Pdfs
 
         pdf_io = StringIO.new
         @combined.write(pdf_io)
-        pdf_io
+        pdf_io.string
       end
 
       private
