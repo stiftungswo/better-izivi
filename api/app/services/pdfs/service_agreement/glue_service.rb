@@ -26,15 +26,15 @@ module Pdfs
       private
 
       def generate_and_load_first_page
-        first_page = FirstPage.new(@service)
-        pdf_io = StringIO.new(first_page.render)
-
-        HexaPDF::Document.new(io: pdf_io).pages.each { |page| @combined.pages << @combined.import(page) }
+        ioify_and_combine(FirstPage.new(@service))
       end
 
       def fill_and_load_form
-        form_filler = FormFiller.new(@service)
-        pdf_io = StringIO.new(form_filler.render)
+        ioify_and_combine(FormFiller.new(@service))
+      end
+
+      def ioify_and_combine(pdf)
+        pdf_io = StringIO.new(pdf.render)
 
         HexaPDF::Document.new(io: pdf_io).pages.each { |page| @combined.pages << @combined.import(page) }
       end

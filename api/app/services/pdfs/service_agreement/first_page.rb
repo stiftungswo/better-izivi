@@ -4,7 +4,7 @@ module Pdfs
   module ServiceAgreement
     class FirstPage
       include Prawn::View
-      include ::Pdfs::PrawnHelper
+      include PrawnHelper
 
       def initialize(service)
         @service = service
