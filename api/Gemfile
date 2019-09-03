@@ -10,10 +10,10 @@ git_source(:github) do |repo_name|
 end
 
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'combine_pdf'
 gem 'devise', github: 'plataformatec/devise', branch: 'master'
 gem 'devise-jwt', '~> 0.6.0'
 gem 'dotenv-rails'
+gem 'hexapdf'
 gem 'iban-tools'
 gem 'jbuilder'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'

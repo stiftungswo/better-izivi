@@ -104,6 +104,7 @@ GEM
     byebug (11.0.1)
     climate_control (0.2.0)
     cliver (0.3.2)
+    cmdparse (3.0.4)
     codeclimate-engine-rb (0.4.1)
       virtus (~> 1.0)
     coderay (1.1.2)
@@ -150,9 +151,13 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
+    geom2d (0.2.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashery (2.1.2)
+    hexapdf (0.9.3)
+      cmdparse (~> 3.0, >= 3.0.3)
+      geom2d (~> 0.2)
     highline (2.0.2)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
@@ -395,6 +400,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  hexapdf
   i18n-tasks (~> 0.9.29)
   iban-tools
   jbuilder

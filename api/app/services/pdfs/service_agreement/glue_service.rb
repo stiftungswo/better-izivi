@@ -10,7 +10,7 @@ module Pdfs
 
       def initialize(service)
         @service = service
-        @combiner = CombinePDF.new
+        @combined = HexaPDF::Document.new
       end
 
       def render
@@ -18,25 +18,31 @@ module Pdfs
         fill_and_load_form
         load_info_text
 
-        @combiner.to_pdf
+        pdf_io = StringIO.new()
+        @combined.write(pdf_io)
+        pdf_io
       end
 
       private
 
       def generate_and_load_first_page
         first_page = FirstPage.new(@service)
+        pdf_io = StringIO.new(first_page.render)
 
-        @combiner << CombinePDF.parse(first_page.render)
+        HexaPDF::Document.new(io: pdf_io).pages.each {|page| @combined.pages << @combined.import(page)}
       end
 
       def fill_and_load_form
         form_filler = FormFiller.new(@service)
+        pdf_io = StringIO.new(form_filler.render)
 
-        @combiner << CombinePDF.parse(form_filler.render)
+        HexaPDF::Document.new(io: pdf_io).pages.each {|page| @combined.pages << @combined.import(page)}
       end
 
       def load_info_text
-        @combiner << CombinePDF.load(valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH)
+        HexaPDF::Document.open(
+          valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
+        ).pages.each {|page| @combined.pages << @combined.import(page)}
       end
 
       def valais?
