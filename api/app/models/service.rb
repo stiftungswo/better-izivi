@@ -89,6 +89,8 @@ class Service < ApplicationRecord
   end
 
   def length_is_valid
-    errors.add(:service_days, :invalid_length) if service_days < 26 && !last_civil_service?
+    return if ending.blank? || beginning.blank? || last_civil_service?
+
+    errors.add(:service_days, :invalid_length) if (ending - beginning).to_i < 25
   end
 end

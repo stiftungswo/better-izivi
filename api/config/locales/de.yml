@@ -54,8 +54,8 @@ de:
         first_swo_service: Erster SWO Einsatz
         long_service: Langer Einsatz
         probation_service: Probeeinsatz
-        service_type: Einsatztyp
         service_days: Einsatzdauer
+        service_type: Einsatztyp
       service_specification:
         accommodation_expenses: Unterkunftsspesen
         active: Aktiv
@@ -107,6 +107,10 @@ de:
           attributes:
             ending:
               before_beginning: vor Start
+        service:
+          attributes:
+            service_days:
+              invalid_length: kann nicht kürzer als 26 Tage sein.
         user:
           attributes:
             bank_iban:
@@ -117,10 +121,6 @@ de:
               unknown_country_code: unbekannter Landescode
             base:
               cant_delete_himself: Du kannst dich nicht selbst löschen
-        service:
-          attributes:
-            service_days:
-              invalid_length: kann nicht kürzer als 26 Tage sein.
     models:
       expense_sheet: Spesenblatt
       holiday: Ferien

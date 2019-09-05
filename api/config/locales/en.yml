@@ -54,8 +54,8 @@ en:
         first_swo_service: First SWO service
         long_service: Long service
         probation_service: Probation service
-        service_type: Service type
         service_days: Days of service
+        service_type: Service type
       service_specification:
         accommodation_expenses: Accommodation expenses
         active: Active
@@ -107,6 +107,10 @@ en:
           attributes:
             ending:
               before_beginning: before beginning
+        service:
+          attributes:
+            service_days:
+              invalid_length: can not be less then 26.
         user:
           attributes:
             bank_iban:
@@ -117,10 +121,6 @@ en:
               unknown_country_code: unknown country code
             base:
               cant_delete_himself: You cannot delete yourself
-        service:
-          attributes:
-            service_days:
-              invalid_length: can not be less then 26.
     models:
       expense_sheet: Expense sheet
       holiday: Holiday

@@ -53,7 +53,7 @@ RSpec.describe Service, type: :model do
   end
 
   it_behaves_like 'validates that the ending is after beginning' do
-    let(:model) { build(:service, beginning: beginning, ending: ending) }
+    let(:model) { build(:service, :last, beginning: beginning, ending: ending) }
   end
 
   describe '#at_year' do
@@ -62,7 +62,7 @@ RSpec.describe Service, type: :model do
     before do
       create_pair :service, beginning: '2018-11-05', ending: '2018-11-30'
       create :service, beginning: '2017-02-06', ending: '2018-01-05'
-      create :service, beginning: '2017-02-06', ending: '2017-02-24'
+      create :service, beginning: '2017-02-06', ending: '2017-03-24'
     end
 
     it 'returns only services that are at least partially in this year' do
@@ -169,7 +169,10 @@ RSpec.describe Service, type: :model do
   end
 
   describe 'beginning_is_monday validation' do
-    subject { build(:service, beginning: beginning).tap(&:validate).errors.added? :beginning, :not_a_monday }
+    subject do
+      build(:service, beginning: beginning, ending: (beginning + 4.weeks).at_end_of_week - 2.days)
+        .tap(&:validate).errors.added? :beginning, :not_a_monday
+    end
 
     let(:beginning) { Time.zone.today.at_beginning_of_week }
 
