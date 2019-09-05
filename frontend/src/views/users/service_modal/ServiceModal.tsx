@@ -64,8 +64,6 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
       probation_period: false,
       confirmation_date: null,
       eligible_paid_vacation_days: 0,
-      feedback_done: false,
-      feedback_mail_sent: false,
       user_id: props.user.id,
     };
   }
@@ -105,7 +103,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
               <Button color="primary" onClick={formikProps.submitForm}>
                 Daten speichern
               </Button>
-              {this.props.mainStore!.isAdmin() && (
+              {(this.props.mainStore!.isAdmin() && this.props.values && this.props.values.confirmation_date == null) && (
                 <>
                   {' '}
                   <Button color="secondary">Aufgebot erhalten</Button>

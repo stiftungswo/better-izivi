@@ -23,7 +23,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
         <WiredField
           horizontal
           component={ServiceSpecificationSelect}
-          name={'service_specification_identification_number'}
+          name={'service_specification.identification_number'}
           label={'Pflichtenheft'}
         />
         <WiredField

@@ -175,8 +175,6 @@ export interface Service {
   confirmation_date: null | string;
   eligible_paid_vacation_days: number;
   ending: Date | null;
-  feedback_done: boolean;
-  feedback_mail_sent: boolean;
   first_swo_service: boolean;
   long_service: boolean;
   service_type: number | null;

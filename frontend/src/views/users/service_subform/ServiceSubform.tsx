@@ -67,7 +67,7 @@ class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
               serviceSpecificationStore={serviceSpecificationStore}
               user={user}
               classes={classes}
-              serviceModalIsOpen={!!this.state.service_id}
+              serviceModalId={this.state.service_id}
               theme={theme}
               onModalClose={() => this.setState({ service_id: undefined })}
               onModalOpen={(service: Service) => this.setState({ service_id: service.id })}

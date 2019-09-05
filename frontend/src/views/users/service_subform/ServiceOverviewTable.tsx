@@ -34,7 +34,7 @@ interface OverviewTableParams extends WithSheet<string, {}> {
   user: User;
   onModalOpen: (service: Service) => void;
   onModalClose: (_?: React.MouseEvent<HTMLButtonElement>) => void;
-  serviceModalIsOpen: boolean;
+  serviceModalId?: number;
 }
 
 function onServiceTableSubmit(serviceStore?: ServiceStore, userStore?: UserStore) {
@@ -97,7 +97,7 @@ export default (params: OverviewTableParams) => {
     serviceSpecificationStore,
     onModalOpen,
     onModalClose,
-    serviceModalIsOpen,
+    serviceModalId,
   } = params;
 
   const columns = [
@@ -173,7 +173,8 @@ export default (params: OverviewTableParams) => {
           user={user}
           values={service}
           onClose={onModalClose}
-          isOpen={serviceModalIsOpen}
+          isOpen={serviceModalId === service.id}
+          // serviceId={serviceModalId}
         />
       </div>
     );
