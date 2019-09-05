@@ -17,12 +17,9 @@ module V1
           render :show
         end
         format.xml do
-          send_data generate_pain,
-                    filename: I18n.t(
-                      'payment.pain_filename',
-                      from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y')
-                    ),
-                    disposition: 'attachment'
+          send_data generate_pain, disposition: 'attachment',
+                                   filename: I18n.t('payment.pain_filename',
+                                                    from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y'))
         end
       end
     end
