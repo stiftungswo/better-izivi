@@ -7,9 +7,8 @@ const dailyExpenseSchema = yup.object({
 });
 
 const serviceSpecificationSchema = yup.object({
-  identification_number: yup
-    .number()
-    .required(),
+  id: yup.number().required(),
+  identification_number: yup.number(),
   name: yup.string().required(),
   short_name: yup.string().required(),
   work_clothing_expenses: yup.number().required(),

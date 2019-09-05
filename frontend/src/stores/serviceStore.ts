@@ -49,12 +49,14 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
   }
 
   async calcEligibleDays(beginning: string, ending: string) {
-    const response = await this.mainStore.api.get<EligibleDays>('/services/calculate_service_days?beginning=' + beginning + '&ending=' + ending);
+    const response = await this.mainStore.api.
+      get<EligibleDays>('/services/calculate_service_days?beginning=' + beginning + '&ending=' + ending);
     return response.data.result;
   }
 
-  async calcPossibleEndDate(beginning: string, service_days: number) {
-    const response = await this.mainStore.api.get<PossibleEndDate>('/services/calculate_ending?beginning=' + beginning + '&service_days=' + service_days);
+  async calcPossibleEndDate(beginning: string, serviceDays: number) {
+    const response = await this.mainStore.api.
+      get<PossibleEndDate>('/services/calculate_ending?beginning=' + beginning + '&service_days=' + serviceDays);
     return response.data.result;
   }
 

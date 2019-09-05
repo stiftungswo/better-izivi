@@ -23,6 +23,7 @@ class Service < ApplicationRecord
   validate :ending_is_friday, unless: :last_civil_service?
   validate :beginning_is_monday
   validate :no_overlapping_service
+  validate :length_is_valid
 
   scope :at_date, ->(date) { where(arel_table[:beginning].lteq(date)).where(arel_table[:ending].gteq(date)) }
   scope :chronologically, -> { order(:beginning, :ending) }
@@ -85,5 +86,9 @@ class Service < ApplicationRecord
 
   def ending_is_friday
     errors.add(:ending, :not_a_friday) unless ending.present? && ending.wday == FRIDAY_WEEKDAY
+  end
+
+  def length_is_valid
+    errors.add(:service_days, :invalid_length) if service_days < 26 && !last_civil_service?
   end
 end

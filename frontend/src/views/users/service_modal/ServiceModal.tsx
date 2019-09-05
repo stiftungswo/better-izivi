@@ -51,11 +51,8 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
   constructor(props: ServiceModalProps<Service>) {
     super(props);
     this.initialValues = props.values || {
-      service_specification: {
-        identification_number: -1,
-        name: '',
-      },
-      service_type: 0,
+      service_specification_id: -1,
+      service_type: 'normal',
       beginning: null,
       ending: null,
       service_days: 0,
@@ -65,6 +62,11 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
       confirmation_date: null,
       eligible_paid_vacation_days: 0,
       user_id: props.user.id,
+      service_specification: {
+        identification_number: -1,
+        name: undefined,
+        short_name: undefined,
+      },
     };
   }
 

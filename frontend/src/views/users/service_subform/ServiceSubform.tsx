@@ -2,6 +2,7 @@ import { inject } from 'mobx-react';
 import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
+import {ExpenseSheetStore} from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../../stores/serviceStore';
@@ -12,7 +13,6 @@ import { serviceSchema } from '../schemas';
 import { ServiceModal } from '../service_modal/ServiceModal';
 import ServiceOverviewTable from './ServiceOverviewTable';
 import { ServiceSubformExplanationHeader } from './ServiceSubformExplanationHeader';
-import {ExpenseSheetStore} from "../../../stores/expenseSheetStore";
 
 interface Props extends WithSheet<typeof styles> {
   mainStore?: MainStore;

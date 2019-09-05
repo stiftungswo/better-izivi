@@ -207,4 +207,40 @@ RSpec.describe Service, type: :model do
       it { is_expected.to be true }
     end
   end
+
+  describe 'length_is_valid validation' do
+    subject { service.tap(&:validate).errors.added? :service_days, :invalid_length }
+
+    let(:service) { build(:service, beginning: beginning, ending: ending, user: user) }
+    let(:user) { create :user }
+    let(:service_range) { get_service_range months: 2 }
+    let(:beginning) { service_range.begin }
+    let(:ending) { service_range.end }
+
+    context 'when service is normal' do
+      context 'when service has a valid length' do
+        it { is_expected.to be false }
+      end
+
+      context 'when service has a invalid length' do
+        let(:service_range) { Date.parse('2018-01-01')..Date.parse('2018-01-19') }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    context 'when service is last' do
+      let(:service) { build(:service, beginning: beginning, ending: ending, user: user, service_type: :last) }
+
+      context 'when service has a valid length' do
+        it { is_expected.to be false }
+      end
+
+      context 'when service has a invalid length' do
+        let(:service_range) { Date.parse('2018-01-01')..Date.parse('2018-01-19') }
+
+        it { is_expected.to be false }
+      end
+    end
+  end
 end

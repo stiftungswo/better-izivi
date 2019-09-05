@@ -93,17 +93,6 @@ module V1
     def sanitize_service_params(permitted_params)
       permitted_params[:user_id] = current_user.id unless current_user.admin?
       permitted_params.except!(:confirmation_date) unless current_user.admin?
-
-      associate_service_specification(permitted_params)
-    end
-
-    def associate_service_specification(service_params)
-      identification_number = service_specification_params[:service_specification_identification_number]
-
-      return service_params if identification_number.blank?
-
-      service_specification = ServiceSpecification.find_by(identification_number: identification_number)
-      service_params.merge(service_specification: service_specification)
     end
 
     def service_specification_params

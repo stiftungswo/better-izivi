@@ -55,6 +55,7 @@ de:
         long_service: Langer Einsatz
         probation_service: Probeeinsatz
         service_type: Einsatztyp
+        service_days: Einsatzdauer
       service_specification:
         accommodation_expenses: Unterkunftsspesen
         active: Aktiv
@@ -116,6 +117,10 @@ de:
               unknown_country_code: unbekannter Landescode
             base:
               cant_delete_himself: Du kannst dich nicht selbst löschen
+        service:
+          attributes:
+            service_days:
+              invalid_length: kann nicht kürzer als 26 Tage sein.
     models:
       expense_sheet: Spesenblatt
       holiday: Ferien

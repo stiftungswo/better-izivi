@@ -74,7 +74,7 @@ function onServiceAddExpenseSheet(service: Service, expenseSheetStore: ExpenseSh
     user_id: 0,
     work_days: 0,
     workfree_days: 0,
-  }
+  };
 
   expenseSheetStore.post(newExpenseSheet).then(window.location.reload);
 }
@@ -108,7 +108,7 @@ export default (params: OverviewTableParams) => {
         const spec = serviceSpecificationStore!
           .entities
           .find((specification: ServiceSpecification) => {
-              return specification.identification_number === service.service_specification.identification_number;
+              return specification.id === service.service_specification_id;
             },
           );
         return `${spec ? spec.name : ''} (${service.service_specification.identification_number})`;
@@ -146,7 +146,7 @@ export default (params: OverviewTableParams) => {
       <div className={classes.hideButtonText}>
         <a
            className={'btn btn-link'}
-           href={mainStore!.apiURL('services/' + service.id + '/draft', {}, true)}
+           href={mainStore!.apiURL('services/' + service.id + '.pdf', {}, true)}
            target={'_blank'}
         >
           <FontAwesomeIcon icon={PrintSolidIcon}/> <span>Drucken</span>

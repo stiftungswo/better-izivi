@@ -55,6 +55,7 @@ fr:
         long_service: Service long
         probation_service: Jours d’affectation à l’essai
         service_type: Type de service
+        service_days: Durée de service
       service_specification:
         accommodation_expenses: frais d'hébergement
         active: activé
@@ -116,6 +117,10 @@ fr:
               unknown_country_code: code de pays inconnu
             base:
               cant_delete_himself: Tu ne peux pas t'effacer toi-même
+        service:
+          attributes:
+            service_days:
+              invalid_length: ne peut être inférieure à 26 jours.
     models:
       expense_sheet: Note de frais
       holiday: Vaccances

@@ -111,6 +111,7 @@ export interface DailyExpense {
 }
 
 export interface ServiceSpecification {
+  id: number;
   identification_number?: number;
   name: string;
   short_name: string;
@@ -177,11 +178,13 @@ export interface Service {
   ending: Date | null;
   first_swo_service: boolean;
   long_service: boolean;
-  service_type: number | null;
+  service_type: string | null;
   probation_period: boolean;
+  service_specification_id: number;
   service_specification: {
     identification_number: number;
-    name: string;
+    name: string | undefined;
+    short_name: string | undefined;
   };
   user_id: number;
 }
@@ -193,8 +196,8 @@ export interface ServiceCollection {
   confirmation_date: string | null;
   service_specification: {
     identification_number: number;
-    name: string | null;
-    short_name: string | null;
+    name: string | undefined;
+    short_name: string | undefined;
   };
   user: {
     id: number;

@@ -17,11 +17,13 @@ export const userSchema = yup.object({
 });
 
 export const serviceSchema = yup.object({
+  service_specification_id: yup.number().required(),
   service_specification: yup.object({
-    identification_number: yup.number(),
-    name: yup.string(),
+      identification_number: yup.number(),
+      short_name: yup.string(),
+      name: yup.string(),
   }),
-  service_type: yup.number(),
+  service_type: yup.string(),
   beginning: apiDate().required(),
   ending: apiDate().required(),
   service_days: yup.number().required(),
