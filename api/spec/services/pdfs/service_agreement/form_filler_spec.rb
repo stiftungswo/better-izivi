@@ -57,48 +57,24 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
     end
 
     context 'when is german' do
-      it 'renders correct texts', :aggregate_failures do
-        expected_strings.each do |value|
-          escaped_value = value.to_s.dup
-          [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-          expect(xobjects_values).to include escaped_value
-        end
-      end
+      it_behaves_like 'pdf renders correct texts'
 
       context 'when the service is long' do
         let(:service_data) { { beginning: '2018-11-05', ending: '2019-05-03', long_service: true } }
 
-        it 'renders correct texts', :aggregate_failures do
-          expected_strings.each do |value|
-            escaped_value = value.to_s.dup
-            [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(xobjects_values).to include escaped_value
-          end
-        end
+        it_behaves_like 'pdf renders correct texts'
       end
 
       context 'when the service is a probational' do
         let(:service_data) { { probation_service: true } }
 
-        it 'renders correct texts', :aggregate_failures do
-          expected_strings.each do |value|
-            escaped_value = value.to_s.dup
-            [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(xobjects_values).to include escaped_value
-          end
-        end
+        it_behaves_like 'pdf renders correct texts'
       end
 
       context 'when there is no company_holiday during the service' do
         let(:company_holiday) { nil }
 
-        it 'renders correct texts', :aggregate_failures do
-          expected_strings.each do |value|
-            escaped_value = value.to_s.dup
-            [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(xobjects_values).to include escaped_value
-          end
-        end
+        it_behaves_like 'pdf renders correct texts'
       end
 
       it 'renders 2 pages' do
@@ -109,48 +85,24 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
     context 'when it is french' do
       let(:service) { create :service, :valais, service_data.merge(service_data_defaults) }
 
-      it 'renders correct texts', :aggregate_failures do
-        expected_strings.each do |value|
-          escaped_value = value.to_s.dup
-          [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-          expect(xobjects_values).to include escaped_value
-        end
-      end
+      it_behaves_like 'pdf renders correct texts'
 
       context 'when the service is long' do
         let(:service_data) { { beginning: '2018-11-05', ending: '2019-05-03', long_service: true } }
 
-        it 'renders correct texts', :aggregate_failures do
-          expected_strings.each do |value|
-            escaped_value = value.to_s.dup
-            [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(xobjects_values).to include escaped_value
-          end
-        end
+        it_behaves_like 'pdf renders correct texts'
       end
 
       context 'when the service is a probational' do
         let(:service_data) { { probation_service: true } }
 
-        it 'renders correct texts', :aggregate_failures do
-          expected_strings.each do |value|
-            escaped_value = value.to_s.dup
-            [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(xobjects_values).to include escaped_value
-          end
-        end
+        it_behaves_like 'pdf renders correct texts'
       end
 
       context 'when there is no company_holiday during the service' do
         let(:company_holiday) { nil }
 
-        it 'renders correct texts', :aggregate_failures do
-          expected_strings.each do |value|
-            escaped_value = value.to_s.dup
-            [%w[( \\(], %w[) \\)]].each { |replacement| escaped_value.gsub!(replacement[0], replacement[1]) }
-            expect(xobjects_values).to include escaped_value
-          end
-        end
+        it_behaves_like 'pdf renders correct texts'
       end
 
       it 'renders 2 pages' do
