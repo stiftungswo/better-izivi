@@ -16,7 +16,7 @@ import { ServiceSpecificationOverviewTableRowFields } from './ServiceSpecificati
 
 const INITIAL_DAILY_EXPENSES_FORM_VALUES = Object.freeze({ breakfast: 0, lunch: 0, dinner: 0 });
 const INITIAL_FORM_VALUES = Object.freeze({
-  identification_number: '',
+  identification_number: -1,
   name: '',
   short_name: '',
   work_clothing_expenses: 0,

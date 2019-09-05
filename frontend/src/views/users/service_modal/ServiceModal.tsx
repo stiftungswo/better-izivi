@@ -52,13 +52,13 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
     super(props);
     this.initialValues = props.values || {
       service_specification: {
-        identification_number: '',
+        identification_number: -1,
         name: '',
       },
       service_type: 0,
       beginning: null,
       ending: null,
-      days: 0,
+      service_days: 0,
       first_swo_service: false,
       long_service: false,
       probation_period: false,
@@ -76,10 +76,9 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
         if (next.values.beginning && next.values.ending) {
           await this.updateDays(next.values.beginning, next.values.ending, formik);
         }
-      }
-      if (current.values.beginning !== next.values.beginning || current.values.days !== next.values.days) {
-        if (next.values.beginning && next.values.days) {
-          await this.updateEnding(next.values.beginning, next.values.days, formik);
+      } else if (current.values.beginning !== next.values.beginning || current.values.service_days !== next.values.service_days) {
+        if (next.values.beginning && next.values.service_days) {
+          await this.updateEnding(next.values.beginning, next.values.service_days, formik);
         }
       }
     }

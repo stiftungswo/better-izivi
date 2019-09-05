@@ -36,7 +36,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
         <Effect onChange={serviceDateRangeChangeHandler}/>
         <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Einsatzbeginn'}/>
         <WiredField horizontal component={DatePickerField} name={'ending'} label={'Einsatzende'} disabled={!isAdmin}/>
-        <WiredField horizontal component={TextField} name={'days'} label={'Einsatztage'}/>
+        <WiredField horizontal component={TextField} name={'service_days'} label={'Einsatztage'}/>
         <WiredField horizontal component={CheckboxField} name={'first_swo_service'} label={'Erster SWO Einsatz?'}/>
         <WiredField horizontal component={CheckboxField} name={'long_service'} label={'Langer Einsatz?'}/>
         <WiredField horizontal component={CheckboxField} name={'probation_period'} label={'Probe-einsatz?'}/>

@@ -12,9 +12,11 @@ import { serviceSchema } from '../schemas';
 import { ServiceModal } from '../service_modal/ServiceModal';
 import ServiceOverviewTable from './ServiceOverviewTable';
 import { ServiceSubformExplanationHeader } from './ServiceSubformExplanationHeader';
+import {ExpenseSheetStore} from "../../../stores/expenseSheetStore";
 
 interface Props extends WithSheet<typeof styles> {
   mainStore?: MainStore;
+  expenseSheetStore?: ExpenseSheetStore;
   serviceStore?: ServiceStore;
   serviceSpecificationStore?: ServiceSpecificationStore;
   userStore?: UserStore;
@@ -41,7 +43,7 @@ const styles = () =>
     },
   });
 
-@inject('mainStore', 'serviceStore', 'serviceSpecificationStore', 'userStore')
+@inject('mainStore', 'serviceStore', 'serviceSpecificationStore', 'userStore', 'expenseSheetStore')
 class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
   constructor(props: Props) {
     super(props);
@@ -50,7 +52,7 @@ class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
   }
 
   render() {
-    const { user, serviceStore, mainStore, userStore, serviceSpecificationStore, classes, theme } = this.props;
+    const { user, serviceStore, mainStore, userStore, serviceSpecificationStore, expenseSheetStore, classes, theme } = this.props;
 
     return (
       <>
@@ -59,6 +61,7 @@ class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
           <div>
             <ServiceOverviewTable
               mainStore={mainStore}
+              expenseSheetStore={expenseSheetStore}
               serviceStore={serviceStore}
               userStore={userStore}
               serviceSpecificationStore={serviceSpecificationStore}

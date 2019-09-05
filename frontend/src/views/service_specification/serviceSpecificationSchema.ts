@@ -8,8 +8,7 @@ const dailyExpenseSchema = yup.object({
 
 const serviceSpecificationSchema = yup.object({
   identification_number: yup
-    .string()
-    .matches(/[0-9_]+/, 'Die ID muss aus Zahlen und Bodenstrichen bestehen.')
+    .number()
     .required(),
   name: yup.string().required(),
   short_name: yup.string().required(),
