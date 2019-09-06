@@ -30,20 +30,41 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
   private readonly initialValues: Service;
   private autoUpdate = true;
 
-  private updateDays = debounce(async (start: Date, end: Date, formik: FormikProps<Service>) => {
-    this.autoUpdate = false;
-    const data = await this.props.serviceStore!.calcEligibleDays(moment(start).format(apiDateFormat), moment(end).format(apiDateFormat));
-    if (data) {
-      formik.setFieldValue('days', data);
-    }
-    this.autoUpdate = true;
-  }, 500);
+  private changeMapToUpdateField = [
+    {
+      changes: ['beginning', 'ending'],
+      updateField: 'service_days',
+    },
+    {
+      changes: ['beginning', 'service_days'],
+      updateField: 'ending',
+    },
+  ];
 
-  private updateEnding = debounce(async (start: Date, days: number, formik: FormikProps<Service>) => {
+  private updateEndingOrServiceDays = debounce(async (current, next, formik) => {
     this.autoUpdate = false;
-    const data = await this.props.serviceStore!.calcPossibleEndDate(moment(start).format(apiDateFormat), days);
-    if (data) {
-      formik.setFieldValue('ending', data);
+    const values = {
+      beginning: next.values.beginning,
+    };
+    for (const map of this.changeMapToUpdateField) {
+      const [firstIndex, secondIndex] = map.changes;
+
+      if (!next.values[firstIndex] || !next.values[secondIndex]) {
+        continue;
+      }
+
+      const firstIndexUnchanged = current.values[firstIndex] === next.values[firstIndex];
+      const secondIndexUnchanged = current.values[secondIndex] === next.values[secondIndex];
+      if (firstIndexUnchanged && secondIndexUnchanged) {
+        continue;
+      }
+
+      values[secondIndex] = next.values[secondIndex];
+      const data = await this.props.serviceStore!.calcServiceDaysOrEnding(values);
+      if (data && data.result) {
+        formik.setFieldValue(map.updateField, data.result);
+      }
+      break;
     }
     this.autoUpdate = true;
   }, 500);
@@ -72,15 +93,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
 
   handleServiceDateRangeChange: OnChange<Service> = async (current, next, formik) => {
     if (this.autoUpdate) {
-      if (current.values.beginning !== next.values.beginning || current.values.ending !== next.values.ending) {
-        if (next.values.beginning && next.values.ending) {
-          await this.updateDays(next.values.beginning, next.values.ending, formik);
-        }
-      } else if (current.values.beginning !== next.values.beginning || current.values.service_days !== next.values.service_days) {
-        if (next.values.beginning && next.values.service_days) {
-          await this.updateEnding(next.values.beginning, next.values.service_days, formik);
-        }
-      }
+      await this.updateEndingOrServiceDays(current, next, formik);
     }
   }
 

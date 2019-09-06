@@ -45,38 +45,38 @@ function onServiceTableSubmit(serviceStore?: ServiceStore, userStore?: UserStore
   };
 }
 
-function onServiceAddExpenseSheet(service: Service, expenseSheetStore: ExpenseSheetStore) {
-  const newExpenseSheet: ExpenseSheet = {
-    bank_account_number: '',
-    beginning: new Date(),
-    clothing_expenses: 0,
-    clothing_expenses_comment: null,
-    company_holiday_comment: null,
-    driving_expenses: 0,
-    driving_expenses_comment: null,
-    duration: 0,
-    ending: new Date(),
-    extraordinary_expenses: 0,
-    extraordinary_expenses_comment: null,
-    id: 0,
-    paid_company_holiday_days: 0,
-    paid_vacation_comment: null,
-    paid_vacation_days: 0,
-    payment_timestamp: null,
-    service_id: 0,
-    sick_comment: null,
-    sick_days: 0,
-    state: ExpenseSheetState.open,
-    total: 0,
-    unpaid_company_holiday_days: 0,
-    unpaid_vacation_comment: null,
-    unpaid_vacation_days: 0,
-    user_id: 0,
-    work_days: 0,
-    workfree_days: 0,
-  };
+const expenseSheetTemplate: ExpenseSheet = {
+  bank_account_number: '',
+  beginning: new Date(),
+  clothing_expenses: 0,
+  clothing_expenses_comment: null,
+  company_holiday_comment: null,
+  driving_expenses: 0,
+  driving_expenses_comment: null,
+  duration: 0,
+  ending: new Date(),
+  extraordinary_expenses: 0,
+  extraordinary_expenses_comment: null,
+  id: 0,
+  paid_company_holiday_days: 0,
+  paid_vacation_comment: null,
+  paid_vacation_days: 0,
+  payment_timestamp: null,
+  service_id: 0,
+  sick_comment: null,
+  sick_days: 0,
+  state: ExpenseSheetState.open,
+  total: 0,
+  unpaid_company_holiday_days: 0,
+  unpaid_vacation_comment: null,
+  unpaid_vacation_days: 0,
+  user_id: 0,
+  work_days: 0,
+  workfree_days: 0,
+};
 
-  expenseSheetStore.post(newExpenseSheet).then(window.location.reload);
+function onServiceAddExpenseSheet(service: Service, expenseSheetStore: ExpenseSheetStore) {
+  expenseSheetStore.post(expenseSheetTemplate).then(window.location.reload);
 }
 
 async function onServiceDeleteConfirm(service: Service, serviceStore: ServiceStore, userStore: UserStore) {
@@ -141,40 +141,63 @@ export default (params: OverviewTableParams) => {
     },
   ];
 
+  function printButton(service: Service) {
+    return (
+      <a
+        className={'btn btn-link'}
+        href={mainStore!.apiURL('services/' + service.id + '.pdf', {}, true)}
+        target={'_blank'}
+      >
+        <FontAwesomeIcon icon={PrintSolidIcon}/> <span>Drucken</span>
+      </a>
+    );
+  }
+
+  function editButton(service: Service) {
+    return (
+      <Button color={'warning'} type={'button'} className="mr-1" onClick={() => onModalOpen(service)}>
+        <FontAwesomeIcon icon={EditSolidIcon}/> <span>Bearbeiten</span>
+      </Button>
+      );
+  }
+
+  function adminButtons(service: Service) {
+    return mainStore!.isAdmin() && (
+      <>
+        <DeleteButton onConfirm={() => onServiceDeleteConfirm(service, serviceStore!, userStore!)}>
+          <FontAwesomeIcon icon={TrashAltRegularIcon}/> <span>Löschen</span>
+        </DeleteButton>{' '}
+        <Button
+          onClick={() => onServiceAddExpenseSheet(service, expenseSheetStore!)}
+          color={'success'}
+          type={'button'}
+        >
+          <FontAwesomeIcon icon={PlusSquareRegularIcon}/> <span>Spesenblatt</span>
+        </Button>
+      </>
+    );
+  }
+
+  function getOverviewButtons(service: Service) {
+    return (
+      <>
+        {printButton(service)}
+        {editButton(service)}
+        {adminButtons(service)}
+      </>
+    );
+  }
+
   function OverViewTableRenderActions() {
     return (service: Service) => (
       <div className={classes.hideButtonText}>
-        <a
-           className={'btn btn-link'}
-           href={mainStore!.apiURL('services/' + service.id + '.pdf', {}, true)}
-           target={'_blank'}
-        >
-          <FontAwesomeIcon icon={PrintSolidIcon}/> <span>Drucken</span>
-        </a>
-        <Button color={'warning'} type={'button'} className="mr-1" onClick={() => onModalOpen(service)}>
-          <FontAwesomeIcon icon={EditSolidIcon}/> <span>Bearbeiten</span>
-        </Button>
-        {mainStore!.isAdmin() && (
-          <>
-            <DeleteButton onConfirm={() => onServiceDeleteConfirm(service, serviceStore!, userStore!)}>
-              <FontAwesomeIcon icon={TrashAltRegularIcon}/> <span>Löschen</span>
-            </DeleteButton>{' '}
-            <Button
-              onClick={() => onServiceAddExpenseSheet(service, expenseSheetStore!)}
-              color={'success'}
-              type={'button'}
-            >
-              <FontAwesomeIcon icon={PlusSquareRegularIcon}/> <span>Spesenblatt</span>
-            </Button>
-          </>
-        )}
+        {getOverviewButtons(service)}
         <ServiceModal
           onSubmit={onServiceTableSubmit(serviceStore, userStore)}
           user={user}
           values={service}
           onClose={onModalClose}
           isOpen={serviceModalId === service.id}
-          // serviceId={serviceModalId}
         />
       </div>
     );

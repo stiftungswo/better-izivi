@@ -1,5 +1,7 @@
 import { action, computed, observable } from 'mobx';
+import moment from 'moment';
 import { Service, ServiceCollection } from '../types';
+import {apiDateFormat} from './apiStore';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 
@@ -48,16 +50,19 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
     this.services = res.data;
   }
 
-  async calcEligibleDays(beginning: string, ending: string) {
-    const response = await this.mainStore.api.
-      get<EligibleDays>('/services/calculate_service_days?beginning=' + beginning + '&ending=' + ending);
-    return response.data.result;
-  }
-
-  async calcPossibleEndDate(beginning: string, serviceDays: number) {
-    const response = await this.mainStore.api.
-      get<PossibleEndDate>('/services/calculate_ending?beginning=' + beginning + '&service_days=' + serviceDays);
-    return response.data.result;
+  async calcServiceDaysOrEnding(values: {beginning: string, ending?: string, service_days?: number}) {
+    values.beginning = moment(values.beginning).format(apiDateFormat);
+    if (values.ending !== undefined) {
+      values.ending = moment(values.ending).format(apiDateFormat);
+      return this.callServiceCalculator<EligibleDays>(
+        `/services/calculate_service_days?beginning=${values.beginning}&ending=${values.ending}`,
+      );
+    } else if (values.service_days !== undefined) {
+      return this.callServiceCalculator<PossibleEndDate>(
+        `/services/calculate_ending?beginning=${values.beginning}&service_days=${values.service_days}`,
+      );
+    }
+    return false;
   }
 
   @action
@@ -66,12 +71,6 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
     const response = await this.mainStore.api.get<Service>('/services/' + id + '/draft');
     return response.data;
   }
-
-  // @action
-  // public async doFetchOne(id: number) {
-  //   const response = await this.mainStore.api.get<Service>('/services/' + id);
-  //   this.service = response.data;
-  // }
 
   @action
   protected async doPost(service: Service) {
@@ -85,6 +84,12 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
     // Todo: Implement
     const response = await this.mainStore.api.put<ServiceCollection[]>('/services/' + service.id, service);
     this.services = response.data;
+  }
+
+  private async callServiceCalculator<ReturnType>(url: string) {
+    const response = await this.mainStore.api.
+    get<ReturnType>(url);
+    return response.data;
   }
 }
 
