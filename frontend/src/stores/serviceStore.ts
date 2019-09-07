@@ -1,7 +1,7 @@
 import { action, computed, observable } from 'mobx';
 import moment from 'moment';
 import { Service, ServiceCollection } from '../types';
-import {apiDateFormat} from './apiStore';
+import { apiDateFormat } from './apiStore';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
 

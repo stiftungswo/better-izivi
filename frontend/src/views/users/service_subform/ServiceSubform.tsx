@@ -2,7 +2,7 @@ import { inject } from 'mobx-react';
 import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
-import {ExpenseSheetStore} from '../../../stores/expenseSheetStore';
+import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../../stores/serviceStore';

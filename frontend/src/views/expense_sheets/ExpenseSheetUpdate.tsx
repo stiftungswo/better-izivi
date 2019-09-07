@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
-import {ServiceSpecificationStore} from '../../stores/serviceSpecificationStore';
+import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../stores/serviceStore';
 import { UserStore } from '../../stores/userStore';
 import { ExpenseSheet, FormValues } from '../../types';

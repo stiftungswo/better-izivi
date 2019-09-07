@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Badge from 'reactstrap/lib/Badge';
-import {ExpenseSheetState, Service, ServiceSpecification} from '../../../types';
+import { ExpenseSheetState, Service, ServiceSpecification } from '../../../types';
 import { Formatter } from '../../../utilities/formatter';
 import { stateTranslation } from '../../../utilities/helpers';
 

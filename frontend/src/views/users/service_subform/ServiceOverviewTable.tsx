@@ -1,18 +1,18 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import * as React from 'react';
-import {WithSheet} from 'react-jss';
-import {Link} from 'react-router-dom';
-import {UncontrolledTooltip} from 'reactstrap';
+import { WithSheet } from 'react-jss';
+import { Link } from 'react-router-dom';
+import { UncontrolledTooltip } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
-import {DeleteButton} from '../../../form/DeleteButton';
-import {OverviewTable} from '../../../layout/OverviewTable';
-import {ExpenseSheetStore} from '../../../stores/expenseSheetStore';
-import {MainStore} from '../../../stores/mainStore';
-import {ServiceSpecificationStore} from '../../../stores/serviceSpecificationStore';
-import {ServiceStore} from '../../../stores/serviceStore';
-import {UserStore} from '../../../stores/userStore';
-import {ExpenseSheet, ExpenseSheetState, Service, ServiceSpecification, User} from '../../../types';
+import { DeleteButton } from '../../../form/DeleteButton';
+import { OverviewTable } from '../../../layout/OverviewTable';
+import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
+import { MainStore } from '../../../stores/mainStore';
+import { ServiceSpecificationStore } from '../../../stores/serviceSpecificationStore';
+import { ServiceStore } from '../../../stores/serviceStore';
+import { UserStore } from '../../../stores/userStore';
+import { ExpenseSheet, ExpenseSheetState, Service, ServiceSpecification, User } from '../../../types';
 import {
   CheckSquareRegularIcon,
   EditSolidIcon,
@@ -22,8 +22,8 @@ import {
   SquareRegularIcon,
   TrashAltRegularIcon,
 } from '../../../utilities/Icon';
-import {serviceSchema} from '../schemas';
-import {ServiceModal} from '../service_modal/ServiceModal';
+import { serviceSchema } from '../schemas';
+import { ServiceModal } from '../service_modal/ServiceModal';
 
 interface OverviewTableParams extends WithSheet<string, {}> {
   mainStore?: MainStore;

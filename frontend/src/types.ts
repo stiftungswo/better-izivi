@@ -1,4 +1,4 @@
-import {FormikBag} from 'formik';
+import { FormikBag } from 'formik';
 
 export interface Holiday {
   id?: number;
