@@ -19,10 +19,10 @@ interface Props<T> extends FormViewProps<T> {
 
 export class FormView<Values, ExtraProps = {}> extends React.Component<FormikConfig<Values> & ExtraProps & Props<Values>> {
   render() {
-    const { loading, title, children, ...rest } = this.props as any;
+    const { loading, title, children, ...rest } = this.props;
     return (
       <IziviContent card={this.props.card} loading={loading} title={title}>
-        {this.props.loading &&
+        {!this.props.loading &&
           <>
             <Formik
               {...rest}
