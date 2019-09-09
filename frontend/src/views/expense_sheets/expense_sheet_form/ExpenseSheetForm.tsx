@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikActions, FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -51,7 +51,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
         card
         loading={empty(expenseSheet) || this.props.loading}
         initialValues={template}
-        onSubmit={(formValues: FormValues, formikActions?: FormikActions<ExpenseSheet>) => onSubmit({ ...formValues }, formikActions)}
+        onSubmit={(formValues: FormValues) => onSubmit({ ...formValues })}
         title={title}
         validationSchema={expenseSheetSchema}
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
@@ -102,9 +102,12 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
   private onSaveButtonClicked(formikProps: FormikProps<{}>) {
     formikProps.submitForm();
-    if (!formikProps.isValid) {
-      this.setState({ safeOverride: true });
-    }
+    // formikProps.validateForm().then(errors => {
+    //   if (Object.keys(errors).length > 0) {
+    //     this.setState({ safeOverride: true });
+    //   } else {
+    //   }
+    // });
   }
 }
 

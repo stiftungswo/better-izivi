@@ -103,7 +103,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     });
   }
 
-  changeSelectedServiceSpecifications(v: boolean, id: number) {
+  changeSelectedServiceSpecifications(v: boolean, id: string) {
     const newSpec = this.state.selectedServiceSpecifications;
     newSpec[id] = v;
     this.setState({ selectedServiceSpecifications: newSpec }, () => this.updateAverageHeaders());
@@ -229,7 +229,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
                   return (
                     <CheckboxField
                       key={currSpec.identification_number!}
-                      onChange={(v: boolean) => this.changeSelectedServiceSpecifications(v, currSpec.identification_number!)}
+                      onChange={(v: boolean) => this.changeSelectedServiceSpecifications(v, (currSpec.identification_number!))}
                       name={currSpec.identification_number!.toString()}
                       value={this.state.selectedServiceSpecifications[currSpec.identification_number!]}
                       label={currSpec.name}

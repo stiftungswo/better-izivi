@@ -84,7 +84,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
       eligible_paid_vacation_days: 0,
       user_id: props.user.id,
       service_specification: {
-        identification_number: -1,
+        identification_number: '',
         name: undefined,
         short_name: undefined,
       },

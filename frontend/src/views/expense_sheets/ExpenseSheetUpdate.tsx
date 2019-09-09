@@ -1,3 +1,4 @@
+import { FormikActions } from 'formik';
 import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
@@ -46,7 +47,8 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
   }
 
   handleSubmit = (expenseSheet: ExpenseSheet) => {
-    return this.props.expenseSheetStore!.put(expenseSheet).then(() => window.location.reload());
+    return this.props.expenseSheetStore!.put(expenseSheet);
+    // return this.props.expenseSheetStore!.put(expenseSheet).then(() => window.location.reload());
   }
 
   get expenseSheet() {
