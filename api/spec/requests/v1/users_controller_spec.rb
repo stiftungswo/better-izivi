@@ -127,7 +127,9 @@ RSpec.describe V1::UsersController, type: :request do
 
   describe '#update' do
     let(:request) { put v1_user_path(updated_user), params: { user: params } }
-    let(:params) { { first_name: 'Updated first name' } }
+    let(:params) do
+      { first_name: 'Updated first name', bank_iban: 'CH56 0483 5012 3456 7800 9' }
+    end
 
     context 'when a civil servant is logged in' do
       let(:civil_servant) { create(:user) }
@@ -141,7 +143,9 @@ RSpec.describe V1::UsersController, type: :request do
           it_behaves_like 'renders a successful http status code'
 
           it 'updates the user' do
-            expect { request }.to change { updated_user.reload.first_name }.to params[:first_name]
+            expect { request }.to change { updated_user.reload.first_name }.to(params[:first_name]).and(
+              change { updated_user.reload.bank_iban }.to(User.strip_iban(params[:bank_iban]))
+            )
           end
         end
 
