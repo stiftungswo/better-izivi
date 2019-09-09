@@ -37,7 +37,11 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
       Promise.all([
         props.userStore!.fetchOne(Number(props.expenseSheetStore!.expenseSheet!.user_id)),
         props.serviceStore!.fetchOne(Number(props.expenseSheetStore!.expenseSheet!.service_id)),
-      ]).then(() => this.setState({ loading: false }));
+      ]).then(() => {
+        props.serviceSpecificationStore!.fetchOne(props.serviceStore!.entity!.service_specification_id).then(() =>
+          this.setState({ loading: false }),
+        );
+      });
     });
   }
 
@@ -70,7 +74,7 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
         expenseSheet={expenseSheet as FormValues}
         hints={this.props.expenseSheetStore!.hints!}
         service={this.props.serviceStore!.entity!}
-        serviceSpecificationStore={this.props.serviceSpecificationStore!}
+        serviceSpecification={this.props.serviceSpecificationStore!.entity!}
         title={
           expenseSheet
             ? this.user
