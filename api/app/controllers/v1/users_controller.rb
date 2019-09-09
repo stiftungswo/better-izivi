@@ -54,6 +54,7 @@ module V1
       format_iban(params.require(:user).permit(*permitted_keys))
     end
 
+    # :reek:UtilityFunction
     def format_iban(params)
       bank_iban = params[:bank_iban]
       params[:bank_iban] = User.strip_iban(bank_iban) if bank_iban.present?
