@@ -59,14 +59,14 @@ RSpec.describe User, type: :model do
       let(:invalid_emails) { %w[invalid @hello.com me@.ch 1234 .ch email@email@gmail.com email@invalid+domain.com] }
 
       it 'allows valid emails', :aggregate_failures do
-        valid_emails.each do |email|
-          expect(model).to allow_value(email).for :email
+        valid_emails.each do |valid_email|
+          expect(model).to allow_value(valid_email).for :email
         end
       end
 
       it 'does not allow valid emails', :aggregate_failures do
-        invalid_emails.each do |email|
-          expect(model).not_to allow_value(email).for :email
+        invalid_emails.each do |invalid_email|
+          expect(model).not_to allow_value(invalid_email).for :email
         end
       end
     end
