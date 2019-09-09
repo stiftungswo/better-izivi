@@ -170,11 +170,12 @@ RSpec.describe Service, type: :model do
 
   describe 'beginning_is_monday validation' do
     subject do
-      build(:service, beginning: beginning, ending: (beginning + 4.weeks).at_end_of_week - 2.days)
+      build(:service, beginning: beginning, ending: ending)
         .tap(&:validate).errors.added? :beginning, :not_a_monday
     end
 
     let(:beginning) { Time.zone.today.at_beginning_of_week }
+    let(:ending) { (beginning + 4.weeks).at_end_of_week - 2.days }
 
     context 'when beginning is a monday' do
       it { is_expected.to be false }
@@ -221,11 +222,11 @@ RSpec.describe Service, type: :model do
     let(:ending) { service_range.end }
 
     context 'when service is normal' do
-      context 'when service has a valid length' do
+      context 'when service has a length that is bigger then 26 days' do
         it { is_expected.to be false }
       end
 
-      context 'when service has a invalid length' do
+      context 'when service has a length that is less then 26 days' do
         let(:service_range) { Date.parse('2018-01-01')..Date.parse('2018-01-19') }
 
         it { is_expected.to be true }
@@ -235,11 +236,11 @@ RSpec.describe Service, type: :model do
     context 'when service is last' do
       let(:service) { build(:service, beginning: beginning, ending: ending, user: user, service_type: :last) }
 
-      context 'when service has a valid length' do
+      context 'when service has a length that is bigger then 26 days' do
         it { is_expected.to be false }
       end
 
-      context 'when service has a invalid length' do
+      context 'when service has a length that is less then 26 days' do
         let(:service_range) { Date.parse('2018-01-01')..Date.parse('2018-01-19') }
 
         it { is_expected.to be false }

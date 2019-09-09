@@ -22,7 +22,7 @@ export class FormView<Values, ExtraProps = {}> extends React.Component<FormikCon
     const { loading, title, children, ...rest } = this.props as any;
     return (
       <IziviContent card={this.props.card} loading={loading} title={title}>
-        {this.props.loading ? null :
+        {this.props.loading &&
           <>
             <Formik
               {...rest}
