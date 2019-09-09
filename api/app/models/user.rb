@@ -52,6 +52,10 @@ class User < ApplicationRecord
     bank_iban.gsub(/\s+/, '')
   end
 
+  def prettified_bank_iban
+    IBANTools::IBAN.new(bank_iban).prettify
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end

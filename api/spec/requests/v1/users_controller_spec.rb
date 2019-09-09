@@ -12,13 +12,14 @@ RSpec.describe V1::UsersController, type: :request do
       extract_to_json(requested_user)
         .except(
           :created_at, :encrypted_password, :legacy_password,
-          :reset_password_sent_at, :reset_password_token,
+          :reset_password_sent_at, :reset_password_token, :bank_iban,
           :updated_at
         ).merge(
           beginning: nil,
           ending: nil,
           services: [],
-          active: false
+          active: false,
+          bank_iban: requested_user.prettified_bank_iban
         )
     end
 
@@ -85,7 +86,8 @@ RSpec.describe V1::UsersController, type: :request do
             ),
             beginning: convert_to_json_value(current_user.services.chronologically.last.beginning),
             ending: convert_to_json_value(current_user.services.chronologically.last.ending.to_s),
-            active: false
+            active: false,
+            bank_iban: current_user.prettified_bank_iban
           ).except(
             :created_at, :encrypted_password, :legacy_password,
             :reset_password_sent_at, :reset_password_token,
@@ -119,7 +121,7 @@ RSpec.describe V1::UsersController, type: :request do
 
       it_behaves_like 'renders a successful http status code'
 
-      it('returns expected JSON response') do
+      it 'returns expected JSON response' do
         expect(json_response).to include(*expected_successful_response_json)
       end
     end
