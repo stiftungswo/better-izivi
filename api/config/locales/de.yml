@@ -141,6 +141,7 @@ de:
   expense_sheet:
     errors:
       already_paid: Spesenblatt wurde bereits ausgezahlt
+      outside_service_date_range: Spesenblatt kann nicht ausserhalb des Einsatzzeitraums sein
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp

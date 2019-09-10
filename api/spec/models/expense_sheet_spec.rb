@@ -35,6 +35,40 @@ RSpec.describe ExpenseSheet, type: :model do
         expect(model).to validate_numericality_of(field).only_integer
       end
     end
+
+    describe '#included_in_service_date_range' do
+      let(:beginning) { Date.parse('2019-09-02') }
+      let(:ending) { Date.parse('2019-09-27') }
+
+      let(:user) { create :user }
+
+      before { create :service, user: user, beginning: beginning, ending: ending }
+
+      context 'when expense_sheet is in service period' do
+        subject(:expense_sheet) do
+          build(:expense_sheet, user: user, beginning: beginning, ending: ending).tap(&:validate)
+        end
+
+        it 'is valid' do
+          expect(expense_sheet.errors[:base]).to be_empty
+        end
+      end
+
+      context 'when expense_sheet is outside service period' do
+        subject(:expense_sheet) do
+          build(:expense_sheet, user: user, beginning: invalid_beginning, ending: invalid_ending).tap(&:validate)
+        end
+
+        let(:invalid_beginning) { Date.parse('2019-09-28') }
+        let(:invalid_ending) { Date.parse('2019-09-28') }
+
+        it 'added error' do
+          expect(expense_sheet.errors[:base]).to include I18n.t('expense_sheet.errors.outside_service_date_range')
+        end
+      end
+
+    end
+
   end
 
   it_behaves_like 'validates that the ending is after beginning' do

@@ -141,6 +141,7 @@ en:
   expense_sheet:
     errors:
       already_paid: Expense sheet has already been paid
+      outside_service_date_range: Expense sheet cannot be outside the period of use
   expense_sheet_calculator:
     errors:
       unknown_day_type: Ungültiger Spesentagestyp
