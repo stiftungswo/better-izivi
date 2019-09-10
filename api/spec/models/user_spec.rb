@@ -135,6 +135,15 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#prettified_bank_iban' do
+    subject { build(:user, bank_iban: ugly_iban).prettified_bank_iban }
+
+    let(:ugly_iban) { 'CH5604835012345678009' }
+    let(:nice_iban) { 'CH56 0483 5012 3456 7800 9' }
+
+    it { is_expected.to eq nice_iban }
+  end
+
   describe '#full_name' do
     subject { build(:user, first_name: 'Peter', last_name: 'Zivi').full_name }
 
