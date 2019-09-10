@@ -182,7 +182,7 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     it 'calls create_expense_sheets with the correct arguments' do
       expense_sheet_generator.create_additional_expense_sheets
       expect(expense_sheet_generator).to have_received(:create_expense_sheet)
-                                           .with(service.ending, service.ending)
+        .with(service.ending, service.ending)
     end
   end
 end

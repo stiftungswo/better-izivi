@@ -205,7 +205,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         let(:service) { create :service }
 
         it_behaves_like 'admin protected resource' do
-          let(:request) { post v1_expense_sheets_path( service_id: service.id ) }
+          let(:request) { post v1_expense_sheets_path(service_id: service.id) }
         end
       end
     end
