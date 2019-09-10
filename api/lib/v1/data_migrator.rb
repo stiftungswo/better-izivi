@@ -14,6 +14,7 @@ module V1
       @password = safe_env_fetch('DATABASE_PASSWORD')
     end
 
+    # :reek:UncommunicativeVariableName
     def migrate
       create_migration_db
       load_old_data
