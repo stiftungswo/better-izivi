@@ -8,12 +8,6 @@ RSpec.describe User, type: :model do
 
     it { is_expected.to validate_numericality_of(:zip).only_integer }
 
-    describe '#email' do
-      subject { build(:user) }
-
-      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
-    end
-
     it_behaves_like 'validates presence of required fields', %i[
       first_name
       last_name
@@ -34,6 +28,22 @@ RSpec.describe User, type: :model do
         .only_integer
         .is_less_than(999_999)
         .is_greater_than(10_000)
+    end
+
+    describe 'uniqueness validations' do
+      subject(:user) { build(:user) }
+
+      it 'validates uniqueness of #email and #zdp', :aggregate_failures do
+        %i[email zdp].each do |field|
+          expect(user).to validate_uniqueness_of(field).case_insensitive
+        end
+      end
+    end
+
+    describe '#zdp' do
+      subject { build(:user) }
+
+      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
     end
 
     describe '#bank_iban' do
