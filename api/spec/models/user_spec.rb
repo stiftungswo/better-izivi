@@ -40,12 +40,6 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '#zdp' do
-      subject { build(:user) }
-
-      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
-    end
-
     describe '#bank_iban' do
       it 'does not allow invalid values', :aggregate_failures do
         expect(model).not_to allow_value('CH93 0076 2011 6238 5295 7').for(:bank_iban)
