@@ -31,7 +31,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
   private readonly initialValues: Service;
   private autoUpdate = true;
 
-  private changeMapToUpdateField = [
+  private changeFieldsToUpdateFieldMap = [
     {
       changes: ['beginning', 'ending'],
       updateField: 'service_days',
@@ -47,7 +47,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
     const values = {
       beginning: next.values.beginning,
     };
-    for (const map of this.changeMapToUpdateField) {
+    for (const map of this.changeFieldsToUpdateFieldMap) {
       const [firstIndex, secondIndex] = map.changes;
 
       if (!next.values[firstIndex] || !next.values[secondIndex]) {

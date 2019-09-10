@@ -54,7 +54,6 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
         onSubmit={(formValues: FormValues) => onSubmit({ ...formValues })}
         title={title}
         validationSchema={expenseSheetSchema}
-        enableReinitialize={true}
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
           <Form>
             <ExpenseSheetFormHeader

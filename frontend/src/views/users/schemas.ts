@@ -22,7 +22,7 @@ export const serviceSchema = yup.object({
       identification_number: yup.string(),
       short_name: yup.string(),
       name: yup.string(),
-  }).nullable(true),
+  }),
   service_type: yup.string(),
   beginning: apiDate().required(),
   ending: apiDate().required(),
