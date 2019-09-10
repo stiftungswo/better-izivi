@@ -11,7 +11,6 @@ const defaults: IziToastSettings = {
 };
 
 export function displaySuccess(message: string) {
-  debugger;
   iziToast.show({
     ...defaults,
     id: 'toast-success',
@@ -23,7 +22,6 @@ export function displaySuccess(message: string) {
 }
 
 export function displayError(message: string) {
-  debugger;
   iziToast.show({
     ...defaults,
     id: 'toast-failed',

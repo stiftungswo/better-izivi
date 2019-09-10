@@ -88,13 +88,5 @@ module V1
     def filter_param
       params[:filter]
     end
-
-    def expense_sheet_default_params
-      {
-        user: @user,
-        # TODO: Where to get bank_account_number from?
-        bank_account_number: '4470 (200)'
-      }
-    end
   end
 end
