@@ -4,7 +4,14 @@ require 'rails_helper'
 
 RSpec.describe ExpenseSheet, type: :model do
   describe 'validations' do
-    subject(:model) { described_class.new }
+    before { create :service, user: user }
+
+    let(:user) { create :user }
+    let(:expense_sheet) { build :expense_sheet, user: user }
+
+    let(:present_fields) do
+      %i[beginning ending user work_days bank_account_number state]
+    end
 
     let(:only_integer_fields) do
       %i[
@@ -21,18 +28,15 @@ RSpec.describe ExpenseSheet, type: :model do
       ]
     end
 
-    it_behaves_like 'validates presence of required fields', %i[
-      beginning
-      ending
-      user
-      work_days
-      bank_account_number
-      state
-    ]
+    it 'validates that required fields are present', :aggregate_failures do
+      present_fields.each do |field|
+        expect(expense_sheet).to validate_presence_of field
+      end
+    end
 
     it 'validates the correctness of numerical fields correctly', :aggregate_failures do
       only_integer_fields.each do |field|
-        expect(model).to validate_numericality_of(field).only_integer
+        expect(expense_sheet).to validate_numericality_of(field).only_integer
       end
     end
 
@@ -66,9 +70,7 @@ RSpec.describe ExpenseSheet, type: :model do
           expect(expense_sheet.errors[:base]).to include I18n.t('expense_sheet.errors.outside_service_date_range')
         end
       end
-
     end
-
   end
 
   it_behaves_like 'validates that the ending is after beginning' do
@@ -76,7 +78,12 @@ RSpec.describe ExpenseSheet, type: :model do
   end
 
   describe '#destroy' do
-    let!(:expense_sheet) { create :expense_sheet }
+    before do
+      create :service, user: user
+    end
+
+    let(:user) { create :user }
+    let!(:expense_sheet) { create :expense_sheet, user: user }
 
     context 'when the expense sheet is not already paid' do
       it 'destroys the expense_sheet' do
@@ -200,28 +207,34 @@ RSpec.describe ExpenseSheet, type: :model do
   end
 
   describe '#duration' do
-    let(:expense_sheet) { build :expense_sheet, beginning: beginning, ending: ending }
-    let(:beginning) { Time.zone.today }
-    let(:ending) { beginning + 2.days }
+    before { create :service, user: user }
+
+    let(:user) { create :user }
+    let(:expense_sheet) { build :expense_sheet, user: user }
 
     it 'returns duration' do
-      expect(expense_sheet.duration).to eq 3
+      expect(expense_sheet.duration).to eq 26
     end
   end
 
   describe '#total_paid_vacation_days' do
     subject { expense_sheet.total_paid_vacation_days }
 
+    before { create :service, user: user }
+
+    let(:user) { create :user }
     let(:expense_sheet) do
-      create :expense_sheet, paid_vacation_days: 2, paid_company_holiday_days: 1, unpaid_company_holiday_days: 3
+      create :expense_sheet,
+             paid_vacation_days: 2, paid_company_holiday_days: 1, unpaid_company_holiday_days: 3, user: user
     end
 
     it { is_expected.to eq 3 }
   end
 
   describe '#at_service_beginning?' do
-    let(:expense_sheet) { create :expense_sheet, expense_sheet_data }
-    let(:service) { create :service, service_data }
+    let(:user) { create :user }
+    let!(:service) { create :service, service_data.merge(user: user) }
+    let(:expense_sheet) { create :expense_sheet, expense_sheet_data.merge(user: user) }
 
     let(:service_data) do
       {
@@ -235,8 +248,7 @@ RSpec.describe ExpenseSheet, type: :model do
         {
           beginning: Date.parse('2018-01-01'),
           ending: Date.parse('2018-01-31'),
-          work_days: 23,
-          user: service.user
+          work_days: 23
         }
       end
 
@@ -305,7 +317,8 @@ RSpec.describe ExpenseSheet, type: :model do
 
   describe 'update' do
     context 'when state is paid' do
-      let(:expense_sheet) { create :expense_sheet, :paid }
+      let!(:service) { create :service }
+      let(:expense_sheet) { create :expense_sheet, :paid, user: service.user }
 
       it 'prevents an update' do
         expect { expense_sheet.update(sick_comment: 'blubb') }.to raise_error ActiveRecord::ReadOnlyRecord

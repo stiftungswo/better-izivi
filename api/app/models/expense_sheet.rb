@@ -60,6 +60,8 @@ class ExpenseSheet < ApplicationRecord
   alias total calculate_full_expenses
 
   def service
+    return if user.nil?
+
     @service ||= user.services.including_date_range(beginning, ending).first
   end
 
