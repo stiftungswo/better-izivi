@@ -12,7 +12,7 @@ RSpec.describe V1::UsersController, type: :request do
       extract_to_json(requested_user)
         .except(
           :created_at, :encrypted_password, :legacy_password,
-          :reset_password_sent_at, :reset_password_token, :bank_iban,
+          :reset_password_sent_at, :reset_password_token,
           :updated_at
         ).merge(
           beginning: nil,
