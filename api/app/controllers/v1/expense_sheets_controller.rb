@@ -9,6 +9,7 @@ module V1
     before_action :authenticate_user!, unless: -> { request.format.pdf? }
     before_action :authenticate_from_params!, if: -> { request.format.pdf? }
     before_action :set_expense_sheet, only: %i[show update destroy hints]
+    before_action :set_service, only: :create
     before_action :authorize_admin!
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
@@ -41,9 +42,7 @@ module V1
     end
 
     def create
-      @expense_sheet = ExpenseSheet.new(expense_sheet_params)
-
-      raise ValidationError, @expense_sheet.errors unless @expense_sheet.save
+      @expense_sheet = ExpenseSheetGenerator.new(@service).create_additional_expense_sheets
 
       render :show
     end
@@ -78,12 +77,24 @@ module V1
       @expense_sheet = ExpenseSheet.find(params[:id])
     end
 
+    def set_service
+      @service = Service.find(params[:service_id])
+    end
+
     def expense_sheet_params
       params.require(:expense_sheet).permit(*PERMITTED_EXPENSE_SHEET_KEYS)
     end
 
     def filter_param
       params[:filter]
+    end
+
+    def expense_sheet_default_params
+      {
+        user: @user,
+        # TODO: Where to get bank_account_number from?
+        bank_account_number: '4470 (200)'
+      }
     end
   end
 end
