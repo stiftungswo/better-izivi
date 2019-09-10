@@ -8,6 +8,12 @@ RSpec.describe User, type: :model do
 
     it { is_expected.to validate_numericality_of(:zip).only_integer }
 
+    describe '#email' do
+      subject { build(:user) }
+
+      it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+    end
+
     it_behaves_like 'validates presence of required fields', %i[
       first_name
       last_name
