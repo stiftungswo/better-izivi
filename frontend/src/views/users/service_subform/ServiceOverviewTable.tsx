@@ -38,7 +38,7 @@ interface OverviewTableParams extends WithSheet<string, {}> {
 function onServiceTableSubmit(serviceStore?: ServiceStore, userStore?: UserStore) {
   return (service: Service) => {
     return serviceStore!.put(serviceSchema.cast(service)).then(() => {
-      void userStore!.fetchOne(service.user_id);
+      userStore!.fetchOne(service.user_id);
     }) as Promise<void>;
   };
 }
@@ -135,13 +135,18 @@ export default (params: OverviewTableParams) => {
         <DeleteButton onConfirm={() => onServiceDeleteConfirm(service, serviceStore!, userStore!)}>
           <FontAwesomeIcon icon={TrashAltRegularIcon}/> <span>Löschen</span>
         </DeleteButton>{' '}
-        <Button
-          onClick={() => onServiceAddExpenseSheet(service, expenseSheetStore!, userStore!)}
-          color={'success'}
-          type={'button'}
-        >
-          <FontAwesomeIcon icon={PlusSquareRegularIcon}/> <span>Spesenblatt</span>
-        </Button>
+        {
+          service.confirmation_date !== null && (
+            <Button
+              onClick={() => onServiceAddExpenseSheet(service, expenseSheetStore!, userStore!)}
+              color={'success'}
+              type={'button'}
+            >
+              <FontAwesomeIcon icon={PlusSquareRegularIcon}/> <span>Spesenblatt</span>
+            </Button>
+          )
+        }
+
       </>
     );
   }

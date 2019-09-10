@@ -42,7 +42,7 @@ module V1
     end
 
     def create
-      @expense_sheet = ExpenseSheetGenerator.new(@service).create_additional_expense_sheets
+      @expense_sheet = ExpenseSheetGenerator.new(@service).create_additional_expense_sheet
 
       render :show
     end

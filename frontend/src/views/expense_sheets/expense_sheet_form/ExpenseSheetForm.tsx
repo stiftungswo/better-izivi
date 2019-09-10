@@ -54,6 +54,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
         onSubmit={(formValues: FormValues) => onSubmit({ ...formValues })}
         title={title}
         validationSchema={expenseSheetSchema}
+        enableReinitialize={true}
         render={(formikProps: FormikProps<{}>): React.ReactNode => (
           <Form>
             <ExpenseSheetFormHeader
@@ -102,12 +103,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
   private onSaveButtonClicked(formikProps: FormikProps<{}>) {
     formikProps.submitForm();
-    // formikProps.validateForm().then(errors => {
-    //   if (Object.keys(errors).length > 0) {
-    //     this.setState({ safeOverride: true });
-    //   } else {
-    //   }
-    // });
+    this.setState({ safeOverride: !formikProps.isValid });
   }
 }
 

@@ -26,7 +26,7 @@ class ExpenseSheetGenerator
     create_expense_sheets beginning: new_beginning
   end
 
-  def create_additional_expense_sheets
+  def create_additional_expense_sheet
     last_ending = @service.expense_sheets.max_by(&:ending).ending
     create_expense_sheet(last_ending, last_ending)
   end

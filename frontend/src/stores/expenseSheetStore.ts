@@ -105,5 +105,4 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
     const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { ...params } });
     this.expenseSheets = res.data;
   }
-
 }

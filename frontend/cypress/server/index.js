@@ -44,7 +44,7 @@ server.use((req, res, next) => {
   next();
 });
 
-server.get('/v1/expense_sheets/:expensesheetId/hints', function (req, res) {
+server.get('/v1/expense_sheets/:expensesheetId/hints', (req, res) => {
   res.jsonp({
     "suggestions": {
       "work_days": 20,

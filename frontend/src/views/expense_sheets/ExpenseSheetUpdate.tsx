@@ -47,12 +47,11 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
   }
 
   handleSubmit = (expenseSheet: ExpenseSheet) => {
-    return this.props.expenseSheetStore!.put(expenseSheet);
-    // return this.props.expenseSheetStore!.put(expenseSheet).then(() => window.location.reload());
+    return this.props.expenseSheetStore!.put(expenseSheet).then(() => window.location.reload());
   }
 
   get expenseSheet() {
-    const expenseSheet = this.props.expenseSheetStore!.expenseSheet;
+    const expenseSheet = this.props.expenseSheetStore!.entity;
     if (expenseSheet) {
       return toJS(expenseSheet);
       // it's important to detach the mobx proxy before passing it into formik
