@@ -620,7 +620,7 @@ RSpec.describe V1::ServicesController, type: :request do
       it_behaves_like 'login protected resource'
     end
 
-    describe '#destroy' do
+    describe '#confirm' do
       let!(:service) { create :service, :unconfirmed }
       let(:request) { put service_confirm_v1_service_path service }
 
