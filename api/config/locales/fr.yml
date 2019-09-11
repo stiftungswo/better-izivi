@@ -138,7 +138,7 @@ fr:
   expense_sheet:
     errors:
       already_paid: Feuille de dépenses déjà payée
-      outside_service_date_range: La feuille de dépenses ne peut pas être en dehors de la période d'utilisation
+      outside_service_date_range: La feuille de dépenses ne peut pas être en dehors de la période du service civil
   expense_sheet_calculator:
     errors:
       unknown_day_type: Type de problème invalide
