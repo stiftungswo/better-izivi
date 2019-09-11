@@ -82,11 +82,12 @@ RSpec.describe V1::UsersController, type: :request do
     let(:request) { get v1_users_path }
     let(:expected_successful_response_json) do
       [user, admin_user].map do |current_user|
-        extract_to_json(current_user, :id, :zdp, :first_name, :last_name, :role)
+        extract_to_json(current_user, :id, :zdp, :role)
           .merge(
-            beginning: convert_to_json_value(current_user.services.chronologically.last.beginning),
-            ending: convert_to_json_value(current_user.services.chronologically.last.ending.to_s),
-            active: current_user.active?
+            beginning: convert_to_json_value(current_user.services.last.beginning),
+            ending: convert_to_json_value(current_user.services.last.ending.to_s),
+            active: current_user.active?,
+            full_name: current_user.full_name
           )
       end
     end
