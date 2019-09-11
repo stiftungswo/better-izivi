@@ -163,9 +163,9 @@ RSpec.describe User, type: :model do
   describe '#active?' do
     subject { user.active? }
 
-    let(:user) { create(:user, services: [service]) }
+    let(:user) { build(:user, services: [service]) }
     let(:ending) { (beginning + 4.weeks).at_end_of_week - 2.days }
-    let(:service) { create :service, beginning: beginning, ending: ending }
+    let(:service) { build :service, beginning: beginning, ending: ending }
 
     context 'when the user\'s currently doing civil service' do
       let(:beginning) { Time.zone.today.at_beginning_of_week }
@@ -181,7 +181,7 @@ RSpec.describe User, type: :model do
 
     context 'when the civil service he\'s currently doing ends today' do
       let(:beginning) { Time.zone.today.at_beginning_of_week - 1.week }
-      let(:service) { create :service, :last, beginning: beginning, ending: Time.zone.today }
+      let(:service) { build :service, :last, beginning: beginning, ending: Time.zone.today }
 
       it { is_expected.to eq true }
     end
