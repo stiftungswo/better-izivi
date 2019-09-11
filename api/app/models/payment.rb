@@ -17,9 +17,17 @@ class Payment
     Payment.new expense_sheets: expense_sheets, payment_timestamp: payment_timestamp, state: state
   end
 
-  def self.all(filter = nil)
-    expense_sheets = ExpenseSheet.payment_issued.eager_load(user: { services: [:service_specification] })
-    expense_sheets = expense_sheets.where(filter) if filter.present?
+  def self.all(filters = nil)
+    expense_sheets = ExpenseSheet
+                     .payment_issued
+                     .eager_load(user: { services: [:service_specification] })
+                     .order(payment_timestamp: :desc)
+
+    if filters.present?
+      filters.each do |filter|
+        expense_sheets = expense_sheets.where(filter)
+      end
+    end
 
     expense_sheets.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|
       state = expense_sheets.first.state

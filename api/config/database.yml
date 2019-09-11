@@ -8,7 +8,7 @@ default: &default
 
 development:
   <<: *default
-  database: better_izivi_development
+  database: better_izivi_development_using_master_data
 
 test:
   <<: *default
