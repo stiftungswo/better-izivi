@@ -1,7 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import Button from 'reactstrap/lib/Button';
-import { bool, boolean } from 'yup';
 import IziviContent from '../../layout/IziviContent';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
@@ -17,7 +16,9 @@ interface Props {
 
 interface State {
   loading: boolean;
-  paidPaymentsLoaded: boolean;
+  yearDelta: number;
+  hasMoreArchivedPayments: boolean;
+  isLoadingMoreArchivedPayments: boolean;
 }
 
 @inject('mainStore', 'paymentStore', 'expenseSheetStore')
@@ -28,26 +29,14 @@ export class PaymentOverview extends React.Component<Props, State> {
 
     this.state = {
       loading: true,
-      paidPaymentsLoaded: false,
+      yearDelta: 1,
+      hasMoreArchivedPayments: true,
+      isLoadingMoreArchivedPayments: false,
     };
   }
 
   componentDidMount(): void {
     this.loadContents();
-  }
-
-  private loadContents() {
-    if (!this.state.loading) {
-      this.setState({ loading: true });
-    }
-
-    const paymentsFilter = !this.state.paidPaymentsLoaded ? { state: 'payment_in_progress' } : undefined;
-    const paymentsPromise = this.props.paymentStore!.fetchAll(paymentsFilter);
-    const expenseSheetPromise = this.props.expenseSheetStore!.fetchToBePaidAll();
-
-    Promise.all([paymentsPromise, expenseSheetPromise]).then(() => {
-      this.setState({ loading: false });
-    });
   }
 
   render() {
@@ -69,22 +58,51 @@ export class PaymentOverview extends React.Component<Props, State> {
     );
   }
 
+  private loadContents() {
+    const paymentsPromise = this.props.paymentStore!.fetchAllWithYearDelta(this.state.yearDelta);
+    const expenseSheetPromise = this.props.expenseSheetStore!.fetchToBePaidAll();
+
+    return Promise.all([paymentsPromise, expenseSheetPromise]).then(() => {
+      this.setState({ loading: false });
+    });
+  }
+
   private archivedPayments() {
-    if (this.state.paidPaymentsLoaded) {
-      return <PaymentsTable payments={this.props.paymentStore!.paidPayments} emptyNotice={'Keine getätigten Zahlungen'}/>;
-    } else {
-      return (
-        <>
-          <div className="text-muted">Das Archiv wurde noch nicht geladen</div>
-          <Button
-            color="link"
-            className="p-0 mt-3"
-            onClick={() => this.setState({ paidPaymentsLoaded: true }, this.loadContents)}
-          >
-            Archivierte Auszahlungen laden
-          </Button>
-        </>
-      );
-    }
+    return (
+      <>
+        <PaymentsTable payments={this.props.paymentStore!.paidPayments} emptyNotice={'Keine getätigten Zahlungen'}/>
+        {this.state.hasMoreArchivedPayments && this.loadMoreArchivedPaymentsButton()}
+      </>
+    );
+  }
+
+  private loadMoreArchivedPaymentsButton() {
+    return (
+      <div className="d-flex justify-content-center" style={{ borderTop: '2px solid lightgray' }}>
+        <Button
+          color="link"
+          className="p-0 mt-3"
+          disabled={this.state.isLoadingMoreArchivedPayments}
+          onClick={() => this.loadMoreArchivedPayments()}
+        >
+          {this.state.isLoadingMoreArchivedPayments ? 'Inhalt wird geladen...' : 'Weitere archivierte Auszahlungen laden'}
+        </Button>
+      </div>
+    );
+  }
+
+  private loadMoreArchivedPayments() {
+    const paymentsCount = this.props.paymentStore!.entities.length;
+    this.setState({
+      yearDelta: this.state.yearDelta + 1,
+      isLoadingMoreArchivedPayments: true,
+    }, () => {
+      this.loadContents().then(() => {
+        this.setState({ isLoadingMoreArchivedPayments: false });
+        if (this.props.paymentStore!.entities.length === paymentsCount) {
+          this.setState({ hasMoreArchivedPayments: false });
+        }
+      });
+    });
   }
 }

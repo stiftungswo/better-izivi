@@ -1,4 +1,4 @@
-import { computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import moment from 'moment';
 import { ExpenseSheetState, Payment, PaymentState } from '../types';
 import { DomainStore } from './domainStore';
@@ -87,8 +87,21 @@ export class PaymentStore extends DomainStore<Payment> {
     }
   }
 
-  protected async doFetchAll(params: { state?: string }): Promise<void> {
-    const filter = params.state ? `?state=${params.state}` : '';
+  @action
+  async fetchAllWithYearDelta(delta: number) {
+    try {
+      const res = await this.mainStore.api.get<Payment[]>(`/payments?filter[year_delta]=${delta}`);
+      this.payments = [...this.payments, ...res.data];
+    } catch (e) {
+      this.mainStore.displayError(DomainStore.buildErrorMessage(e, `${this.entityName.plural} konnten nicht geladen werden`));
+      // tslint:disable-next-line:no-console
+      console.error(e);
+      throw e;
+    }
+  }
+
+  protected async doFetchAll(params: { year_delta?: string }): Promise<void> {
+    const filter = params.year_delta ? `?filter[year_delta]=${params.year_delta}` : '';
     const res = await this.mainStore.api.get<Payment[]>(`/payments${filter}`);
     this.payments = res.data;
   }
