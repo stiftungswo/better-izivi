@@ -86,9 +86,19 @@ RSpec.describe V1::UsersController, type: :request do
           .merge(
             beginning: convert_to_json_value(current_user.services.chronologically.last.beginning),
             ending: convert_to_json_value(current_user.services.chronologically.last.ending.to_s),
-            active: false
+            active: current_user.active?
           )
       end
+    end
+
+    let(:now) { Time.zone.today }
+
+    before do
+      create :service, user: user, beginning: (now - 4.weeks).at_beginning_of_week, ending: now.at_end_of_week + 5.days
+      create(:service,
+             user: admin_user,
+             beginning: (now + 1.month).at_beginning_of_week,
+             ending: (now + 2.months).at_end_of_week - 2.days)
     end
 
     context 'when no user is logged in' do
