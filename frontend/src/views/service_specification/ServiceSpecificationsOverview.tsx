@@ -16,8 +16,8 @@ import { ServiceSpecificationOverviewTableRowFields } from './ServiceSpecificati
 
 const INITIAL_DAILY_EXPENSES_FORM_VALUES = Object.freeze({ breakfast: 0, lunch: 0, dinner: 0 });
 const INITIAL_FORM_VALUES = Object.freeze({
-  id: -1,
-  identification_number: undefined,
+  id: undefined,
+  identification_number: '',
   name: '',
   short_name: '',
   work_clothing_expenses: 0,
@@ -61,11 +61,12 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
     await this.props.serviceSpecificationStore!.post(serviceSpecificationSchema.cast(entity)).then(() => {
       actions.setSubmitting(false);
       actions.resetForm();
+      window.location.reload();
     });
   }
 
   render() {
-    const entities = this.props.serviceSpecificationStore!.entities;
+    const serviceSpecifications = this.props.serviceSpecificationStore!.entities;
 
     return (
       <IziviContent loading={this.state.loading} title={'Pflichtenheft'} card={true} fullscreen>
@@ -91,7 +92,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
               </tr>
             )}
           />
-          {entities.map(serviceSpecification => (
+          {serviceSpecifications.map(serviceSpecification => (
             <Formik
               key={serviceSpecification.identification_number}
               validationSchema={serviceSpecificationSchema}
