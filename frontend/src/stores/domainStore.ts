@@ -3,7 +3,6 @@ import * as _ from 'lodash';
 import { action, observable } from 'mobx';
 import { noop } from '../utilities/helpers';
 import { MainStore } from './mainStore';
-import { reject } from 'lodash';
 
 /**
  * This class wraps all common store functions with success/error popups.
@@ -229,7 +228,7 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
     await this.mainStore.api.delete(this.entityURL + id);
 
     if (this.entities && this.entities.length > 0 && 'id' in this.entities[0]) {
-      this.entities = reject(this.entities, entity => (entity as OverviewType & { id: number }).id === id);
+      this.entities = _.reject(this.entities, entity => (entity as OverviewType & { id: number }).id === id);
     }
 
     await this.filter();
