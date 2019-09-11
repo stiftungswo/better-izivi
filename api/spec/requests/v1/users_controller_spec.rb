@@ -68,14 +68,6 @@ RSpec.describe V1::UsersController, type: :request do
   end
 
   describe '#index' do
-    before do
-      create :service, user: user
-      create :service, user: admin_user
-
-      create :expense_sheet, user: user
-      create :expense_sheet, user: admin_user
-    end
-
     let!(:user) { create :user }
     let!(:admin_user) { create :user, :admin }
 
