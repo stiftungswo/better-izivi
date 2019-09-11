@@ -87,8 +87,9 @@ export class PaymentStore extends DomainStore<Payment> {
     }
   }
 
-  protected async doFetchAll(): Promise<void> {
-    const res = await this.mainStore.api.get<Payment[]>('/payments');
+  protected async doFetchAll(params: { state?: string }): Promise<void> {
+    const filter = params.state ? `?state=${params.state}` : '';
+    const res = await this.mainStore.api.get<Payment[]>(`/payments${filter}`);
     this.payments = res.data;
   }
 

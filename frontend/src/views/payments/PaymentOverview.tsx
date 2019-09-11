@@ -1,5 +1,7 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import Button from 'reactstrap/lib/Button';
+import { bool, boolean } from 'yup';
 import IziviContent from '../../layout/IziviContent';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
@@ -15,6 +17,7 @@ interface Props {
 
 interface State {
   loading: boolean;
+  paidPaymentsLoaded: boolean;
 }
 
 @inject('mainStore', 'paymentStore', 'expenseSheetStore')
@@ -25,11 +28,24 @@ export class PaymentOverview extends React.Component<Props, State> {
 
     this.state = {
       loading: true,
+      paidPaymentsLoaded: false,
     };
   }
 
   componentDidMount(): void {
-    Promise.all([this.props.paymentStore!.fetchAll(), this.props.expenseSheetStore!.fetchToBePaidAll()]).then(() => {
+    this.loadContents();
+  }
+
+  private loadContents() {
+    if (!this.state.loading) {
+      this.setState({ loading: true });
+    }
+
+    const paymentsFilter = !this.state.paidPaymentsLoaded ? { state: 'payment_in_progress' } : undefined;
+    const paymentsPromise = this.props.paymentStore!.fetchAll(paymentsFilter);
+    const expenseSheetPromise = this.props.expenseSheetStore!.fetchToBePaidAll();
+
+    Promise.all([paymentsPromise, expenseSheetPromise]).then(() => {
       this.setState({ loading: false });
     });
   }
@@ -48,8 +64,27 @@ export class PaymentOverview extends React.Component<Props, State> {
         <PaymentsTable payments={this.props.paymentStore!.paymentsInProgress} emptyNotice={'Keine Zahlung in Bearbeitung'}/>
 
         <h1 className="mb-4 mt-5">Archiv</h1>
-        <PaymentsTable payments={this.props.paymentStore!.paidPayments} emptyNotice={'Keine getätigten Zahlungen'}/>
+        {this.archivedPayments()}
       </IziviContent>
     );
+  }
+
+  private archivedPayments() {
+    if (this.state.paidPaymentsLoaded) {
+      return <PaymentsTable payments={this.props.paymentStore!.paidPayments} emptyNotice={'Keine getätigten Zahlungen'}/>;
+    } else {
+      return (
+        <>
+          <div className="text-muted">Das Archiv wurde noch nicht geladen</div>
+          <Button
+            color="link"
+            className="p-0 mt-3"
+            onClick={() => this.setState({ paidPaymentsLoaded: true }, this.loadContents)}
+          >
+            Archivierte Auszahlungen laden
+          </Button>
+        </>
+      );
+    }
   }
 }

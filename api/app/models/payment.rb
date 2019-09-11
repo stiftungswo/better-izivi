@@ -18,7 +18,7 @@ class Payment
   end
 
   def self.all(filter = nil)
-    expense_sheets = ExpenseSheet.payment_issued
+    expense_sheets = ExpenseSheet.payment_issued.eager_load(user: { services: [:service_specification] })
     expense_sheets = expense_sheets.where(filter) if filter.present?
 
     expense_sheets.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|

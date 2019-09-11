@@ -62,7 +62,8 @@ class ExpenseSheet < ApplicationRecord
   def service
     return if user.nil?
 
-    @service ||= user.services.including_date_range(beginning, ending).first
+    services = user.services
+    @service ||= services.loaded? ? eager_loaded_service(services) : fetch_service(services)
   end
 
   def duration
@@ -94,6 +95,14 @@ class ExpenseSheet < ApplicationRecord
   end
 
   private
+
+  def fetch_service(services)
+    services.including_date_range(beginning, ending).first
+  end
+
+  def eager_loaded_service(services)
+    services.select { |service| service.beginning <= beginning && service.ending >= ending }.first
+  end
 
   def legitimate_destroy
     return unless paid?
