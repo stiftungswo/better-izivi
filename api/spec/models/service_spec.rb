@@ -12,6 +12,10 @@ RSpec.describe Service, type: :model do
       service_type
     ]
 
+    it_behaves_like 'validates that the ending is after beginning' do
+      let(:model) { build(:service, :last, beginning: beginning, ending: ending) }
+    end
+
     describe '#length_is_valid' do
       subject { service.tap(&:validate).errors.added? :service_days, :invalid_length }
 
@@ -45,6 +49,66 @@ RSpec.describe Service, type: :model do
 
           it { is_expected.to be false }
         end
+      end
+    end
+
+    describe 'ending_is_friday validation' do
+      subject { build(:service, ending: ending).tap(&:validate).errors.added? :ending, :not_a_friday }
+
+      let(:ending) { Time.zone.today.at_end_of_week - 2.days }
+
+      context 'when ending is a friday' do
+        it { is_expected.to be false }
+      end
+
+      context 'when ending is a saturday' do
+        let(:ending) { Time.zone.today.at_end_of_week - 1.day }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    describe '#beginning_is_monday' do
+      subject do
+        build(:service, beginning: beginning, ending: ending)
+          .tap(&:validate).errors.added? :beginning, :not_a_monday
+      end
+
+      let(:beginning) { Time.zone.today.at_beginning_of_week }
+      let(:ending) { (beginning + 4.weeks).at_end_of_week - 2.days }
+
+      context 'when beginning is a monday' do
+        it { is_expected.to be false }
+      end
+
+      context 'when beginning is a tuesday' do
+        let(:beginning) { Time.zone.today.at_beginning_of_week + 1.day }
+
+        it { is_expected.to be true }
+      end
+    end
+
+    describe '#no_overlapping_service' do
+      subject { service.tap(&:validate).errors.added? :beginning, :overlaps_service }
+
+      let(:service) { build(:service, beginning: beginning, ending: ending, user: user) }
+      let(:user) { create :user }
+      let(:service_range) { get_service_range months: 2 }
+      let(:beginning) { service_range.begin }
+      let(:ending) { service_range.end }
+      let(:other_beginning) { (service_range.begin - 2.months).at_beginning_of_week }
+      let(:other_ending) { (service_range.begin - 1.month).at_end_of_week - 2.days }
+
+      before { create :service, user: user, beginning: other_beginning, ending: other_ending }
+
+      context 'when there is no overlapping service' do
+        it { is_expected.to be false }
+      end
+
+      context 'when there is no overlapping service' do
+        let(:other_ending) { service_range.begin.at_end_of_week - 2.days }
+
+        it { is_expected.to be true }
       end
     end
   end
@@ -86,10 +150,6 @@ RSpec.describe Service, type: :model do
       service.remaining_paid_vacation_days
       expect(ExpenseSheetCalculators::RemainingDaysCalculator).to have_received(:new).exactly(1).times
     end
-  end
-
-  it_behaves_like 'validates that the ending is after beginning' do
-    let(:model) { build(:service, :last, beginning: beginning, ending: ending) }
   end
 
   describe '#at_year' do
@@ -217,65 +277,5 @@ RSpec.describe Service, type: :model do
     let(:ending) { Date.parse '2018-11-30' }
 
     it { is_expected.to eq beginning..ending }
-  end
-
-  describe 'ending_is_friday validation' do
-    subject { build(:service, ending: ending).tap(&:validate).errors.added? :ending, :not_a_friday }
-
-    let(:ending) { Time.zone.today.at_end_of_week - 2.days }
-
-    context 'when ending is a friday' do
-      it { is_expected.to be false }
-    end
-
-    context 'when ending is a saturday' do
-      let(:ending) { Time.zone.today.at_end_of_week - 1.day }
-
-      it { is_expected.to be true }
-    end
-  end
-
-  describe 'beginning_is_monday validation' do
-    subject do
-      build(:service, beginning: beginning, ending: ending)
-        .tap(&:validate).errors.added? :beginning, :not_a_monday
-    end
-
-    let(:beginning) { Time.zone.today.at_beginning_of_week }
-    let(:ending) { (beginning + 4.weeks).at_end_of_week - 2.days }
-
-    context 'when beginning is a monday' do
-      it { is_expected.to be false }
-    end
-
-    context 'when beginning is a tuesday' do
-      let(:beginning) { Time.zone.today.at_beginning_of_week + 1.day }
-
-      it { is_expected.to be true }
-    end
-  end
-
-  describe 'no_overlapping_service validation' do
-    subject { service.tap(&:validate).errors.added? :beginning, :overlaps_service }
-
-    let(:service) { build(:service, beginning: beginning, ending: ending, user: user) }
-    let(:user) { create :user }
-    let(:service_range) { get_service_range months: 2 }
-    let(:beginning) { service_range.begin }
-    let(:ending) { service_range.end }
-    let(:other_beginning) { (service_range.begin - 2.months).at_beginning_of_week }
-    let(:other_ending) { (service_range.begin - 1.month).at_end_of_week - 2.days }
-
-    before { create :service, user: user, beginning: other_beginning, ending: other_ending }
-
-    context 'when there is no overlapping service' do
-      it { is_expected.to be false }
-    end
-
-    context 'when there is no overlapping service' do
-      let(:other_ending) { service_range.begin.at_end_of_week - 2.days }
-
-      it { is_expected.to be true }
-    end
   end
 end
