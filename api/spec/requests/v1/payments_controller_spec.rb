@@ -85,10 +85,10 @@ RSpec.describe V1::PaymentsController, type: :request do
             ]
           end
 
-          let(:expected_user_attributes) { %i[id zdp bank_iban] }
           let(:expected_user_response) do
-            extract_to_json(user, *expected_user_attributes).merge(full_name: user.full_name)
+            extract_to_json(user, :id, :zdp, :bank_iban).merge(full_name: user.full_name)
           end
+
           let(:expected_response) do
             {
               payment_timestamp: payment.payment_timestamp.to_i,
@@ -413,26 +413,23 @@ RSpec.describe V1::PaymentsController, type: :request do
       before { sign_in user }
 
       context 'when there are payments' do
-        let!(:payments) do
-          iota = 0
-          payment_in_progress_payments = Array.new(4).map do
-            iota += 1
-            create_payment payment_timestamp: Time.zone.now + iota.hours
+        let(:payment_in_progress_payments) do
+          (1..3).to_a.map do |iota|
+            create_payment state: :payment_in_progress, payment_timestamp: Time.zone.now + iota.hours
           end
-          paid_payments = Array.new(4).map do
-            iota += 1
+        end
+
+        let(:paid_payments) do
+          (4..6).to_a.map do |iota|
             create_payment state: :paid, payment_timestamp: Time.zone.now + iota.hours
           end
-
-          payment_in_progress_payments.push(*paid_payments)
         end
 
-        let(:expected_user_attributes) { %i[id zdp bank_iban] }
-        let(:expected_user_response) do
-          extract_to_json(user, *expected_user_attributes).merge(full_name: user.full_name)
-        end
+        let!(:payments) { payment_in_progress_payments + paid_payments }
+        let(:expected_payments) { payments }
+        let(:expected_user_response) { extract_to_json(user, :id, :zdp, :bank_iban).merge(full_name: user.full_name) }
         let(:expected_response) do
-          payments.map do |payment|
+          expected_payments.map do |payment|
             {
               payment_timestamp: payment.payment_timestamp.to_i,
               state: payment.state.to_s,
@@ -445,16 +442,38 @@ RSpec.describe V1::PaymentsController, type: :request do
           create :service, user: user, beginning: beginning, ending: ending
         end
 
-        it_behaves_like 'renders a successful http status code'
+        context 'with no filter' do
+          it_behaves_like 'renders a successful http status code'
 
-        it 'returns a content type json' do
-          request
-          expect(response.headers['Content-Type']).to include 'json'
+          it 'returns a content type json' do
+            request
+            expect(response.headers['Content-Type']).to include 'json'
+          end
+
+          it 'renders the correct response' do
+            request
+            expect(parse_response_json(response)).to eq(expected_response)
+          end
         end
 
-        it 'renders the correct response' do
-          request
-          expect(parse_response_json(response)).to eq(expected_response)
+        context 'with :payment_in_progress filter' do
+          let(:request) { get v1_payments_path(params: { state: 'payment_in_progress' }) }
+          let(:expected_payments) { payment_in_progress_payments }
+
+          it 'renders the correct response' do
+            request
+            expect(parse_response_json(response)).to eq expected_response
+          end
+        end
+
+        context 'with :paid filter' do
+          let(:request) { get v1_payments_path(params: { state: 'paid' }) }
+          let(:expected_payments) { paid_payments }
+
+          it 'renders the correct response' do
+            request
+            expect(parse_response_json(response)).to eq expected_response
+          end
         end
       end
 

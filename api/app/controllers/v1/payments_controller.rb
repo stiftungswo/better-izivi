@@ -23,7 +23,9 @@ module V1
     end
 
     def index
-      @payments = Payment.all
+      filter = state_filter_param.present? ? { state: state_filter_param } : nil
+
+      @payments = Payment.all(filter)
     end
 
     def create
@@ -59,6 +61,10 @@ module V1
 
     def generate_pain
       PainGenerationService.new(@payment.expense_sheets).generate_pain.to_xml('pain.001.001.03.ch.02')
+    end
+
+    def state_filter_param
+      params.permit(:state)[:state]
     end
   end
 end

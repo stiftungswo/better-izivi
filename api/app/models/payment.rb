@@ -17,8 +17,11 @@ class Payment
     Payment.new expense_sheets: expense_sheets, payment_timestamp: payment_timestamp, state: state
   end
 
-  def self.all
-    ExpenseSheet.payment_issued.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|
+  def self.all(filter = nil)
+    expense_sheets = ExpenseSheet.payment_issued
+    expense_sheets = expense_sheets.where(filter) if filter.present?
+
+    expense_sheets.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|
       state = expense_sheets.first.state
       Payment.new(expense_sheets: expense_sheets, state: state, payment_timestamp: payment_timestamp)
     end
