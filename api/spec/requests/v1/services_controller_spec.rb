@@ -315,7 +315,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
       before { service }
 
-      context 'when the user confirm his own service' do
+      context 'when the user confirms his own service' do
         it 'does not update the confirmation_date the Service' do
           expect { request }.not_to(change { service.reload.confirmation_date })
         end
