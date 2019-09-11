@@ -15,10 +15,7 @@ RSpec.describe V1::UsersController, type: :request do
           :reset_password_sent_at, :reset_password_token,
           :updated_at
         ).merge(
-          beginning: nil,
-          ending: nil,
           services: [],
-          active: false,
           bank_iban: requested_user.prettified_bank_iban
         )
     end
@@ -85,22 +82,11 @@ RSpec.describe V1::UsersController, type: :request do
     let(:request) { get v1_users_path }
     let(:expected_successful_response_json) do
       [user, admin_user].map do |current_user|
-        extract_to_json(current_user)
+        extract_to_json(current_user, :id, :zdp, :first_name, :last_name, :role)
           .merge(
-            services: be_an_instance_of(Array),
-            expense_sheets: contain_exactly(
-              extract_to_json(current_user.expense_sheets.first)
-                .slice(:beginning, :ending, :id, :state)
-                .merge(duration: current_user.expense_sheets.first.duration)
-            ),
             beginning: convert_to_json_value(current_user.services.chronologically.last.beginning),
             ending: convert_to_json_value(current_user.services.chronologically.last.ending.to_s),
-            active: false,
-            bank_iban: current_user.prettified_bank_iban
-          ).except(
-            :created_at, :encrypted_password, :legacy_password,
-            :reset_password_sent_at, :reset_password_token,
-            :updated_at
+            active: false
           )
       end
     end
