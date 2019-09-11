@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, FormikActions } from 'formik';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
@@ -40,6 +40,7 @@ interface ServiceSpecificationState {
 }
 
 @inject('serviceSpecificationStore', 'mainStore')
+@observer
 export class ServiceSpecificationsOverviewInner extends React.Component<ServiceSpecificationProps, ServiceSpecificationState> {
   constructor(props: ServiceSpecificationProps) {
     super(props);
@@ -61,7 +62,6 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
     await this.props.serviceSpecificationStore!.post(serviceSpecificationSchema.cast(entity)).then(() => {
       actions.setSubmitting(false);
       actions.resetForm();
-      window.location.reload();
     });
   }
 

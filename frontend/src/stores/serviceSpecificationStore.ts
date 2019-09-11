@@ -41,4 +41,10 @@ export class ServiceSpecificationStore extends DomainStore<ServiceSpecification>
   constructor(mainStore: MainStore) {
     super(mainStore);
   }
+
+  @action
+  protected async doPost(serviceSpecification: ServiceSpecification) {
+    const response = await this.mainStore.api.post<ServiceSpecification>(this.entitiesURL, serviceSpecification);
+    this.serviceSpecifications.unshift(response.data);
+  }
 }

@@ -200,7 +200,7 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
     }
 
     const response = await this.mainStore.api.post<OverviewType>(this.entitiesURL, entity);
-    this.entities = this.entities.concat([ response.data ]);
+    this.entities.push(response.data);
   }
 
   @action
