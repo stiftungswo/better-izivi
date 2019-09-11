@@ -152,6 +152,28 @@ RSpec.describe Service, type: :model do
     end
   end
 
+  describe '#in_future?' do
+    subject { build(:service, :last, beginning: beginning).in_future? }
+
+    context 'when service will start in future' do
+      let(:beginning) { (Time.zone.today + 2.weeks).at_beginning_of_week }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when service already started' do
+      let(:beginning) { (Time.zone.today - 1.week).at_beginning_of_week }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when service starts today' do
+      let(:beginning) { Time.zone.today }
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe 'ending_is_friday validation' do
     subject { build(:service, ending: ending).tap(&:validate).errors.added? :ending, :not_a_friday }
 

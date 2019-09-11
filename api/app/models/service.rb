@@ -61,6 +61,10 @@ class Service < ApplicationRecord
     Rails.logger.info "Sent reminder to #{user.email} (Service id ##{id})"
   end
 
+  def in_future?
+    beginning > Time.zone.today
+  end
+
   private
 
   def remaining_days_calculator
