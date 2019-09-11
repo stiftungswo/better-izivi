@@ -187,6 +187,34 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#active_service' do
+    subject(:user) { build(:user, services: services) }
+
+    let(:services) { [past_service, future_service, current_service] }
+    let(:now) { Time.zone.today }
+    let(:past_service) { build_stubbed :service, beginning: now - 2.months, ending: now - 3.weeks }
+    let(:current_service) { build_stubbed :service, beginning: now - 1.month, ending: now + 4.weeks }
+    let(:future_service) { build_stubbed :service, beginning: now + 2.months, ending: now + 4.months }
+
+    it 'returns the service which the user is currently doing' do
+      expect(user.active_service).to be current_service
+    end
+  end
+
+  describe '#next_service' do
+    subject(:user) { build(:user, services: services) }
+
+    let(:services) { [second_future_service, future_service, current_service] }
+    let(:now) { Time.zone.today }
+    let(:current_service) { build :service, beginning: now - 1.month, ending: now + 4.weeks }
+    let(:future_service) { build :service, beginning: now + 2.months, ending: now + 4.months }
+    let(:second_future_service) { build :service, beginning: now + 1.year, ending: now + 1.year + 4.weeks }
+
+    it 'returns the service which the user is currently doing' do
+      expect(user.next_service).to be future_service
+    end
+  end
+
   describe 'JWT payload' do
     let(:payload) { Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).second }
 
