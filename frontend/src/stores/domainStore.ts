@@ -228,8 +228,8 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
 
     await this.mainStore.api.delete(this.entityURL + id);
 
-    if (this.entities) {
-      this.entities = reject(this.entities, entity => (entity as any).id === id);
+    if (this.entities && this.entities.length > 0 && 'id' in this.entities[0]) {
+      this.entities = reject(this.entities, entity => (entity as OverviewType & { id: number }).id === id);
     }
 
     await this.filter();
