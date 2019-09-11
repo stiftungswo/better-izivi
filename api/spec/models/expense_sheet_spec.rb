@@ -78,9 +78,7 @@ RSpec.describe ExpenseSheet, type: :model do
   end
 
   describe '#destroy' do
-    before do
-      create :service, user: user
-    end
+    before { create :service, user: user }
 
     let(:user) { create :user }
     let!(:expense_sheet) { create :expense_sheet, user: user }
@@ -207,14 +205,9 @@ RSpec.describe ExpenseSheet, type: :model do
   end
 
   describe '#duration' do
-    before { create :service, user: user }
+    subject(:expense_sheet) { build(:expense_sheet).duration }
 
-    let(:user) { create :user }
-    let(:expense_sheet) { build :expense_sheet, user: user }
-
-    it 'returns duration' do
-      expect(expense_sheet.duration).to eq 26
-    end
+    it { is_expected.to eq 26 }
   end
 
   describe '#total_paid_vacation_days' do
