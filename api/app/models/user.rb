@@ -79,7 +79,7 @@ class User < ApplicationRecord
   end
 
   def active_service
-    services.find { |service| Time.zone.today.in?(service.beginning..service.ending) }
+    services.find { |service| Time.zone.today.in? service.date_range }
   end
 
   def next_service

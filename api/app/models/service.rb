@@ -65,6 +65,10 @@ class Service < ApplicationRecord
     beginning > Time.zone.today
   end
 
+  def date_range
+    beginning..ending
+  end
+
   private
 
   def remaining_days_calculator

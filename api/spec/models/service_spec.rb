@@ -174,6 +174,15 @@ RSpec.describe Service, type: :model do
     end
   end
 
+  describe '#date_range' do
+    subject { build(:service, beginning: beginning, ending: ending).date_range }
+
+    let(:beginning) { Date.parse '2018-10-29' }
+    let(:ending) { Date.parse '2018-11-30' }
+
+    it { is_expected.to eq beginning..ending }
+  end
+
   describe 'ending_is_friday validation' do
     subject { build(:service, ending: ending).tap(&:validate).errors.added? :ending, :not_a_friday }
 
