@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 json.array! @users do |user|
-  json.extract! user, :id, :zdp, :first_name, :last_name, :role
+  json.extract! user, :id, :zdp, :full_name, :role
 
   json.beginning((user.active_service || user.next_service)&.beginning)
   json.ending((user.active_service || user.next_service)&.ending)
