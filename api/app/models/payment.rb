@@ -7,16 +7,20 @@ class Payment
 
   validate :validate_expense_sheets
 
-  class << self
-    private
+  def self.filtered_expense_sheets(filters)
+    expense_sheets = ExpenseSheet
+                       .payment_issued
+                       .eager_load(user: { services: [:service_specification] })
+                       .order(payment_timestamp: :desc)
+                       .filtered_by(filters)
 
-    def filtered_expense_sheets(filters)
-      ExpenseSheet
-        .payment_issued
-        .eager_load(user: { services: [:service_specification] })
-        .order(payment_timestamp: :desc, id: :asc)
-        .filtered_by filters
-    end
+    # if filters.present?
+    #   filters.each do |filter|
+    #     expense_sheets = expense_sheets.where(filter)
+    #   end
+    # end
+
+    expense_sheets
   end
 
   def self.find(payment_timestamp)
