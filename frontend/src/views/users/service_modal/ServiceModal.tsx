@@ -8,7 +8,6 @@ import ModalBody from 'reactstrap/lib/ModalBody';
 import ModalFooter from 'reactstrap/lib/ModalFooter';
 import ModalHeader from 'reactstrap/lib/ModalHeader';
 import { CheckboxField } from '../../../form/CheckboxField';
-import { WiredField } from '../../../form/formik';
 import { MainStore } from '../../../stores/mainStore';
 import { ServiceStore } from '../../../stores/serviceStore';
 import { Service, User } from '../../../types';
