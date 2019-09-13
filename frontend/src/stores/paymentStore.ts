@@ -44,6 +44,9 @@ export class PaymentStore extends DomainStore<Payment> {
   @observable
   payment?: Payment;
 
+  protected entityURL = '/payments/';
+  protected entitiesURL = '/payments/';
+
   constructor(mainStore: MainStore) {
     super(mainStore);
   }
@@ -98,10 +101,5 @@ export class PaymentStore extends DomainStore<Payment> {
       console.error(e);
       throw e;
     }
-  }
-
-  protected async doFetchOne(timestamp: number): Promise<void> {
-    const res = await this.mainStore.api.get<Payment>('/payments/' + timestamp);
-    this.payment = res.data;
   }
 }
