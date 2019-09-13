@@ -9,6 +9,20 @@ module V1
     before_action :authenticate_user!, unless: -> { request.format.xml? }
     before_action :authorize_admin!
 
+    class << self
+      private
+
+      def filter_at_year(year_delta)
+        lower_boundary = Time.zone.now - year_delta.years
+        upper_boundary = lower_boundary + 1.year
+
+        [
+          ExpenseSheet.arel_table[:payment_timestamp].gteq(lower_boundary),
+          ExpenseSheet.arel_table[:payment_timestamp].lteq(upper_boundary)
+        ]
+      end
+    end
+
     def show
       @payment = Payment.find(payment_timestamp_param)
 
@@ -64,13 +78,7 @@ module V1
 
       return [] unless year_delta.positive?
 
-      lower_boundary = Time.zone.now - year_delta.years
-      upper_boundary = lower_boundary + 1.year
-
-      [
-        ExpenseSheet.arel_table[:payment_timestamp].gteq(lower_boundary),
-        ExpenseSheet.arel_table[:payment_timestamp].lteq(upper_boundary)
-      ]
+      filter_at_year(year_delta)
     end
 
     def payment_timestamp_param

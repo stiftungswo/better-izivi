@@ -7,6 +7,18 @@ class Payment
 
   validate :validate_expense_sheets
 
+  class << self
+    private
+
+    def filtered_expense_sheets(filters)
+      ExpenseSheet
+        .payment_issued
+        .eager_load(user: { services: [:service_specification] })
+        .order(payment_timestamp: :desc, id: :asc)
+        .filtered_by filters
+    end
+  end
+
   def self.find(payment_timestamp)
     payment_timestamp = floor_time(payment_timestamp)
     expense_sheets = ExpenseSheet.in_payment(payment_timestamp)
@@ -18,18 +30,7 @@ class Payment
   end
 
   def self.all(filters = nil)
-    expense_sheets = ExpenseSheet
-                     .payment_issued
-                     .eager_load(user: { services: [:service_specification] })
-                     .order(payment_timestamp: :desc)
-
-    if filters.present?
-      filters.each do |filter|
-        expense_sheets = expense_sheets.where(filter)
-      end
-    end
-
-    expense_sheets.group_by(&:payment_timestamp).map do |payment_timestamp, grouped_expense_sheets|
+    filtered_expense_sheets(filters).group_by(&:payment_timestamp).map do |payment_timestamp, grouped_expense_sheets|
       state = grouped_expense_sheets.first.state
       Payment.new(expense_sheets: grouped_expense_sheets, state: state, payment_timestamp: payment_timestamp)
     end

@@ -413,19 +413,21 @@ RSpec.describe V1::PaymentsController, type: :request do
       before { sign_in user }
 
       context 'when there are payments' do
-        let(:payment_in_progress_payments) do
-          (1..3).to_a.map do |iota|
-            create_payment state: :payment_in_progress, payment_timestamp: Time.zone.now + iota.hours
+        let(:last_year_timestamp) { Time.zone.now - 1.year - 3.months }
+        let(:current_year_timestamp) { Time.zone.now - 3.months }
+        let(:last_year_payments) do
+          (1..3).to_a.reverse.map do |iota|
+            create_payment state: :payment_in_progress, payment_timestamp: last_year_timestamp + iota.hours
           end
         end
 
-        let(:paid_payments) do
-          (4..6).to_a.map do |iota|
-            create_payment state: :paid, payment_timestamp: Time.zone.now + iota.hours
+        let(:current_year_payments) do
+          (4..6).to_a.reverse.map do |iota|
+            create_payment state: :paid, payment_timestamp: current_year_timestamp + iota.hours
           end
         end
 
-        let!(:payments) { payment_in_progress_payments + paid_payments }
+        let!(:payments) { current_year_payments + last_year_payments }
         let(:expected_payments) { payments }
         let(:expected_user_response) { extract_to_json(user, :id, :zdp, :bank_iban).merge(full_name: user.full_name) }
         let(:expected_response) do
@@ -440,38 +442,35 @@ RSpec.describe V1::PaymentsController, type: :request do
 
         before do
           create :service, user: user, beginning: beginning, ending: ending
+          request
         end
 
         context 'with no filter' do
           it_behaves_like 'renders a successful http status code'
 
           it 'returns a content type json' do
-            request
             expect(response.headers['Content-Type']).to include 'json'
           end
 
           it 'renders the correct response' do
-            request
             expect(parse_response_json(response)).to eq(expected_response)
           end
         end
 
-        context 'with :payment_in_progress filter' do
-          let(:request) { get v1_payments_path(params: { state: 'payment_in_progress' }) }
-          let(:expected_payments) { payment_in_progress_payments }
+        context 'with :year_delta is one year' do
+          let(:request) { get v1_payments_path(params: { filter: { year_delta: 1 } }) }
+          let(:expected_payments) { current_year_payments }
 
           it 'renders the correct response' do
-            request
             expect(parse_response_json(response)).to eq expected_response
           end
         end
 
-        context 'with :paid filter' do
-          let(:request) { get v1_payments_path(params: { state: 'paid' }) }
-          let(:expected_payments) { paid_payments }
+        context 'with :year_delta is two years' do
+          let(:request) { get v1_payments_path(params: { filter: { year_delta: 2 } }) }
+          let(:expected_payments) { last_year_payments }
 
           it 'renders the correct response' do
-            request
             expect(parse_response_json(response)).to eq expected_response
           end
         end
