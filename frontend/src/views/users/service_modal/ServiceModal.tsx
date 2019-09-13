@@ -7,14 +7,14 @@ import Modal from 'reactstrap/lib/Modal';
 import ModalBody from 'reactstrap/lib/ModalBody';
 import ModalFooter from 'reactstrap/lib/ModalFooter';
 import ModalHeader from 'reactstrap/lib/ModalHeader';
+import { CheckboxField } from '../../../form/CheckboxField';
+import { WiredField } from '../../../form/formik';
 import { MainStore } from '../../../stores/mainStore';
 import { ServiceStore } from '../../../stores/serviceStore';
 import { Service, User } from '../../../types';
 import { OnChange } from '../../../utilities/Effect';
 import { serviceSchema } from '../schemas';
 import { ServiceModalForm } from './ServiceModalForm';
-import { CheckboxField } from '../../../form/CheckboxField';
-import { WiredField } from '../../../form/formik';
 
 export interface ServiceModalProps<T> {
   onSubmit: (values: T) => Promise<void>;
