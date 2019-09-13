@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { Field, Formik, FormikProps } from 'formik';
 import debounce from 'lodash.debounce';
 import { inject } from 'mobx-react';
 import * as React from 'react';
@@ -13,6 +13,8 @@ import { Service, User } from '../../../types';
 import { OnChange } from '../../../utilities/Effect';
 import { serviceSchema } from '../schemas';
 import { ServiceModalForm } from './ServiceModalForm';
+import { CheckboxField } from '../../../form/CheckboxField';
+import { WiredField } from '../../../form/formik';
 
 export interface ServiceModalProps<T> {
   onSubmit: (values: T) => Promise<void>;
@@ -25,7 +27,7 @@ export interface ServiceModalProps<T> {
 }
 
 @inject('serviceStore', 'mainStore')
-export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
+export class ServiceModal extends React.Component<ServiceModalProps<Service>, { informationChecked: boolean }> {
   private readonly initialValues: Service;
   private autoUpdate = true;
 
@@ -88,6 +90,10 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
         short_name: undefined,
       },
     };
+
+    this.state = {
+      informationChecked: false,
+    };
   }
 
   handleServiceDateRangeChange: OnChange<Service> = async (current, next, formik) => {
@@ -98,6 +104,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
 
   render() {
     const { onSubmit, onClose, isOpen } = this.props;
+    const isAdmin = this.props.mainStore!.isAdmin();
 
     if (!isOpen) {
       return <></>;
@@ -115,10 +122,21 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
               <ServiceModalForm serviceDateRangeChangeHandler={this.handleServiceDateRangeChange}/>
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={formikProps.submitForm}>
+              {!isAdmin && (
+                <Field
+                  component={CheckboxField}
+                  onChange={this.handleInformationChecked}
+                  label={'Meine Angaben (IBAN, Telefon) sind aktuell'}
+                />
+              )}
+              <Button
+                color="primary"
+                onClick={formikProps.submitForm}
+                disabled={!this.state.informationChecked && !isAdmin}
+              >
                 Daten speichern
               </Button>
-              {(this.props.mainStore!.isAdmin() && this.props.service && this.props.service.confirmation_date == null) && (
+              {(isAdmin && this.props.service && this.props.service.confirmation_date == null) && (
                 <>
                   {' '}
                   <Button color="secondary" onClick={this.onConfirmationPut}>
@@ -131,6 +149,10 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>> {
         )}
       />
     );
+  }
+
+  handleInformationChecked = () => {
+    this.setState({ informationChecked: !this.state.informationChecked });
   }
 
   onConfirmationPut = () => {
