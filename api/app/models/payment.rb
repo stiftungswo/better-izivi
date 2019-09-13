@@ -29,9 +29,9 @@ class Payment
       end
     end
 
-    expense_sheets.group_by(&:payment_timestamp).map do |payment_timestamp, expense_sheets|
-      state = expense_sheets.first.state
-      Payment.new(expense_sheets: expense_sheets, state: state, payment_timestamp: payment_timestamp)
+    expense_sheets.group_by(&:payment_timestamp).map do |payment_timestamp, grouped_expense_sheets|
+      state = grouped_expense_sheets.first.state
+      Payment.new(expense_sheets: grouped_expense_sheets, state: state, payment_timestamp: payment_timestamp)
     end
   end
 
