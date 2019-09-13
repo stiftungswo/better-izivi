@@ -38,9 +38,6 @@ export class PaymentStore extends DomainStore<Payment> {
     return moment(timestamp * 1000);
   }
 
-  protected entityURL = '/payments/';
-  protected entitiesURL = '/payments/';
-
   @observable
   payments: Payment[] = [];
 
