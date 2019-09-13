@@ -74,7 +74,7 @@ module V1
 
       return [] unless year_delta.positive?
 
-      filter_at_year(year_delta)
+      PaymentsController.filter_at_year(year_delta)
     end
 
     def payment_timestamp_param
