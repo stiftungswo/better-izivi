@@ -100,12 +100,6 @@ export class PaymentStore extends DomainStore<Payment> {
     }
   }
 
-  protected async doFetchAll(params: { year_delta?: string }): Promise<void> {
-    const filter = params.year_delta ? `?filter[year_delta]=${params.year_delta}` : '';
-    const res = await this.mainStore.api.get<Payment[]>(`/payments${filter}`);
-    this.payments = res.data;
-  }
-
   protected async doFetchOne(timestamp: number): Promise<void> {
     const res = await this.mainStore.api.get<Payment>('/payments/' + timestamp);
     this.payment = res.data;
