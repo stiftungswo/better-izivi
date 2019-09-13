@@ -31,8 +31,12 @@ import { UserUpdate } from './views/users/UserUpdate';
 
 Icons();
 
+const feedbacksUrl = 'FEEDBACKS_URL';
+
 class App extends React.Component {
   render() {
+    const feedbacksUrlValid = feedbacksUrl.startsWith('https');
+
     return (
       <IziviLayout>
         <Switch>
@@ -44,8 +48,11 @@ class App extends React.Component {
           <Route component={HolidayOverview} exact path={'/holidays'} />
           <Route component={PhoneListView} exact path={'/phones'} />
           <Route component={ProfileOverview} exact path={'/profile'} />
+          {feedbacksUrlValid && (
+              <Route component={() => { window.location.href = feedbacksUrl; return null; }} exact path={'/feedbacks'}/>
+            )
+          }
           <ProtectedRoute component={ChangePassword} exact path={'/changePassword'} />
-          <ProtectedRoute component={ServiceFeedback} exact path={'/service/:id/feedback'} />
           <ProtectedRoute requiresAdmin component={PaymentOverview} exact path={'/payments'} />
           <ProtectedRoute requiresAdmin component={ServiceOverview} exact path={'/services'} />
           <ProtectedRoute requiresAdmin component={PaymentDetail} exact path={'/payments/:timestamp'} />
@@ -54,7 +61,7 @@ class App extends React.Component {
           <ProtectedRoute requiresAdmin component={UserFeedbackOverview} exact path={'/user_feedbacks'} />
           <ProtectedRoute requiresAdmin component={UserOverview} exact path={'/users'} />
           <ProtectedRoute requiresAdmin component={UserUpdate} exact path={'/users/:id'} />
-          <ProtectedRoute requiresAdmin component={ServiceSpecificationsOverview} exact path={'/serviceSpecifications'} />
+          <ProtectedRoute requiresAdmin component={ServiceSpecificationsOverview} exact path={'/service_specifications'} />
           <Route component={NotFound} />
         </Switch>
       </IziviLayout>
