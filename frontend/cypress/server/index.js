@@ -107,8 +107,8 @@ server.use((req, res, next) => {
     const sync = path.join(__dirname, 'db.json');
     if (fs.existsSync(sync)) {
       fs.unlinkSync(sync);
-      res.sendStatus(200);
     }
+    res.sendStatus(200);
   } else {
     next();
   }
