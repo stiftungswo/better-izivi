@@ -211,9 +211,7 @@ export class HolidayOverview extends React.Component<Props, State> {
             ))}
             </HolidayOverviewTable>
             </TabPanel>
-            
           </Tabs>
-        
       </IziviContent>
     );
   }
