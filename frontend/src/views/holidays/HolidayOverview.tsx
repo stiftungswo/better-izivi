@@ -3,6 +3,8 @@ import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import Button from 'reactstrap/lib/Button';
 import * as yup from 'yup';
 import IziviContent from '../../layout/IziviContent';
@@ -12,8 +14,6 @@ import { Holiday } from '../../types';
 import { apiDate } from '../../utilities/validationHelpers';
 import { HolidayOverviewTable } from './HolidayOverviewTable';
 import HolidayTableRow from './HolidayTableRow';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import "react-tabs/style/react-tabs.css";
 
 const holidaySchema = yup.object({
   beginning: apiDate().required(),
