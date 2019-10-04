@@ -13,6 +13,7 @@ import { MainStore } from '../../stores/mainStore';
 import { Holiday } from '../../types';
 import { apiDate } from '../../utilities/validationHelpers';
 import { HolidayOverviewTable } from './HolidayOverviewTable';
+import { HolidayOverviewTabs } from './HolidayOverviewTabs';
 import HolidayTableRow from './HolidayTableRow';
 
 const holidaySchema = yup.object({
@@ -56,162 +57,9 @@ export class HolidayOverview extends React.Component<Props, State> {
   }
 
   render() {
-    const actualHolidays = this.props.holidayStore!.actualEntities;
-    const futureHolidays = this.props.holidayStore!.futureEntities;
-    const passedHolidays = this.props.holidayStore!.passedEntities;
-    const holidayStore = this.props.holidayStore!;
-
     return (
       <IziviContent loading={this.state.loading} title={'Freitage'} card={true}>
-          <Tabs>
-            <TabList>
-              <Tab>
-                Aktuell
-              </Tab>
-              <Tab>
-                Zukunft
-              </Tab>
-              <Tab>
-                Vergangenheit
-              </Tab>
-            </TabList>
-            <TabPanel>
-            <HolidayOverviewTable mainStore={this.props.mainStore!}>
-            <Formik
-              validationSchema={holidaySchema}
-              initialValues={{
-                beginning: moment().format('Y-MM-DD'),
-                ending: moment().format('Y-MM-DD'),
-                holiday_type: 'company_holiday',
-                description: '',
-              }}
-              onSubmit={this.handleAdd}
-              render={({ isSubmitting, submitForm }) => (
-                <HolidayTableRow
-                  buttons={[
-                    <Button key={'submitButton'} color={'success'} disabled={isSubmitting} onClick={submitForm}>Hinzufügen</Button>,
-                  ]}
-                />
-              )}
-            />
-              {actualHolidays.map(holiday => (
-
-              <Formik
-                key={holiday.id}
-                validationSchema={holidaySchema}
-                initialValues={holiday}
-                onSubmit={this.handleSubmit}
-                render={({ isSubmitting, submitForm }) => (
-                  <HolidayTableRow
-                    buttons={[
-                      (
-                        <Button color={'success'} disabled={isSubmitting} onClick={submitForm}>
-                          Speichern
-                        </Button>
-                      ),
-                      (
-                        <Button color={'danger'} disabled={isSubmitting} onClick={() => holidayStore!.delete(holiday.id!)}>
-                          Löschen
-                        </Button>
-                      ),
-                    ]}
-                  />
-                )}
-              />
-            ))}
-            </HolidayOverviewTable>
-            </TabPanel>
-            <TabPanel>
-            <HolidayOverviewTable mainStore={this.props.mainStore!}>
-            <Formik
-              validationSchema={holidaySchema}
-              initialValues={{
-                beginning: moment().format('Y-MM-DD'),
-                ending: moment().format('Y-MM-DD'),
-                holiday_type: 'company_holiday',
-                description: '',
-              }}
-              onSubmit={this.handleAdd}
-              render={({ isSubmitting, submitForm }) => (
-                <HolidayTableRow
-                  buttons={[
-                    <Button key={'submitButton'} color={'success'} disabled={isSubmitting} onClick={submitForm}>Hinzufügen</Button>,
-                  ]}
-                />
-              )}
-            />
-              {futureHolidays.map(holiday => (
-              <Formik
-                key={holiday.id}
-                validationSchema={holidaySchema}
-                initialValues={holiday}
-                onSubmit={this.handleSubmit}
-                render={({ isSubmitting, submitForm }) => (
-                  <HolidayTableRow
-                    buttons={[
-                      (
-                        <Button color={'success'} disabled={isSubmitting} onClick={submitForm}>
-                          Speichern
-                        </Button>
-                      ),
-                      (
-                        <Button color={'danger'} disabled={isSubmitting} onClick={() => holidayStore!.delete(holiday.id!)}>
-                          Löschen
-                        </Button>
-                      ),
-                    ]}
-                  />
-                )}
-              />
-            ))}
-            </HolidayOverviewTable>
-            </TabPanel>
-            <TabPanel>
-            <HolidayOverviewTable mainStore={this.props.mainStore!}>
-            <Formik
-              validationSchema={holidaySchema}
-              initialValues={{
-                beginning: moment().format('Y-MM-DD'),
-                ending: moment().format('Y-MM-DD'),
-                holiday_type: 'company_holiday',
-                description: '',
-              }}
-              onSubmit={this.handleAdd}
-              render={({ isSubmitting, submitForm }) => (
-                <HolidayTableRow
-                  buttons={[
-                    <Button key={'submitButton'} color={'success'} disabled={isSubmitting} onClick={submitForm}>Hinzufügen</Button>,
-                  ]}
-                />
-              )}
-            />
-              {passedHolidays.map(holiday => (
-              <Formik
-                key={holiday.id}
-                validationSchema={holidaySchema}
-                initialValues={holiday}
-                onSubmit={this.handleSubmit}
-                render={({ isSubmitting, submitForm }) => (
-                  <HolidayTableRow
-                    buttons={[
-                      (
-                        <Button color={'success'} disabled={isSubmitting} onClick={submitForm}>
-                          Speichern
-                        </Button>
-                      ),
-                      (
-                        <Button color={'danger'} disabled={isSubmitting} onClick={() => holidayStore!.delete(holiday.id!)}>
-                          Löschen
-                        </Button>
-                      ),
-                    ]}
-                  />
-                )}
-              />
-            ))}
-            </HolidayOverviewTable>
-            </TabPanel>
-          </Tabs>
+        <HolidayOverviewTabs mainStore={this.props.mainStore!} holidayStore={this.props.holidayStore!} />
       </IziviContent>
     );
   }
