@@ -24,7 +24,8 @@ export class HolidayStore extends DomainStore<Holiday> {
   @computed
   get actualEntities(): Holiday[] {
     // Shows holidays which are today -> 1 Year
-    const result = this.holidays.filter(holiday => moment(holiday.beginning) >= moment() && moment(holiday.beginning) <= moment().add(1, 'year'));
+    const result = this.holidays.filter(
+      holiday => moment(holiday.beginning) >= moment() && moment(holiday.beginning) <= moment().add(1, 'year'));
     return result.reverse();
   }
 
