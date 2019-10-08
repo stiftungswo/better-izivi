@@ -34,8 +34,8 @@ module Pdfs
     private
 
     def header
-      text I18n.t('pdfs.expenses_overview.header', date: I18n.l(Time.zone.today)), align: :right
-
+      text I18n.t('pdfs.expenses_overview.swo', date: I18n.l(Time.zone.today)), align: :right, size: 8
+      text I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today)), align: :right, size: 8
       text(
         I18n.t(
           'pdfs.expenses_overview.title',

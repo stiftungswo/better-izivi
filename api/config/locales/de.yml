@@ -188,6 +188,11 @@ de:
       filename: Telefonliste_%{today}.pdf
       header: Stand vom %{date}
       title: Telefonliste vom %{beginning} bis %{ending}
+    expenses_overview:
+      filename: Übersicht_Spesenstatistik_%{today}.pdf
+      swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Verfügung vom %{date}
+      basedon: Statistik basiert auf allen erledigten Meldeblättern
+      title: Zivi-Spesen Detailübersicht (Zeitperiode %{beginning} - %{ending})
     service_agreement:
       body_content: |-
         Lieber Zivi
