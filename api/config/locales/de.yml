@@ -6,6 +6,7 @@ de:
         accommodation_expenses: Unterkunft
         bank_account_number: Bankkonto Nummer
         beginning: Anfang
+        clothing: Kleider
         clothing_expenses: Kleiderspesen
         clothing_expenses_comment: Kleiderspesen - Kommentar
         company_holiday_comment: Betriebsferien Kommentar
@@ -20,6 +21,7 @@ de:
           one: Ferientag
           other: Ferientage
         pocket_money: Taschengeld
+        sickness: Krankheit
         sick_comment: Krankheitskommentar
         sick_days:
           one: Krankheitstag
@@ -30,10 +32,12 @@ de:
         unpaid_vacation_days:
           one: Urlaubstag
           other: Urlaubstage
+        way_expenses: Wegspesen          
         work_clothing_expenses: Arbeitskleider
         work_days:
           one: Arbeitstag
           other: Arbeitstage
+        workfree: Arbeitsfrei
         workfree_days:
           one: Arbeitsfreier Tag
           other: Arbeitsfreie Tage
@@ -84,6 +88,7 @@ de:
         first_name: Vorname
         health_insurance: Krankenkasse
         hometown: Heimatstadt
+        id: ID
         internal_note: Interne Notiz
         last_name: Nachname
         phone: Telefonnummer
@@ -159,6 +164,7 @@ de:
         headers:
           full_amount: Total
         row_headers:
+          extra: Extra
           first_work_days: Erster Arbeitstag
           last_work_days: Letzter Arbeitstag
         supplement:

@@ -8,12 +8,18 @@ module Pdfs
     include Pdfs::PrawnHelper
 
     TABLE_HEADER = [
-      I18n.t('activerecord.attributes.user.last_name'),
-      I18n.t('activerecord.attributes.user.first_name'),
-      I18n.t('activerecord.attributes.user.address'),
-      I18n.t('activerecord.attributes.user.zip_with_city'),
-      I18n.t('activerecord.attributes.user.phone'),
-      I18n.t('activerecord.attributes.user.email')
+      I18n.t('activerecord.attributes.user.id'),
+      I18n.t('activerecord.attributes.service_specification.name'),
+      I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'),
+      I18n.t('activerecord.attributes.expense_sheet.work_days.other'),
+      I18n.t('activerecord.attributes.expense_sheet.workfree'),
+      I18n.t('activerecord.attributes.expense_sheet.sickness'),
+      I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'),
+      I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'),
+      I18n.t('activerecord.attributes.expense_sheet.way_expenses'),
+      I18n.t('activerecord.attributes.expense_sheet.clothing'),
+      I18n.t('pdfs.expense_sheet.expense_table.row_headers.extra'),
+      I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'),
     ].freeze
 
     def initialize(service_specifications, dates)
@@ -55,9 +61,9 @@ module Pdfs
         font_size 10
         table(table_data(services),
               cell_style: { borders: %i[] },
-              width: bounds.width,
+              width: bounds.width + 120,
               header: true,
-              column_widths: [98, 98, 179.89, 118, 98, 178]) do
+              column_widths: [50, 60, 100, 60, 60, 60, 60, 60, 60, 60, 60]) do
           row(0).font_style = :bold
         end
       end
@@ -86,6 +92,12 @@ module Pdfs
           :address,
           :zip_with_city,
           :phone,
+          :email,
+          :email,
+          :email,
+          :email,
+          :email,
+          :email,
           :email
         ).values
       end
