@@ -55,11 +55,10 @@ module Pdfs
     end
 
     def content_table
-      @service_specifications.each do |name, services|
-        pre_table(name)
+      @service_specifications.each do |name, expense_sheets|
 
         font_size 10
-        table(table_data(services),
+        table(table_data(expense_sheets),
               cell_style: { borders: %i[] },
               width: bounds.width + 120,
               header: true,
@@ -80,25 +79,24 @@ module Pdfs
       )
     end
 
-    def table_data(services)
-      [TABLE_HEADER].push(*table_content(services))
+    def table_data(expense_sheets)
+      [TABLE_HEADER].push(*table_content(expense_sheets))
     end
 
-    def table_content(services)
-      services.map do |service|
-        service.user.slice(
-          :first_name,
-          :last_name,
-          :address,
-          :zip_with_city,
-          :phone,
-          :email,
-          :email,
-          :email,
-          :email,
-          :email,
-          :email,
-          :email
+    def table_content(expense_sheets)
+      expense_sheets.map do |expense_sheet|
+        expense_sheet.slice(
+          :user_id,
+          :beginning,
+          :ending,
+          :work_days,
+          :workfree_days,
+          :sick_days,
+          :paid_vacation_days,
+          :unpaid_vacation_days,
+          :driving_expenses,
+          :clothing_expenses,
+          :extraordinary_expenses
         ).values
       end
     end
