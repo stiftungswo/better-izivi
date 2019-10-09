@@ -22,7 +22,7 @@ module Pdfs
       I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'),
     ].freeze
 
-    def initialize(service_specifications, dates)
+    def initialize(service_specifications,name,  dates)
       @beginning = dates.beginning
       @ending = dates.ending
       @service_specifications = service_specifications
@@ -62,7 +62,7 @@ module Pdfs
               cell_style: { borders: %i[] },
               width: bounds.width + 120,
               header: true,
-              column_widths: [50, 60, 100, 60, 60, 60, 60, 60, 60, 60, 60]) do
+              column_widths: [50, 60, 100, 60, 60, 60, 60, 60, 60, 60]) do
           row(0).font_style = :bold
         end
       end

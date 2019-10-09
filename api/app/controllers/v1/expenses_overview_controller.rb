@@ -10,7 +10,7 @@ module V1
     def show
       respond_to do |format|
         format.pdf do
-          pdf = Pdfs::ExpensesOverviewService.new(@specifications, sanitized_filters)
+          pdf = Pdfs::ExpensesOverviewService.new(@specifications, name, sanitized_filters)
 
           send_data pdf.render,
                     filename: I18n.t('pdfs.expenses_overview.filename', today: I18n.l(Time.zone.today)),
@@ -26,7 +26,7 @@ module V1
       @specifications = ExpenseSheet.overlapping_date_range(sanitized_filters.beginning, sanitized_filters.ending)
                                .includes(:user)
                                .order('user_id')
-                               .group_by { |expense_sheet| expense_sheet.user_id }
+                               .group_by { |expense_sheet, user| expense_sheet.user_id }
     end
 
     # :reek:FeatureEnvy
@@ -39,9 +39,14 @@ module V1
 
     def sanitized_filters
       @sanitized_filters ||= OpenStruct.new(
-        beginning: Date.parse(filter_params[:beginning]), 
+        beginning: Date.parse(filter_params[:beginning]),
         ending: Date.parse(filter_params[:ending])
       )
     end
+
+    def calculate_report_period
+      report_period = @expense_sheet.beginning + @expense_sheet.ending
+    end
+
   end
 end
