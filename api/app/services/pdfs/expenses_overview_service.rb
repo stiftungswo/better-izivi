@@ -22,7 +22,7 @@ module Pdfs
       I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'),
     ].freeze
 
-    def initialize(service_specifications,name,  dates)
+    def initialize(service_specifications, dates)
       @beginning = dates.beginning
       @ending = dates.ending
       @service_specifications = service_specifications
@@ -87,8 +87,10 @@ module Pdfs
       expense_sheets.map do |expense_sheet|
         expense_sheet.slice(
           :user_id,
+          #@Todo: Insert Zivi-name here
           :beginning,
           :ending,
+          #@Todo: Merge Beginning and ending together
           :work_days,
           :workfree_days,
           :sick_days,
@@ -96,8 +98,8 @@ module Pdfs
           :unpaid_vacation_days,
           :driving_expenses,
           :clothing_expenses,
-          :extraordinary_expenses
-        ).values
+          :extraordinary_expenses,
+        ).values.push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d))
       end
     end
   end
