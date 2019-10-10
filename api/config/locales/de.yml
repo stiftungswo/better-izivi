@@ -32,7 +32,7 @@ de:
         unpaid_vacation_days:
           one: Urlaubstag
           other: Urlaubstage
-        way_expenses: Wegspesen          
+        way_expenses: Wegspesen
         work_clothing_expenses: Arbeitskleider
         work_days:
           one: Arbeitstag
@@ -137,6 +137,7 @@ de:
     formats:
       default: "%d.%m.%Y"
       long: "%d.%b.%Y"
+      short: "%d.%m.%y"
   errors:
     authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
     format_error: Sie haben ein ungültiges Format angefordert

@@ -11,15 +11,16 @@ module Pdfs
       I18n.t('activerecord.attributes.user.id'),
       I18n.t('activerecord.attributes.service_specification.name'),
       I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'),
-      I18n.t('activerecord.attributes.expense_sheet.work_days.other'),
-      I18n.t('activerecord.attributes.expense_sheet.workfree'),
-      I18n.t('activerecord.attributes.expense_sheet.sickness'),
-      I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'),
-      I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'),
-      I18n.t('activerecord.attributes.expense_sheet.way_expenses'),
-      I18n.t('activerecord.attributes.expense_sheet.clothing'),
+      {:content => I18n.t('activerecord.attributes.expense_sheet.work_days.other'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.workfree'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.sickness'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.way_expenses'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.clothing'), :colspan => 2},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.clothing'), :colspan => 2},
       I18n.t('pdfs.expense_sheet.expense_table.row_headers.extra'),
-      I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'),
+      {:content => I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'), :colspan => 2}
     ].freeze
 
     def initialize(service_specifications, dates)
@@ -62,7 +63,7 @@ module Pdfs
               cell_style: { borders: %i[] },
               width: bounds.width + 120,
               header: true,
-              column_widths: [50, 60, 100, 60, 60, 60, 60, 60, 60, 60]) do
+              column_widths: [50, 60, 100, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30]) do
           row(0).font_style = :bold
         end
       end
@@ -85,21 +86,14 @@ module Pdfs
 
     def table_content(expense_sheets)
       expense_sheets.map do |expense_sheet|
-        expense_sheet.slice(
-          :user_id,
-          #@Todo: Insert Zivi-name here
-          :beginning,
-          :ending,
-          #@Todo: Merge Beginning and ending together
-          :work_days,
-          :workfree_days,
-          :sick_days,
-          :paid_vacation_days,
-          :unpaid_vacation_days,
-          :driving_expenses,
-          :clothing_expenses,
-          :extraordinary_expenses,
-        ).values.push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d))
+        expense_sheet.slice().values
+          .push(expense_sheet.user_id)
+        .push("Name / Vorname")
+        .push(I18n.l(expense_sheet.beginning, format: :short) + " - " + I18n.l(expense_sheet.ending, format: :short))
+        .push(expense_sheet.work_days)
+        .push(expense_sheet.calculate_work_days.to_d)
+        .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d))
+        .push("test")
       end
     end
   end
