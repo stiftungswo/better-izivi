@@ -8,17 +8,17 @@ module Pdfs
     include Pdfs::PrawnHelper
 
     TABLE_HEADER = [
-      {:content => I18n.t('activerecord.attributes.user.id'), :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.service_specification.name'), :background_color => "DDDDDD"},
-      {:content => I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'), :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.expense_sheet.work_days.other'), :colspan => 2, :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.expense_sheet.workfree'), :colspan => 2, :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.expense_sheet.sickness'), :colspan => 2,:background_color => "DDDDDD" },
-      {:content => I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'), :colspan => 2, :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'), :colspan => 2, :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.expense_sheet.way_expenses'), :background_color => "DDDDDD"},
-      {:content => I18n.t('activerecord.attributes.expense_sheet.clothing'), :colspan => 2, :background_color => "DDDDDD"},
-      {:content => I18n.t('pdfs.expense_sheet.expense_table.row_headers.extra'), :background_color => "DDDDDD"},
+      {:content => I18n.t('activerecord.attributes.user.id'), :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.service_specification.name'), :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'), :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.work_days.other'), :colspan => 2, :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.workfree'), :colspan => 2, :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.sickness'), :colspan => 2,:background_color => "DDDDDD" , align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'), :colspan => 2, :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'), :colspan => 2, :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.way_expenses'), :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('activerecord.attributes.expense_sheet.clothing'), :colspan => 2, :background_color => "DDDDDD", align: :center},
+      {:content => I18n.t('pdfs.expense_sheet.expense_table.row_headers.extra'), :background_color => "DDDDDD", align: :center},
       {:content => I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'), :colspan => 2, :background_color => "DDDDDD", align: :right}
     ].freeze
 
@@ -62,7 +62,7 @@ module Pdfs
               cell_style: { borders: %i[] },
               width: bounds.width,
               header: true,
-              column_widths: [40, 80, 100, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30]) do
+              column_widths: [40, 80, 100, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 30]) do
           row(0).font_style = :bold
         end
       end
@@ -86,24 +86,24 @@ module Pdfs
     def table_content(expense_sheets)
       expense_sheets.map do |expense_sheet|
         expense_sheet.slice().values
-          .push(expense_sheet.user_id)
+          .push(:content => expense_sheet.user_id.to_s, align: :right)
           .push(expense_sheet.user.last_name + " " + expense_sheet.user.first_name)
           .push(I18n.l(expense_sheet.beginning, format: :short) + " - " + I18n.l(expense_sheet.ending, format: :short))
-          .push(expense_sheet.work_days)
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days.to_s))
-          .push(expense_sheet.workfree_days)
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_workfree_days.to_s))
-          .push(expense_sheet.sick_days)
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_sick_days.to_s))
-          .push(expense_sheet.paid_vacation_days)
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_paid_vacation_days.to_s))
-          .push(expense_sheet.unpaid_vacation_days)
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_unpaid_vacation_days.to_s))
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses))
-          .push(expense_sheet.work_days + expense_sheet.workfree_days)
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.clothing_expenses))
-          .push(Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.extraordinary_expenses))
-          .push(expense_sheet.work_days + expense_sheet.workfree_days)
+          .push(:content => expense_sheet.work_days.to_s, align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days.to_s), align: :right)
+          .push(:content => expense_sheet.workfree_days.to_s, align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_workfree_days.to_s), align: :right)
+          .push(:content => expense_sheet.sick_days.to_s, align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_sick_days.to_s), align: :right)
+          .push(:content => expense_sheet.paid_vacation_days.to_s, align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_paid_vacation_days.to_s), align: :right)
+          .push(:content => expense_sheet.unpaid_vacation_days.to_s, align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_unpaid_vacation_days.to_s), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses), align: :right)
+          .push(:content => (expense_sheet.work_days + expense_sheet.workfree_days).to_s, align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.clothing_expenses), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.extraordinary_expenses), align: :right)
+          .push(:content => (expense_sheet.work_days + expense_sheet.workfree_days).to_s, align: :right)
           .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d), align: :right)
       end
     end
