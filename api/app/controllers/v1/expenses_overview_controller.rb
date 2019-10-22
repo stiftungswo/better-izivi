@@ -26,6 +26,7 @@ module V1
     def load_specifications
       @specifications = ExpenseSheet.overlapping_date_range(sanitized_filters.beginning, sanitized_filters.ending)
                                .order('user_id')
+                               .includes(:user)
                                .group_by { |expense_sheet, user| expense_sheet.user_id }
     end
 
