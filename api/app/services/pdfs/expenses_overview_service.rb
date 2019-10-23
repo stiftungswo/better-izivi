@@ -7,8 +7,6 @@ module Pdfs
     include Prawn::View
     include Pdfs::PrawnHelper
 
-    sum = 0.0
-
     TABLE_HEADER = [
       {:content => I18n.t('activerecord.attributes.user.id'), :background_color => "DDDDDD", align: :center},
       {:content => I18n.t('activerecord.attributes.service_specification.name'), :background_color => "DDDDDD", align: :center},
@@ -86,9 +84,17 @@ module Pdfs
               cell_style: { borders: %i[] },
               width: bounds.width,
               header: true,
-              column_widths: [40,80,90,30,30,30,30,30,30,30,30,30,30,60,30,30,30,70]) do
+              column_widths: [40, 80, 90, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 70]) do
           row(0).font_style = :bold
         end
+        table([ ["Gesamt: ", expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days), Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s)]],
+              cell_style: { borders: %i[] },
+              header: true,
+              position: :right,
+              column_widths: [30 , 30, 70]) do
+          row(0).font_style = :bold
+          end
+
       end
     end
 
@@ -105,14 +111,14 @@ module Pdfs
 
     def table_data(expense_sheets)
       move_down 10
-      [TABLE_HEADER, TABLE_SUB_HEADER].push(*table_content(expense_sheets)).push(*table_content_sum(expense_sheets))
+      [TABLE_HEADER, TABLE_SUB_HEADER].push(*table_content(expense_sheets))
     end
 
     def table_content(expense_sheets)
       expense_sheets.map do |expense_sheet|
         expense_sheet.slice().values
           .push(:content => expense_sheet.user_id.to_s, align: :right)
-          .push(expense_sheet.user.last_name + " " + expense_sheet.user.first_name)
+          .push(:content => (expense_sheet.user.last_name + " " + expense_sheet.user.first_name))
           .push(:content => (I18n.l(expense_sheet.beginning, format: :short) + " - " + I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center)
           .push(:content => expense_sheet.work_days.to_s, align: :right)
           .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days.to_s), align: :right)
@@ -131,10 +137,6 @@ module Pdfs
           .push(:content => (expense_sheet.work_days + expense_sheet.workfree_days).to_s, align: :right)
           .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d), align: :right)
       end
-    end
-
-    def table_content_sum(expense_sheets)
-
     end
   end
 end
