@@ -77,24 +77,30 @@ module Pdfs
     end
 
     def content_table
+      font_size 10
+      table([TABLE_HEADER, TABLE_SUB_HEADER],
+            cell_style: { borders: %i[] },
+            width: bounds.width,
+            header: true,
+            column_widths: [40, 80, 90, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
+        row(0).font_style = :bold
+      end
       @service_specifications.each do |name, expense_sheets|
-
-        font_size 10
         table(table_data(expense_sheets),
               cell_style: { borders: %i[] },
               width: bounds.width,
               header: true,
-              column_widths: [40, 80, 90, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 30, 70]) do
+              column_widths: [40, 80, 90, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
+        end
+
+        table([ [{ :content => "Gesamt: ", align: :left},
+                 { :content => (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days)).to_s, align: :right},
+                 { :content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s), align: :right}]],
+              cell_style: { borders: %i[] },
+              header: false,
+              position: :right) do
           row(0).font_style = :bold
         end
-        table([ ["Gesamt: ", expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days), Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s)]],
-              cell_style: { borders: %i[] },
-              header: true,
-              position: :right,
-              column_widths: [30 , 30, 70]) do
-          row(0).font_style = :bold
-          end
-
       end
     end
 
@@ -111,7 +117,7 @@ module Pdfs
 
     def table_data(expense_sheets)
       move_down 10
-      [TABLE_HEADER, TABLE_SUB_HEADER].push(*table_content(expense_sheets))
+      [].push(*table_content(expense_sheets))
     end
 
     def table_content(expense_sheets)
