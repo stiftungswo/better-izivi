@@ -77,12 +77,12 @@ module Pdfs
     end
 
     def content_table
-      font_size 10
+      font_size 9
       table([TABLE_HEADER, TABLE_SUB_HEADER],
             cell_style: { borders: %i[] },
             width: bounds.width,
             header: true,
-            column_widths: [40, 80, 90, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
+            column_widths: [40, 70, 80, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
         row(0).font_style = :bold
       end
       @service_specifications.each do |name, expense_sheets|
@@ -90,7 +90,7 @@ module Pdfs
               cell_style: { borders: %i[] },
               width: bounds.width,
               header: true,
-              column_widths: [40, 80, 90, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
+              column_widths: [40, 70, 80, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
         end
 
         table([ [{ :content => "Gesamt: ", align: :left},
@@ -127,15 +127,15 @@ module Pdfs
           .push(:content => (expense_sheet.user.last_name + " " + expense_sheet.user.first_name))
           .push(:content => (I18n.l(expense_sheet.beginning, format: :short) + " - " + I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center)
           .push(:content => expense_sheet.work_days.to_s, align: :right)
-          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days.to_s), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days[:total] + expense_sheet.calculate_first_day[:total] + expense_sheet.calculate_last_day[:total]), align: :right)
           .push(:content => expense_sheet.workfree_days.to_s, align: :right)
-          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_workfree_days.to_s), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_workfree_days[:total]), align: :right)
           .push(:content => expense_sheet.sick_days.to_s, align: :right)
-          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_sick_days.to_s), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_sick_days[:total]), align: :right)
           .push(:content => expense_sheet.paid_vacation_days.to_s, align: :right)
-          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_paid_vacation_days.to_s), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_paid_vacation_days[:total]), align: :right)
           .push(:content => expense_sheet.unpaid_vacation_days.to_s, align: :right)
-          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_unpaid_vacation_days.to_s), align: :right)
+          .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_unpaid_vacation_days[:total]), align: :right)
           .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses), align: :right)
           .push(:content => (expense_sheet.work_days + expense_sheet.workfree_days).to_s, align: :right)
           .push(:content => Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.clothing_expenses), align: :right)
