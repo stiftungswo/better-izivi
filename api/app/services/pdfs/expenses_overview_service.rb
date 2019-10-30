@@ -82,7 +82,7 @@ module Pdfs
             cell_style: { borders: %i[] },
             width: bounds.width,
             header: true,
-            column_widths: [40, 70, 80, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
+            column_widths: [40, 90, 80, 30, 35, 30, 35, 30, 35, 30, 35, 30, 35, 60, 30, 30, 40, 30]) do
         row(0).font_style = :bold
       end
       @service_specifications.each do |name, expense_sheets|
@@ -90,7 +90,7 @@ module Pdfs
               cell_style: { borders: %i[] },
               width: bounds.width,
               header: true,
-              column_widths: [40, 70, 80, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30, 60, 30, 30, 40, 60]) do
+              column_widths: [40, 90, 80, 30, 35, 30, 35, 30, 35, 30, 35, 30, 35, 60, 30, 30, 40, 30]) do
         end
 
         table([ [{ :content => "Gesamt: ", align: :left},
