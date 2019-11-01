@@ -2,6 +2,8 @@
 
 require 'prawn'
 
+# require_relative 'expenses_overview/expenses_overview_additions'
+
 module Pdfs
   class ExpensesOverviewService
     include Prawn::View
@@ -39,19 +41,15 @@ module Pdfs
 
     def content_table
       font_size 9
-      table([Pdfs::Expenses_overview::ExpensesOverviewAdditions::TABLE_HEADER, Pdfs::Expenses_overview::ExpensesOverviewAdditions::TABLE_SUB_HEADER],
-            cell_style: { borders: [] },
-            width: bounds.width,
-            header: true,
-            column_widths: Pdfs::Expenses_overview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
+      table([Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_HEADER, Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_SUB_HEADER],
+            cell_style: { borders: [] }, width: bounds.width, header: true,
+            column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
         row(0).font_style = :bold
       end
       @service_specifications.values.each do |expense_sheets|
         table(table_data(expense_sheets),
-              cell_style: { borders: [] },
-              width: bounds.width,
-              header: true,
-              column_widths: Pdfs::Expenses_overview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
+              cell_style: { borders: [] }, width: bounds.width, header: true,
+              column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
         end
 
         table([[{ content: 'Gesamt: ', align: :left },
@@ -59,9 +57,7 @@ module Pdfs
                   align: :right },
                 { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s),
                   align: :right }]], cell_style: { borders: %i[] },
-                                     header: false,
-                                     position: :right,
-                                     column_widths: [40, 30, 45]) do
+                                     header: false, position: :right, column_widths: [40, 30, 45]) do
           row(0).font_style = :bold
         end
       end
@@ -69,13 +65,7 @@ module Pdfs
 
     def pre_table(name)
       move_down 25
-
-      text(
-        name,
-        align: :left,
-        style: :bold,
-        size: 11
-      )
+      text(name, align: :left, style: :bold, size: 11)
     end
 
     def table_data(expense_sheets)
