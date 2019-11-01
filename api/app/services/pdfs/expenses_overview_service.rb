@@ -7,88 +7,11 @@ module Pdfs
     include Prawn::View
     include Pdfs::PrawnHelper
 
-    COLOR_GREY = 'DDDDDD'
-
-    TABLE_HEADER = [
-      {
-        content: I18n.t('activerecord.attributes.user.id'),
-        background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.service_specification.name'),
-        background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'),
-        background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.work_days.other'),
-        colspan: 2, background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.workfree'),
-        colspan: 2, background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.sickness'),
-        colspan: 2, background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'),
-        colspan: 2, background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'),
-        colspan: 2, background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.way_expenses'),
-        background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('activerecord.attributes.expense_sheet.clothing'),
-        colspan: 2, background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('pdfs.expense_sheet.expense_table.row_headers.extra'),
-        background_color: COLOR_GREY, align: :center
-      },
-      {
-        content: I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'),
-        colspan: 2, background_color: COLOR_GREY, align: :right
-      }
-    ].freeze
-
-    TABLE_SUB_HEADER = [
-      {},
-      {},
-      {},
-      { content: 'Tage', background_color: COLOR_GREY, align: :left },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Tage', background_color: COLOR_GREY, align: :left },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Tage', background_color: COLOR_GREY, align: :left },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Tage', background_color: COLOR_GREY, align: :left },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Tage', background_color: COLOR_GREY, align: :left },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Tage', background_color: COLOR_GREY, align: :left },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right },
-      { content: 'Tage', background_color: COLOR_GREY, align: :right },
-      { content: 'Fr.', background_color: COLOR_GREY, align: :right }
-    ].freeze
-
     def initialize(service_specifications, dates)
       @beginning = dates.beginning
       @ending = dates.ending
       @service_specifications = service_specifications
-
       update_font_families
-
       header
       content_table
     end
@@ -116,19 +39,19 @@ module Pdfs
 
     def content_table
       font_size 9
-      table([TABLE_HEADER, TABLE_SUB_HEADER],
-            cell_style: { borders: %i[] },
+      table([Pdfs::Expenses_overview::ExpensesOverviewAdditions::TABLE_HEADER, Pdfs::Expenses_overview::ExpensesOverviewAdditions::TABLE_SUB_HEADER],
+            cell_style: { borders: [] },
             width: bounds.width,
             header: true,
-            column_widths: [40, 90, 80, 30, 35, 30, 35, 30, 35, 30, 35, 30, 35, 60, 30, 30, 40, 30]) do
+            column_widths: Pdfs::Expenses_overview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
         row(0).font_style = :bold
       end
-      @service_specifications.each do |_name, expense_sheets|
+      @service_specifications.values.each do |expense_sheets|
         table(table_data(expense_sheets),
-              cell_style: { borders: %i[] },
+              cell_style: { borders: [] },
               width: bounds.width,
               header: true,
-              column_widths: [40, 90, 80, 30, 35, 30, 35, 30, 35, 30, 35, 30, 35, 60, 30, 30, 40, 30]) do
+              column_widths: Pdfs::Expenses_overview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
         end
 
         table([[{ content: 'Gesamt: ', align: :left },
@@ -157,7 +80,7 @@ module Pdfs
 
     def table_data(expense_sheets)
       move_down 10
-      [].push(*table_content(expense_sheets))
+      table_content(expense_sheets)
     end
 
     def table_content(expense_sheets)
