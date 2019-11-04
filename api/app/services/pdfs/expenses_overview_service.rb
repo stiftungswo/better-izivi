@@ -14,6 +14,7 @@ module Pdfs
       @ending = dates.ending
       @service_specifications = service_specifications
       update_font_families
+      headline
       header
       content_table
     end
@@ -24,7 +25,7 @@ module Pdfs
 
     private
 
-    def header
+    def headline
       text I18n.t('pdfs.expenses_overview.swo', date: I18n.l(Time.zone.today)), align: :right, size: 8
       text I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today)), align: :right, size: 8
       text(
@@ -39,19 +40,25 @@ module Pdfs
       )
     end
 
-    def content_table
+    def header
       font_size 9
-      table([Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_HEADER, Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_SUB_HEADER],
-            cell_style: { borders: [] }, width: bounds.width, header: true,
+      table([Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_HEADER,
+             Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_SUB_HEADER],
+            cell_style: { borders: [] },
+            width: bounds.width,
+            header: true,
             column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
         row(0).font_style = :bold
       end
+    end
+
+    def content_table
+      font_size 9
       @service_specifications.values.each do |expense_sheets|
         table(table_data(expense_sheets),
-              cell_style: { borders: [] }, width: bounds.width, header: true,
-              column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
-        end
-
+              cell_style: { borders: [] },
+              width: bounds.width, header: true,
+              column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) {}
         table([[{ content: 'Gesamt: ', align: :left },
                 { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days)).to_s,
                   align: :right },
