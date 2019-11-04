@@ -58,15 +58,19 @@ module Pdfs
         table(table_data(expense_sheets),
               cell_style: { borders: [] },
               width: bounds.width, header: true,
-              column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) {}
-        table([[{ content: 'Gesamt: ', align: :left },
-                { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days)).to_s,
-                  align: :right },
-                { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s),
-                  align: :right }]], cell_style: { borders: %i[] },
-                                     header: false, position: :right, column_widths: [40, 30, 45]) do
-          row(0).font_style = :bold
-        end
+              column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
+        sum_table(expense_sheets)
+      end
+    end
+
+    def sum_table(expense_sheets)
+      table([[{ content: 'Gesamt: ', align: :left },
+              { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days)).to_s,
+                align: :right },
+              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s),
+                align: :right }]], cell_style: { borders: %i[] },
+                                   header: false, position: :right, column_widths: [40, 30, 45]) do
+        row(0).font_style = :bold
       end
     end
 
@@ -126,10 +130,18 @@ module Pdfs
     def method5(expense_sheet)
       [
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(
+          expense_sheet.clothing_expenses
+        ), align: :right },
+        { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(
           expense_sheet.extraordinary_expenses
         ), align: :right },
         { content: (expense_sheet.work_days +
-          expense_sheet.workfree_days).to_s, align: :right },
+          expense_sheet.workfree_days).to_s, align: :right }
+      ]
+    end
+
+    def method6(expense_sheet)
+      [
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(
           expense_sheet.calculate_full_expenses.to_d
         ), align: :right }
@@ -143,7 +155,8 @@ module Pdfs
           method2(expense_sheet) +
           method3(expense_sheet) +
           method4(expense_sheet) +
-          method5(expense_sheet)
+          method5(expense_sheet) +
+          method6(expense_sheet)
       end
     end
   end
