@@ -80,10 +80,14 @@ module Pdfs
       table_content(expense_sheets)
     end
 
+    def method1(expense_sheet)
+      { content: expense_sheet.user_id.to_s, align: :right }
+    end
+
     def table_content(expense_sheets)
       expense_sheets.map do |expense_sheet|
         expense_sheet.slice.values
-                     .push(content: expense_sheet.user_id.to_s, align: :right)
+                     .push(method1(expense_sheet))
                      .push(content: (expense_sheet.user.last_name + ' ' + expense_sheet.user.first_name))
                      .push(content: (I18n.l(expense_sheet.beginning,
                                             format: :short) + ' - ' + I18n.l(expense_sheet.ending,
