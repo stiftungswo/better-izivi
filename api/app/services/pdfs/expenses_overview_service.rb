@@ -73,21 +73,21 @@ module Pdfs
       table_content(expense_sheets)
     end
 
-    def method1(expense_sheet)
+    def first_part(expense_sheet)
       [{ content: expense_sheet.user_id.to_s, align: :right },
        { content: (expense_sheet.user.last_name + ' ' + expense_sheet.user.first_name) },
        { content: (I18n.l(expense_sheet.beginning, format: :short) + ' - ' +
          I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center }]
     end
 
-    def method2(expense_sheet)
+    def second_part(expense_sheet)
       # rubocop:disable Metrics/LineLength
       [{ content: expense_sheet.work_days.to_s, align: :right }, { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days[:total] + expense_sheet.calculate_first_day[:total] + expense_sheet.calculate_last_day[:total]), align: :right },
        # rubocop:enable Metrics/LineLength
        { content: expense_sheet.workfree_days.to_s, align: :right }]
     end
 
-    def method3(expense_sheet)
+    def third_part(expense_sheet)
       [{ content: Pdfs::ExpenseSheet::FormatHelper.to_chf(
         expense_sheet.calculate_workfree_days[:total]
       ), align: :right },
@@ -99,7 +99,7 @@ module Pdfs
        ), align: :right }]
     end
 
-    def method4(expense_sheet)
+    def fourth_part(expense_sheet)
       [{ content: expense_sheet.unpaid_vacation_days.to_s, align: :right },
        { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_unpaid_vacation_days[:total]),
          align: :right },
@@ -107,7 +107,7 @@ module Pdfs
        { content: (expense_sheet.work_days + expense_sheet.workfree_days).to_s, align: :right }]
     end
 
-    def method5(expense_sheet)
+    def fifth_part(expense_sheet)
       [
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.clothing_expenses), align: :right },
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.extraordinary_expenses), align: :right },
@@ -115,7 +115,7 @@ module Pdfs
       ]
     end
 
-    def method6(expense_sheet)
+    def sixt_part(expense_sheet)
       [
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d), align: :right }
       ]
@@ -125,7 +125,7 @@ module Pdfs
       expense_sheets.map do |expense_sheet|
         expense_sheet.slice.values
         # rubocop:disable Metrics/LineLength
-        method1(expense_sheet) + method2(expense_sheet) + method3(expense_sheet) + method4(expense_sheet) + method5(expense_sheet) + method6(expense_sheet)
+        first_part(expense_sheet) + second_part(expense_sheet) + third_part(expense_sheet) + fourth_part(expense_sheet) + fifth_part(expense_sheet) + sixt_part(expense_sheet)
         # rubocop:enable Metrics/LineLength
       end
     end
