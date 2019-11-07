@@ -36,7 +36,7 @@ module Pdfs
       font_size 9
       table([Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_HEADER,
              Pdfs::ExpensesOverview::ExpensesOverviewAdditions::TABLE_SUB_HEADER],
-            cell_style: { borders: [] }, width: bounds.width, header: true,
+            cell_style: { borders: [] }, width: bounds.width,
             column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS) do
         row(0).font_style = :bold
       end
@@ -48,10 +48,10 @@ module Pdfs
       font_size 9
       @service_specifications.values.each do |expense_sheets|
         # rubocop:disable Metrics/LineLength
-        table(table_data(expense_sheets), cell_style: { borders: [] }, width: bounds.width, header: true, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
+        table(table_data(expense_sheets), cell_style: { borders: [] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
         # rubocop:enable Metrics/LineLength
         sum_table(expense_sheets)
-        total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days))
+        total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) + expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days))
         total_expenses += expense_sheets.sum(&:calculate_full_expenses)
       end
       total_sum_table(total_days, total_expenses)
@@ -59,7 +59,7 @@ module Pdfs
 
     def sum_table(expense_sheets)
       table([[{ content: 'Gesamt: ', align: :left },
-              { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days)).to_s,
+              { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) + expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days)).to_s,
                 align: :right },
               { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s), align: :right }]], cell_style: { borders: %i[] }, header: false, position: :right, column_widths: [40, 30, 45]) do
         row(0).font_style = :bold
