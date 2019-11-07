@@ -123,7 +123,7 @@ module Pdfs
       [
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.clothing_expenses), align: :right },
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.extraordinary_expenses), align: :right },
-        { content: (expense_sheet.work_days + expense_sheet.workfree_days).to_s, align: :right }
+        { content: (expense_sheet.work_days + expense_sheet.workfree_days + expense_sheet.paid_vacation_days + expense_sheet.sick_days).to_s, align: :right }
       ]
     end
 
