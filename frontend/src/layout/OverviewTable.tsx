@@ -3,6 +3,7 @@ import * as React from 'react';
 import Table from 'reactstrap/lib/Table';
 import { Column } from '../types';
 import { SafeClickableTableRow } from '../utilities/SafeClickableTableRow';
+import _ from 'lodash';
 
 // tslint:disable:no-any ; this is adapted from the docs. It should be typed eventually.
 
@@ -15,11 +16,7 @@ function format<T>(def: Column<T>, row: T): React.ReactNode {
 }
 
 function calcsum(arr: any[]): number {
-  let sum = 0.0;
-  for (const obj of arr) {
-    sum += obj.total;
-  }
-  return sum / 100;
+  return _.sum(arr) / 100;
 }
 
 // tslint:enable:no-any
