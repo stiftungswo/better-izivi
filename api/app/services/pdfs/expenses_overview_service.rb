@@ -43,22 +43,34 @@ module Pdfs
     end
 
     def content_table
+      total_days = 0
+      total_expenses = 0.0
       font_size 9
       @service_specifications.values.each do |expense_sheets|
         # rubocop:disable Metrics/LineLength
         table(table_data(expense_sheets), cell_style: { borders: [] }, width: bounds.width, header: true, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
         # rubocop:enable Metrics/LineLength
         sum_table(expense_sheets)
+        total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days))
+        total_expenses += expense_sheets.sum(&:calculate_full_expenses)
       end
+      total_sum_table(total_days, total_expenses)
     end
 
     def sum_table(expense_sheets)
       table([[{ content: 'Gesamt: ', align: :left },
               { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days)).to_s,
                 align: :right },
-              # rubocop:disable Metrics/LineLength
               { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s), align: :right }]], cell_style: { borders: %i[] }, header: false, position: :right, column_widths: [40, 30, 45]) do
-        # rubocop:enable Metrics/LineLength
+        row(0).font_style = :bold
+      end
+    end
+
+    def total_sum_table(total_days, total_expenses)
+      table([[{ content: 'Total: ', align: :left },
+              { content: (total_days).to_s,
+                align: :right },
+              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s), align: :right }]], cell_style: { borders: %i[] }, header: false, position: :right, column_widths: [40, 30, 45]) do
         row(0).font_style = :bold
       end
     end
@@ -74,7 +86,7 @@ module Pdfs
     end
 
     def first_part(expense_sheet)
-      [{ content: expense_sheet.user_id.to_s, align: :right },
+      [{ content: expense_sheet.user.zdp.to_s, align: :right },
        { content: (expense_sheet.user.last_name + ' ' + expense_sheet.user.first_name) },
        { content: (I18n.l(expense_sheet.beginning, format: :short) + ' - ' +
          I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center }]
