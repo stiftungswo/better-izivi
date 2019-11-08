@@ -48,7 +48,7 @@ module Pdfs
       font_size 9
       @service_specifications.values.each do |expense_sheets|
         # rubocop:disable Metrics/LineLength
-        table(table_data(expense_sheets), cell_style: { borders: [] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
+        table(table_data(expense_sheets), cell_style: { borders: [], padding: [0,5,0,5]}, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
         # rubocop:enable Metrics/LineLength
         sum_table(expense_sheets)
         total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) + expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days))
@@ -61,17 +61,15 @@ module Pdfs
       table([[{ content: 'Gesamt: ', align: :left },
               { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) + expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days)).to_s,
                 align: :right },
-              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s), align: :right }]], cell_style: { borders: %i[] }, header: false, position: :right, column_widths: [40, 30, 45]) do
+              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s), align: :right }]], cell_style: { borders: [], padding: [1,5,1,5] }, header: false, position: :right, column_widths: [40, 30, 45]) do
         row(0).font_style = :bold
       end
     end
 
     def total_sum_table(total_days, total_expenses)
-      table([[{ content: 'Total: ', align: :left },
-              { content: (total_days).to_s,
-                align: :right },
-              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s), align: :right }]], cell_style: { borders: %i[] }, header: false, position: :right, column_widths: [40, 30, 45]) do
-        row(0).font_style = :bold
+      table([[{ content: 'Total Tage: ' + (total_days).to_s + ', Total Betrag: ' + Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s), align: :right }
+              ]], cell_style: { borders: [] }, header: false, position: :right) do
+        row(0).font_style = :italic
       end
     end
 
