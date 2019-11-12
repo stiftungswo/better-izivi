@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length = 1000
+
 require 'rails_helper'
 
 RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
@@ -41,7 +43,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
           'Pflichtenheft:', '82846 MyServiceSpecification',
           'Nachname, Vorname:', 'Zivi Mustermann',
           'Adresse:', 'Bahnstrasse 18b, 8603 Schwerzenbach',
-          'ZDP-Nr.:', user.zdp,
+          'ZDP-Nr.:', user.zdp.to_s,
           'Gesamteinsatz:', '01.01.2018 bis 23.02.2018 (54 Tage)',
           'Meldeperiode:', '01.01.2018 bis 27.01.2018 (27 Tage)',
           'Taschengeld', '(Fr.)', 'Unterkunft', '(Fr.)',
