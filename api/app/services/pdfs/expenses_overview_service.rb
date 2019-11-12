@@ -5,6 +5,7 @@ require 'prawn'
 # require_relative 'expenses_overview/expenses_overview_additions'
 
 module Pdfs
+  # rubocop:disable ClassLength
   class ExpensesOverviewService
     include Prawn::View
     include Pdfs::PrawnHelper
@@ -42,33 +43,40 @@ module Pdfs
       end
     end
 
+    # rubocop:disable Metrics/AbcSize
     def content_table
       total_days = 0
       total_expenses = 0.0
       font_size 9
       @service_specifications.values.each do |expense_sheets|
         # rubocop:disable Metrics/LineLength
-        table(table_data(expense_sheets), cell_style: { borders: [], padding: [0,5,0,5]}, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
+        table(table_data(expense_sheets), cell_style: { borders: [], padding: [0, 5, 0, 5] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
         # rubocop:enable Metrics/LineLength
         sum_table(expense_sheets)
-        total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) + expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days))
+        total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) +
+        expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days))
         total_expenses += expense_sheets.sum(&:calculate_full_expenses)
       end
       total_sum_table(total_days, total_expenses)
     end
+    # rubocop:enable Metrics/AbcSize
 
     def sum_table(expense_sheets)
       table([[{ content: 'Gesamt: ', align: :left },
-              { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) + expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days)).to_s,
+              { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) +
+                expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days)).to_s,
                 align: :right },
-              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s), align: :right }]], cell_style: { borders: [], padding: [1,5,1,5] }, header: false, position: :right, column_widths: [40, 30, 45]) do
+              { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s),
+                align: :right }]], cell_style: { borders: [], padding: [1, 5, 1, 5] },
+                                   header: false, position: :right, column_widths: [40, 30, 45]) do
         row(0).font_style = :bold
       end
     end
 
     def total_sum_table(total_days, total_expenses)
-      table([[{ content: 'Total Tage: ' + (total_days).to_s + ', Total Betrag: ' + Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s), align: :right }
-              ]], cell_style: { borders: [] }, header: false, position: :right) do
+      table([[{ content: 'Total Tage: ' + total_days.to_s + ', Total Betrag: ' +
+        Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s), align: :right }]],
+            cell_style: { borders: [] }, header: false, position: :right) do
         row(0).font_style = :italic
       end
     end
@@ -83,12 +91,14 @@ module Pdfs
       table_content(expense_sheets)
     end
 
+    # rubocop:disable Metrics/AbcSize
     def first_part(expense_sheet)
       [{ content: expense_sheet.user.zdp.to_s, align: :right },
        { content: (expense_sheet.user.last_name + ' ' + expense_sheet.user.first_name) },
        { content: (I18n.l(expense_sheet.beginning, format: :short) + ' - ' +
          I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center }]
     end
+    # rubocop:enable Metrics/AbcSize
 
     def second_part(expense_sheet)
       # rubocop:disable Metrics/LineLength
@@ -121,7 +131,8 @@ module Pdfs
       [
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.clothing_expenses), align: :right },
         { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.extraordinary_expenses), align: :right },
-        { content: (expense_sheet.work_days + expense_sheet.workfree_days + expense_sheet.paid_vacation_days + expense_sheet.sick_days).to_s, align: :right }
+        { content: (expense_sheet.work_days + expense_sheet.workfree_days +
+          expense_sheet.paid_vacation_days + expense_sheet.sick_days).to_s, align: :right }
       ]
     end
 
@@ -140,4 +151,5 @@ module Pdfs
       end
     end
   end
+  # rubocop:enable ClassLength
 end
