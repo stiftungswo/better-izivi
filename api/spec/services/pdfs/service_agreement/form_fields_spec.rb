@@ -55,59 +55,5 @@ RSpec.describe Pdfs::ServiceAgreement::FormFields, type: :service do
         I18n.l(company_holiday.ending)
       ]
     end
-
-    context 'when is german' do
-      it_behaves_like 'pdf renders correct texts'
-
-      context 'when the service is long' do
-        let(:service_data) { { beginning: '2018-11-05', ending: '2019-05-03', long_service: true } }
-
-        it_behaves_like 'pdf renders correct texts'
-      end
-
-      context 'when the service is a probational' do
-        let(:service_data) { { probation_service: true } }
-
-        it_behaves_like 'pdf renders correct texts'
-      end
-
-      context 'when there is no company_holiday during the service' do
-        let(:company_holiday) { nil }
-
-        it_behaves_like 'pdf renders correct texts'
-      end
-
-      it 'renders 2 pages' do
-        expect(pdf_page_inspector.pages.size).to eq 2
-      end
-    end
-
-    context 'when it is french' do
-      let(:service) { create :service, :valais, service_data.merge(service_data_defaults) }
-
-      it_behaves_like 'pdf renders correct texts'
-
-      context 'when the service is long' do
-        let(:service_data) { { beginning: '2018-11-05', ending: '2019-05-03', long_service: true } }
-
-        it_behaves_like 'pdf renders correct texts'
-      end
-
-      context 'when the service is a probational' do
-        let(:service_data) { { probation_service: true } }
-
-        it_behaves_like 'pdf renders correct texts'
-      end
-
-      context 'when there is no company_holiday during the service' do
-        let(:company_holiday) { nil }
-
-        it_behaves_like 'pdf renders correct texts'
-      end
-
-      it 'renders 2 pages' do
-        expect(pdf_page_inspector.pages.size).to eq 2
-      end
-    end
   end
 end
