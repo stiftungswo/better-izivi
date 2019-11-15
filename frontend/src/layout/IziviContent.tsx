@@ -19,7 +19,7 @@ const styles = (theme: Theme) =>
       },
       'composes': 'mo-container',
       '@media print': {
-        margin: 0
+        margin: 0,
       },
     },
     background: {
