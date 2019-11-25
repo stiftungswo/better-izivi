@@ -48,14 +48,14 @@ module Pdfs
       total_days = 0
       total_expenses = 0.0
       font_size 9
-      @service_specifications.each do |expense_sheets|
+      @service_specifications.each do |expense_sheet|
         # rubocop:disable Metrics/LineLength
-        table(table_data(expense_sheets), cell_style: { borders: [], padding: [0, 5, 0, 5] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
+        table(table_data(expense_sheet), cell_style: { borders: [], padding: [0, 5, 0, 5] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
         # rubocop:enable Metrics/LineLength
-        sum_table(expense_sheets)
-        total_days += (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) +
-        expense_sheets.sum(&:paid_vacation_days) + expense_sheets.sum(&:sick_days))
-        total_expenses += expense_sheets.sum(&:calculate_full_expenses)
+        sum_table(expense_sheet)
+        total_days += (expense_sheet.sum(&:work_days) + expense_sheet.sum(&:workfree_days) +
+        expense_sheet.sum(&:paid_vacation_days) + expense_sheet.sum(&:sick_days))
+        total_expenses += expense_sheet.sum(&:calculate_full_expenses)
       end
       total_sum_table(total_days, total_expenses)
     end
