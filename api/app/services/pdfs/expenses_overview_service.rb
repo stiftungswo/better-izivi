@@ -92,15 +92,13 @@ module Pdfs
       table_content(expense_sheets)
     end
 
-    # rubocop:disable Metrics/AbcSize
     def first_part(expense_sheet)
-      @exps_user = expense_sheet.user
+      exps_user = expense_sheet.user
       [{ content: exps_user.zdp.to_s, align: :right },
        { content: (exps_user.last_name + ' ' + exps_user.first_name) },
        { content: (I18n.l(expense_sheet.beginning, format: :short) + ' - ' +
          I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center }]
     end
-    # rubocop:enable Metrics/AbcSize
 
     def second_part(expense_sheet)
       # rubocop:disable Metrics/LineLength
