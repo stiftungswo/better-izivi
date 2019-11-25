@@ -11,11 +11,17 @@ RSpec.describe Pdfs::ExpensesOverviewService, type: :service do
 
       after { I18n.locale = I18n.default_locale }
 
-      let(:pdf) { described_class.new(expense_sheet).render }
+      let(:pdf) { described_class.new(expense_sheet, expense_sheet_dates).render }
       let(:expense_sheet) { create :expense_sheet, expense_sheet_data }
       let(:service) { create :service, service_data }
       let(:service_specification) { create :service_specification, identification_number: 82_846 }
       let(:expense_sheet_data) { expense_sheet_data_defaults }
+      let(:expense_sheet_dates) do
+        OpenStruct.new(
+          beginning: Date.parse('2018-01-01'),
+          ending: Date.parse('2018-01-27')
+        )
+      end
       let(:user) { expense_sheet.service.user }
       let(:expense_sheet_data_defaults) do
         {
