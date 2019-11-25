@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'prawn'
 
 # require_relative 'expenses_overview/expenses_overview_additions'
@@ -58,6 +59,7 @@ module Pdfs
       end
       total_sum_table(total_days, total_expenses)
     end
+
     # rubocop:enable Metrics/AbcSize
     # :reek:FeatureEnvy
     def sum_table(expense_sheets)
