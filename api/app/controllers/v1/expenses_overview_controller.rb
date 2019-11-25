@@ -5,8 +5,10 @@ module V1
     include V1::Concerns::AdminAuthorizable
     include Pdfs::ExpenseSheet
 
-    before_action :authorize_admin!
+    before_action :authenticate_user!, unless: -> { request.format.pdf? }
+    before_action :authenticate_from_params!, if: -> { request.format.pdf? }
     before_action :load_specifications, only: :show
+    before_action :authorize_admin!
 
     def show
       respond_to do |format|
