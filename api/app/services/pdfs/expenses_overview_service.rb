@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 require 'prawn'
 
 # require_relative 'expenses_overview/expenses_overview_additions'
@@ -48,7 +47,7 @@ module Pdfs
       total_days = 0
       total_expenses = 0.0
       font_size 9
-      @service_specifications.values.each do |expense_sheets|
+      @service_specifications.each do |expense_sheets|
         # rubocop:disable Metrics/LineLength
         table(table_data(expense_sheets), cell_style: { borders: [], padding: [0, 5, 0, 5] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
         # rubocop:enable Metrics/LineLength
@@ -60,7 +59,7 @@ module Pdfs
       total_sum_table(total_days, total_expenses)
     end
     # rubocop:enable Metrics/AbcSize
-
+    # :reek:FeatureEnvy
     def sum_table(expense_sheets)
       table([[{ content: 'Gesamt: ', align: :left },
               { content: (expense_sheets.sum(&:work_days) + expense_sheets.sum(&:workfree_days) +
@@ -93,8 +92,9 @@ module Pdfs
 
     # rubocop:disable Metrics/AbcSize
     def first_part(expense_sheet)
-      [{ content: expense_sheet.user.zdp.to_s, align: :right },
-       { content: (expense_sheet.user.last_name + ' ' + expense_sheet.user.first_name) },
+      @exps_user = expense_sheet.user
+      [{ content: exps_user.zdp.to_s, align: :right },
+       { content: (exps_user.last_name + ' ' + exps_user.first_name) },
        { content: (I18n.l(expense_sheet.beginning, format: :short) + ' - ' +
          I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center }]
     end
