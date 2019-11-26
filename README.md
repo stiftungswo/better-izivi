@@ -149,7 +149,27 @@ Installation gemäss der Installationsanleitung auf der [Website](https://docs.d
 
 ### Tipps für Windows
 
-I
+#### Installation
+- Ruby installieren mit Rubyinstaller mit devkit (installiert gem)
+- Yarn installieren
+- Installation mysql-Server
+- Repo klonen
+-- Im Ordner frontend `yarn` ausführen (installiert Frontend dependencies)
+-- im Ordner api `gem install bundler` ausführen (installiert gems)
+- Das configfile anpassen und die Ports im frontend von 28000 auf 3000 wechseln (lokaler API port)
+- Aus Ordner api, Datenbank installieren mit `rails db:create db:migrate`
+
+#### Starten
+- Server starten
+-- API: Ordner api: `rails s`
+-- Frontend: Ordner frontend, `yarn start` (Meldung zu Portänderung bejahen)
+
+#### Testing
+- Linter ausführen im jeweiligen Ordner: `rubocop -a` (korrigiert auch direkt Fehler)
+- Rspec einzelnes File: `bundle exec rspec ./spec/services/pdfs/expenses_overview_service_spec.rb`
+- Rspec alle Tests: `bundle exec rspec`
+- bundle exec rake == rubocop
+- bundle exec reek == rspec
 
 ## Entwicklung
 
