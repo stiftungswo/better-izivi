@@ -23,7 +23,7 @@ module V1
     ].freeze
 
     def index
-      @expense_sheets = filtered_expense_sheets
+      @expense_sheets = filtered_expense_sheets.order(beginning: :desc, ending: :desc)
     end
 
     def show

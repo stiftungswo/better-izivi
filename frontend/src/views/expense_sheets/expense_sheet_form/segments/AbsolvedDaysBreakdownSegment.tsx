@@ -11,12 +11,14 @@ export const AbsolvedDaysBreakdownSegment = expenseSheetFormSegment(
         horizontal
         appendedLabels={[`Vorschlag: ${hints.suggestions.work_days} Tage`]}
         component={NumberField}
+        defaultValue={hints.suggestions.work_days}
         name={'work_days'}
         label={'Gearbeitet'}
       />
       <WiredField
         horizontal
         appendedLabels={[`Vorschlag: ${hints.suggestions.workfree_days} Tage`]}
+        defaultValue={hints.suggestions.workfree_days}
         component={NumberField}
         name={'workfree_days'}
         label={'Arbeitsfrei'}
@@ -24,6 +26,7 @@ export const AbsolvedDaysBreakdownSegment = expenseSheetFormSegment(
       <WiredField
         horizontal
         appendedLabels={[`Übriges Guthaben: ${hints.remaining_days.sick_days} Tage`]}
+        defaultValue={hints.remaining_days.sick_days}
         component={NumberField}
         name={'sick_days'}
         label={'Krank'}
