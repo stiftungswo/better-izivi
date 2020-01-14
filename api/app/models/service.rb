@@ -11,6 +11,8 @@ class Service < ApplicationRecord
   belongs_to :user
   belongs_to :service_specification
 
+  before_destroy :deletable?
+
   enum service_type: {
     normal: 0,
     first: 1,
@@ -65,7 +67,7 @@ class Service < ApplicationRecord
     beginning > Time.zone.today
   end
 
-  def deletable
+  def deletable?
     @expense_sheets ||= user.expense_sheets.in_date_range(beginning, ending)
     @expense_sheets.nil? || @expense_sheets.count == 0
   end

@@ -15,7 +15,7 @@ const styles = (theme: Theme) =>
   createStyles({
     container: {
       '@media (min-width: 1024px)': {
-        padding: `${theme.layout.baseSpacing}px ${2 * theme.layout.baseSpacing}px`,
+        padding: `${theme.layout.baseSpacing}px 2px`,
       },
       'composes': 'mo-container',
       '@media print': {
