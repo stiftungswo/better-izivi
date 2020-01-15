@@ -73,7 +73,6 @@ export class DeleteButton extends React.Component<DeleteButtonProps, DeleteButto
         {this.getDeleteButtonWithTooltipWrapper()}
         {this.props.id && this.props.tooltip && (
           <Tooltip
-            hideArrow
             trigger={'hover focus'}
             delay={{ show: 100, hide: 100 }}
             placement={'top'}

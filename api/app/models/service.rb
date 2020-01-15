@@ -11,8 +11,6 @@ class Service < ApplicationRecord
   belongs_to :user
   belongs_to :service_specification
 
-  before_destroy :deletable?
-
   enum service_type: {
     normal: 0,
     first: 1,
@@ -35,6 +33,12 @@ class Service < ApplicationRecord
   delegate :used_paid_vacation_days, :used_sick_days, to: :used_days_calculator
   delegate :remaining_paid_vacation_days, :remaining_sick_days, to: :remaining_days_calculator
   delegate :identification_number, to: :service_specification
+
+  def destroy
+    raise "Cannot delete a service which has associated expense sheets!" unless deletable?
+    # service doesn't have associated expense sheets, so we can go ahead and destroy it
+    super
+  end
 
   def service_days
     service_calculator.calculate_chargeable_service_days(ending)
