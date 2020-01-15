@@ -72,8 +72,8 @@ class Service < ApplicationRecord
   end
 
   def deletable?
-    @expense_sheets ||= user.expense_sheets.in_date_range(beginning, ending)
-    @expense_sheets.nil? || @expense_sheets.count.zero?
+    sheets_in_range = user.expense_sheets.in_date_range(beginning, ending)
+    sheets_in_range.nil? || sheets_in_range.count.zero?
   end
 
   def date_range

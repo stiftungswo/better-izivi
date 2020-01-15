@@ -15,11 +15,16 @@ const styles = (theme: Theme) =>
   createStyles({
     container: {
       '@media (min-width: 1024px)': {
-        padding: `${theme.layout.baseSpacing}px 2px`,
+        padding: `${theme.layout.baseSpacing}px ${2 * theme.layout.baseSpacing}px`,
       },
       'composes': 'mo-container',
       '@media print': {
         margin: 0,
+      },
+    },
+    limitedContainer: {
+      '@media (min-width: 1250px)': {
+        maxWidth: '1200px',
       },
     },
     background: {
@@ -57,7 +62,7 @@ class IziviContent extends React.Component<Props> {
       this.props.className,
       classes.container,
       { [classes.background]: showBackgroundImage },
-      (!this.props.showBackgroundImage && !this.props.fullscreen ? 'container' : undefined),
+      (!this.props.showBackgroundImage && !this.props.fullscreen ? ['container', classes.limitedContainer] : undefined),
     );
 
     return (
