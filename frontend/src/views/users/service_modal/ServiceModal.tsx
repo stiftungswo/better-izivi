@@ -130,8 +130,6 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
   }
 
   onConfirmationPut = () => {
-    // tslint:disable-next-line:no-console
-    console.log(this.props);
     if (this.props.onServiceConfirmed != null) {
       this.props.onServiceConfirmed(this.props.service!).then(() => {
         this.props.mainStore!.displaySuccess('Speichern erfolgreich');
