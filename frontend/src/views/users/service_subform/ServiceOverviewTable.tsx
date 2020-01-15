@@ -48,7 +48,7 @@ function confirmService(serviceStore?: ServiceStore, userStore?: UserStore) {
     return serviceStore!.doConfirmPut(service.id!).then(() => {
       userStore!.fetchOne(service.user_id);
     });
-  }
+  };
 }
 
 function onServiceAddExpenseSheet(service: Service, expenseSheetStore: ExpenseSheetStore, userStore: UserStore) {
