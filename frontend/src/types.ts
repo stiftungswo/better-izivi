@@ -60,6 +60,7 @@ export interface ExpenseSheet {
   work_days: number;
   workfree_days: number;
   service_id: number;
+  deletable: boolean;
 }
 
 export interface ExpenseSheetHints {
