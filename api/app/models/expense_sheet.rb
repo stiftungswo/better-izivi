@@ -90,7 +90,7 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def readonly?
-    paid? && !state_changed?
+    !open? && !state_changed?
   end
 
   private

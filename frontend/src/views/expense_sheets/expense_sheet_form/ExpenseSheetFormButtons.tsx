@@ -68,7 +68,7 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           target={'ExpenseSheetSaveButtonWrapper'}
           placement={'top'}
         >
-          Bezahlte Spesen können nicht modifiziert werden!
+          Nur offene Spesen können modifiziert werden!
         </UncontrolledTooltip>
       </>
     );
@@ -101,7 +101,7 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
           target={'ExpenseSheetDeleteButtonWrapper'}
           placement={'top'}
         >
-          Bezahlte Spesen können nicht gelöscht werden!
+          Nur offene Spesen können gelöscht werden!
         </UncontrolledTooltip>
       </>
     );
