@@ -4,6 +4,9 @@ ENV BUNDLER_VERSION=2.1.4
 ENV RAILS_ENV=development
 ENV RACK_ENV=development
 
+RUN wget -O /tmp/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+RUN chmod +x /tmp/wait-for-it.sh
+
 RUN gem install bundler -v "2.1.4" --no-document
 RUN apt-get update && apt-get install -y mariadb-client pdftk
 
