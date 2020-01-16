@@ -27,7 +27,7 @@ interface ExpenseSheetFormButtonsProps {
 }
 
 function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: ExpenseSheetFormButtonsProps) {
-  if (expenseSheet.deletable) {
+  if (expenseSheet.modifiable) {
     if (safeOverride) {
       return (
         <Button
