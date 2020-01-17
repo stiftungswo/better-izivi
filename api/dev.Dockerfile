@@ -1,8 +1,8 @@
 FROM ruby:2.6.5
 
 ENV BUNDLER_VERSION=2.1.4
-ENV RAILS_ENV=development
-ENV RACK_ENV=development
+#ENV RAILS_ENV=development test
+#ENV RACK_ENV=development test
 
 RUN wget -O /tmp/wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
 RUN chmod +x /tmp/wait-for-it.sh
