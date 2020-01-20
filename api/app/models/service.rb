@@ -27,6 +27,7 @@ class Service < ApplicationRecord
   validate :beginning_is_monday
   validate :no_overlapping_service
   validate :length_is_valid
+  validate :validate_iban, :on => :create
 
   scope :at_date, ->(date) { where(arel_table[:beginning].lteq(date)).where(arel_table[:ending].gteq(date)) }
   scope :chronologically, -> { order(:beginning, :ending) }
@@ -54,6 +55,10 @@ class Service < ApplicationRecord
 
   def conventional_service?
     !probation_service? && !long_service?
+  end
+
+  def bank_iban
+    user.bank_iban
   end
 
   def expense_sheets
@@ -112,5 +117,11 @@ class Service < ApplicationRecord
     return if ending.blank? || beginning.blank? || last_civil_service?
 
     errors.add(:service_days, :invalid_length) if (ending - beginning).to_i + 1 < MIN_NORMAL_SERVICE_LENGTH
+  end
+
+  def validate_iban
+    IBANTools::IBAN.new(user.bank_iban).validation_errors.each do |error|
+      errors.add(:bank_iban, error)
+    end
   end
 end
