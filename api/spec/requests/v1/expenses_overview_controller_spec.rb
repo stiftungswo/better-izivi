@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::ExpenseSheetsController, type: :request do
+RSpec.describe V1::ExpensesOverviewController, type: :request do
   context 'when the user is signed in' do
     let(:user) { create :user }
 
