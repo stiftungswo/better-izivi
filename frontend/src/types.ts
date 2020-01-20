@@ -60,6 +60,8 @@ export interface ExpenseSheet {
   work_days: number;
   workfree_days: number;
   service_id: number;
+  deletable: boolean;
+  modifiable: boolean;
 }
 
 export interface ExpenseSheetHints {
@@ -189,6 +191,7 @@ export interface Service {
   long_service: boolean;
   service_type: string | null;
   probation_period: boolean;
+  deletable: boolean;
   service_specification_id: number;
   service_specification: {
     identification_number: string;

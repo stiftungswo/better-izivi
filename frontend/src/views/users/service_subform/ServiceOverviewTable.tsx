@@ -43,6 +43,14 @@ function onServiceTableSubmit(serviceStore?: ServiceStore, userStore?: UserStore
   };
 }
 
+function confirmService(serviceStore?: ServiceStore, userStore?: UserStore) {
+  return (service: Service) => {
+    return serviceStore!.doConfirmPut(service.id!).then(() => {
+      userStore!.fetchOne(service.user_id);
+    });
+  };
+}
+
 function onServiceAddExpenseSheet(service: Service, expenseSheetStore: ExpenseSheetStore, userStore: UserStore) {
   expenseSheetStore.createAdditional(service.id!).then(value => {
     userStore.fetchOne(service.user_id);
@@ -132,7 +140,12 @@ export default (params: OverviewTableParams) => {
   function adminButtons(service: Service) {
     return mainStore!.isAdmin() && (
       <>
-        <DeleteButton onConfirm={() => onServiceDeleteConfirm(service, serviceStore!, userStore!)}>
+        <DeleteButton
+          id={service.id ? 'Service-' + service.id.toString() : ''}
+          onConfirm={() => onServiceDeleteConfirm(service, serviceStore!, userStore!)}
+          disabled={!service.deletable}
+          tooltip={service.deletable ? undefined : 'Zuerst Spesenblatt löschen!'}
+        >
           <FontAwesomeIcon icon={TrashAltRegularIcon}/> <span>Löschen</span>
         </DeleteButton>{' '}
         {
@@ -167,6 +180,7 @@ export default (params: OverviewTableParams) => {
         {getOverviewButtons(service)}
         <ServiceModal
           onSubmit={onServiceTableSubmit(serviceStore, userStore)}
+          onServiceConfirmed={confirmService(serviceStore, userStore)}
           user={user}
           service={service}
           onClose={onModalClose}
