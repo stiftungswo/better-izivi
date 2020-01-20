@@ -27,7 +27,7 @@ class Service < ApplicationRecord
   validate :beginning_is_monday
   validate :no_overlapping_service
   validate :length_is_valid
-  validate :validate_iban, :on => :create
+  validate :validate_iban, on: :create
 
   scope :at_date, ->(date) { where(arel_table[:beginning].lteq(date)).where(arel_table[:ending].gteq(date)) }
   scope :chronologically, -> { order(:beginning, :ending) }
@@ -57,9 +57,7 @@ class Service < ApplicationRecord
     !probation_service? && !long_service?
   end
 
-  def bank_iban
-    user.bank_iban
-  end
+  delegate :bank_iban, to: :user
 
   def expense_sheets
     @expense_sheets ||= user.expense_sheets.in_date_range(beginning, ending)
