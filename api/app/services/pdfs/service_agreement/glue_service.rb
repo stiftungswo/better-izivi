@@ -15,9 +15,9 @@ module Pdfs
       end
 
       def render
-        generate_and_load_first_page
         fill_and_load_form
         load_info_text
+        generate_and_load_first_page
 
         pdf_io = StringIO.new
         @combined.write(pdf_io)
