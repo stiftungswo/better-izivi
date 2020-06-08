@@ -49,11 +49,11 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
       end
       let(:page_text_check_texts) do
         [
-          [sender_name, sender_address, sender_zip_city].join(''),
           'Einsatzvereinbarung ',
-          'Unterkunft, Verpflegung und Entschädigung',
-          'Anstellungsbedingungen der SWO',
-          'Absenzen: '
+          'Bundesamt für Zivildienst ',
+          'Die Unterkunft wird durchgehend angeboten (7 Tage/Woche)   ',
+          '07:50 Uhr',
+          ' Morgen zwischen 07:15 Uhr und 07:45 Uhr beim Einsatzleiter '
         ]
       end
 
