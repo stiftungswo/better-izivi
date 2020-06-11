@@ -5,7 +5,7 @@
 
 iZivi ist ein Tool, um Schweizer Zivildienstleistende in einem Einsatzbetrieb zu verwalten.
 
-https://izivi.stiftungswo.ch/
+[izivi.stiftungswo.ch](https://izivi.stiftungswo.ch/)
 
 ## Aufbau der Applikation
 
@@ -245,4 +245,4 @@ Anschliessend kann die Seite neu geladen werden und der Record-Button erneut ged
 
 ## License
 
-iZivi is licensed under the GNU General Public License v3.0 (GPLv3). [LICENSE](LICENSE)
+iZivi is licensed under the GNU Lesser General Public License v3.0 (LGPLv3). [LICENSE](LICENSE)
