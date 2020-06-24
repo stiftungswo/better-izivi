@@ -1,4 +1,5 @@
 import { Formik, FormikActions } from 'formik';
+import { LocationState } from 'history';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
@@ -11,7 +12,6 @@ import { WiredField } from '../form/formik';
 import IziviContent from '../layout/IziviContent';
 import { ApiStore } from '../stores/apiStore';
 import { MainStore } from '../stores/mainStore';
-import { LocationState } from 'history';
 
 const loginSchema = yup.object({
   email: yup
@@ -34,7 +34,7 @@ interface Props extends RouteComponentProps<any, any, CustomHistoryState> {
 }
 
 export interface CustomHistoryState {
-  referrer: string
+  referrer: string;
 }
 
 @inject('apiStore', 'mainStore')
@@ -43,7 +43,7 @@ export class Login extends React.Component<Props> {
   login = async (values: FormValues, actions: FormikActions<FormValues>) => {
     try {
       await this.props.apiStore!.postLogin(values);
-      this.props.history.push(this.getReferrer() || "/");
+      this.props.history.push(this.getReferrer() || '/');
     } catch (error) {
       // tslint:disable-next-line:no-console
       console.log(error);
