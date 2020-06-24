@@ -8,6 +8,7 @@ import IziviContent from '../layout/IziviContent';
 import { Theme } from '../layout/theme';
 import { ApiStore } from '../stores/apiStore';
 import createStyles from '../utilities/createStyles';
+import {FormattedMessage} from "react-intl";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -39,9 +40,7 @@ class HomeInner extends React.Component<Props> {
           Zivildienst-Einsätzen
         </CardSubtitle>
         <CardText>
-          Seit 1996 können Militärpflichtige, die den Militärdienst aus Gewissensgründen ablehnen, einen zivilen Ersatzdienst leisten. Die
-          SWO hat den Zivildienst mitgestaltet und bietet Zivildienstleistenden eine Vielzahl von sinnvollen Einsatzmöglichkeiten zugunsten
-          einer nachhaltigen Entwicklung.
+          <FormattedMessage id="frontend.view.home.intro" defaultMessage={"Seit 1996 können Militärpflichtige, die den Militärdienst aus Gewissensgründen ablehnen, einen zivilen Ersatzdienst leisten. Die SWO hat den Zivildienst mitgestaltet und bietet Zivildienstleistenden eine Vielzahl von sinnvollen Einsatzmöglichkeiten zugunsten einer nachhaltigen Entwicklung."}/>
         </CardText>
         {this.props.apiStore!.isLoggedIn || (
           <>

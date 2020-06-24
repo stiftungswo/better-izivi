@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
     "@fortawesome/fontawesome-svg-core": "^1.2.12",
     "@fortawesome/free-regular-svg-icons": "^5.6.3",
     "@fortawesome/free-solid-svg-icons": "^5.6.3",
@@ -10,6 +12,7 @@
     "@sentry/browser": "^4.4.2",
     "@types/react-tabs": "^2.3.1",
     "axios": "^0.18.1",
+    "babel-plugin-react-intl": "^7.5.23",
     "bootstrap": "^4.2.1",
     "classnames": "^2.2.6",
     "formik": "^1.4.1",
@@ -23,6 +26,7 @@
     "moment": "^2.23.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-intl": "^4.7.2",
     "react-jss": "^8.6.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
@@ -42,7 +46,8 @@
     "lint": "tslint --project . -t verbose",
     "cypress:open": "cypress open",
     "cypress": "cypress run",
-    "cypress:ci": "yarn run build && start-server-and-test 'node_modules/.bin/serve -s build -p 3001' http://localhost:3001 cypress"
+    "cypress:ci": "yarn run build && start-server-and-test 'node_modules/.bin/serve -s build -p 3001' http://localhost:3001 cypress",
+    "extract-messages": "NODE_ENV=production babel ./src  --out-file /dev/null"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
