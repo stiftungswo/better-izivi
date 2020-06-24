@@ -9,8 +9,9 @@ import { DomainStore } from '../../stores/domainStore';
 import { MainStore } from '../../stores/mainStore';
 import { FormValues as RegisterFormValue, RegisterForm } from './RegisterForm';
 import { RegisterFormHeader } from './RegisterFormHeader';
+import { CustomHistoryState } from '../Login';
 
-interface RegisterProps extends RouteComponentProps<{ page?: string | undefined }> {
+interface RegisterProps extends RouteComponentProps<{ page?: string}, any, CustomHistoryState> {
   apiStore?: ApiStore;
   mainStore?: MainStore;
 }
@@ -21,7 +22,7 @@ export class Register extends React.Component<RegisterProps> {
   login = async (values: RegisterFormValue, actions: FormikActions<RegisterFormValue>) => {
     try {
       await this.props.apiStore!.postRegister(values);
-      this.props.history.push(this.getReferrer());
+      this.props.history.push(this.getReferrer() || "/");
       this.props.mainStore!.displaySuccess('Erfolgreich registriert');
       setTimeout(() => sessionStorage.removeItem(RegisterForm.SESSION_STORAGE_FORM_PERSISTENCE_KEY), 500);
     } catch (error) {
@@ -36,7 +37,7 @@ export class Register extends React.Component<RegisterProps> {
 
   getReferrer() {
     const { state, search } = this.props.location;
-    // check for referer in router state (from ProtectedRoute in index.js)
+    // check for referrer in router state (from ProtectedRoute in index.js)
     if (state && state.referrer) {
       return state.referrer;
     }

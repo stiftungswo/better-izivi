@@ -11,6 +11,7 @@ import { WiredField } from '../form/formik';
 import IziviContent from '../layout/IziviContent';
 import { ApiStore } from '../stores/apiStore';
 import { MainStore } from '../stores/mainStore';
+import { LocationState } from 'history';
 
 const loginSchema = yup.object({
   email: yup
@@ -27,9 +28,13 @@ const template = {
 
 type FormValues = typeof template;
 
-interface Props extends RouteComponentProps {
+interface Props extends RouteComponentProps<any, any, CustomHistoryState> {
   apiStore?: ApiStore;
   mainStore?: MainStore;
+}
+
+export interface CustomHistoryState {
+  referrer: string
 }
 
 @inject('apiStore', 'mainStore')
@@ -38,7 +43,7 @@ export class Login extends React.Component<Props> {
   login = async (values: FormValues, actions: FormikActions<FormValues>) => {
     try {
       await this.props.apiStore!.postLogin(values);
-      this.props.history.push(this.getReferrer());
+      this.props.history.push(this.getReferrer() || "/");
     } catch (error) {
       // tslint:disable-next-line:no-console
       console.log(error);
@@ -58,7 +63,7 @@ export class Login extends React.Component<Props> {
 
   getReferrer() {
     const { state, search } = this.props.location;
-    // check for referer in router state (from ProtectedRoute in index.js)
+    // check for referrer in router state (from ProtectedRoute in index.js)
     if (state && state.referrer) {
       return state.referrer;
     }
