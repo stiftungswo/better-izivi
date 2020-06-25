@@ -118,6 +118,7 @@ export class ApiStore {
 
     const res = await this._api.post<LoginResponse>('/users/sign_in', { user: values });
     runInAction(() => {
+      // TODO change to user's language
       this.setToken(res.headers.authorization);
       this.updateSentryContext();
     });

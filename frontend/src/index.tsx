@@ -12,8 +12,7 @@ import App from './App';
 import { theme } from './layout/theme';
 import { StoreProvider } from './utilities/StoreProvider';
 import {IntlProvider} from "react-intl";
-import messagesDe from "./messages.de-CH.json"
-import messagesFr from "./messages.fr-CH.json"
+import {StoreConnectedIntlProvider} from "./utilities/StoreConnectedIntlProvider";
 
 const browserHistory = createBrowserHistory();
 const sentryDSN = 'SENTRY_DSN'; // this value will be replaced by a build script
@@ -35,15 +34,15 @@ moment.locale('de-ch');
 momentLocalizer();
 
 ReactDOM.render(
-  <IntlProvider locale={"de-CH"} messages={messagesFr as any}>
   <StoreProvider history={browserHistory}>
-    <ThemeProvider theme={theme}>
-      <Router history={browserHistory}>
-        <App />
-      </Router>
-    </ThemeProvider>
+    <StoreConnectedIntlProvider>
+      <ThemeProvider theme={theme}>
+        <Router history={browserHistory}>
+          <App/>
+        </Router>
+      </ThemeProvider>
+    </StoreConnectedIntlProvider>
   </StoreProvider>
-  </IntlProvider>
     ,
   document.getElementById('root') as HTMLElement,
 );

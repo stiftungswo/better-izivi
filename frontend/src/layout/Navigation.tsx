@@ -10,6 +10,9 @@ import NavItem from 'reactstrap/lib/NavItem';
 import NavLink from 'reactstrap/lib/NavLink';
 import { ApiStore } from '../stores/apiStore';
 import { MainStore } from '../stores/mainStore';
+import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
+import {messages} from "../utilities/StoreConnectedIntlProvider";
+import {Locale} from "../types";
 
 interface NavEntryProps {
   to: string;
@@ -85,6 +88,18 @@ export class Navigation extends React.Component<NavProps> {
                 <NavEntry to="/login">Anmelden</NavEntry>
               </>
             )}
+            <UncontrolledDropdown>
+              <DropdownToggle>
+                {mainStore.locale}
+              </DropdownToggle>
+              <DropdownMenu right>
+                {Object.keys(messages).map((locale) =>
+                  <DropdownItem onClick={()=>mainStore.locale = locale as Locale}>
+                    {locale}
+                  </DropdownItem>
+                )}
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
         </Collapse>
       </Navbar>

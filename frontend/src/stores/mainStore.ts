@@ -4,6 +4,7 @@ import { Formatter } from '../utilities/formatter';
 import { buildURL } from '../utilities/helpers';
 import { displayError, displaySuccess, displayWarning } from '../utilities/notification';
 import { ApiStore, baseUrl } from './apiStore';
+import {Locale} from "../types";
 
 export class MainStore {
   get api() {
@@ -20,6 +21,9 @@ export class MainStore {
 
   @observable
   showArchived = false;
+
+  @observable
+  locale: Locale = "de-CH";
 
   // --- formatting
   formatDate = this.formatter.formatDate;
