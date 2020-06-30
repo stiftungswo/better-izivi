@@ -1,6 +1,8 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link, Route } from 'react-router-dom';
+import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from 'reactstrap';
 import Collapse from 'reactstrap/lib/Collapse';
 import Nav from 'reactstrap/lib/Nav';
 import Navbar from 'reactstrap/lib/Navbar';
@@ -9,10 +11,8 @@ import NavbarToggler from 'reactstrap/lib/NavbarToggler';
 import NavItem from 'reactstrap/lib/NavItem';
 import NavLink from 'reactstrap/lib/NavLink';
 import { ApiStore } from '../stores/apiStore';
-import { MainStore } from '../stores/mainStore';
-import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
-import {messages} from "../utilities/StoreConnectedIntlProvider";
-import {Locale} from "../types";
+import { MainStore, messages } from '../stores/mainStore';
+import {Locale} from '../types';
 
 interface NavEntryProps {
   to: string;

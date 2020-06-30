@@ -1,15 +1,7 @@
-import * as React from "react";
-import {MainStore} from "../stores/mainStore";
-import {inject, observer} from "mobx-react";
-import {IntlProvider} from "react-intl";
-import messagesDe from "../messages.de-CH.json"
-import messagesFr from "../messages.fr-CH.json"
-import {Locale} from "../types";
-
-export const messages: {[locale in Locale]: any} = {
-  "de-CH": messagesDe,
-  "fr-CH": messagesFr,
-};
+import { inject, observer } from 'mobx-react';
+import * as React from 'react';
+import { RawIntlProvider } from 'react-intl';
+import { MainStore } from '../stores/mainStore';
 
 interface Props {
   mainStore?: MainStore;
@@ -19,8 +11,8 @@ interface Props {
 @inject('holidayStore', 'mainStore')
 @observer
 export class StoreConnectedIntlProvider extends React.Component<Props> {
-  render(){
-    const {locale} = this.props.mainStore!
-    return (<IntlProvider locale={locale} messages={messages[locale]}>{this.props.children}</IntlProvider>)
+  render() {
+    const { intl } = this.props.mainStore!;
+    return (<RawIntlProvider value={intl}>{this.props.children}</RawIntlProvider>);
   }
 }

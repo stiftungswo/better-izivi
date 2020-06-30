@@ -5,14 +5,14 @@ import moment from 'moment';
 import 'moment/locale/de-ch';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { IntlProvider } from 'react-intl';
 import { ThemeProvider } from 'react-jss';
 import { Router } from 'react-router';
 import momentLocalizer from 'react-widgets-moment';
 import App from './App';
 import { theme } from './layout/theme';
+import { StoreConnectedIntlProvider } from './utilities/StoreConnectedIntlProvider';
 import { StoreProvider } from './utilities/StoreProvider';
-import {IntlProvider} from "react-intl";
-import {StoreConnectedIntlProvider} from "./utilities/StoreConnectedIntlProvider";
 
 const browserHistory = createBrowserHistory();
 const sentryDSN = 'SENTRY_DSN'; // this value will be replaced by a build script
@@ -28,7 +28,6 @@ if (sentryDSN.startsWith('https')) {
   options.dsn = sentryDSN;
   Sentry.init(options);
 }
-
 
 moment.locale('de-ch');
 momentLocalizer();

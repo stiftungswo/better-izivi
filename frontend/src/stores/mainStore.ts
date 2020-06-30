@@ -1,10 +1,20 @@
 import { History } from 'history';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import messagesDe from '../messages.de-CH.json';
+import messagesFr from '../messages.fr-CH.json';
+import { Locale } from '../types';
 import { Formatter } from '../utilities/formatter';
 import { buildURL } from '../utilities/helpers';
 import { displayError, displaySuccess, displayWarning } from '../utilities/notification';
 import { ApiStore, baseUrl } from './apiStore';
-import {Locale} from "../types";
+
+const cache = createIntlCache();
+
+export const messages: {[locale in Locale]: any} = {
+  'de-CH': messagesDe,
+  'fr-CH': messagesFr,
+};
 
 export class MainStore {
   get api() {
@@ -23,7 +33,15 @@ export class MainStore {
   showArchived = false;
 
   @observable
-  locale: Locale = "de-CH";
+  locale: Locale = 'de-CH';
+
+  @computed
+  get intl() {
+    return createIntl({
+      locale: this.locale,
+      messages: messages[this.locale]},
+                      cache);
+  }
 
   // --- formatting
   formatDate = this.formatter.formatDate;
