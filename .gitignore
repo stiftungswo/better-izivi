@@ -6,3 +6,4 @@
 .vscode/
 frontend/cypress/videos/
 frontend/cypress/screenshots/
+frontend/.phraseapp.yml
