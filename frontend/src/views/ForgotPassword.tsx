@@ -1,6 +1,7 @@
 import { Formik, FormikActions } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
 import Button from 'reactstrap/lib/Button';
 import Form from 'reactstrap/lib/Form';
@@ -13,10 +14,7 @@ import { DomainStore } from '../stores/domainStore';
 import { MainStore } from '../stores/mainStore';
 
 const forgotSchema = yup.object({
-  email: yup
-    .string()
-    .email()
-    .required(),
+  email: yup.string().email().required(),
 });
 
 const template = {
@@ -37,12 +35,20 @@ export class ForgotPassword extends React.Component<Props> {
     success: false,
   };
 
-  handleSubmit = async (values: FormValues, actions: FormikActions<FormValues>) => {
+  handleSubmit = async (
+    values: FormValues,
+    actions: FormikActions<FormValues>,
+  ) => {
     try {
       await this.props.apiStore!.postForgotPassword({ email: values.email });
       this.setState({ success: true, error: null });
     } catch (error) {
-      this.props.mainStore!.displayError(DomainStore.buildErrorMessage(error, 'Konnte Passwort nicht zurücksetzen'));
+      this.props.mainStore!.displayError(
+        DomainStore.buildErrorMessage(
+          error,
+          'Konnte Passwort nicht zurücksetzen',
+        ),
+      );
     } finally {
       actions.setSubmitting(false);
     }
@@ -55,13 +61,21 @@ export class ForgotPassword extends React.Component<Props> {
           initialValues={template}
           validationSchema={forgotSchema}
           onSubmit={this.handleSubmit}
-          render={formikProps => (
+          render={(formikProps) => (
             <Form onSubmit={formikProps.handleSubmit}>
               <h2>Passwort vergessen</h2>
               {this.state.success && (
                 <div className="alert alert-info">
-                  <h6>E-Mail gesendet</h6>
-                  Sie haben eine E-Mail mit einem Link zum Passwort-Reset erhalten, falls uns die E-Mail bekannt ist.
+                  <h6>
+                    <FormattedMessage
+                      id="izivi.frontend.views.forgotPassword.email_sent"
+                      defaultMessage="E-Mail gesendet"
+                    />
+                  </h6>
+                  <FormattedMessage
+                    id="izivi.frontend.views.forgotPassword.password_reset_email_sent"
+                    defaultMessage="Sie haben eine E-Mail mit einem Link zum Passwort-Reset erhalten, falls uns die E-Mail bekannt ist."
+                  />
                 </div>
               )}
               <WiredField
@@ -71,11 +85,15 @@ export class ForgotPassword extends React.Component<Props> {
                 label={'Email'}
                 placeholder={'zivi@example.org'}
               />
-              {!this.state.success &&
-              <Button color={'primary'} disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>
-                Weiter
-              </Button>
-              }
+              {!this.state.success && (
+                <Button
+                  color={'primary'}
+                  disabled={formikProps.isSubmitting}
+                  onClick={formikProps.submitForm}
+                >
+                  Weiter
+                </Button>
+              )}
             </Form>
           )}
         />

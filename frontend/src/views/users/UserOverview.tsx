@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import FormGroup from 'reactstrap/lib/FormGroup';
@@ -20,37 +21,62 @@ interface Props {
 @observer
 export class UserOverview extends React.Component<Props> {
   columns: Array<Column<UserOverviewType>>;
+  intl = this.props.mainStore!.intl;
 
   constructor(props: Props) {
     super(props);
     this.columns = [
       {
         id: 'zdp',
-        label: 'ZDP',
+        label: this.intl.formatMessage({
+          id: 'izivi.frontend.views.users.userOverview.zdp',
+          defaultMessage: 'ZDP',
+        }),
         format: ({ zdp }: UserOverviewType) => zdp,
       },
       {
         id: 'name',
-        label: 'Name',
-        format: (user: UserOverviewType) => <Link to={'/users/' + user.id}>{`${user.full_name}`}</Link>,
+        label: this.intl.formatMessage({
+          id: 'izivi.frontend.views.users.userOverview.name',
+          defaultMessage: 'Name',
+        }),
+        format: (user: UserOverviewType) => (
+          <Link to={'/users/' + user.id}>{`${user.full_name}`}</Link>
+        ),
       },
       {
         id: 'start',
-        label: 'Von',
-        format: (user: UserOverviewType) => (user.beginning ? this.props.mainStore!.formatDate(user.beginning) : ''),
+        label: this.intl.formatMessage({
+          id: 'izivi.frontend.views.users.userOverview.from',
+          defaultMessage: 'Von',
+        }),
+        format: (user: UserOverviewType) =>
+          user.beginning
+            ? this.props.mainStore!.formatDate(user.beginning)
+            : '',
       },
       {
         id: 'end',
-        label: 'Bis',
-        format: (user: UserOverviewType) => (user.ending ? this.props.mainStore!.formatDate(user.ending) : ''),
+        label: this.intl.formatMessage({
+          id: 'izivi.frontend.views.users.userOverview.until',
+          defaultMessage: 'Bis',
+        }),
+        format: (user: UserOverviewType) =>
+          user.ending ? this.props.mainStore!.formatDate(user.ending) : '',
       },
       {
         id: 'active',
-        label: 'Aktiv',
+        label: this.intl.formatMessage({
+          id: 'izivi.frontend.views.users.userOverview.active',
+          defaultMessage: 'Aktiv',
+        }),
       },
       {
         id: 'userRole',
-        label: 'Gruppe',
+        label: this.intl.formatMessage({
+          id: 'izivi.frontend.views.users.userOverview.group',
+          defaultMessage: 'Gruppe',
+        }),
         format: translateUserRole,
       },
     ];
@@ -63,8 +89,14 @@ export class UserOverview extends React.Component<Props> {
         store={this.props.userStore!}
         title={'Benutzer'}
         renderActions={(user: UserOverviewType) => (
-          <Button color={'danger'} onClick={() => this.props.userStore!.delete(user.id!)}>
-            Löschen
+          <Button
+            color={'danger'}
+            onClick={() => this.props.userStore!.delete(user.id!)}
+          >
+            <FormattedMessage
+              id="izivi.frontend.views.users.userOverview.delete"
+              defaultMessage="Löschen"
+            />
           </Button>
         )}
         filter={true}
@@ -73,7 +105,9 @@ export class UserOverview extends React.Component<Props> {
             <td>
               <Input
                 type={'text'}
-                onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+                onChange={({
+                  target: { value },
+                }: React.ChangeEvent<HTMLInputElement>) => {
                   this.props.userStore!.updateFilters({ zdp: value });
                 }}
                 value={this.props.userStore!.userFilters.zdp || ''}
@@ -82,7 +116,9 @@ export class UserOverview extends React.Component<Props> {
             <td>
               <Input
                 type={'text'}
-                onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+                onChange={({
+                  target: { value },
+                }: React.ChangeEvent<HTMLInputElement>) => {
                   this.props.userStore!.updateFilters({ name: value });
                 }}
                 value={this.props.userStore!.userFilters.name}
@@ -112,7 +148,9 @@ export class UserOverview extends React.Component<Props> {
               <FormGroup check>
                 <Input
                   type={'checkbox'}
-                  onChange={({ target: { checked } }: React.ChangeEvent<HTMLInputElement>) => {
+                  onChange={({
+                    target: { checked },
+                  }: React.ChangeEvent<HTMLInputElement>) => {
                     this.props.userStore!.updateFilters({ active: checked });
                   }}
                   checked={this.props.userStore!.userFilters.active}
@@ -122,12 +160,37 @@ export class UserOverview extends React.Component<Props> {
             <td>
               <Input
                 type={'select'}
-                onChange={({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+                onChange={({
+                  target: { value },
+                }: React.ChangeEvent<HTMLInputElement>) => {
                   this.props.userStore!.updateFilters({ role: value });
                 }}
                 value={this.props.userStore!.userFilters.role || ''}
               >
-                {[{ id: '', name: 'Alle' }, { id: 'civil_servant', name: 'Zivi' }, { id: 'admin', name: 'Admin' }].map(option => (
+                {[
+                  {
+                    id: '',
+                    name: this.intl.formatMessage({
+                      id: 'izivi.frontend.views.users.userOverview.all',
+                      defaultMessage: 'Alle',
+                    }),
+                  },
+                  {
+                    id: 'civil_servant',
+                    name: this.intl.formatMessage({
+                      id:
+                        'izivi.frontend.views.users.userOverview.civil_servant',
+                      defaultMessage: 'Zivi',
+                    }),
+                  },
+                  {
+                    id: 'admin',
+                    name: this.intl.formatMessage({
+                      id: 'izivi.frontend.views.users.userOverview.admin',
+                      defaultMessage: 'Admin',
+                    }),
+                  },
+                ].map((option) => (
                   <option value={option.id} key={option.id}>
                     {option.name}
                   </option>

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import injectSheet from 'react-jss';
 import { WithSheet } from 'react-jss/lib/injectSheet';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -32,31 +33,6 @@ interface State {
   canceled: boolean;
 }
 
-const COLUMNS = [
-  {
-    id: 'zdp',
-    label: 'ZDP',
-    format: ({ user: { zdp } }: PaymentExpenseSheet) => zdp,
-  },
-  {
-    id: 'full_name',
-    label: 'Name',
-    format: (expenseSheet: PaymentExpenseSheet) => (
-      <Link to={'/users/' + expenseSheet.user.id}>{expenseSheet.user.full_name}</Link>
-    ),
-  },
-  {
-    id: 'iban',
-    label: 'IBAN',
-    format: ({ user: { bank_iban } }: PaymentExpenseSheet) => bank_iban,
-  },
-  {
-    id: 'total',
-    label: 'Betrag',
-    format: (expenseSheet: PaymentExpenseSheet) => new Formatter().formatCurrency(expenseSheet.total),
-  },
-];
-
 @inject('mainStore', 'paymentStore')
 @observer
 class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymentDetailStyles>, State> {
@@ -68,25 +44,6 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
       loading: true,
       canceled: false,
     };
-  }
-
-  actionButton() {
-    const payment = this.props.paymentStore!.payment!;
-
-    if (payment.state === PaymentState.payment_in_progress) {
-      return (
-        <ButtonGroup>
-          <Button disabled={this.state.canceled} color="success" onClick={this.confirmButtonClicked} className="mb-4" target="_blank">
-            <FontAwesomeIcon className="mr-1" icon={CheckSolidIcon}/> Zahlung bestätigen
-          </Button>
-          <Button color="danger" disabled={this.state.canceled} onClick={this.cancelButtonClicked} className="mb-4" target="_blank">
-            <FontAwesomeIcon className="mr-1" icon={ExclamationSolidIcon}/> Zahlung abbrechen
-          </Button>
-        </ButtonGroup>
-      );
-    } else {
-      return <></>;
-    }
   }
 
   render() {
@@ -101,20 +58,96 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
             <>
               {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
                 <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
-                  <FontAwesomeIcon className="mr-1" icon={DownloadIcon}/> Zahlungsdatei herunterladen
+                  <FormattedMessage
+                    id="izivi.frontend.payments.paymentDetail.download_payment_file"
+                    defaultMessage="{icon} Zahlungsdatei herunterladen"
+                    values={{ icon: <FontAwesomeIcon className="mr-1" icon={DownloadIcon} /> }}
+                  />
                 </Button>
               )}
               <div className="float-right">{this.actionButton()}</div>
               <OverviewTable
-                columns={COLUMNS}
+                columns={this.columns()}
                 data={this.props.paymentStore!.payment!.expense_sheets}
-                renderActions={(expenseSheet: PaymentExpenseSheet) => <Link to={`/expense_sheets/${expenseSheet.id!}`}>Spesenblatt</Link>}
+                renderActions={(expenseSheet: PaymentExpenseSheet) => <Link to={`/expense_sheets/${expenseSheet.id!}`}>
+                  <FormattedMessage
+                    id="izivi.frontend.payments.paymentDetail.expense_sheet"
+                    defaultMessage="Spesenblatt"
+                  />
+                </Link>}
               />
             </>
           )}
         </div>
       </IziviContent>
     );
+  }
+
+  private actionButton() {
+    const payment = this.props.paymentStore!.payment!;
+
+    if (payment.state === PaymentState.payment_in_progress) {
+      return (
+        <ButtonGroup>
+          <Button disabled={this.state.canceled} color="success" onClick={this.confirmButtonClicked} className="mb-4" target="_blank">
+            <FormattedMessage
+              id="izivi.frontend.payments.paymentDetail.confirm_payment"
+              defaultMessage="{icon} Zahlung bestätigen"
+              values={{ icon: <FontAwesomeIcon className="mr-1" icon={CheckSolidIcon} /> }}
+            />
+          </Button>
+          <Button color="danger" disabled={this.state.canceled} onClick={this.cancelButtonClicked} className="mb-4" target="_blank">
+            <FormattedMessage
+              id="izivi.frontend.payments.paymentDetail.cancel_payment"
+              defaultMessage="{icon} Zahlung abbrechen"
+              values={{ icon: <FontAwesomeIcon className="mr-1" icon={ExclamationSolidIcon} /> }}
+            />
+          </Button>
+        </ButtonGroup>
+      );
+    } else {
+      return <></>;
+    }
+  }
+
+  private columns() {
+    return [
+      {
+        id: 'zdp',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.payments.paymentDetail.zdp',
+          defaultMessage: 'ZDP',
+        }),
+        format: ({ user: { zdp } }: PaymentExpenseSheet) => zdp,
+      },
+      {
+        id: 'full_name',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.payments.paymentDetail.name',
+          defaultMessage: 'Name',
+        }),
+        format: (expenseSheet: PaymentExpenseSheet) => (
+          <Link to={'/users/' + expenseSheet.user.id}>{expenseSheet.user.full_name}</Link>
+        ),
+      },
+      {
+        id: 'iban',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.payments.paymentDetail.iban',
+          defaultMessage: 'IBAN',
+        }),
+        format: ({ user: { bank_iban } }: PaymentExpenseSheet) => bank_iban,
+      },
+      {
+        id: 'total',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.payments.paymentDetail.amount',
+          defaultMessage: 'Betrag',
+        }),
+        format: (expenseSheet: PaymentExpenseSheet) => new Formatter().formatCurrency(expenseSheet.total),
+      },
+    ];
+
   }
 
   private cancelButtonClicked = () => {

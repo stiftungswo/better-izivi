@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { UncontrolledTooltip } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
@@ -35,7 +36,11 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           color={'primary'}
           onClick={onForceSave}
         >
-          <FontAwesomeIcon icon={ExclamationSolidIcon}/> Speichern erzwingen
+          <FormattedMessage
+            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.force_save"
+            defaultMessage="{icon} Speichern erzwingen"
+            values={{ icon: <FontAwesomeIcon icon={ExclamationSolidIcon} /> }}
+          />
         </Button>
       );
     } else {
@@ -45,7 +50,11 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           color={'primary'}
           onClick={onSave}
         >
-          <FontAwesomeIcon icon={SaveRegularIcon}/> Speichern
+          <FormattedMessage
+            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.save"
+            defaultMessage="{icon} Speichern"
+            values={{ icon: <FontAwesomeIcon icon={SaveRegularIcon} /> }}
+          />
         </Button>
       );
     }
@@ -59,7 +68,11 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
             color={'primary'}
             style={{ pointerEvents: 'none' }}
           >
-            <FontAwesomeIcon icon={SaveRegularIcon}/> Speichern
+            <FormattedMessage
+              id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.save"
+              defaultMessage="{icon} Speichern"
+              values={{ icon: <FontAwesomeIcon icon={SaveRegularIcon} /> }}
+            />
           </Button>
         </div>
         <UncontrolledTooltip
@@ -68,7 +81,10 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           target={'ExpenseSheetSaveButtonWrapper'}
           placement={'top'}
         >
-          Nur offene Spesen können modifiziert werden!
+          <FormattedMessage
+            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.only_open_expenses_can_be_modified"
+            defaultMessage="Nur offene Spesen können modifiziert werden!"
+          />
         </UncontrolledTooltip>
       </>
     );
@@ -79,7 +95,11 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
   if (expenseSheet.deletable) {
     return (
       <Button block color={'danger'} onClick={onDelete}>
-        <FontAwesomeIcon icon={TrashAltRegularIcon}/> Löschen
+        <FormattedMessage
+          id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.delete"
+          defaultMessage="{icon} Löschen"
+          values={{ icon: <FontAwesomeIcon icon={TrashAltRegularIcon} /> }}
+        />
       </Button>
     );
   } else {
@@ -92,7 +112,11 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
             color={'danger'}
             style={{ pointerEvents: 'none' }}
           >
-            <FontAwesomeIcon icon={TrashAltRegularIcon}/> Löschen
+            <FormattedMessage
+              id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.delete"
+              defaultMessage="{icon} Löschen"
+              values={{ icon: <FontAwesomeIcon icon={TrashAltRegularIcon} /> }}
+            />
           </Button>
         </div>
         <UncontrolledTooltip
@@ -101,7 +125,10 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
           target={'ExpenseSheetDeleteButtonWrapper'}
           placement={'top'}
         >
-          Nur offene Spesen können gelöscht werden!
+          <FormattedMessage
+            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.only_open_expenses_can_be_deleted"
+            defaultMessage="Nur offene Spesen können gelöscht werden!"
+          />
         </UncontrolledTooltip>
       </>
     );
@@ -113,7 +140,11 @@ function getPrintButton(mainStore: MainStore, expenseSheetId?: number) {
 
   return (
     <Button block color={'warning'} disabled={!expenseSheetId} href={printURL} tag={'a'} target={'_blank'}>
-      <FontAwesomeIcon icon={PrintSolidIcon}/> Drucken
+      <FormattedMessage
+        id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.print"
+        defaultMessage="{icon} Drucken"
+        values={{ icon: <FontAwesomeIcon icon={PrintSolidIcon} /> }}
+      />
     </Button>
   );
 }
@@ -121,7 +152,13 @@ function getPrintButton(mainStore: MainStore, expenseSheetId?: number) {
 function getProfileButton(userId: number) {
   return (
     <Link to={'/users/' + userId} style={{ textDecoration: 'none' }}>
-      <Button block><FontAwesomeIcon icon={UserIcon}/> Profil anzeigen</Button>
+      <Button block>
+        <FormattedMessage
+          id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.show_profile"
+          defaultMessage="{icon} Profil anzeigen"
+          values={{ icon: <FontAwesomeIcon icon={UserIcon} /> }}
+        />
+      </Button>
     </Link>
   );
 }

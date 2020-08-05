@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps, withRouter } from 'react-router';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
@@ -31,7 +32,12 @@ type Props = {
 } & FormViewProps<User> &
   RouteComponentProps;
 
-@inject('mainStore', 'userStore', 'serviceSpecificationStore', 'regionalCenterStore')
+@inject(
+  'mainStore',
+  'userStore',
+  'serviceSpecificationStore',
+  'regionalCenterStore',
+)
 @observer
 class UserFormInner extends React.Component<Props> {
   componentWillMount() {
@@ -41,6 +47,7 @@ class UserFormInner extends React.Component<Props> {
 
   render() {
     const { onSubmit, user, title, mainStore } = this.props;
+    const intl = mainStore!.intl;
 
     return (
       <FormView<User>
@@ -52,57 +59,240 @@ class UserFormInner extends React.Component<Props> {
         validationSchema={userSchema}
         render={(formikProps: FormikProps<User>) => (
           <Form>
-            <h3>Persönliche Informationen</h3>
+            <h3>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.print"
+                defaultMessage="Persönliche Informationen"
+              />
+            </h3>
             <p>
-              Bitte fülle die folgenden Felder zu deiner Person wahrheitsgetreu aus. Dadurch erleichterst du dir und uns den
-              administrativen Aufwand. <br/>
-              Wir verwenden diese Informationen ausschliesslich zur Erstellung der Einsatzplanung und zur administrativen Abwicklung.
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.info1"
+                defaultMessage="Bitte fülle die folgenden Felder zu deiner Person wahrheitsgetreu aus. Dadurch erleichterst du dir und uns den administrativen Aufwand."
+              />
+              <br />
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.info2"
+                defaultMessage="Wir verwenden diese Informationen ausschliesslich zur Erstellung der Einsatzplanung und zur administrativen Abwicklung."
+              />
             </p>
-            <p>Bitte lies dir auch die näheren Informationen zu den jeweiligen Feldern unter dem Icon jeweils durch.</p>
-            <p>Wichtig: Vergiss nicht zu speichern (Daten speichern) bevor du die Seite verlässt oder eine Einsatzplanung erfasst.</p>
+            <p>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.info3"
+                defaultMessage="Bitte lies dir auch die näheren Informationen zu den jeweiligen Feldern unter dem Icon jeweils durch."
+              />
+            </p>
+            <p>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.info4"
+                defaultMessage="Wichtig: Vergiss nicht zu speichern (Daten speichern) bevor du die Seite verlässt oder eine Einsatzplanung erfasst."
+              />
+            </p>
 
-            <SolidHorizontalRow/>
+            <SolidHorizontalRow />
 
-            <WiredField disabled horizontal component={TextField} name={'zdp'} label={'ZDP'}/>
-            <WiredField horizontal component={TextField} name={'first_name'} label={'Vorname'}/>
-            <WiredField horizontal component={TextField} name={'last_name'} label={'Nachname'}/>
-            <WiredField horizontal component={TextField} name={'address'} label={'Strasse'}/>
-            <WiredField horizontal component={NumberField} name={'zip'} label={'PLZ'}/>
-            <WiredField horizontal component={TextField} name={'city'} label={'Ort'}/>
-            <WiredField horizontal component={TextField} name={'hometown'} label={'Heimatort'}/>
-            <WiredField horizontal component={DatePickerField} name={'birthday'} label={'Geburtstag'}/>
+            <WiredField
+              disabled
+              horizontal
+              component={TextField}
+              name={'zdp'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.zdp',
+                defaultMessage: 'ZDP ',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'first_name'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.first_name',
+                defaultMessage: 'Vorname',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'last_name'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.last_name',
+                defaultMessage: 'Nachname',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'address'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.street',
+                defaultMessage: 'Strasse',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={NumberField}
+              name={'zip'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.post_code',
+                defaultMessage: 'PLZ',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'city'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.place',
+                defaultMessage: 'Ort',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'hometown'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.home_town',
+                defaultMessage: 'Heimatort',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={DatePickerField}
+              name={'birthday'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.birthday',
+                defaultMessage: 'Geburtstag',
+              })}
+            />
 
-            <SolidHorizontalRow/>
-            <h3>Kontaktmöglichkeit</h3>
-            <p>Telefonnummer bitte im Format "044 123 45 67" angeben.</p>
+            <SolidHorizontalRow />
+            <h3>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.contact_possibility"
+                defaultMessage="Kontaktmöglichkeit"
+              />
+            </h3>
+            <p>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.phone_format_info"
+                defaultMessage="Telefonnummer bitte im Format '044 123 45 67' angeben."
+              />
+            </p>
 
-            <WiredField horizontal component={TextField} name={'email'} label={'E-Mail'}/>
-            <WiredField horizontal component={TextField} name={'phone'} label={'Telefon'}/>
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'email'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.email',
+                defaultMessage: 'E-Mail',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'phone'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.phone',
+                defaultMessage: 'Telefon',
+              })}
+            />
 
-            <SolidHorizontalRow/>
-            <h3>Bank-/Postverbindung</h3>
+            <SolidHorizontalRow />
+            <h3>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.bank_post_connection"
+                defaultMessage="Bank-/Postverbindung"
+              />
+            </h3>
 
-            <WiredField horizontal component={TextField} name={'bank_iban'} label={'IBAN-Nummer'}/>
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'bank_iban'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.iban_number',
+                defaultMessage: 'IBAN-Nummer',
+              })}
+            />
 
-            <SolidHorizontalRow/>
-            <h3>Krankenkasse</h3>
+            <SolidHorizontalRow />
+            <h3>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.healt_insurance"
+                defaultMessage="Krankenkasse"
+              />
+            </h3>
 
-            <WiredField horizontal component={TextField} name={'health_insurance'} label={'Krankenkasse (Name und Ort)'}/>
+            <WiredField
+              horizontal
+              component={TextField}
+              name={'health_insurance'}
+              label={intl.formatMessage({
+                id:
+                  'izivi.frontend.views.users.userForm.healt_insurance_name_and_location',
+                defaultMessage: 'Krankenkasse (Name und Ort)',
+              })}
+            />
 
-            <SolidHorizontalRow/>
-            <h3>Diverse Informationen</h3>
+            <SolidHorizontalRow />
+            <h3>
+              <FormattedMessage
+                id="izivi.frontend.views.users.userForm.various_information"
+                defaultMessage="Diverse Informationen"
+              />
+            </h3>
 
-            <WiredField horizontal multiline={true} component={TextField} name={'work_experience'} label={'Berufserfahrung'}/>
+            <WiredField
+              horizontal
+              multiline={true}
+              component={TextField}
+              name={'work_experience'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.work_experience',
+                defaultMessage: 'Berufserfahrung',
+              })}
+            />
             <WiredField
               horizontal
               component={SelectField}
               name={'regional_center_id'}
-              label={'Regionalzentrum'}
-              options={this.props.regionalCenterStore!.entities.map(({ id, name }) => ({ id, name }))}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.regional_center',
+                defaultMessage: 'Regionalzentrum',
+              })}
+              options={this.props.regionalCenterStore!.entities.map(
+                ({ id, name }) => ({ id, name }),
+              )}
             />
-            <WiredField horizontal component={CheckboxField} name={'driving_licence_b'} label={'Führerausweis Kat. B'}/>
-            <WiredField horizontal component={CheckboxField} name={'driving_licence_be'} label={'Führerausweis Kat. BE'}/>
-            <WiredField horizontal component={CheckboxField} name={'chainsaw_workshop'} label={'Motorsägekurs bereits absolviert'}/>
+            <WiredField
+              horizontal
+              component={CheckboxField}
+              name={'driving_licence_b'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.driving_licence_b',
+                defaultMessage: 'Führerausweis Kat. B',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={CheckboxField}
+              name={'driving_licence_be'}
+              label={intl.formatMessage({
+                id: 'izivi.frontend.views.users.userForm.driving_licence_be',
+                defaultMessage: 'Führerausweis Kat. BE',
+              })}
+            />
+            <WiredField
+              horizontal
+              component={CheckboxField}
+              name={'chainsaw_workshop'}
+              label={intl.formatMessage({
+                id:
+                  'izivi.frontend.views.users.userForm.chainsaw_workshop_already_done',
+                defaultMessage: 'Motorsägekurs bereits absolviert',
+              })}
+            />
 
             {mainStore!.isAdmin() && (
               <>
@@ -110,29 +300,62 @@ class UserFormInner extends React.Component<Props> {
                   horizontal
                   component={SelectField}
                   name={'role'}
-                  label={'Benutzerrolle'}
+                  label={intl.formatMessage({
+                    id: 'izivi.frontend.views.users.userForm.user_role',
+                    defaultMessage: 'Benutzerrolle',
+                  })}
                   options={[
-                    { id: 'admin', name: 'Admin' },
-                    { id: 'civil_servant', name: 'Zivildienstleistender' },
+                    {
+                      id: 'admin',
+                      name: intl.formatMessage({
+                        id: 'izivi.frontend.views.users.userForm.admin',
+                        defaultMessage: 'Admin',
+                      }),
+                    },
+                    {
+                      id: 'civil_servant',
+                      name: intl.formatMessage({
+                        id: 'izivi.frontend.views.users.userForm.civil_servant',
+                        defaultMessage: 'Zivildienstleistender',
+                      }),
+                    },
                   ]}
                 />
-                <WiredField horizontal multiline={true} component={TextField} name={'internal_note'} label={'Interne Bemerkung'}/>
+                <WiredField
+                  horizontal
+                  multiline={true}
+                  component={TextField}
+                  name={'internal_note'}
+                  label={intl.formatMessage({
+                    id: 'izivi.frontend.views.users.userForm.inernal_comment',
+                    defaultMessage: 'Interne Bemerkung',
+                  })}
+                />
               </>
             )}
 
             <Row>
               <Col md={2}>
-                <Button block color={'primary'} onClick={formikProps.submitForm}>Speichern</Button>
+                <Button
+                  block
+                  color={'primary'}
+                  onClick={formikProps.submitForm}
+                >
+                  <FormattedMessage
+                    id="izivi.frontend.views.users.userForm.save"
+                    defaultMessage="Speichern"
+                  />
+                </Button>
               </Col>
             </Row>
           </Form>
         )}
       >
-        <SolidHorizontalRow/>
-        <ServiceSubform user={user}/>
+        <SolidHorizontalRow />
+        <ServiceSubform user={user} />
 
-        <SolidHorizontalRow/>
-        <ExpenseSheetSubform user={user}/>
+        <SolidHorizontalRow />
+        <ExpenseSheetSubform user={user} />
       </FormView>
     );
   }

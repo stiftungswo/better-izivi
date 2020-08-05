@@ -1,7 +1,8 @@
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
 
+import { autorun, computed, observable, reaction } from 'mobx';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
@@ -12,6 +13,7 @@ import { CheckboxField } from '../../form/CheckboxField';
 import { SelectField } from '../../form/common';
 import IziviContent from '../../layout/IziviContent';
 import { LoadingInformation } from '../../layout/LoadingInformation';
+import { MainStore } from '../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../stores/serviceStore';
 import { ServiceCollection } from '../../types';
@@ -21,6 +23,7 @@ import { ServiceStyles } from './ServiceStyles';
 interface ServiceOverviewProps extends WithSheet<typeof ServiceStyles> {
   serviceSpecificationStore?: ServiceSpecificationStore;
   serviceStore?: ServiceStore;
+  mainStore?: MainStore;
 }
 
 interface ServiceOverviewState {
@@ -36,12 +39,12 @@ interface ServiceOverviewState {
   weekCount: Map<number, Map<number, number>>;
 }
 
-@inject('serviceStore', 'serviceSpecificationStore')
+@inject('serviceStore', 'serviceSpecificationStore', 'mainStore')
+@observer
 class ServiceOverviewContent extends React.Component<ServiceOverviewProps, ServiceOverviewState> {
   cookiePrefixSpec = 'service-overview-checkbox-';
   cookieYear = 'service-overview-year';
   currYear = moment().year();
-  monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
 
   constructor(props: ServiceOverviewProps) {
     super(props);
@@ -59,6 +62,10 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
       serviceRows: new Map<number, React.ReactNode>(),
       weekCount: new Map<number, Map<number, number>>(),
     };
+
+    reaction(() => this.props.mainStore!.monthNames, () => {
+      this.setWeekAndMonthHeaders();
+    });
   }
 
   componentDidMount(): void {
@@ -222,21 +229,21 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
             <Col sm="12" md="8">
               <div>
                 {// Mapping a CheckboxField to every serviceSpecification in use
-                specIdsOfServices.map(id => {
-                  const currSpec = serviceSpecificationStore!
-                    .entities
-                    .filter(spec => spec.identification_number === id)[0];
-                  return (
-                    <CheckboxField
-                      key={currSpec.identification_number!}
-                      onChange={(v: boolean) => this.changeSelectedServiceSpecifications(v, currSpec.identification_number!)}
-                      name={currSpec.identification_number!.toString()}
-                      value={this.state.selectedServiceSpecifications[currSpec.identification_number!]}
-                      label={currSpec.name}
-                      horizontal={false}
-                    />
-                  );
-                })}
+                  specIdsOfServices.map(id => {
+                    const currSpec = serviceSpecificationStore!
+                      .entities
+                      .filter(spec => spec.identification_number === id)[0];
+                    return (
+                      <CheckboxField
+                        key={currSpec.identification_number!}
+                        onChange={(v: boolean) => this.changeSelectedServiceSpecifications(v, currSpec.identification_number!)}
+                        name={currSpec.identification_number!.toString()}
+                        value={this.state.selectedServiceSpecifications[currSpec.identification_number!]}
+                        label={currSpec.name}
+                        horizontal={false}
+                      />
+                    );
+                  })}
               </div>
             </Col>
 
@@ -248,38 +255,38 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
           {this.state.loadingServices ? (
             <LoadingInformation />
           ) : (
-            <Row>
-              <Table responsive={true} striped={true} bordered={true} className={'table-no-padding'} id="service_overview_table">
-                <thead>
-                  <tr>
-                    <td colSpan={3} rowSpan={2} className={classes.rowTd + ' mo-name-header'}>
-                      Name
+              <Row>
+                <Table responsive={true} striped={true} bordered={true} className={'table-no-padding'} id="service_overview_table">
+                  <thead>
+                    <tr>
+                      <td colSpan={3} rowSpan={2} className={classes.rowTd + ' mo-name-header'}>
+                        Name
                     </td>
-                    {this.state.monthHeaders}
-                  </tr>
-                  <tr>{this.state.weekHeaders}</tr>
-                  <tr>
-                    <td
-                      colSpan={3}
-                      style={{ textAlign: 'left', paddingLeft: '8px !important', fontWeight: 'bold', whiteSpace: 'nowrap' }}
-                      className={classes.rowTd}
-                    >
-                      Ø / Woche: {(this.state.totalCount / 52).toFixed(2)}
-                    </td>
-                    {this.state.weekTotalHeaders}
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.props.serviceStore!.entities.map(service => {
-                    if (this.state.selectedServiceSpecifications[service.service_specification.identification_number]) {
-                      return this.state.serviceRows.get(service.id!);
-                    }
-                    return;
-                  })}
-                </tbody>
-              </Table>
-            </Row>
-          )}
+                      {this.state.monthHeaders}
+                    </tr>
+                    <tr>{this.state.weekHeaders}</tr>
+                    <tr>
+                      <td
+                        colSpan={3}
+                        style={{ textAlign: 'left', paddingLeft: '8px !important', fontWeight: 'bold', whiteSpace: 'nowrap' }}
+                        className={classes.rowTd}
+                      >
+                        Ø / Woche: {(this.state.totalCount / 52).toFixed(2)}
+                      </td>
+                      {this.state.weekTotalHeaders}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.props.serviceStore!.entities.map(service => {
+                      if (this.state.selectedServiceSpecifications[service.service_specification.identification_number]) {
+                        return this.state.serviceRows.get(service.id!);
+                      }
+                      return;
+                    })}
+                  </tbody>
+                </Table>
+              </Row>
+            )}
         </Container>
       </IziviContent>
     );
@@ -326,7 +333,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
               colSpan={monthColCount}
               key={'month_header_' + currWeek}
             >
-              {this.monthNames[currMonth]}
+              {this.props.mainStore!.monthNames[currMonth]}
             </td>
           ),
         );
@@ -347,9 +354,9 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
           className={classes.rowTd}
           style={{ fontWeight: 'bold' }}
           colSpan={monthColCount}
-          key={this.monthNames.indexOf(this.monthNames[currMonth])}
+          key={this.props.mainStore!.monthNames.indexOf(this.props.mainStore!.monthNames[currMonth])}
         >
-          {this.monthNames[currMonth]}
+          {this.props.mainStore!.monthNames[currMonth]}
         </td>
       ),
     );

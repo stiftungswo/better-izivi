@@ -1,31 +1,30 @@
 import * as React from 'react';
-import { TextField } from '../../../../form/common';
-import CurrencyField from '../../../../form/CurrencyField';
+import { NumberField, TextField } from '../../../../form/common';
 import { WiredField } from '../../../../form/formik';
 import { MainStore } from '../../../../stores/mainStore';
 import { expenseSheetFormSegment } from './expenseSheetFormSegment';
 
-export const ExtraordinaryExpensesSegment = expenseSheetFormSegment(
+export const PaidVacationSegment = expenseSheetFormSegment(
   ({ mainStore }: { mainStore: MainStore }) => (
     <>
       <WiredField
         horizontal
-        component={CurrencyField}
-        name={'extraordinary_expenses'}
+        component={NumberField}
+        name={'paid_vacation_days'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.ExtraordinaryExpensesSegment.extraordinary_expenses',
-            defaultMessage: 'Ausserordentliche Spesen',
+            id: 'izivi.frontend.views.expense_sheets.paidVacationSegment.vacation',
+            defaultMessage: 'Ferien',
           })
         }
       />
       <WiredField
         horizontal
         component={TextField}
-        name={'extraordinary_expenses_comment'}
+        name={'paid_vacation_comment'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.ExtraordinaryExpensesSegment.extraordinary_expenses_comment',
+            id: 'izivi.frontend.views.expense_sheets.paidVacationSegment.comment',
             defaultMessage: 'Bemerkung',
           })
         }

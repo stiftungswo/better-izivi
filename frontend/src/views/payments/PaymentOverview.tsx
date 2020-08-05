@@ -47,10 +47,18 @@ export class PaymentOverview extends React.Component<Props, State> {
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
           paymentStore={this.props.paymentStore!}
           expenseSheetStore={this.props.expenseSheetStore!}
+          mainStore={this.props.mainStore!}
         />
 
         <h1 className="mb-4 mt-5">In Auszahlung</h1>
-        <PaymentsTable payments={this.props.paymentStore!.paymentsInProgress} emptyNotice={'Keine Zahlung in Bearbeitung'}/>
+        <PaymentsTable
+          payments={this.props.paymentStore!.paymentsInProgress}
+          emptyNotice={this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.payments.paymentOverview.no_payment_in_progress',
+            defaultMessage: 'Keine Zahlung in Bearbeitung',
+          })}
+          mainStore={this.props.mainStore!}
+        />
 
         <h1 className="mb-4 mt-5">Archiv</h1>
         {this.archivedPayments()}
@@ -70,7 +78,14 @@ export class PaymentOverview extends React.Component<Props, State> {
   private archivedPayments() {
     return (
       <>
-        <PaymentsTable payments={this.props.paymentStore!.paidPayments} emptyNotice={'Keine getätigten Zahlungen'}/>
+        <PaymentsTable
+          payments={this.props.paymentStore!.paidPayments}
+          emptyNotice={this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.payments.paymentOverview.no_done_payments',
+            defaultMessage: 'Keine getätigten Zahlungen',
+          })}
+          mainStore={this.props.mainStore!}
+        />
         {this.state.hasMoreArchivedPayments && this.loadMoreArchivedPaymentsButton()}
       </>
     );
@@ -85,7 +100,15 @@ export class PaymentOverview extends React.Component<Props, State> {
           disabled={this.state.isLoadingMoreArchivedPayments}
           onClick={() => this.loadMoreArchivedPayments()}
         >
-          {this.state.isLoadingMoreArchivedPayments ? 'Inhalt wird geladen...' : 'Weitere archivierte Auszahlungen laden'}
+          {this.state.isLoadingMoreArchivedPayments
+            ? this.props.mainStore!.intl.formatMessage({
+              id: 'izivi.frontend.payments.paymentOverview.loading_content',
+              defaultMessage: 'Inhalt wird geladen...',
+            })
+            : this.props.mainStore!.intl.formatMessage({
+              id: 'izivi.frontend.payments.paymentOverview.load_more_payments',
+              defaultMessage: 'Weitere archivierte Auszahlungen laden',
+            })}
         </Button>
       </div>
     );

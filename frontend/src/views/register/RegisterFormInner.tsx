@@ -1,13 +1,14 @@
 import { FormikProps } from 'formik';
 import { clamp } from 'lodash';
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import Breadcrumb from 'reactstrap/lib/Breadcrumb';
 import BreadcrumbItem from 'reactstrap/lib/BreadcrumbItem';
 import createStyles from '../../utilities/createStyles';
 import { PagedForm } from './PagedForm';
-import { REGISTER_FORM_PAGES } from './pages';
+import { getRegisterFormPages } from './pages';
 import { FormValues } from './RegisterForm';
 
 const breadcrumbStyles = () => createStyles({
@@ -63,18 +64,20 @@ interface RegisterFormInnerProps extends WithSheet<typeof breadcrumbStyles>, Rou
 
 const RegisterFormInnerImplementation = (props: FormikProps<FormValues> & RegisterFormInnerProps) => {
   const { currentPage, ...formikProps } = props;
+  const intl = useIntl();
+  const registerFormPages = getRegisterFormPages(intl);
 
   return (
     <>
       <Breadcrumb>
-        {[...REGISTER_FORM_PAGES, { title: 'Registration' }]
-            .map(({ title }, index) => getBreadcrumbItem(index, title, clamp(currentPage, 1, REGISTER_FORM_PAGES.length), props.classes))}
+        {[...registerFormPages, { title: 'Registration' }]
+          .map(({ title }, index) => getBreadcrumbItem(index, title, clamp(currentPage, 1, registerFormPages.length), props.classes))}
       </Breadcrumb>
       <PagedForm
         history={props.history}
         formikProps={formikProps}
         currentPage={currentPage}
-        pages={REGISTER_FORM_PAGES.map(({ component }) => component as any)}
+        pages={registerFormPages.map(({ component }) => component as any)}
       />
     </>
   );

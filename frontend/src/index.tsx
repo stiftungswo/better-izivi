@@ -1,11 +1,8 @@
 // tslint:disable:no-console
 import * as Sentry from '@sentry/browser';
 import createBrowserHistory from 'history/createBrowserHistory';
-import moment from 'moment';
-import 'moment/locale/de-ch';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { IntlProvider } from 'react-intl';
 import { ThemeProvider } from 'react-jss';
 import { Router } from 'react-router';
 import momentLocalizer from 'react-widgets-moment';
@@ -29,7 +26,6 @@ if (sentryDSN.startsWith('https')) {
   Sentry.init(options);
 }
 
-moment.locale('de-ch');
 momentLocalizer();
 
 ReactDOM.render(

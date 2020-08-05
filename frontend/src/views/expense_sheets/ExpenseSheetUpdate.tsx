@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
+import { MainStore } from '../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../stores/serviceStore';
 import { UserStore } from '../../stores/userStore';
@@ -15,13 +16,14 @@ interface ExpenseSheetDetailRouterProps {
 }
 
 interface Props extends RouteComponentProps<ExpenseSheetDetailRouterProps> {
+  mainStore?: MainStore;
   expenseSheetStore?: ExpenseSheetStore;
   userStore?: UserStore;
   serviceStore?: ServiceStore;
   serviceSpecificationStore?: ServiceSpecificationStore;
 }
 
-@inject('expenseSheetStore', 'userStore', 'serviceStore', 'serviceSpecificationStore')
+@inject('expenseSheetStore', 'userStore', 'serviceStore', 'serviceSpecificationStore', 'mainStore')
 @observer
 export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolean }> {
   constructor(props: Props) {
@@ -79,9 +81,18 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
         title={
           expenseSheet
             ? this.user
-            ? `Spesenblatt von ${this.user.first_name} ${this.user.last_name} bearbeiten`
-            : 'Spesenblatt bearbeiten'
-            : 'Spesenblatt wird geladen'
+              ? this.props.mainStore!.intl.formatMessage({
+                id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.edit_expense_sheet_from',
+                defaultMessage: 'Spesenblatt von {firstName} {lastName} bearbeiten',
+              }, { firstName: this.user.first_name, lastName: this.user.last_name })
+              : this.props.mainStore!.intl.formatMessage({
+                id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.edit_expense_sheet',
+                defaultMessage: 'Spesenblatt bearbeiten',
+              })
+            : this.props.mainStore!.intl.formatMessage({
+              id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.loading_expense_sheet',
+              defaultMessage: 'Spesenblatt wird geladen',
+            })
         }
       />
     );

@@ -1,6 +1,6 @@
 import { FormikBag } from 'formik';
 
-export type Locale = "de-CH" | "fr-CH";
+export type Locale = 'de-CH' | 'fr-CH';
 
 export interface Holiday {
   id?: number;

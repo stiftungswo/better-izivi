@@ -1,79 +1,196 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage, IntlShape } from 'react-intl';
 import { CheckboxField } from '../../../form/CheckboxField';
 import { NumberField, PasswordField, SelectField, TextField } from '../../../form/common';
 import { DatePickerField } from '../../../form/DatePickerField';
 import { WiredField } from '../../../form/formik';
 import { LoadingInformation } from '../../../layout/LoadingInformation';
+import { MainStore } from '../../../stores/mainStore';
 import { RegionalCenterStore } from '../../../stores/regionalCenterStore';
 
 interface PersonalDetailsPageProps {
   regionalCenterStore?: RegionalCenterStore;
+  mainStore?: MainStore;
 }
 
-@inject('regionalCenterStore')
+@inject('regionalCenterStore', 'mainStore')
 @observer
 export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProps, { loading: boolean }> {
-  static Title = 'Persönliche Informationen';
+  private intl: IntlShape;
 
   constructor(props: PersonalDetailsPageProps) {
     super(props);
 
     this.props.regionalCenterStore!.fetchAll().then(() => this.setState({ loading: false }));
     this.state = { loading: true };
+    this.intl = this.props.mainStore!.intl;
   }
 
   render() {
     if (this.state.loading) {
-      return <LoadingInformation message="Lade Formular" className="mb-3" />;
+      return (
+        <LoadingInformation
+          message={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.load_form',
+              defaultMessage: 'Lade Formular',
+            })
+          }
+          className="mb-3"
+        />
+      );
     }
 
     return (
       <>
-        <h3 className={'mb-3'}>{PersonalDetailsPage.Title}</h3>
+        <h3 className={'mb-3'}>
+          <FormattedMessage
+            id="izivi.frontend.register.personalDetailsPage.title"
+            defaultMessage="Persönliche Informationen"
+          />
+        </h3>
         <WiredField
           horizontal={true}
           component={NumberField}
           name={'zdp'}
-          label={'Zivildienstnummer (ZDP)'}
-          placeholder={'Dies ist deine Zivildienst-Nummer, welche du auf deinem Aufgebot wiederfindest'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.zdp',
+              defaultMessage: 'Zivildienstnummer (ZDP)',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.zdp_placeholder',
+              defaultMessage: 'Dies ist deine Zivildienst-Nummer, welche du auf deinem Aufgebot wiederfindest',
+            })
+          }
         />
         <WiredField
           horizontal={true}
           component={SelectField}
           name={'regional_center_id'}
-          label={'Regionalzentrum'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.regional_center',
+              defaultMessage: 'Regionalzentrum',
+            })
+          }
           options={this.props.regionalCenterStore!.entities.map(({ id, name }) => ({ id, name }))}
         />
-        <WiredField horizontal={true} component={TextField} name={'first_name'} label={'Vorname'} placeholder={'Dein Vorname'}/>
-        <WiredField horizontal={true} component={TextField} name={'last_name'} label={'Nachname'} placeholder={'Dein Nachname'}/>
+        <WiredField
+          horizontal={true}
+          component={TextField}
+          name={'first_name'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.first_name',
+              defaultMessage: 'Vorname',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.first_name_placeholder',
+              defaultMessage: 'Dein Vorname',
+            })
+          }
+        />
+        <WiredField
+          horizontal={true}
+          component={TextField}
+          name={'last_name'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.last_name',
+              defaultMessage: 'Nachname',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.last_name_placeholder',
+              defaultMessage: 'Dein Nachname',
+            })
+          }
+        />
         <WiredField
           horizontal={true}
           component={TextField}
           name={'email'}
-          label={'Email'}
-          placeholder={'Wird für das zukünftige Login sowie das Versenden von Systemnachrichten benötigt'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.email',
+              defaultMessage: 'Email',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.email_placeholder',
+              defaultMessage: 'Wird für das zukünftige Login sowie das Versenden von Systemnachrichten benötigt',
+            })
+          }
         />
-        <WiredField horizontal={true} component={DatePickerField} name={'birthday'} label={'Geburtstag'} placeholder={'dd.mm.yyyy'}/>
+        <WiredField
+          horizontal={true}
+          component={DatePickerField}
+          name={'birthday'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.birthday',
+              defaultMessage: 'Geburtstag',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.birthday_placeholder',
+              defaultMessage: 'dd.mm.yyyy',
+            })
+          }
+        />
         <WiredField
           horizontal={true}
           component={PasswordField}
           name={'password'}
-          label={'Passwort (mind. 6 Zeichen)'}
-          placeholder={'Passwort mit mindestens 7 Zeichen'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.password_min_chars',
+              defaultMessage: 'Passwort (mind. 6 Zeichen)',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.password_min_chars_placeholder',
+              defaultMessage: 'Passwort mit mindestens 6 Zeichen',
+            })
+          }
         />
         <WiredField
           horizontal={true}
           component={PasswordField}
           name={'password_confirm'}
-          label={'Passwort Bestätigung'}
-          placeholder={'Wiederhole dein gewähltes Passwort'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.password_confirm',
+              defaultMessage: 'Passwort Bestätigung',
+            })
+          }
+          placeholder={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.password_confirm_placeholder',
+              defaultMessage: 'Wiederhole dein gewähltes Passwort',
+            })
+          }
         />
         <WiredField
           horizontal={true}
           component={CheckboxField}
           name={'newsletter'}
-          label={'Ja, ich möchte den SWO Newsletter erhalten'}
+          label={
+            this.intl.formatMessage({
+              id: 'izivi.frontend.register.personalDetailsPage.newsletter_yes',
+              defaultMessage: 'Ja, ich möchte den SWO Newsletter erhalten',
+            })
+          }
         />
       </>
     );

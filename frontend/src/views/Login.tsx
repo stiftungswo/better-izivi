@@ -2,6 +2,7 @@ import { Formik, FormikActions } from 'formik';
 import { LocationState } from 'history';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
@@ -14,10 +15,7 @@ import { ApiStore } from '../stores/apiStore';
 import { MainStore } from '../stores/mainStore';
 
 const loginSchema = yup.object({
-  email: yup
-    .string()
-    .email()
-    .required(),
+  email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
@@ -40,6 +38,8 @@ export interface CustomHistoryState {
 @inject('apiStore', 'mainStore')
 @observer
 export class Login extends React.Component<Props> {
+  intl = this.props.mainStore!.intl;
+
   login = async (values: FormValues, actions: FormikActions<FormValues>) => {
     try {
       await this.props.apiStore!.postLogin(values);
@@ -51,10 +51,24 @@ export class Login extends React.Component<Props> {
         this.props.mainStore!.displayError(error.messages.error); // display errors messages from the server
       } else if (error.error != null && error.error.message != null) {
         this.props.mainStore!.displayError(error.error.message); // display error messages from the connection request
-      } else if (error.error != null && error.error.toString().includes('400')) {
-        this.props.mainStore!.displayError('Ungültiger Benutzername/Passwort');
+      } else if (
+        error.error != null &&
+        error.error.toString().includes('400')
+      ) {
+        this.props.mainStore!.displayError(
+          this.intl.formatMessage({
+            id: 'izivi.frontend.views.login.invalid_password_or_username',
+            defaultMessage: 'Ungültiger Benutzername/Passwort',
+          }),
+        );
       } else {
-        this.props.mainStore!.displayError('Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+        this.props.mainStore!.displayError(
+          this.intl.formatMessage({
+            id: 'izivi.frontend.views.login.internal_error_try_again_later',
+            defaultMessage:
+              'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
+          }),
+        );
       }
     } finally {
       actions.setSubmitting(false);
@@ -89,19 +103,53 @@ export class Login extends React.Component<Props> {
           initialValues={template}
           validationSchema={loginSchema}
           onSubmit={this.login}
-          render={formikProps => (
+          render={(formikProps) => (
             <Form onSubmit={formikProps.handleSubmit}>
-              <h2 className="form-signin-heading">Anmelden</h2>
-              <WiredField component={TextField} name={'email'} label={'Email'} placeholder={'zivi@example.org'} />
-              <WiredField component={PasswordField} name={'password'} label={'Passwort'} placeholder={'****'} />
-              <Button color={'primary'} disabled={formikProps.isSubmitting} onClick={formikProps.submitForm} type="submit">
-                Anmelden
+              <h2 className="form-signin-heading">
+                <FormattedMessage
+                  id="izivi.frontend.views.login.login"
+                  defaultMessage="Anmelden"
+                />
+              </h2>
+              <WiredField
+                component={TextField}
+                name={'email'}
+                label={this.intl.formatMessage({
+                  id: 'izivi.frontend.views.login.email',
+                  defaultMessage: 'Email',
+                })}
+                placeholder={'zivi@example.org'}
+              />
+              <WiredField
+                component={PasswordField}
+                name={'password'}
+                label={this.intl.formatMessage({
+                  id: 'izivi.frontend.views.login.password',
+                  defaultMessage: 'Passwort',
+                })}
+                placeholder={'****'}
+              />
+              <Button
+                color={'primary'}
+                disabled={formikProps.isSubmitting}
+                onClick={formikProps.submitForm}
+                type="submit"
+              >
+                <FormattedMessage
+                  id="izivi.frontend.views.login.login"
+                  defaultMessage="Anmelden"
+                />
               </Button>
             </Form>
           )}
         />
         <p>
-          <Link to="/users/password/reset">Passwort vergessen?</Link>
+          <Link to="/users/password/reset">
+            <FormattedMessage
+              id="izivi.frontend.views.login.forgot_password"
+              defaultMessage="Passwort vergessen?"
+            />
+          </Link>
         </p>
       </IziviContent>
       /*<LoadingView loading={this.state.loading} error={this.state.error} />*/

@@ -2,30 +2,44 @@ import * as React from 'react';
 import { SelectField, TextField } from '../../form/common';
 import { DatePickerField } from '../../form/DatePickerField';
 import { WiredField } from '../../form/formik';
+import { MainStore } from '../../stores/mainStore';
 
-export default (params: { buttons: React.ReactElement[] }) => {
+export const HolidayTableRow = (params: { buttons: React.ReactElement[], mainStore: MainStore }) => {
   const { buttons } = params;
+  const { mainStore } = params;
 
   return (
     <tr>
       <td>
-        <WiredField component={DatePickerField} name={'beginning'}/>
+        <WiredField component={DatePickerField} name={'beginning'} />
       </td>
       <td>
-        <WiredField component={DatePickerField} name={'ending'}/>
+        <WiredField component={DatePickerField} name={'ending'} />
       </td>
       <td>
         <WiredField
           component={SelectField}
           name={'holiday_type_id'}
           options={[
-            { id: 'company_holiday', name: 'Betriebsferien' },
-            { id: 'public_holiday', name: 'Feiertag' },
+            {
+              id: 'company_holiday',
+              name: mainStore.intl.formatMessage({
+                id: 'izivi.frontend.views.holidays.holidayTableRow.company_holiday',
+                defaultMessage: 'Betriebsferien',
+              }),
+            },
+            {
+              id: 'public_holiday',
+              name: mainStore.intl.formatMessage({
+                id: 'izivi.frontend.views.holidays.holidayTableRow.public_holiday',
+                defaultMessage: 'Feiertag',
+              }),
+            },
           ]}
         />
       </td>
       <td>
-        <WiredField component={TextField} name={'description'}/>
+        <WiredField component={TextField} name={'description'} />
       </td>
 
       {buttons.map((button, index) => <td key={`button-${index}`}>{button}</td>)}

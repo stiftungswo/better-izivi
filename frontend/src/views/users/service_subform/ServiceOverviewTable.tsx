@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import { WithSheet } from 'react-jss';
 import { UncontrolledTooltip } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
@@ -76,28 +77,42 @@ export default (params: OverviewTableParams) => {
     serviceModalId,
   } = params;
 
+  const intl = useIntl();
+
   const columns = [
     {
       id: 'serviceSpecification',
-      label: 'Pflichtenheft',
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.users.serviceOverviewTable.service_specifaction',
+          defaultMessage: 'Pflichtenheft',
+        }),
       format: (service: Service) => {
         const spec = serviceSpecificationStore!
           .entities
           .find((specification: ServiceSpecification) => {
-              return specification.id === service.service_specification_id;
-            },
+            return specification.id === service.service_specification_id;
+          },
           );
         return `${spec ? spec.name : ''} (${service.service_specification.identification_number})`;
       },
     },
     {
       id: 'beginning',
-      label: 'Start',
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.users.serviceOverviewTable.start',
+          defaultMessage: 'Start',
+        }),
       format: (service: Service) => (service.beginning ? mainStore!.formatDate(moment(service.beginning)) : ''),
     },
     {
       id: 'ending',
-      label: 'Ende',
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.users.serviceOverviewTable.end',
+          defaultMessage: 'Ende',
+        }),
       format: (service: Service) => (service.ending ? mainStore!.formatDate(moment(service.ending)) : ''),
     },
     {
@@ -124,7 +139,7 @@ export default (params: OverviewTableParams) => {
         href={mainStore!.apiURL('services/' + service.id + '.pdf', {}, true)}
         target={'_blank'}
       >
-        <FontAwesomeIcon icon={PrintSolidIcon}/> <span>Drucken</span>
+        <FontAwesomeIcon icon={PrintSolidIcon} /> <span>Drucken</span>
       </a>
     );
   }
@@ -132,7 +147,7 @@ export default (params: OverviewTableParams) => {
   function editButton(service: Service) {
     return (
       <Button color={'warning'} type={'button'} className="mr-1" onClick={() => onModalOpen(service)}>
-        <FontAwesomeIcon icon={EditSolidIcon}/> <span>Bearbeiten</span>
+        <FontAwesomeIcon icon={EditSolidIcon} /> <span>Bearbeiten</span>
       </Button>
     );
   }
@@ -146,7 +161,7 @@ export default (params: OverviewTableParams) => {
           disabled={!service.deletable}
           tooltip={service.deletable ? undefined : 'Zuerst Spesenblatt löschen!'}
         >
-          <FontAwesomeIcon icon={TrashAltRegularIcon}/> <span>Löschen</span>
+          <FontAwesomeIcon icon={TrashAltRegularIcon} /> <span>Löschen</span>
         </DeleteButton>{' '}
         {
           service.confirmation_date !== null && (
@@ -155,7 +170,7 @@ export default (params: OverviewTableParams) => {
               color={'success'}
               type={'button'}
             >
-              <FontAwesomeIcon icon={PlusSquareRegularIcon}/> <span>Spesenblatt</span>
+              <FontAwesomeIcon icon={PlusSquareRegularIcon} /> <span>Spesenblatt</span>
             </Button>
           )
         }

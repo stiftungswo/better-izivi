@@ -11,7 +11,7 @@ import { CustomHistoryState } from '../Login';
 import { FormValues as RegisterFormValue, RegisterForm } from './RegisterForm';
 import { RegisterFormHeader } from './RegisterFormHeader';
 
-interface RegisterProps extends RouteComponentProps<{ page?: string}, any, CustomHistoryState> {
+interface RegisterProps extends RouteComponentProps<{ page?: string }, any, CustomHistoryState> {
   apiStore?: ApiStore;
   mainStore?: MainStore;
 }
@@ -23,11 +23,22 @@ export class Register extends React.Component<RegisterProps> {
     try {
       await this.props.apiStore!.postRegister(values);
       this.props.history.push(this.getReferrer() || '/');
-      this.props.mainStore!.displaySuccess('Erfolgreich registriert');
+      this.props.mainStore!.displaySuccess(
+        this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.register.register.successfully_registered',
+          defaultMessage: 'Erfolgreich registriert',
+        }),
+      );
       setTimeout(() => sessionStorage.removeItem(RegisterForm.SESSION_STORAGE_FORM_PERSISTENCE_KEY), 500);
     } catch (error) {
       this.props.mainStore!.displayError(
-        DomainStore.buildErrorMessage(error, 'Ein Fehler ist bei der Registration aufgetreten'),
+        DomainStore.buildErrorMessage(
+          error,
+          this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.register.register.error_during_registration',
+            defaultMessage: 'Ein Fehler ist bei der Registration aufgetreten',
+          }),
+        ),
       );
       throw error;
     } finally {
@@ -58,11 +69,20 @@ export class Register extends React.Component<RegisterProps> {
 
   render(): React.ReactNode {
     return (
-      <IziviContent card showBackgroundImage title={'Registrieren'}>
+      <IziviContent
+        card
+        showBackgroundImage
+        title={
+          this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.register.register.register',
+            defaultMessage: 'Registrieren',
+          })
+        }
+      >
         <div>
-          <RegisterFormHeader/>
+          <RegisterFormHeader />
           <Container>
-            <RegisterForm onSubmit={this.login} match={this.props.match} history={this.props.history} location={this.props.location}/>
+            <RegisterForm onSubmit={this.login} match={this.props.match} history={this.props.history} location={this.props.location} />
           </Container>
         </div>
       </IziviContent>

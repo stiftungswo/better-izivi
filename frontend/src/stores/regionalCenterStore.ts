@@ -5,8 +5,14 @@ import { DomainStore } from './domainStore';
 export class RegionalCenterStore extends DomainStore<RegionalCenter> {
   protected get entityName() {
     return {
-      singular: 'Das Regionalzentrum',
-      plural: 'Die Regionalzentren',
+      singular: this.mainStore.intl.formatMessage({
+        id: 'izivi.frontend.store.regionalCenterStore.regional_center.one',
+        defaultMessage: 'Das Regionalzentrum',
+      }),
+      plural: this.mainStore.intl.formatMessage({
+        id: 'izivi.frontend.store.regionalCenterStore.regional_center.other',
+        defaultMessage: 'Die Regionalzentren',
+      }),
     };
   }
 

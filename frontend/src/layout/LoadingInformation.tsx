@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Spinner } from '../utilities/Spinner';
 
 class LoadingInformation extends React.Component<{ message?: string, className?: any }> {
@@ -6,7 +7,12 @@ class LoadingInformation extends React.Component<{ message?: string, className?:
     return (
       <div className={this.props.className}>
         <Spinner size="sm" color="primary" className="mr-2" />
-        {this.props.message || 'Inhalt wird geladen, einen Moment'}
+        {this.props.message ||
+         <FormattedMessage
+           id="izivi.frontend.layout.loading_information.loading"
+           defaultMessage="Inhalt wird geladen, einen Moment"
+         />
+        }
       </div>
     );
   }

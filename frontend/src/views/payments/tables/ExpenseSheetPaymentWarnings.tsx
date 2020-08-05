@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { MainStore } from '../../../stores/mainStore';
 import { ExpenseSheetListing } from '../../../types';
 
@@ -10,8 +11,18 @@ export const ExpenseSheetPaymentWarnings = (props: { expenseSheet: ExpenseSheetL
   if ('user' in props.expenseSheet) {
     return (
       <>
-        {!addressIsValid(props.expenseSheet.user) && <div className="text-danger">Adresse unvollständig!</div>}
-        {!MainStore.validateIBAN(props.expenseSheet.user.bank_iban) && <div className="text-danger">IBAN ist ungültig!</div>}
+        {!addressIsValid(props.expenseSheet.user) && <div className="text-danger">
+          <FormattedMessage
+            id="izivi.frontend.payments.expenseSheetPaymentWarnings.address_incomplete"
+            defaultMessage="Adresse unvollständig!"
+          />
+        </div>}
+        {!MainStore.validateIBAN(props.expenseSheet.user.bank_iban) && <div className="text-danger">
+          <FormattedMessage
+            id="izivi.frontend.payments.expenseSheetPaymentWarnings.iban_not_valid"
+            defaultMessage="IBAN ist ungültig!"
+          />
+        </div>}
       </>
     );
   } else {

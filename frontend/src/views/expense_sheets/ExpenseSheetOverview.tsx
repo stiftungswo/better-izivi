@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import ButtonGroup from 'reactstrap/lib/ButtonGroup';
@@ -36,19 +37,28 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       },
       {
         id: 'first_name',
-        label: 'Name',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.name',
+          defaultMessage: 'Name',
+        }),
         format: ({ user: { id, full_name } }: ExpenseSheetListing) => (
           <Link to={'/users/' + id}>{full_name}</Link>
         ),
       },
       {
         id: 'start',
-        label: 'Von',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.from',
+          defaultMessage: 'Von',
+        }),
         format: ({ beginning }: ExpenseSheetListing) => this.props.mainStore!.formatDate(beginning),
       },
       {
         id: 'end',
-        label: 'Bis',
+        label: this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.until',
+          defaultMessage: 'Bis',
+        }),
         format: ({ ending }: ExpenseSheetListing) => this.props.mainStore!.formatDate(ending),
       },
     ];
@@ -74,9 +84,21 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
 
   render() {
     return (
-      <IziviContent card loading={this.state.loading} title={'Spesen'}>
+      <IziviContent
+        card
+        loading={this.state.loading}
+        title={
+          this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.expenses',
+            defaultMessage: 'Spesen',
+          })
+        }
+      >
         <Button outline className="mb-4 d-block" onClick={() => this.toggle()}>
-          Spesenstatistik generieren
+          <FormattedMessage
+            id="izivi.frontend.views.expense_sheets.expenseSheetOverview.generate_expense_statistics"
+            defaultMessage="Spesenstatistik generieren"
+          />
         </Button>
         <ButtonGroup className="mb-4">
           <Button
@@ -84,28 +106,42 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
             color={this.state.expenseSheetStateFilter === null ? 'primary' : 'secondary'}
             onClick={() => this.updateSheetFilter(null)}
           >
-            Alle Spesenblätter
+            <FormattedMessage
+              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.all_expense_sheets"
+              defaultMessage="Alle Spesenblätter"
+            />
           </Button>
           <Button
             outline={this.state.expenseSheetStateFilter !== 'pending'}
             color={this.state.expenseSheetStateFilter === 'pending' ? 'primary' : 'secondary'}
             onClick={() => this.updateSheetFilter('pending')}
           >
-            Pendente Spesenblätter
+            <FormattedMessage
+              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.pending_expense_sheets"
+              defaultMessage="Pendente Spesenblätter"
+            />
           </Button>
           <Button
             outline={this.state.expenseSheetStateFilter !== 'current'}
             color={this.state.expenseSheetStateFilter === 'current' ? 'primary' : 'secondary'}
             onClick={() => this.updateSheetFilter('current')}
           >
-            Aktuelle Spesenblätter
+            <FormattedMessage
+              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.current_expense_sheets"
+              defaultMessage="Aktuelle Spesenblätter"
+            />
           </Button>
         </ButtonGroup>
-        <ExpenseSheetStatisticFormDialog isOpen={this.state.modalOpen} mainStore={this.props.mainStore!} toggle={() => this.toggle()}/>
+        <ExpenseSheetStatisticFormDialog isOpen={this.state.modalOpen} mainStore={this.props.mainStore!} toggle={() => this.toggle()} />
         <OverviewTable
           columns={this.columns}
           data={this.props.expenseSheetStore!.expenseSheets}
-          renderActions={(e: ExpenseSheetListing) => <Link to={'/expense_sheets/' + e.id}>Spesenblatt bearbeiten</Link>}
+          renderActions={(e: ExpenseSheetListing) => <Link to={'/expense_sheets/' + e.id}>
+            <FormattedMessage
+              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.edit_expense_sheet"
+              defaultMessage="Spesenblatt bearbeiten"
+            />
+          </Link>}
         />
       </IziviContent>
     );

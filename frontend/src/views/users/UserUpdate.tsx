@@ -2,6 +2,7 @@ import { toJS } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { MainStore } from '../../stores/mainStore';
 import { UserStore } from '../../stores/userStore';
 import { FormValues, User } from '../../types';
 import { UserForm } from './UserForm';
@@ -12,16 +13,19 @@ interface UserDetailRouterProps {
 
 interface Props extends RouteComponentProps<UserDetailRouterProps> {
   userStore?: UserStore;
+  mainStore?: MainStore;
   userId?: number;
 }
 
-@inject('userStore')
+@inject('userStore', 'mainStore')
 @observer
 export class UserUpdate extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
 
-    props.userStore!.fetchOne(props.userId ? props.userId : Number(props.match.params.id));
+    props.userStore!.fetchOne(
+      props.userId ? props.userId : Number(props.match.params.id),
+    );
   }
 
   handleSubmit = (user: User) => {
@@ -40,8 +44,25 @@ export class UserUpdate extends React.Component<Props> {
   }
 
   render() {
+    const intl = this.props.mainStore!.intl;
     const user = this.user;
 
-    return <UserForm onSubmit={this.handleSubmit} user={user as FormValues} title={user ? 'Profil' : 'Profil wird geladen'} />;
+    return (
+      <UserForm
+        onSubmit={this.handleSubmit}
+        user={user as FormValues}
+        title={
+          user
+            ? intl.formatMessage({
+                id: 'izivi.frontend.views.users.userUpdate.profile',
+                defaultMessage: 'Profil',
+              })
+            : intl.formatMessage({
+                id: 'izivi.frontend.views.users.userUpdate.profile_is_loading',
+                defaultMessage: 'Profil wird geladen',
+              })
+        }
+      />
+    );
   }
 }

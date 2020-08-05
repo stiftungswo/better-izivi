@@ -1,6 +1,8 @@
 import { History } from 'history';
-import { action, computed, observable } from 'mobx';
+import { action, autorun, computed, observable, reaction } from 'mobx';
+import moment from 'moment';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import momentLocalizer from 'react-widgets-moment';
 import messagesDe from '../messages.de-CH.json';
 import messagesFr from '../messages.fr-CH.json';
 import { Locale } from '../types';
@@ -11,7 +13,7 @@ import { ApiStore, baseUrl } from './apiStore';
 
 const cache = createIntlCache();
 
-export const messages: {[locale in Locale]: any} = {
+export const messages: { [locale in Locale]: any } = {
   'de-CH': messagesDe,
   'fr-CH': messagesFr,
 };
@@ -35,12 +37,16 @@ export class MainStore {
   @observable
   locale: Locale = 'de-CH';
 
+  @observable
+  monthNames: string[] = moment.months();
+
   @computed
   get intl() {
     return createIntl({
       locale: this.locale,
-      messages: messages[this.locale]},
-                      cache);
+      messages: messages[this.locale],
+    },
+      cache);
   }
 
   // --- formatting
@@ -54,22 +60,27 @@ export class MainStore {
   displaySuccess = displaySuccess;
   displayError = displayError;
 
-  constructor(private apiStore: ApiStore, readonly formatter: Formatter, private history: History) {}
+  constructor(private apiStore: ApiStore, readonly formatter: Formatter, private history: History) {
+    autorun(() => {
+      moment.locale(this.locale);
+      this.monthNames = moment.months();
+    });
+}
 
-  // --- routing / navigation
+// --- routing / navigation
   @action
-  navigateTo(path: string): void {
-    this.history.push(path);
-  }
+navigateTo(path: string): void {
+  this.history.push(path);
+}
 
   apiURL(path: string, params: object = {}, includeAuth: boolean = true): string {
-    return buildURL(baseUrl + '/' + path, {
-      ...params,
-      token: includeAuth ? this.apiStore.rawToken : undefined,
-    });
-  }
+  return buildURL(baseUrl + '/' + path, {
+    ...params,
+    token: includeAuth ? this.apiStore.rawToken : undefined,
+  });
+}
 
   isAdmin() {
-    return this.apiStore.isAdmin;
-  }
+  return this.apiStore.isAdmin;
+}
 }

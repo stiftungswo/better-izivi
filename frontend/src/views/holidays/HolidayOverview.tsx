@@ -1,20 +1,15 @@
-import { Formik, FormikActions } from 'formik';
+import { FormikActions } from 'formik';
 import { inject, observer } from 'mobx-react';
-import moment from 'moment';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import Button from 'reactstrap/lib/Button';
 import * as yup from 'yup';
 import IziviContent from '../../layout/IziviContent';
 import { HolidayStore } from '../../stores/holidayStore';
 import { MainStore } from '../../stores/mainStore';
 import { Holiday } from '../../types';
 import { apiDate } from '../../utilities/validationHelpers';
-import { HolidayOverviewTable } from './HolidayOverviewTable';
 import { HolidayOverviewTabs } from './HolidayOverviewTabs';
-import HolidayTableRow from './HolidayTableRow';
 
 const holidaySchema = yup.object({
   beginning: apiDate().required(),
@@ -58,8 +53,20 @@ export class HolidayOverview extends React.Component<Props, State> {
 
   render() {
     return (
-      <IziviContent loading={this.state.loading} title={'Freitage'} card={true}>
-        <HolidayOverviewTabs mainStore={this.props.mainStore!} holidayStore={this.props.holidayStore!} />
+      <IziviContent
+        loading={this.state.loading}
+        title={
+          this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.views.holidays.holidayOverview.free_days',
+            defaultMessage: 'Freitage',
+          })
+        }
+        card={true}
+      >
+        <HolidayOverviewTabs
+          mainStore={this.props.mainStore!}
+          holidayStore={this.props.holidayStore!}
+        />
       </IziviContent>
     );
   }

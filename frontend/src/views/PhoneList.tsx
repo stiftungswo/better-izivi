@@ -2,6 +2,7 @@ import { Formik, FormikActions } from 'formik';
 import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { RouteComponentProps } from 'react-router';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
@@ -12,6 +13,7 @@ import { DatePickerField } from '../form/DatePickerField';
 import { WiredField } from '../form/formik';
 import IziviContent from '../layout/IziviContent';
 import { ApiStore, baseUrl } from '../stores/apiStore';
+import { MainStore } from '../stores/mainStore';
 import { apiDate } from '../utilities/validationHelpers';
 
 const phonelistSchema = yup.object({
@@ -26,12 +28,16 @@ interface PhoneList {
 
 interface Props extends RouteComponentProps {
   apiStore?: ApiStore;
+  mainStore?: MainStore;
 }
 
-@inject('apiStore')
+@inject('apiStore', 'mainStore')
 @observer
 export class PhoneListView extends React.Component<Props> {
-  handleSubmit = async (entity: PhoneList, actions: FormikActions<PhoneList>) => {
+  handleSubmit = async (
+    entity: PhoneList,
+    actions: FormikActions<PhoneList>,
+  ) => {
     const inputs = phonelistSchema.cast(entity);
     const rawToken = this.props.apiStore!.rawToken;
     let url = `${baseUrl}/phone_list.pdf`;
@@ -45,36 +51,56 @@ export class PhoneListView extends React.Component<Props> {
   }
 
   render() {
+    const intl = this.props.mainStore!.intl;
     return (
       <IziviContent card title="Telefonliste">
         <p>
-          Geben Sie ein Anfangsdatum und ein Enddatum ein um eine Telefonliste mit allen Zivis zu erhalten, die in diesem Zeitraum arbeiten.
+          <FormattedMessage
+            id="izivi.frontend.views.phoneList.info"
+            defaultMessage="Geben Sie ein Anfangsdatum und ein Enddatum ein um eine Telefonliste mit allen Zivis zu erhalten, die in diesem Zeitraum arbeiten."
+          />
         </p>
         <br />
         <Formik
           validationSchema={phonelistSchema}
           initialValues={{
-            beginning: moment()
-              .date(0)
-              .format('Y-MM-DD'),
-            ending: moment()
-              .endOf('month')
-              .format('Y-MM-DD'),
+            beginning: moment().date(0).format('Y-MM-DD'),
+            ending: moment().endOf('month').format('Y-MM-DD'),
             holiday_type: 2,
             description: '',
           }}
           onSubmit={this.handleSubmit}
-          render={formikProps => (
+          render={(formikProps) => (
             <Form>
               <Row>
                 <Col xs="12">
-                  <WiredField horizontal component={DatePickerField} label={'Anfang'} name={'beginning'} />
-                  <WiredField horizontal component={DatePickerField} label={'Ende'} name={'ending'} />
+                  <WiredField
+                    horizontal
+                    component={DatePickerField}
+                    label={intl.formatMessage({
+                      id: 'izivi.frontend.views.phoneList.start',
+                      defaultMessage: 'Anfang',
+                    })}
+                    name={'beginning'}
+                  />
+                  <WiredField
+                    horizontal
+                    component={DatePickerField}
+                    label={intl.formatMessage({
+                      id: 'izivi.frontend.views.phoneList.end',
+                      defaultMessage: 'Ende',
+                    })}
+                    name={'ending'}
+                  />
                 </Col>
               </Row>
               <Row>
                 <Col xs={{ size: 2, offset: 10 }}>
-                  <Button color={'success'} onClick={formikProps.submitForm} style={{ width: '100%' }}>
+                  <Button
+                    color={'success'}
+                    onClick={formikProps.submitForm}
+                    style={{ width: '100%' }}
+                  >
                     Laden
                   </Button>
                 </Col>

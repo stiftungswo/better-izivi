@@ -10,7 +10,16 @@ import { MainStore } from './mainStore';
  */
 export class DomainStore<SingleType, OverviewType = SingleType> {
   protected get entityName() {
-    return { singular: 'Die Entität', plural: 'Die Entitäten' };
+    return {
+      singular: this.mainStore.intl.formatMessage({
+        id: 'izivi.frontend.store.domainStore.entity.one',
+        defaultMessage: 'Die Entität',
+      }),
+      plural: this.mainStore.intl.formatMessage({
+        id: 'izivi.frontend.store.domainStore.entity.other',
+        defaultMessage: 'Die Entitäten',
+      }),
+    };
   }
 
   get entity(): SingleType | undefined {
@@ -85,14 +94,21 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
   protected entitiesURL?: string = '';
   protected entityURL?: string = '';
 
-  constructor(protected mainStore: MainStore) {}
+  constructor(protected mainStore: MainStore) { }
 
   @action
   async fetchAll(params: object = {}) {
     try {
       await this.doFetchAll(params);
     } catch (e) {
-      this.mainStore.displayError(DomainStore.buildErrorMessage(e, `${this.entityName.plural} konnten nicht geladen werden`));
+      this.mainStore.displayError(
+        DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
+          {
+            id: 'izivi.frontend.store.domainStore.not_loaded.other',
+            defaultMessage: '{entityNamePlural} konnten nicht geladen werden.',
+          },
+          { entityNamePlural: this.entityName.plural },
+        )));
       console.error(e);
       throw e;
     }
@@ -104,7 +120,14 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
       this.entity = undefined;
       return await this.doFetchOne(id);
     } catch (e) {
-      this.mainStore.displayError(DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht geladen werden`));
+      this.mainStore.displayError(
+        DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
+          {
+            id: 'izivi.frontend.store.domainStore.not_loaded.one',
+            defaultMessage: '{entityNameSingular} konnte nicht geladen werden',
+          },
+          { entityNameSingular: this.entityName.singular },
+        )));
       console.error(e);
       throw e;
     }
@@ -115,9 +138,22 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
     await this.displayLoading(async () => {
       try {
         await this.doPost(entity);
-        this.mainStore.displaySuccess(`${this.entityName.singular} wurde gespeichert.`);
+        this.mainStore.displaySuccess(this.mainStore.intl.formatMessage(
+          {
+            id: 'izivi.frontend.store.domainStore.saved.one',
+            defaultMessage: '{entityNameSingular} wurde gespeichert',
+          },
+          { entityNameSingular: this.entityName.singular },
+        ));
       } catch (e) {
-        this.mainStore.displayError(DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht gespeichert werden`));
+        this.mainStore.displayError(
+          DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
+            {
+              id: 'izivi.frontend.store.domainStore.not_saved.one',
+              defaultMessage: '{entityNameSingular} konnte nicht gespeichert werden',
+            },
+            { entityNameSingular: this.entityName.singular },
+          )));
         throw e;
       }
     });
@@ -128,9 +164,22 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
     await this.displayLoading(async () => {
       try {
         await this.doPut(entity);
-        this.mainStore.displaySuccess(`${this.entityName.singular} wurde gespeichert.`);
+        this.mainStore.displaySuccess(this.mainStore.intl.formatMessage(
+          {
+            id: 'izivi.frontend.store.domainStore.saved.one',
+            defaultMessage: '{entityNameSingular} wurde gespeichert',
+          },
+          { entityNameSingular: this.entityName.singular },
+        ));
       } catch (e) {
-        this.mainStore.displayError(DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht gespeichert werden`));
+        this.mainStore.displayError(
+          DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
+            {
+              id: 'izivi.frontend.store.domainStore.not_saved.one',
+              defaultMessage: '{entityNameSingular} konnte nicht gespeichert werden',
+            },
+            { entityNameSingular: this.entityName.singular },
+          )));
         console.error(e);
         throw e;
       }
@@ -142,9 +191,22 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
     await this.displayLoading(async () => {
       try {
         await this.doDelete(id);
-        this.mainStore.displaySuccess(`${this.entityName.singular} wurde gelöscht.`);
+        this.mainStore.displaySuccess(this.mainStore.intl.formatMessage(
+          {
+            id: 'izivi.frontend.store.domainStore.deleted.one',
+            defaultMessage: '{entityNameSingular} wurde gelöscht.',
+          },
+          { entityNameSingular: this.entityName.singular },
+        ));
       } catch (e) {
-        this.mainStore.displayError(DomainStore.buildErrorMessage(e, `${this.entityName.singular} konnte nicht gelöscht werden`));
+        this.mainStore.displayError(
+          DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
+            {
+              id: 'izivi.frontend.store.domainStore.not_deleted.one',
+              defaultMessage: '{entityNameSingular} konnte nicht gelöscht werden',
+            },
+            { entityNameSingular: this.entityName.singular },
+          )));
         console.error(e);
         throw e;
       }
@@ -156,7 +218,16 @@ export class DomainStore<SingleType, OverviewType = SingleType> {
     await f();
   }
 
-  async notifyProgress<P>(f: () => Promise<P>, { errorMessage = 'Fehler!', successMessage = 'Erfolg!' } = {}) {
+  async notifyProgress<P>(f: () => Promise<P>, {
+    errorMessage = this.mainStore.intl.formatMessage({
+      id: 'izivi.frontend.store.domainStore.error',
+      defaultMessage: 'Fehler!',
+    }),
+    successMessage = this.mainStore.intl.formatMessage({
+      id: 'izivi.frontend.store.domainStore.success',
+      defaultMessage: 'Erfolg!',
+    }),
+  } = {}) {
     await this.displayLoading(async () => {
       try {
         await f();

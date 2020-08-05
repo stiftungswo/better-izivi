@@ -10,10 +10,19 @@ export const ClothingExpensesSegment = expenseSheetFormSegment(
     <>
       <WiredField
         horizontal
-        appendedLabels={[`Vorschlag: ${mainStore!.formatCurrency(hints.suggestions.clothing_expenses)}`]}
+        appendedLabels={[
+          mainStore.intl.formatMessage({
+            id: 'izivi.frontend.views.expense_sheets.ClothingExpensesSegment.hint_clothin_expenses',
+            defaultMessage: 'Vorschlag: {hintClothingExpenses}',
+          }, { hintClothingExpenses: mainStore!.formatCurrency(hints.suggestions.clothing_expenses) },
+        )]}
         component={CurrencyField}
         name={'clothing_expenses'}
-        label={'Kleiderspesen'}
+        label={
+          mainStore.intl.formatMessage({
+            id: 'izivi.frontend.views.expense_sheets.absolvedDaysBreakdownSegment.clothing_expenses',
+            defaultMessage: 'Kleiderspesen',
+          })}
       />
     </>
   ),

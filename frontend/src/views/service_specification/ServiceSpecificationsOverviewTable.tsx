@@ -1,5 +1,6 @@
 import { ary, compact, flatMap, partial } from 'lodash';
 import * as React from 'react';
+import { IntlShape, useIntl } from 'react-intl';
 import { WithSheet } from 'react-jss';
 import Table from 'reactstrap/lib/Table';
 import Tooltip from 'reactstrap/lib/Tooltip';
@@ -15,27 +16,143 @@ interface TableHeader {
   subcolumns?: TableHeader[];
 }
 
-const DAILY_EXPENSES_SUBCOLUMNS = [
-  { label: 'Erster Tag' },
-  { label: 'Arbeit' },
-  { label: 'Frei' },
-  { label: 'Letzter Tag' },
-];
+const getDailyExpensesSubcolumns = (intl: IntlShape) => {
+  return [
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.first_day',
+          defaultMessage: 'Erster Tag',
+        }),
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.work',
+          defaultMessage: 'Arbeit',
+        }),
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.free',
+          defaultMessage: 'Frei',
+        }),
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.last_day',
+          defaultMessage: 'Letzter Tag',
+        }),
+    },
+  ];
+};
 
-const COLUMNS: TableHeader[] = [
-  { label: 'Aktiv', span: { row: 2 } },
-  { label: 'ID', tooltip: 'Pflichtenheft Nummer', span: { row: 2 } },
-  { label: 'Name', span: { row: 2 } },
-  { label: 'KN', tooltip: 'Kurz-Name', span: { row: 2 } },
-  { label: 'Taschengeld', tooltip: 'Taschengeld (Fixer Betrag)', span: { row: 2 } },
-  { label: 'Unterkunft', span: { row: 2 } },
-  { label: 'Kleider', span: { row: 2 } },
-  { label: 'Frühstück', span: { col: 4 }, subcolumns: DAILY_EXPENSES_SUBCOLUMNS },
-  { label: 'Mittagessen', span: { col: 4 }, subcolumns: DAILY_EXPENSES_SUBCOLUMNS },
-  { label: 'Abendessen', span: { col: 6 }, subcolumns: DAILY_EXPENSES_SUBCOLUMNS },
-];
+const getColumns = (intl: IntlShape): TableHeader[] => {
+  return [
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.active',
+          defaultMessage: 'Aktiv',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.id',
+          defaultMessage: 'ID',
+        }),
+      tooltip:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.service_specification_number',
+          defaultMessage: 'Pflichtenheft Nummer',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.name',
+          defaultMessage: 'Name',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.short_name_short',
+          defaultMessage: 'KN',
+        }),
+      tooltip:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.short_name',
+          defaultMessage: 'Kurz-Name',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.pocket_money',
+          defaultMessage: 'Taschengeld',
+        }),
+      tooltip:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.pocket_money_tooltip',
+          defaultMessage: 'Taschengeld (Fixer Betrag)',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.accommodation',
+          defaultMessage: 'Unterkunft',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.clothing',
+          defaultMessage: 'Kleider',
+        }),
+      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.breakfast',
+          defaultMessage: 'Frühstück',
+        }),
+      span: { col: 4 },
+      subcolumns: getDailyExpensesSubcolumns(intl),
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.lunch',
+          defaultMessage: 'Mittagessen',
+        }),
+      span: { col: 4 },
+      subcolumns: getDailyExpensesSubcolumns(intl),
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.dinner',
+          defaultMessage: 'Abendessen',
+        }),
+      span: { col: 6 },
+      subcolumns: getDailyExpensesSubcolumns(intl),
+    },
+  ];
+};
 
-const TableHeaderTooltip: React.FunctionComponent<{tableHeader: TableHeader, id: string}> = params => {
+const TableHeaderTooltip: React.FunctionComponent<{ tableHeader: TableHeader, id: string }> = params => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   if (params.tableHeader.tooltip) {
@@ -53,13 +170,14 @@ const TableHeaderTooltip: React.FunctionComponent<{tableHeader: TableHeader, id:
 };
 
 const OverviewTableHeader = (params: { tableHeaderClasses: string[] }) => {
+  const intl = useIntl();
   const [mainTableHeaderClass, secondaryTableHeaderClass] = params.tableHeaderClasses;
   const secondaryTableHeaders = compact(
-    flatMap<TableHeader[], TableHeader | undefined>(COLUMNS, header => (header as TableHeader).subcolumns),
+    flatMap<TableHeader[], TableHeader | undefined>(getColumns(intl), header => (header as TableHeader).subcolumns),
   );
 
   const layout = [
-    { class: mainTableHeaderClass, columns: COLUMNS },
+    { class: mainTableHeaderClass, columns: getColumns(intl) },
     { class: secondaryTableHeaderClass, columns: secondaryTableHeaders },
   ];
 
@@ -93,7 +211,7 @@ export const ServiceSpecificationsOverviewTable: React.FunctionComponent<WithShe
   return (
     <Table hover={true} responsive={true}>
       <thead>
-        <OverviewTableHeader tableHeaderClasses={[classes.th, classes.secondTh]}/>
+        <OverviewTableHeader tableHeaderClasses={[classes.th, classes.secondTh]} />
       </thead>
       <tbody>{props.children}</tbody>
     </Table>

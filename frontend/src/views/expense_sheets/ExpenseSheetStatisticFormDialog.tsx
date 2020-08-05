@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
 import moment from 'moment';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Button, ModalHeader } from 'reactstrap';
 import Modal from 'reactstrap/lib/Modal';
 import ModalBody from 'reactstrap/lib/ModalBody';
@@ -35,7 +36,12 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
 
     return (
       <Modal isOpen={isOpen}>
-        <ModalHeader>Spesenstatistik erstellen</ModalHeader>
+        <ModalHeader>
+          <FormattedMessage
+            id="izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.create_expense_statistics"
+            defaultMessage="Spesenstatistik erstellen"
+          />
+        </ModalHeader>
         <Formik
           initialValues={{
             beginning: moment()
@@ -60,8 +66,20 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                   component={SelectField}
                   name={'time_type'}
                   options={[
-                    { id: '0', name: 'Gesamtes Jahr' },
-                    { id: '1', name: 'Von / Bis' },
+                    {
+                      id: '0',
+                      name: this.props.mainStore!.intl.formatMessage({
+                        id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.whole_year',
+                        defaultMessage: 'Gesamtes Jahr ',
+                      }),
+                    },
+                    {
+                      id: '1',
+                      name: this.props.mainStore!.intl.formatMessage({
+                        id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.from_to',
+                        defaultMessage: 'Von / Bis',
+                      }),
+                    },
                     { id: '2', name: moment().format('MMMM YYYY') },
                     {
                       id: '3',
@@ -70,32 +88,100 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                         .format('MMMM YYYY'),
                     },
                   ]}
-                  label={'Zeitspanne'}
+                  label={
+                    this.props.mainStore!.intl.formatMessage({
+                      id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.timespan',
+                      defaultMessage: 'Zeitspanne',
+                    })
+                  }
                 />
 
                 {formikProps.values.time_type === '0' && (
-                  <WiredField horizontal component={SelectField} name={'year'} options={yearOptions()} label={'Jahr'} />
+                  <WiredField
+                    horizontal
+                    component={SelectField}
+                    name={'year'}
+                    options={yearOptions()}
+                    label={
+                      this.props.mainStore!.intl.formatMessage({
+                        id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.year',
+                        defaultMessage: 'Jahr',
+                      })
+                    }
+                  />
                 )}
 
                 {formikProps.values.time_type === '1' && (
                   <>
-                    <WiredField horizontal component={DatePickerField} name={'beginning'} label={'Start'} />
-                    <WiredField horizontal component={DatePickerField} name={'ending'} label={'Ende'} />
+                    <WiredField
+                      horizontal
+                      component={DatePickerField}
+                      name={'beginning'}
+                      label={
+                        this.props.mainStore!.intl.formatMessage({
+                          id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.start',
+                          defaultMessage: 'Start',
+                        })
+                      }
+                    />
+                    <WiredField
+                      horizontal
+                      component={DatePickerField}
+                      name={'ending'}
+                      label={
+                        this.props.mainStore!.intl.formatMessage({
+                          id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.end',
+                          defaultMessage: 'Ende',
+                        })
+                      }
+                    />
                   </>
                 )}
 
-                <WiredField component={CheckboxField} name={'only_done_sheets'} label={'Nur erledigte Spesenblätter anzeigen?'} />
+                <WiredField
+                  component={CheckboxField}
+                  name={'only_done_sheets'}
+                  label={
+                    this.props.mainStore!.intl.formatMessage({
+                      id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.only_show_finished_expense_sheets',
+                      defaultMessage: 'Nur erledigte Spesenblätter anzeigen?',
+                    })
+                  }
+                />
 
-                <WiredField component={CheckboxField} name={'detail_view'} label={'Detaillierte Ansicht anzeigen?'} />
+                <WiredField
+                  component={CheckboxField}
+                  name={'detail_view'}
+                  label={
+                    this.props.mainStore!.intl.formatMessage({
+                      id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.only_show_detailed_view',
+                      defaultMessage: 'Detaillierte Ansicht anzeigen?',
+                    })
+                  }
+                />
               </ModalBody>
 
               <ModalFooter>
                 {/* tslint:disable-next-line:max-line-length */}
-                <Button color={'success'} href={mainStore.apiURL('expenses_overview.pdf?expenses_overview[beginning]=' + formikProps.values.beginning + '&expenses_overview[ending]=' + formikProps.values.ending + '&detail_view=' + formikProps.values.detail_view + '&only_done_sheets=' + formikProps.values.only_done_sheets + '&time_type=' + formikProps.values.time_type + '&year=' + formikProps.values.year)} tag={'a'} target={'_blank'}>
-                  PDF generieren
+                <Button
+                  color={'success'}
+                  href={mainStore.apiURL('expenses_overview.pdf?expenses_overview[beginning]=' + formikProps.values.beginning + '&expenses_overview[ending]=' + formikProps.values.ending + '&detail_view=' + formikProps.values.detail_view + '&only_done_sheets=' + formikProps.values.only_done_sheets + '&time_type=' + formikProps.values.time_type + '&year=' + formikProps.values.year)}
+                  tag={'a'}
+                  target={'_blank'}
+                >
+                  <FormattedMessage
+                    id="izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.generate_pdf"
+                    defaultMessage="PDF generieren"
+                  />
                 </Button>{' '}
-                <Button color="danger" onClick={toggle}>
-                  Abbrechen
+                <Button
+                  color="danger"
+                  onClick={toggle}
+                >
+                  <FormattedMessage
+                    id="izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.cancel"
+                    defaultMessage="Abbrechen"
+                  />
                 </Button>
               </ModalFooter>
             </>

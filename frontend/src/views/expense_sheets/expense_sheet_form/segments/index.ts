@@ -5,7 +5,7 @@ import { DrivingExpensesSegment } from './DrivingExpensesSegment';
 import { ExtraordinaryExpensesSegment } from './ExtraordinaryExpensesSegment';
 import { FooterSegment } from './FooterSegment';
 import { GeneralSegment } from './GeneralSegment';
-import { PaidVacationSegment } from './PaidVacationSegmet';
+import { PaidVacationSegment } from './PaidVacationSegment';
 import { StateSegment } from './StateSegment';
 import { UnpaidVacationSegment } from './UnpaidVacationSegmet';
 

@@ -4,6 +4,7 @@ import { curry, isEmpty, pick } from 'lodash';
 import * as React from 'react';
 import { ApiStore, baseUrl } from '../../stores/apiStore';
 import { DomainStore } from '../../stores/domainStore';
+import { MainStore } from '../../stores/mainStore';
 import { UserStore } from '../../stores/userStore';
 import { displayError } from '../../utilities/notification';
 
@@ -16,6 +17,7 @@ export interface ValidatablePageInnerProps {
   onValidityChange: ValidityCallback;
   ref: React.Ref<ValidatablePageRefType>;
   userStore?: UserStore;
+  mainStore?: MainStore;
 }
 
 interface ValidatablePageInnerState {
@@ -53,7 +55,13 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
       this.setState({ isValid: false });
       this.props.onValidityChange(false);
 
-      displayError(DomainStore.buildErrorMessage({ messages: data }, 'Ein Fehler ist aufgetreten'));
+      displayError(DomainStore.buildErrorMessage(
+        { messages: data },
+        this.props.mainStore!.intl.formatMessage({
+          id: 'izivi.frontend.register.validatePage.error',
+          defaultMessage: 'Ein Fehler ist aufgetreten',
+        }),
+      ));
       return false;
     } finally {
       this.setState({ dirty: true });
@@ -67,7 +75,7 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
   componentDidUpdate(prevProps: any, prevState: Readonly<ValidatablePageInnerState>) {
     const isValid = this.isValid();
 
-    if (isValid !== prevState.isValid  || this.state.dirty) {
+    if (isValid !== prevState.isValid || this.state.dirty) {
       this.props.onValidityChange(isValid);
       this.setState({ isValid, dirty: false });
     }
@@ -82,7 +90,7 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
       <>
         {this.props.validatableFields.map(field => (
           <div className="text-danger" key={field}>
-            <ErrorMessage name={field}/>
+            <ErrorMessage name={field} />
           </div>
         ))}
 
@@ -106,7 +114,7 @@ export const withPageValidations = curry(
   (validatableFields: string[], EnhancedComponent: React.ComponentType) =>
     React.forwardRef<ValidatablePageRefType, WithPageValidationsProps>(({ onValidityChange, ...rest }, ref) => (
       <ValidatablePage validatableFields={validatableFields} onValidityChange={onValidityChange} ref={ref}>
-        <EnhancedComponent {...rest}/>
+        <EnhancedComponent {...rest} />
       </ValidatablePage>
     )),
 );

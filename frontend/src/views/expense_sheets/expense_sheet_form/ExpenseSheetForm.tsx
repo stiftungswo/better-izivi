@@ -62,15 +62,15 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
               serviceSpecification={serviceSpecification}
             />
 
-            <FormSegments.GeneralSegment service={service}/>
-            <FormSegments.AbsolvedDaysBreakdownSegment hints={hints}/>
-            <FormSegments.CompanyHolidaysSegment hints={hints}/>
-            <FormSegments.PaidVacationSegment/>
-            <FormSegments.UnpaidVacationSegment/>
+            <FormSegments.GeneralSegment service={service} mainStore={mainStore!}/>
+            <FormSegments.AbsolvedDaysBreakdownSegment hints={hints} mainStore={mainStore!}/>
+            <FormSegments.CompanyHolidaysSegment hints={hints} mainStore={mainStore!}/>
+            <FormSegments.PaidVacationSegment mainStore={mainStore!}/>
+            <FormSegments.UnpaidVacationSegment mainStore={mainStore!}/>
             <FormSegments.ClothingExpensesSegment hints={hints} mainStore={mainStore!}/>
-            <FormSegments.DrivingExpensesSegment/>
-            <FormSegments.ExtraordinaryExpensesSegment/>
-            <FormSegments.FooterSegment/>
+            <FormSegments.DrivingExpensesSegment mainStore={mainStore!}/>
+            <FormSegments.ExtraordinaryExpensesSegment mainStore={mainStore!}/>
+            <FormSegments.FooterSegment mainStore={mainStore!}/>
             <FormSegments.StateSegment expenseSheetState={expenseSheet.state} expenseSheetStore={expenseSheetStore!}/>
 
             <ExpenseSheetFormButtons

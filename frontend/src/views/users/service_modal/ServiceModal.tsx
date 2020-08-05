@@ -1,7 +1,7 @@
 import { Field, Formik, FormikProps } from 'formik';
-import debounce from 'lodash.debounce';
 import { inject } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
 import Modal from 'reactstrap/lib/Modal';
 import ModalBody from 'reactstrap/lib/ModalBody';
@@ -97,14 +97,19 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
           <Modal isOpen toggle={onClose}>
             <ModalHeader toggle={onClose}>Zivildiensteinsatz</ModalHeader>
             <ModalBody>
-              <ServiceModalForm serviceDateRangeChangeHandler={this.handleServiceDateRangeChange}/>
+              <ServiceModalForm serviceDateRangeChangeHandler={this.handleServiceDateRangeChange} />
             </ModalBody>
             <ModalFooter>
               {!isAdmin && (
                 <Field
                   component={CheckboxField}
                   onChange={this.handleInformationChecked}
-                  label={'Meine Angaben (IBAN, Telefon) sind aktuell'}
+                  label={
+                    this.props.mainStore!.intl.formatMessage({
+                      id: 'izivi.frontend.views.users.serviceModal.details_are_up_to_date',
+                      defaultMessage: 'Meine Angaben (IBAN, Telefon) sind aktuell',
+                    })
+                  }
                 />
               )}
               <Button
@@ -118,7 +123,10 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
                 <>
                   {' '}
                   <Button color="secondary" onClick={this.onConfirmationPut}>
-                    Aufgebot erhalten
+                    <FormattedMessage
+                      id="izivi.frontend.views.users.serviceModal.got_draft"
+                      defaultMessage="Aufgebot erhalten"
+                    />
                   </Button>
                 </>
               )}
@@ -132,7 +140,12 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
   onConfirmationPut = () => {
     if (this.props.onServiceConfirmed != null) {
       this.props.onServiceConfirmed(this.props.service!).then(() => {
-        this.props.mainStore!.displaySuccess('Speichern erfolgreich');
+        this.props.mainStore!.displaySuccess(
+          this.props.mainStore!.intl.formatMessage({
+            id: 'izivi.frontend.views.users.serviceModal.saved_successfully',
+            defaultMessage: 'Speichern erfolgreich',
+          }),
+        );
       });
     }
   }

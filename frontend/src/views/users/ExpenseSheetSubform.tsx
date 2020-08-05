@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { inject } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import Tooltip from 'reactstrap/lib/Tooltip';
@@ -37,34 +38,6 @@ const styles = () =>
 
 @inject('mainStore')
 class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubformState> {
-  private static getExpenseSheetColumnProps({ state }: ShortExpenseSheetListing) {
-    switch (state) {
-      case ExpenseSheetState.payment_in_progress:
-        return {
-          icon: HourGlassRegularIcon,
-          tooltip: 'In Bearbeitung',
-          color: 'orange',
-        };
-      case ExpenseSheetState.ready_for_payment:
-        return {
-          icon: HourGlassRegularIcon,
-          tooltip: 'In Bearbeitung',
-          color: 'orange',
-        };
-      case ExpenseSheetState.paid:
-        return {
-          icon: CheckSquareRegularIcon,
-          tooltip: 'Erledigt',
-          color: 'green',
-        };
-      default:
-        return {
-          icon: ClockRegularIcon,
-          tooltip: 'Noch nicht fällig',
-          color: 'black',
-        };
-    }
-  }
 
   constructor(props: Props) {
     super(props);
@@ -95,7 +68,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
                 {mainStore!.isAdmin() && (
                   <div className={classes.hideButtonText}>
                     <Button color={'warning'} href={'/expense_sheets/' + expenseSheet.id} tag={'a'} target={'_blank'}>
-                      <FontAwesomeIcon icon={EditSolidIcon}/> <span>Bearbeiten</span>
+                      <FontAwesomeIcon icon={EditSolidIcon} /> <span>Bearbeiten</span>
                     </Button>
                   </div>
                 )}
@@ -103,36 +76,53 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
             )}
           />
         )}
-        {!user && <LoadingInformation/>}
+        {!user && <LoadingInformation />}
       </div>
     );
   }
 
   private getColumns() {
+    const intl = this.props.mainStore!.intl;
+
     return [
       {
         id: 'beginning',
-        label: 'Von',
+        label: intl.formatMessage({
+          id: 'izivi.frontend.views.users.expenseSheetSubform.from',
+          defaultMessage: 'Von',
+        }),
         format: (expenseSheet: ShortExpenseSheetListing) => this.safeFormatDate(expenseSheet.beginning),
       },
       {
         id: 'end',
-        label: 'Bis',
+        label: intl.formatMessage({
+          id: 'izivi.frontend.views.users.expenseSheetSubform.until',
+          defaultMessage: 'Bis',
+        }),
         format: (expenseSheet: ShortExpenseSheetListing) => this.safeFormatDate(expenseSheet.ending),
       },
       {
         id: 'days',
-        label: 'Anzahl Tage',
+        label: intl.formatMessage({
+          id: 'izivi.frontend.views.users.expenseSheetSubform.number_of_days',
+          defaultMessage: 'Anzahl Tage',
+        }),
         format: (expenseSheet: ShortExpenseSheetListing) => expenseSheet.duration,
       },
       {
         id: 'state',
-        label: 'Status',
+        label: intl.formatMessage({
+          id: 'izivi.frontend.views.users.expenseSheetSubform.status',
+          defaultMessage: 'Status',
+        }),
         format: this.formatExpenseSheetStateColumn.bind(this),
       },
       {
         id: 'print',
-        label: 'Drucken',
+        label: intl.formatMessage({
+          id: 'izivi.frontend.views.users.expenseSheetSubform.print',
+          defaultMessage: 'Drucken',
+        }),
         format: this.formatExpenseSheetPrintColumn.bind(this),
       },
     ];
@@ -149,22 +139,27 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
             target={'_blank'}
             className="pl-0"
           >
-            <FontAwesomeIcon icon={PrintSolidIcon}/> <span>Drucken</span>
+            <FontAwesomeIcon icon={PrintSolidIcon} /> <span>
+              <FormattedMessage
+                id="izivi.frontend.views.users.expenseSheetSubform.print"
+                defaultMessage="Drucken"
+              />
+            </span>
           </Button>
         </div>
       );
     } else {
-      return <React.Fragment/>;
+      return <React.Fragment />;
     }
   }
 
   private formatExpenseSheetStateColumn(expenseSheet: ShortExpenseSheetListing) {
-    const { icon, tooltip, color } = ExpenseSheetSubformInner.getExpenseSheetColumnProps(expenseSheet);
+    const { icon, tooltip, color } = this.getExpenseSheetColumnProps(expenseSheet);
 
     return (
       <>
         <span id={'expenseSheetState' + expenseSheet.id}>
-          <FontAwesomeIcon icon={icon} color={color}/>
+          <FontAwesomeIcon icon={icon} color={color} />
         </span>
         <Tooltip
           placement="bottom"
@@ -180,6 +175,49 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
 
   private safeFormatDate(date: string) {
     return date ? this.props.mainStore!.formatDate(date) : '';
+  }
+
+  private getExpenseSheetColumnProps({ state }: ShortExpenseSheetListing) {
+    const intl = this.props.mainStore!.intl;
+
+    switch (state) {
+      case ExpenseSheetState.payment_in_progress:
+        return {
+          icon: HourGlassRegularIcon,
+          tooltip: intl.formatMessage({
+            id: 'izivi.frontend.views.users.expenseSheetSubform.in_progress',
+            defaultMessage: 'In Bearbeitung',
+          }),
+          color: 'orange',
+        };
+      case ExpenseSheetState.ready_for_payment:
+        return {
+          icon: HourGlassRegularIcon,
+          tooltip: intl.formatMessage({
+            id: 'izivi.frontend.views.users.expenseSheetSubform.in_progress',
+            defaultMessage: 'In Bearbeitung',
+          }),
+          color: 'orange',
+        };
+      case ExpenseSheetState.paid:
+        return {
+          icon: CheckSquareRegularIcon,
+          tooltip: intl.formatMessage({
+            id: 'izivi.frontend.views.users.expenseSheetSubform.done',
+            defaultMessage: 'Erledigt',
+          }),
+          color: 'green',
+        };
+      default:
+        return {
+          icon: ClockRegularIcon,
+          tooltip: intl.formatMessage({
+            id: 'izivi.frontend.views.users.expenseSheetSubform.not_yet_due',
+            defaultMessage: 'Noch nicht fällig',
+          }),
+          color: 'black',
+        };
+    }
   }
 }
 

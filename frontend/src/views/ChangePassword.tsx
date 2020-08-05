@@ -12,21 +12,6 @@ import { ApiStore } from '../stores/apiStore';
 import { DomainStore } from '../stores/domainStore';
 import { MainStore } from '../stores/mainStore';
 
-const changePasswordSchema = yup.object({
-  current_password: yup.string().required('Pflichtfeld'),
-  password: yup
-    .string()
-    .required('Pflichtfeld')
-    .min(6, 'Passwort muss mindestens 6 Zeichen sein'),
-  password_confirmation: yup
-    .string()
-    .required('Pflichtfeld')
-    .min(6, 'Passwort muss mindestens 6 Zeichen sein')
-    .test('passwords-match', 'Passwörter müssen übereinstimmen', function(value) {
-      return this.parent.password === value;
-    }),
-});
-
 const template = {
   current_password: '',
   password: '',
@@ -43,14 +28,70 @@ interface ChangePasswordProps {
 @inject('apiStore', 'mainStore')
 @observer
 class ChangePassword extends React.Component<ChangePasswordProps> {
+  intl = this.props.mainStore!.intl;
+
+  changePasswordSchema = yup.object({
+    password: yup
+      .string()
+      .required(
+        this.intl.formatMessage({
+          id: 'izivi.frontend.views.changeForgottenPassword.mandatory_field',
+          defaultMessage: 'Pflichtfeld',
+        }),
+      )
+      .min(
+        6,
+        this.intl.formatMessage({
+          id:
+            'izivi.frontend.views.changeForgottenPassword.password_min_length',
+          defaultMessage: 'Passwort muss mindestens 6 Zeichen sein',
+        }),
+      ),
+    password_confirmation: yup
+      .string()
+      .required(
+        this.intl.formatMessage({
+          id: 'izivi.frontend.views.changeForgottenPassword.mandatory_field',
+          defaultMessage: 'Pflichtfeld',
+        }),
+      )
+      .min(
+        6,
+        this.intl.formatMessage({
+          id:
+            'izivi.frontend.views.changeForgottenPassword.password_min_length',
+          defaultMessage: 'Passwort muss mindestens 6 Zeichen sein',
+        }),
+      )
+      .test(
+        'passwords-match',
+        this.intl.formatMessage({
+          id:
+            'izivi.frontend.views.changeForgottenPassword.passwords_must_match',
+          defaultMessage: 'Passwörter müssen übereinstimmen',
+        }),
+        function(value) {
+          return this.parent.password === value;
+        },
+      ),
+  });
+
   constructor(props: ChangePasswordProps) {
     super(props);
   }
 
-  changePassword = async (values: FormValues, actions: FormikActions<FormValues>) => {
+  changePassword = async (
+    values: FormValues,
+    actions: FormikActions<FormValues>,
+  ) => {
     try {
       await this.props.apiStore!.putChangePassword(values);
-      this.props.mainStore!.displaySuccess('Passwort wurde erfolgreich gespeichert!');
+      this.props.mainStore!.displaySuccess(
+        this.intl.formatMessage({
+          id: 'izivi.frontend.views.changePassword.password_save_success',
+          defaultMessage: 'Passwort wurde erfolgreich gespeichert!',
+        }),
+      );
     } catch (error) {
       this.displayError(error);
       throw error;
@@ -65,22 +106,49 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
       <IziviContent card title={'Passwort ändern'}>
         <Formik
           initialValues={template}
-          validationSchema={changePasswordSchema}
+          validationSchema={this.changePasswordSchema}
           onSubmit={this.changePassword}
-          render={formikProps => (
+          render={(formikProps) => (
             <Form onSubmit={formikProps.handleSubmit}>
-              <WiredField component={PasswordField} name={'current_password'} label={'Altes Passwort'} placeholder={passwordPlaceholder} />
-              <WiredField component={PasswordField} name={'password'} label={'Neues Passwort'} placeholder={passwordPlaceholder} />
+              <WiredField
+                component={PasswordField}
+                name={'current_password'}
+                label={this.intl.formatMessage({
+                  id: 'izivi.frontend.views.changePassword.old_password',
+                  defaultMessage: 'Altes Passwort',
+                })}
+                placeholder={passwordPlaceholder}
+              />
+              <WiredField
+                component={PasswordField}
+                name={'password'}
+                label={this.intl.formatMessage({
+                  id: 'izivi.frontend.views.changePassword.new_password',
+                  defaultMessage: 'Neues Passwort',
+                })}
+                placeholder={passwordPlaceholder}
+              />
               <WiredField
                 component={PasswordField}
                 name={'password_confirmation'}
-                label={'Neues Passwort wiederholen'}
+                label={this.intl.formatMessage({
+                  id: 'izivi.frontend.views.changePassword.repeat_new_password',
+                  defaultMessage: 'Neues Passwort wiederholen',
+                })}
                 placeholder={passwordPlaceholder}
               />
-              <Button color={'primary'} disabled={formikProps.isSubmitting} onClick={formikProps.submitForm}>
+              <Button
+                color={'primary'}
+                disabled={formikProps.isSubmitting}
+                onClick={formikProps.submitForm}
+              >
                 Passwort ändern
               </Button>
-              <Button className={'ml-3'} color={'danger'} onClick={() => (window.location.pathname = '/')}>
+              <Button
+                className={'ml-3'}
+                color={'danger'}
+                onClick={() => (window.location.pathname = '/')}
+              >
                 Abbrechen
               </Button>
             </Form>
@@ -92,10 +160,23 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
 
   private displayError(error: any) {
     if (this.isCurrentPasswordInvalid(error)) {
-      this.props.mainStore!.displayError('Das eingegebene Passwort ist falsch');
+      this.props.mainStore!.displayError(
+        this.intl.formatMessage({
+          id: 'izivi.frontend.views.changePassword.password_wrong',
+          defaultMessage: 'Das eingegebene Passwort ist falsch',
+        }),
+      );
     } else {
       this.props.mainStore!.displayError(
-        DomainStore.buildErrorMessage(error, 'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.'),
+        DomainStore.buildErrorMessage(
+          error,
+          this.intl.formatMessage({
+            id:
+              'izivi.frontend.views.changePassword.internal_error_try_again_later',
+            defaultMessage:
+              'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
+          }),
+        ),
       );
     }
   }

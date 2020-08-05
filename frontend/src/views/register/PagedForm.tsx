@@ -1,10 +1,13 @@
 import { FormikProps } from 'formik';
 import * as H from 'history';
 import { clamp, curryRight } from 'lodash';
+import { inject } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import Form from 'reactstrap/lib/Form';
+import { MainStore } from '../../stores/mainStore';
 import { Spinner } from '../../utilities/Spinner';
 import { FormValues as RegisterFormValues } from './RegisterForm';
 import { ValidatablePageRefType, WithPageValidationsProps } from './ValidatablePage';
@@ -14,17 +17,26 @@ interface PagedFormProps {
   pages: Array<React.RefForwardingComponent<ValidatablePageRefType, WithPageValidationsProps>>;
   currentPage: number;
   history: H.History;
+  mainStore?: MainStore;
 }
 
-const getNextButton = (isDisabled: boolean, onClick: () => void) => {
-  const title = isDisabled ? 'Das Formular hat noch ungültige Felder' : undefined;
+const getNextButton = (isDisabled: boolean, onClick: () => void, intl: IntlShape) => {
+  const title = isDisabled
+    ? intl.formatMessage({
+      id: 'izivi.frontend.register.pagedForm.form_has_invalid_fields ',
+      defaultMessage: 'Das Formular hat noch ungültige Felder',
+    })
+    : undefined;
   return (
     <Button
       disabled={isDisabled}
       onClick={() => onClick()}
       title={title}
     >
-      Vorwärts
+      <FormattedMessage
+        id="izivi.frontend.register.pagedForm.forward"
+        defaultMessage="Vorwärts"
+      />
     </Button>
   );
 };
@@ -36,11 +48,15 @@ const getSubmitButton = (formikProps: FormikProps<RegisterFormValues>, isDisable
       disabled={formikProps.isSubmitting || isDisabled}
       onClick={onClick}
     >
-      Registrieren
+      <FormattedMessage
+        id="izivi.frontend.register.pagedForm.register"
+        defaultMessage="Registrieren"
+      />
     </Button>
   );
 };
 
+@inject('mainStore')
 export class PagedForm extends React.Component<PagedFormProps, { currentPageIsValid: boolean, isValidating: boolean }> {
   private ref = React.createRef<ValidatablePageRefType>();
 
@@ -76,14 +92,19 @@ export class PagedForm extends React.Component<PagedFormProps, { currentPageIsVa
     const isLast = currentPage === pages.length;
 
     const isDisabled = !this.state.currentPageIsValid || this.state.isValidating;
-    const nextButton = getNextButton(isDisabled, this.nextButtonClicked);
+    const nextButton = getNextButton(isDisabled, this.nextButtonClicked, this.props.mainStore!.intl);
     const submitButton = getSubmitButton(formikProps, isDisabled, this.submitButtonClicked);
 
     return (
       <Form onSubmit={formikProps.handleSubmit}>
-        <CurrentPageComponent onValidityChange={valid => this.setState({ currentPageIsValid: valid })} ref={this.ref}/>
+        <CurrentPageComponent onValidityChange={valid => this.setState({ currentPageIsValid: valid })} ref={this.ref} />
         <Link to={`/register/${this.sanitizedPage - 1}`}>
-          <Button disabled={this.sanitizedPage === 1} className={'mr-2'}>Zurück</Button>
+          <Button disabled={this.sanitizedPage === 1} className={'mr-2'}>
+            <FormattedMessage
+              id="izivi.frontend.register.pagedForm.back"
+              defaultMessage="Zurück"
+            />
+          </Button>
         </Link>
         {isLast ? submitButton : nextButton}
         {this.state.isValidating && <Spinner size="sm" className="ml-3" />}

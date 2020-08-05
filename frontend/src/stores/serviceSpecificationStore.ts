@@ -6,8 +6,14 @@ import { MainStore } from './mainStore';
 export class ServiceSpecificationStore extends DomainStore<ServiceSpecification> {
   protected get entityName() {
     return {
-      singular: 'Das Pflichtenheft',
-      plural: 'Die Pflichtenhefte',
+      singular: this.mainStore.intl.formatMessage({
+        id: 'izivi.frontend.store.serviceSpecificationStore.service_specification.one',
+        defaultMessage: 'Das Pflichtenheft',
+      }),
+      plural: this.mainStore.intl.formatMessage({
+        id: 'izivi.frontend.store.serviceSpecificationStore.service_specification.other',
+        defaultMessage: 'Die Pflichtenhefte',
+      }),
     };
   }
 
