@@ -19,12 +19,13 @@ services:
             - DATABASE_PASSWORD=
             - DEVISE_JWT_SECRET_KEY=verysecret
             - DEVISE_SECRET_KEY=verysecret
+            - COMMUNITY_PASSWORD=123456
 
     frontend:
         image: node:10
         container_name: better_izivi_frontend
         volumes:
-            - ./frontend:/var/frontend
+            - ./frontend:/var/frontend:cached
         working_dir: /var/frontend
         ports:
             - "23000:3000"
