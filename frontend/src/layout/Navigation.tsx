@@ -11,7 +11,7 @@ import NavbarToggler from 'reactstrap/lib/NavbarToggler';
 import NavItem from 'reactstrap/lib/NavItem';
 import NavLink from 'reactstrap/lib/NavLink';
 import { ApiStore } from '../stores/apiStore';
-import { MainStore, messages } from '../stores/mainStore';
+import { languages, MainStore, messages } from '../stores/mainStore';
 import { Locale } from '../types';
 
 interface NavEntryProps {
@@ -114,12 +114,12 @@ export class Navigation extends React.Component<NavProps> {
               )}
             <UncontrolledDropdown>
               <DropdownToggle>
-                {mainStore.locale}
+                {languages[mainStore.locale]}
               </DropdownToggle>
               <DropdownMenu right>
                 {Object.keys(messages).map((locale) =>
                   <DropdownItem onClick={() => mainStore.locale = locale as Locale} key={locale}>
-                    {locale}
+                    {languages[locale as Locale]}
                   </DropdownItem>,
                 )}
               </DropdownMenu>

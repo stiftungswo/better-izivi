@@ -13,9 +13,17 @@ import { ApiStore, baseUrl } from './apiStore';
 
 const cache = createIntlCache();
 
+const germanLocale = 'de-CH';
+const frenchLocale = 'fr-CH';
+
 export const messages: { [locale in Locale]: any } = {
-  'de-CH': messagesDe,
-  'fr-CH': messagesFr,
+  [germanLocale]: messagesDe,
+  [frenchLocale]: messagesFr,
+};
+
+export const languages = {
+  [germanLocale]: 'Deutsch',
+  [frenchLocale]: 'Français',
 };
 
 export class MainStore {
