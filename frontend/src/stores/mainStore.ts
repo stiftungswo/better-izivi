@@ -3,8 +3,8 @@ import { action, autorun, computed, observable, reaction } from 'mobx';
 import moment from 'moment';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import momentLocalizer from 'react-widgets-moment';
-import messagesDe from '../messages.de-CH.json';
-import messagesFr from '../messages.fr-CH.json';
+import messagesDe from '../messages.de.json';
+import messagesFr from '../messages.fr.json';
 import { Locale } from '../types';
 import { Formatter } from '../utilities/formatter';
 import { buildURL } from '../utilities/helpers';
@@ -13,8 +13,8 @@ import { ApiStore, baseUrl } from './apiStore';
 
 const cache = createIntlCache();
 
-const germanLocale = 'de-CH';
-const frenchLocale = 'fr-CH';
+const germanLocale = 'de';
+const frenchLocale = 'fr';
 
 export const messages: { [locale in Locale]: any } = {
   [germanLocale]: messagesDe,
@@ -43,7 +43,7 @@ export class MainStore {
   showArchived = false;
 
   @observable
-  locale: Locale = 'de-CH';
+  locale: Locale = germanLocale;
 
   @observable
   monthNames: string[] = moment.months();
