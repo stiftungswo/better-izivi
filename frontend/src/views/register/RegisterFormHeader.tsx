@@ -9,15 +9,11 @@ export const RegisterFormHeader = () => {
     defaultMessage: 'Einsatzplanung Zivildienst',
   });
 
-  const SAMPLE_MAIL_CONTENT_TEXT = `Guten Tag Herr Pfeuti!
+  const SAMPLE_MAIL_CONTENT = `Guten Tag Herr Pfeuti!
               %0D%0A%0D%0AIch schreibe Ihnen betreffend meiner Einsatzplanung als FELDZIVI / BÜROZIVI (EINS AUSWÄHLEN)
               vom DD.MM.YYYY bis DD.MM.YYYY, wäre dieser Zeitraum möglich?
               %0D%0A%0D%0A
               %0D%0A%0D%0ABesten Dank und freundliche Grüsse`;
-  const SAMPLE_MAIL_CONTENT = intl.formatMessage({
-    id: 'izivi.frontend.register.registerFormHeader.sample_mail_content',
-    defaultMessage: SAMPLE_MAIL_CONTENT_TEXT,
-  });
 
   const SAMPLE_MAIL_LINK = `mailto:zivildienst@stiftungswo.ch?subject=${SAMPLE_MAIL_SUBJECT}&body=${SAMPLE_MAIL_CONTENT}`;
   const MARC_LINK = (
