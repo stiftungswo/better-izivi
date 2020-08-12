@@ -20,6 +20,19 @@ services:
             - DEVISE_JWT_SECRET_KEY=verysecret
             - DEVISE_SECRET_KEY=verysecret
             - COMMUNITY_PASSWORD=123456
+            - PAIN_CREDITOR_NAME=Example Company
+            - PAIN_CREDITOR_BIC=POFICHBEXXX
+            - PAIN_CREDITOR_IBAN=CH9300762011623852957
+            - MAIL_SENDER=no-reply@stiftungswo.ch
+            - SMTP_HOST=example.com
+            - SMTP_PORT=25
+            - SMTP_USER_NAME=username
+            - SMTP_PASSWORD=password
+            - SERVICE_AGREEMENT_LETTER_SENDER_NAME=My Company Name
+            - SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS=MyStreet 111
+            - SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY=1234 MyCity
+            - FEEDBACK_MAIL_SURVEY_URL="e.g. http://survey.stiftungswo.ch/my/survey?service_id=%{service_id}"
+            - PASSWORD_RESET_LINK="e.g. http://izivi.localhost:3000/users/passwords/edit/%{token}"
 
     frontend:
         image: node:10
