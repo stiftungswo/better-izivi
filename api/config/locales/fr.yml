@@ -164,7 +164,7 @@ fr:
           not_found: Paiement non trouvé
           ready_not_found: Aucune feuille de dépenses prête à être payée n'a été trouvée
         expenses_from: Frais du %{from_date}
-        pain_filename: Frais_du_%{from_date}.xml
+        pain_filename: Frais_du_%{from_date}
       pdfs:
         expense_sheet:
           expense_table:
@@ -182,7 +182,7 @@ fr:
               work_clothing_expenses_comment:
                 one: CHF %{amount} p. jour pour %{count} jour facturable
                 other: CHF %{amount} p. jour pour %{count} jours facturables
-          filename: Portrait_des_dépenses_%{today}.pdf
+          filename: Portrait_des_dépenses_%{today}
           header: 'Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
           info_block:
             footer:
@@ -198,21 +198,21 @@ fr:
                 value:
                   one: "<b>%{beginning} à %{ending} (%{duration} jour)</b>"
                   other: "<b>%{beginning} à %{ending} (%{duration} jours)</b>"
-          title: Rapport_de_dépenses_de_%{full_name}.pdf
+          title: Rapport_de_dépenses_de_%{full_name}
         expenses_overview:
           basedon: Statistiques basées sur toutes les feuilles de rapport remplies
-          filename: Presentation_statistiques_charges_%{today}.pdf
+          filename: Presentation_statistiques_charges_%{today}
           swo: Stiftung für Wirtschaft und Ökologie (opération d'utilisation No. 423) - Disponible à partir de %{date}
           title: Zivi aperçu des dépenses (period %{beginning} - %{ending})
         phone_list:
-          filename: Liste_téléphonique_%{today}.pdf
+          filename: Liste_téléphonique_%{today}
           header: Généré sur %{date}
           title: Liste téléphonique de %{beginning} à %{ending}
         service_agreement:
           body_content: |-
             Chère Zivi
             Veuillez envoyer l'accord de mission signé à l'adresse ci-dessus. Si vous utilisez une enveloppe à fenêtre à fenêtre gauche ou droite, vous pouvez plier cette page de garde et la mettre dans l'enveloppe. L'adresse est placée correctement. L'adresse en bas à droite est utilisée par nous pour transmettre l'accord de mission au bureau régional. A la toute fin, vous trouverez une fiche d'information, qui vous donne des informations sur le déroulement de votre mission. Veuillez remettre le talon signé à l'officier responsable le premier jour de la mission.
-          filename: Accord_de_mission_de_%{full_name}.pdf
+          filename: Accord_de_mission_de_%{full_name}
       service_calculator:
         end_date_cannot_be_on_weekend: La fin du service ne peut pas avoir lieu la fin de semaine.
         invalid_required_service_days: Jours du service non valables

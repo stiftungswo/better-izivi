@@ -8,7 +8,7 @@ module V1
           format.json
           format.pdf do
             send_data pdf.new(*args).render,
-                      filename: filename,
+                      filename: filename + '.pdf',
                       type: 'application/pdf',
                       disposition: 'inline'
           end
