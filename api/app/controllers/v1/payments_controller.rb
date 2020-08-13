@@ -15,9 +15,10 @@ module V1
       respond_to do |format|
         format.json
         format.xml do
-          send_data generate_pain, disposition: 'attachment',
-                                   filename: I18n.t('izivi.backend.payment.pain_filename',
-                                                    from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y')) + '.xml'
+          send_data generate_pain,
+                    disposition: 'attachment',
+                    filename: I18n.t('izivi.backend.payment.pain_filename',
+                                     from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y')) + '.xml'
         end
       end
     end

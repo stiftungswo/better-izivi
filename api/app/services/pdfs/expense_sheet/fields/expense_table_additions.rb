@@ -79,7 +79,7 @@ module Pdfs
           content: [
             {
               ExpenseTable::COLUMN_WIDTHS[0..-3].sum => '',
-              ExpenseTable::COLUMN_WIDTHS[-2] => "#{I18n.t('izivi.backend.pdfs.expense_sheet.expense_table.footer.total')}:",
+              ExpenseTable::COLUMN_WIDTHS[-2] => "#{I18n.t('izivi.backend.pdfs.expense_sheet.expense_table.footer.total')}:", # rubocop:disable Metrics/LineLength
               ExpenseTable::COLUMN_WIDTHS[-1] => lambda do |expense_sheet|
                 Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_full_expenses.to_d)
               end

@@ -67,7 +67,9 @@ RSpec.describe ExpenseSheet, type: :model do
         let(:invalid_ending) { Date.parse('2019-09-28') }
 
         it 'added error' do
-          expect(expense_sheet.errors[:base]).to include I18n.t('izivi.backend.expense_sheet.errors.outside_service_date_range')
+          expect(expense_sheet.errors[:base]).to include I18n.t(
+            'izivi.backend.expense_sheet.errors.outside_service_date_range'
+          )
         end
       end
     end

@@ -16,7 +16,8 @@ module V1
           pdf = Pdfs::ExpensesOverviewService.new(@specifications, sanitized_filters)
 
           send_data pdf.render,
-                    filename: I18n.t('izivi.backend.pdfs.expenses_overview.filename', today: I18n.l(Time.zone.today)) + '.pdf',
+                    filename:
+                      I18n.t('izivi.backend.pdfs.expenses_overview.filename', today: I18n.l(Time.zone.today)) + '.pdf',
                     type: 'application/pdf',
                     disposition: 'inline'
         end
