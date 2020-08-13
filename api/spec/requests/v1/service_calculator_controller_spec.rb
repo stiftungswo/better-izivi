@@ -47,7 +47,7 @@ RSpec.describe V1::ServiceCalculatorController, type: :request do
         let(:service_days) { 0 }
 
         it 'returns the correct error' do
-          expect(json_response).to eq(error: I18n.t('service_calculator.invalid_required_service_days'))
+          expect(json_response).to eq(error: I18n.t('izivi.backend.service_calculator.invalid_required_service_days'))
         end
       end
     end

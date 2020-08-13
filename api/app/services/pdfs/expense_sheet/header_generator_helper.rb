@@ -6,7 +6,7 @@ module Pdfs
       def header
         box Colors::GREEN, [0, cursor], width: bounds.width, height: 30
         move_down 30
-        text_box I18n.t('pdfs.expense_sheet.header'),
+        text_box I18n.t('izivi.backend.pdfs.expense_sheet.header'),
                  align: :center,
                  valign: :center,
                  style: :bold,

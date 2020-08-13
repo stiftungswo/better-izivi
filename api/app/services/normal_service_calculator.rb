@@ -11,7 +11,7 @@ class NormalServiceCalculator
   end
 
   def calculate_ending_date(required_service_days)
-    raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
+    raise I18n.t('izivi.backend.service_calculator.invalid_required_service_days') unless required_service_days.positive?
 
     temp_ending_date = @beginning_date + required_service_days.days - 1.day
     unpaid_days = calculate_unpaid_days(required_service_days, temp_ending_date)

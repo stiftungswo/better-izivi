@@ -22,7 +22,7 @@ RSpec.describe ValidationError do
 
       it 'serializes the error to a hash' do
         expect(validation_error_hash).to eq(
-          errors: { first_name: [I18n.t('errors.messages.blank')] },
+          errors: { first_name: [I18n.t('izivi.backend.errors.messages.blank')] },
           human_readable_descriptions: full_messages
         )
       end

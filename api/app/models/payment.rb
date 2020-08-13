@@ -23,7 +23,7 @@ class Payment
     payment_timestamp = floor_time(payment_timestamp)
     expense_sheets = ExpenseSheet.in_payment(payment_timestamp)
 
-    raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.not_found') if expense_sheets.empty?
+    raise ActiveRecord::RecordNotFound, I18n.t('izivi.backend.payment.errors.not_found') if expense_sheets.empty?
 
     state = expense_sheets.first.state
     Payment.new expense_sheets: expense_sheets, payment_timestamp: payment_timestamp, state: state
@@ -37,7 +37,7 @@ class Payment
   end
 
   def initialize(expense_sheets:, payment_timestamp: Time.zone.now, state: :payment_in_progress)
-    raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.ready_not_found') if expense_sheets.empty?
+    raise ActiveRecord::RecordNotFound, I18n.t('izivi.backend.payment.errors.ready_not_found') if expense_sheets.empty?
 
     @expense_sheets = expense_sheets
     @payment_timestamp = Payment.floor_time payment_timestamp

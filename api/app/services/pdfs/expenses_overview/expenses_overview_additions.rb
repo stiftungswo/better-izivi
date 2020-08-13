@@ -7,51 +7,51 @@ module Pdfs
 
       TABLE_HEADER = [
         {
-          content: I18n.t('activerecord.attributes.user.id'),
+          content: I18n.t('izivi.backend.activerecord.attributes.user.id'),
           background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.service_specification.name'),
+          content: I18n.t('izivi.backend.activerecord.attributes.service_specification.name'),
           background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'),
+          content: I18n.t('izivi.backend.pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.label'),
           background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.work_days.other'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.work_days.other'),
           colspan: 2, background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.workfree'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.workfree'),
           colspan: 2, background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.sickness'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.sickness'),
           colspan: 2, background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.paid_vacation_days.other'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.paid_vacation_days.other'),
           colspan: 2, background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.unpaid_vacation_days.other'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.unpaid_vacation_days.other'),
           colspan: 2, background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.way_expenses'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.way_expenses'),
           background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('activerecord.attributes.expense_sheet.clothing'),
+          content: I18n.t('izivi.backend.activerecord.attributes.expense_sheet.clothing'),
           colspan: 2, background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('pdfs.expense_sheet.expense_table.row_headers.extra'),
+          content: I18n.t('izivi.backend.pdfs.expense_sheet.expense_table.row_headers.extra'),
           background_color: COLOR_GREY, align: :center
         },
         {
-          content: I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount'),
+          content: I18n.t('izivi.backend.pdfs.expense_sheet.expense_table.headers.full_amount'),
           colspan: 2, background_color: COLOR_GREY, align: :right
         }
       ].freeze

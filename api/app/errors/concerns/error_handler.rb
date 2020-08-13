@@ -31,11 +31,11 @@ module Concerns
     end
 
     def render_authorization_error
-      render json: { error: I18n.t('errors.authorization_error') }, status: :unauthorized
+      render json: { error: I18n.t('izivi.backend.errors.authorization_error') }, status: :unauthorized
     end
 
     def render_format_error
-      render json: { error: I18n.t('errors.format_error') }, status: :not_acceptable
+      render json: { error: I18n.t('izivi.backend.errors.format_error') }, status: :not_acceptable
     end
 
     def render_calculation_error(error)

@@ -23,8 +23,8 @@ module DeviseOverrides
 
     # :reek:UtilityFunction
     def invalid_community_password_error
-      full_message = I18n.t('registrations.errors.community_password.not_valid.full')
-      single_message = I18n.t('registrations.errors.community_password.not_valid.single')
+      full_message = I18n.t('izivi.backend.registrations.errors.community_password.not_valid.full')
+      single_message = I18n.t('izivi.backend.registrations.errors.community_password.not_valid.single')
 
       ValidationError.new({ community_password: single_message }, [full_message])
     end

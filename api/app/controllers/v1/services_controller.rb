@@ -27,7 +27,7 @@ module V1
     def show
       respond_to_json_and_pdf(
         Pdfs::ServiceAgreement::GlueService,
-        I18n.t('pdfs.service_agreement.filename', full_name: @service.user.full_name),
+        I18n.t('izivi.backend.pdfs.service_agreement.filename', full_name: @service.user.full_name),
         @service
       )
     end

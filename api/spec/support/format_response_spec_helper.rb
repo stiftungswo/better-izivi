@@ -9,7 +9,7 @@ RSpec.shared_examples_for 'format protected resource' do
 
   it 'renders an error' do
     expect(parse_response_json(response)).to include(
-      error: I18n.t('errors.format_error')
+      error: I18n.t('izivi.backend.errors.format_error')
     )
   end
 end
