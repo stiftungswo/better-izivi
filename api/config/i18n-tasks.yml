@@ -17,7 +17,7 @@ data:
   read:
     ## Default:
     - config/locales/%{locale}.yml
-    - config/locales/devise.%{locale}.yml
+    # - config/locales/devise.%{locale}.yml
     ## More files:
     # - config/locales/**/*.%{locale}.yml
 
@@ -28,7 +28,7 @@ data:
     # - ['{devise, simple_form}.*', 'config/locales/\1.%{locale}.yml']
     ## Catch-all default:
     - config/locales/%{locale}.yml
-    - config/locales/devise.%{locale}.yml
+    # - config/locales/devise.%{locale}.yml
 
   # External locale data (e.g. gems).
   # This data is not considered unused and is never written to.
