@@ -9,7 +9,7 @@ RSpec.shared_examples_for 'login protected resource' do
 
   it 'renders an error' do
     expect(parse_response_json(response)).to include(
-      error: I18n.t('izivi.backend.devise.failure.unauthenticated')
+      error: I18n.t('devise.failure.unauthenticated')
     )
   end
 end

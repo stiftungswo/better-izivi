@@ -66,8 +66,8 @@ RSpec.describe Devise::RegistrationsController, type: :request do
       it_behaves_like 'renders a validation error response'
       it 'renders only errors of the fields supplied', :aggregate_failures do
         expect(response_json[:errors]).to eq(
-          first_name: [I18n.t('izivi.backend.errors.messages.blank')],
-          last_name: [I18n.t('izivi.backend.errors.messages.blank')]
+          first_name: [I18n.t('errors.messages.blank')],
+          last_name: [I18n.t('errors.messages.blank')]
         )
         expect(response_json[:human_readable_descriptions]).to contain_exactly('Vorname muss ausgefüllt werden',
                                                                                'Nachname muss ausgefüllt werden')
