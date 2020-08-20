@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import * as H from 'history';
 import { clamp, curryRight } from 'lodash';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -57,6 +57,7 @@ const getSubmitButton = (formikProps: FormikProps<RegisterFormValues>, isDisable
 };
 
 @inject('mainStore')
+@observer
 export class PagedForm extends React.Component<PagedFormProps, { currentPageIsValid: boolean, isValidating: boolean }> {
   private ref = React.createRef<ValidatablePageRefType>();
 

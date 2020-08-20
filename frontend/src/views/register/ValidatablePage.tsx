@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { connect, ErrorMessage, FormikProps } from 'formik';
 import { curry, isEmpty, pick } from 'lodash';
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { IntlShape } from 'react-intl';
 import { ApiStore, baseUrl } from '../../stores/apiStore';
 import { DomainStore } from '../../stores/domainStore';
 import { MainStore } from '../../stores/mainStore';
@@ -16,7 +18,6 @@ export interface ValidatablePageInnerProps {
   validatableFields: string[];
   onValidityChange: ValidityCallback;
   ref: React.Ref<ValidatablePageRefType>;
-  userStore?: UserStore;
   mainStore?: MainStore;
 }
 
@@ -27,13 +28,17 @@ interface ValidatablePageInnerState {
 
 type ValidatablePageInnerFullProps = ValidatablePageInnerProps & { formik: FormikProps<any> };
 
+@inject('mainStore')
+@observer
 class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps, ValidatablePageInnerState> {
   private axiosClient = axios.create({ baseURL: baseUrl });
+  private intl: IntlShape;
 
   constructor(props: ValidatablePageInnerFullProps) {
     super(props);
 
     this.state = { isValid: false, dirty: false };
+    this.intl = props.mainStore!.intl;
   }
 
   async validateWithServer() {
@@ -57,7 +62,7 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
 
       displayError(DomainStore.buildErrorMessage(
         { messages: data },
-        this.props.mainStore!.intl.formatMessage({
+        this.intl.formatMessage({
           id: 'izivi.frontend.register.validatePage.error',
           defaultMessage: 'Ein Fehler ist aufgetreten',
         }),
