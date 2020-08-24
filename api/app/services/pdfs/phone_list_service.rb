@@ -8,12 +8,12 @@ module Pdfs
     include Pdfs::PrawnHelper
 
     TABLE_HEADER = [
-      I18n.t('izivi.backend.activerecord.attributes.user.first_name'),
-      I18n.t('izivi.backend.activerecord.attributes.user.last_name'),
-      I18n.t('izivi.backend.activerecord.attributes.user.address'),
-      I18n.t('izivi.backend.activerecord.attributes.user.zip_with_city'),
-      I18n.t('izivi.backend.activerecord.attributes.user.phone'),
-      I18n.t('izivi.backend.activerecord.attributes.user.email')
+      I18n.t('activerecord.attributes.user.first_name'),
+      I18n.t('activerecord.attributes.user.last_name'),
+      I18n.t('activerecord.attributes.user.address'),
+      I18n.t('activerecord.attributes.user.zip_with_city'),
+      I18n.t('activerecord.attributes.user.phone'),
+      I18n.t('activerecord.attributes.user.email')
     ].freeze
 
     def initialize(service_specifications, dates)
@@ -34,11 +34,11 @@ module Pdfs
     private
 
     def header
-      text I18n.t('izivi.backend.pdfs.phone_list.header', date: I18n.l(Time.zone.today)), align: :right
+      text I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today)), align: :right
 
       text(
         I18n.t(
-          'izivi.backend.pdfs.phone_list.title',
+          'pdfs.phone_list.title',
           beginning: I18n.l(@beginning),
           ending: I18n.l(@ending)
         ),

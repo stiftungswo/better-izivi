@@ -1,338 +1,216 @@
 ---
 en:
-  izivi:
-    backend:
-      activerecord:
-        attributes:
-          expense_sheet:
-            accommodation_expenses: Accommodation
-            bank_account_number: Bank account number
-            beginning: Beginning
-            clothing: Clothes
-            clothing_expenses: Clothing expenses
-            clothing_expenses_comment: Clothing expenses comment
-            company_holiday_comment: Company holiday comment
-            driving_expenses: Driving expenses
-            driving_expenses_comment: Driving expenses comment
-            ending: Ending
-            extraordinary_expenses: Extraordinary expenses
-            extraordinary_expenses_comment: Extraordinary expenses comment
-            paid_company_holiday_days: Paid company holiday days
-            paid_vacation_comment: Paid vacation comment
-            paid_vacation_days:
-              one: Paid vacation day
-              other: Paid vacation days
-            pocket_money: Pocket money
-            sick_comment: Sick comment
-            sick_days:
-              one: Sick day
-              other: Sick days
-            sickness: Sickness
-            state: State
-            unpaid_company_holiday_days: Unpaid company holiday days
-            unpaid_vacation_comment: Unpaid vacation comment
-            unpaid_vacation_days:
-              one: Unpaid vacation day
-              other: Unpaid vacation days
-            way_expenses: Way expenses
-            work_clothing_expenses: Work clothing expenses
-            work_days:
-              one: Work day
-              other: Work days
-            workfree: Workfree
-            workfree_days:
-              one: Workfree day
-              other: Workfree days
-          holiday:
-            beginning: Beginning
-            description: Description
-            ending: Ending
-            holiday_type: Holiday type
-          regional_center:
-            address: Address
-            name: Name
-            short_name: Short name
-          service:
-            beginning: Beginning
-            confirmation_date: Confirmation date
-            ending: Ending
-            feedback_mail_sent: Feedback mail sent
-            first_swo_service: First SWO service
-            long_service: Long service
-            probation_service: Probation service
-            service_days: Days of service
-            service_type: Service type
-          service_specification:
-            accommodation_expenses: Accommodation expenses
-            active: Active
-            expense_keys:
-              breakfast: Breakfast
-              dinner: Dinner
-              lunch: Lunch
-            first_day_expenses: First day expenses
-            identification_number: Identification number
-            last_day_expenses: Last day expenses
-            location: Location
-            name: Name
-            paid_vacation_expenses: Paid vacation expenses
-            short_name: Short name
-            work_clothing_expenses: Work clothing expenses
-            work_days_expenses: Work days expenses
-          user:
-            address: Address
-            bank_iban: IBAN account number
-            birthday: Birthday
-            chainsaw_workshop: Chainsaw workshop
-            city: City
-            driving_licence_b: Driving licence B
-            driving_licence_be: Driving licence BE
-            email: Email
-            first_name: First name
-            health_insurance: Health insurance
-            hometown: Hometown
-            id: ID
-            internal_note: Internal note
-            last_name: Last name
-            phone: Phone
-            role: Role
-            work_experience: Work experience
-            zdp: Civil servant number
-            zip: Zip
-            zip_with_city: ZIP / City
-        errors:
-          messages:
-            before_beginning: before beginning
-            invalid_date: invalid date
-            not_a_friday: not a friday
-            not_a_monday: not a monday
-            overlaps_service: overlaps existing Service
-          models:
-            expense_sheet:
-              attributes:
-                state:
-                  invalid_state_change: invalid state change
-            service:
-              attributes:
-                bank_iban:
-                  bad_chars: bad chars
-                  bad_check_digits: bad check digits
-                  bad_format: bad format
-                  bad_length: bad length
-                  unknown_country_code: unknown country code
-                service_days:
-                  invalid_length: can not be less then 26.
-            user:
-              attributes:
-                bank_iban:
-                  bad_chars: bad chars
-                  bad_check_digits: bad check digits
-                  bad_format: bad format
-                  bad_length: bad length
-                  unknown_country_code: unknown country code
-                base:
-                  cant_delete_himself: You cannot delete yourself
-        models:
-          expense_sheet: Expense sheet
-          holiday: Holiday
-          regional_center: Regional center
-          service: Service
-          service_specification: Service specification
-          user: User
-      attributes:
-        payment_timestamp: Payment timestamp
-        state: State
-      date:
-        formats:
-          default: "%d.%m.%Y"
-          long: "%d.%b.%Y"
-          short: "%d.%m.%y"
-      devise:
-        confirmations:
-          confirmed: Your email address has been successfully confirmed.
-          new:
-            resend_confirmation_instructions: Resend confirmation instructions
-          send_instructions: You will receive an email with instructions for how to confirm your email address in a few minutes.
-          send_paranoid_instructions: If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes.
-        failure:
-          already_authenticated: You are already signed in.
-          inactive: Your account is not activated yet.
-          invalid: Invalid %{authentication_keys} or password.
-          last_attempt: You have one more attempt before your account is locked.
-          locked: Your account is locked.
-          not_found_in_database: Invalid %{authentication_keys} or password.
-          timeout: Your session expired. Please sign in again to continue.
-          unauthenticated: You need to sign in or sign up before continuing.
-          unconfirmed: You have to confirm your email address before continuing.
-        mailer:
-          confirmation_instructions:
-            action: Confirm my account
-            greeting: Welcome %{recipient}!
-            instruction: 'You can confirm your account email through the link below:'
-            subject: Confirmation instructions
-          email_changed:
-            greeting: Hello %{recipient}!
-            message: We're contacting you to notify you that your email has been changed to %{email}.
-            subject: Email Changed
-          password_change:
-            greeting: Hello %{recipient}!
-            message: We're contacting you to notify you that your password has been changed.
-            subject: Password Changed
-          reset_password_instructions:
-            action: Change my password
-            greeting: Hello %{recipient}!
-            instruction: Someone has requested a link to change your password. You can do this through the link below.
-            instruction_2: If you didn't request this, please ignore this email.
-            instruction_3: Your password won't change until you access the link above and create a new one.
-            subject: Reset password instructions
-          unlock_instructions:
-            action: Unlock my account
-            greeting: Hello %{recipient}!
-            instruction: 'Click the link below to unlock your account:'
-            message: Your account has been locked due to an excessive number of unsuccessful sign in attempts.
-            subject: Unlock instructions
-        omniauth_callbacks:
-          failure: Could not authenticate you from %{kind} because "%{reason}".
-          success: Successfully authenticated from %{kind} account.
-        passwords:
-          edit:
-            change_my_password: Change my password
-            change_your_password: Change your password
-            confirm_new_password: Confirm new password
-            new_password: New password
-          new:
-            forgot_your_password: Forgot your password?
-            send_me_reset_password_instructions: Send me reset password instructions
-          no_token: You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided.
-          send_instructions: You will receive an email with instructions on how to reset your password in a few minutes.
-          send_paranoid_instructions: If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.
-          updated: Your password has been changed successfully. You are now signed in.
-          updated_not_active: Your password has been changed successfully.
-        registrations:
-          destroyed: Bye! Your account has been successfully cancelled. We hope to see you again soon.
-          edit:
-            are_you_sure: Are you sure?
-            cancel_my_account: Cancel my account
-            currently_waiting_confirmation_for_email: 'Currently waiting confirmation for: %{email}'
-            leave_blank_if_you_don_t_want_to_change_it: leave blank if you don't want to change it
-            title: Edit %{resource}
-            unhappy: Unhappy?
-            update: Update
-            we_need_your_current_password_to_confirm_your_changes: we need your current password to confirm your changes
-          new:
-            sign_up: Sign up
-          signed_up: Welcome! You have signed up successfully.
-          signed_up_but_inactive: You have signed up successfully. However, we could not sign you in because your account is not yet activated.
-          signed_up_but_locked: You have signed up successfully. However, we could not sign you in because your account is locked.
-          signed_up_but_unconfirmed: A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.
-          update_needs_confirmation: You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirm link to confirm your new email address.
-          updated: Your account has been updated successfully.
-          updated_but_not_signed_in: Your account has been updated successfully, but since your password was changed, you need to sign in again
-        sessions:
-          already_signed_out: Signed out successfully.
-          new:
-            sign_in: Log in
-          signed_in: Signed in successfully.
-          signed_out: Signed out successfully.
-        shared:
-          links:
-            back: Back
-            didn_t_receive_confirmation_instructions: Didn't receive confirmation instructions?
-            didn_t_receive_unlock_instructions: Didn't receive unlock instructions?
-            forgot_your_password: Forgot your password?
-            sign_in: Log in
-            sign_in_with_provider: Sign in with %{provider}
-            sign_up: Sign up
-          minimum_password_length:
-            one: "(%{count} character minimum)"
-            other: "(%{count} characters minimum)"
-        unlocks:
-          new:
-            resend_unlock_instructions: Resend unlock instructions
-          send_instructions: You will receive an email with instructions for how to unlock your account in a few minutes.
-          send_paranoid_instructions: If your account exists, you will receive an email with instructions for how to unlock it in a few minutes.
-          unlocked: Your account has been unlocked successfully. Please sign in to continue.
-      errors:
-        authorization_error: You are not authorized to perform this action
-        format_error: You requested an invalid format
-        messages:
-          already_confirmed: was already confirmed, please try signing in
-          confirmation_period_expired: needs to be confirmed within %{period}, please request a new one
-          expired: has expired, please request a new one
-          not_found: not found
-          not_locked: was not locked
-          not_saved:
-            one: '1 error prohibited this %{resource} from being saved:'
-            other: "%{count} errors prohibited this %{resource} from being saved:"
+  activerecord:
+    attributes:
       expense_sheet:
-        errors:
-          already_paid: Expense sheet has already been paid
-          outside_service_date_range: Expense sheet cannot be outside the period of use
-      expense_sheet_calculator:
-        errors:
-          unknown_day_type: Ungültiger Spesentagestyp
-      feedback_mailer:
-        feedback_reminder_mail:
-          subject: Your opinion matters to us
-      payment:
-        errors:
-          not_found: Payment not found
-          ready_not_found: No ready for payment expense sheets found
-        expenses_from: Expenses from %{from_date}
-        pain_filename: Expenses_from_%{from_date}
-      pdfs:
+        accommodation_expenses: Accommodation
+        bank_account_number: Bank account number
+        beginning: Beginning
+        clothing: Clothes
+        clothing_expenses: Clothing expenses
+        clothing_expenses_comment: Clothing expenses comment
+        company_holiday_comment: Company holiday comment
+        driving_expenses: Driving expenses
+        driving_expenses_comment: Driving expenses comment
+        ending: Ending
+        extraordinary_expenses: Extraordinary expenses
+        extraordinary_expenses_comment: Extraordinary expenses comment
+        paid_company_holiday_days: Paid company holiday days
+        paid_vacation_comment: Paid vacation comment
+        paid_vacation_days:
+          one: Paid vacation day
+          other: Paid vacation days
+        pocket_money: Pocket money
+        sick_comment: Sick comment
+        sick_days:
+          one: Sick day
+          other: Sick days
+        sickness: Sickness
+        state: State
+        unpaid_company_holiday_days: Unpaid company holiday days
+        unpaid_vacation_comment: Unpaid vacation comment
+        unpaid_vacation_days:
+          one: Unpaid vacation day
+          other: Unpaid vacation days
+        way_expenses: Way expenses
+        work_clothing_expenses: Work clothing expenses
+        work_days:
+          one: Work day
+          other: Work days
+        workfree: Workfree
+        workfree_days:
+          one: Workfree day
+          other: Workfree days
+      holiday:
+        beginning: Beginning
+        description: Description
+        ending: Ending
+        holiday_type: Holiday type
+      regional_center:
+        address: Address
+        name: Name
+        short_name: Short name
+      service:
+        beginning: Beginning
+        confirmation_date: Confirmation date
+        ending: Ending
+        feedback_mail_sent: Feedback mail sent
+        first_swo_service: First SWO service
+        long_service: Long service
+        probation_service: Probation service
+        service_days: Days of service
+        service_type: Service type
+      service_specification:
+        accommodation_expenses: Accommodation expenses
+        active: Active
+        expense_keys:
+          breakfast: Breakfast
+          dinner: Dinner
+          lunch: Lunch
+        first_day_expenses: First day expenses
+        identification_number: Identification number
+        last_day_expenses: Last day expenses
+        location: Location
+        name: Name
+        paid_vacation_expenses: Paid vacation expenses
+        short_name: Short name
+        work_clothing_expenses: Work clothing expenses
+        work_days_expenses: Work days expenses
+      user:
+        address: Address
+        bank_iban: IBAN account number
+        birthday: Birthday
+        chainsaw_workshop: Chainsaw workshop
+        city: City
+        driving_licence_b: Driving licence B
+        driving_licence_be: Driving licence BE
+        email: Email
+        first_name: First name
+        health_insurance: Health insurance
+        hometown: Hometown
+        id: ID
+        internal_note: Internal note
+        last_name: Last name
+        phone: Phone
+        role: Role
+        work_experience: Work experience
+        zdp: Civil servant number
+        zip: Zip
+        zip_with_city: ZIP / City
+    errors:
+      messages:
+        before_beginning: before beginning
+        invalid_date: invalid date
+        not_a_friday: not a friday
+        not_a_monday: not a monday
+        overlaps_service: overlaps existing Service
+      models:
         expense_sheet:
-          expense_table:
-            footer:
-              total: Total
-            headers:
-              full_amount: Total
-            row_headers:
-              extra: Extra
-              first_work_days: First work day
-              last_work_days: Last work day
-            supplement:
-              driving_expenses_comment_empty: N/A
-              unpaid_vacation_comment: incl. %{comment}
-              work_clothing_expenses_comment:
-                one: CHF %{amount}/day for %{count} chargeable service day
-                other: CHF %{amount}/day for %{count} chargeable service days
-          filename: ExpenseSheet_%{today}
-          header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach
-          info_block:
-            footer:
-              bank_account_number: 'Account-No:'
-            header:
-              complete_service:
-                label: Full service
-                value:
-                  one: "<b>%{beginning} to %{ending} (%{duration} day)</b>"
-                  other: "<b>%{beginning} to %{ending} (%{duration} days)</b>"
-              expense_sheet_time_duration:
-                label: Reporting period
-                value:
-                  one: "%{beginning} to %{ending} (%{duration} day)"
-                  other: "%{beginning} to %{ending} (%{duration} days)"
-          title: Expense_report_of_%{full_name}
-        expenses_overview:
-          basedon: Statistic bases on all finished reports
-          filename: Overview_expense_statistics_%{today}
-          swo: Stiftung für Wirtschaft und Ökologie (deployment operation No. 423) - Provision vom %{date}
-          title: Zivi-Expenses Detail-Overview (Timeperiod %{beginning} - %{ending})
-        phone_list:
-          filename: Phonelist_%{today}
-          header: Generated on %{date}
-          title: Phonelist from %{beginning} to %{ending}
-        service_agreement:
-          body_content: |-
-            Dear Zivis
-            Please send the signed Mission Agreement to the above address. If you use a window envelope with left or right window, you can fold this cover sheet and put it in the envelope. The address is placed correctly. The address at the bottom right will be used by us to forward the Mission Agreement to the regional office. At the very end you will find an information sheet, which gives you information about the process of your mission. Please hand in the signed talon to the officer in charge on the first day of the mission.
-          filename: Service_agreement_of_%{full_name}
-      registrations:
-        errors:
-          community_password:
-            not_valid:
-              full: Community password is invalid
-              single: invalid
-      service_calculator:
-        end_date_cannot_be_on_weekend: Service end date can't be on a weekend
-        invalid_required_service_days: Invalid service days
+          attributes:
+            state:
+              invalid_state_change: invalid state change
+        service:
+          attributes:
+            bank_iban:
+              bad_chars: bad chars
+              bad_check_digits: bad check digits
+              bad_format: bad format
+              bad_length: bad length
+              unknown_country_code: unknown country code
+            service_days:
+              invalid_length: can not be less then 26.
+        user:
+          attributes:
+            bank_iban:
+              bad_chars: bad chars
+              bad_check_digits: bad check digits
+              bad_format: bad format
+              bad_length: bad length
+              unknown_country_code: unknown country code
+            base:
+              cant_delete_himself: You cannot delete yourself
+    models:
+      expense_sheet: Expense sheet
+      holiday: Holiday
+      regional_center: Regional center
+      service: Service
+      service_specification: Service specification
+      user: User
+  attributes:
+    payment_timestamp: Payment timestamp
+    state: State
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      long: "%d.%b.%Y"
+      short: "%d.%m.%y"
+  errors:
+    authorization_error: You are not authorized to perform this action
+    format_error: You requested an invalid format
+  expense_sheet:
+    errors:
+      already_paid: Expense sheet has already been paid
+      outside_service_date_range: Expense sheet cannot be outside the period of use
+  expense_sheet_calculator:
+    errors:
+      unknown_day_type: Ungültiger Spesentagestyp
+  feedback_mailer:
+    feedback_reminder_mail:
+      subject: Your opinion matters to us
+  payment:
+    errors:
+      not_found: Payment not found
+      ready_not_found: No ready for payment expense sheets found
+    expenses_from: Expenses from %{from_date}
+    pain_filename: Expenses_from_%{from_date}.xml
+  pdfs:
+    expense_sheet:
+      expense_table:
+        footer:
+          total: Total
+        headers:
+          full_amount: Total
+        row_headers:
+          extra: Extra
+          first_work_days: First work day
+          last_work_days: Last work day
+        supplement:
+          driving_expenses_comment_empty: N/A
+          unpaid_vacation_comment: incl. %{comment}
+          work_clothing_expenses_comment:
+            one: CHF %{amount}/day for %{count} chargeable service day
+            other: CHF %{amount}/day for %{count} chargeable service days
+      filename: ExpenseSheet_%{today}.pdf
+      header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach
+      info_block:
+        footer:
+          bank_account_number: 'Account-No:'
+        header:
+          complete_service:
+            label: Full service
+            value:
+              one: "<b>%{beginning} to %{ending} (%{duration} day)</b>"
+              other: "<b>%{beginning} to %{ending} (%{duration} days)</b>"
+          expense_sheet_time_duration:
+            label: Reporting period
+            value:
+              one: "%{beginning} to %{ending} (%{duration} day)"
+              other: "%{beginning} to %{ending} (%{duration} days)"
+      title: Expense_report_of_%{full_name}.pdf
+    expenses_overview:
+      basedon: Statistic bases on all finished reports
+      filename: Overview_expense_statistics_%{today}.pdf
+      swo: Stiftung für Wirtschaft und Ökologie (deployment operation No. 423) - Provision vom %{date}
+      title: Zivi-Expenses Detail-Overview (Timeperiod %{beginning} - %{ending})
+    phone_list:
+      filename: Phonelist_%{today}.pdf
+      header: Generated on %{date}
+      title: Phonelist from %{beginning} to %{ending}
+    service_agreement:
+      body_content: |-
+        Dear Zivis
+        Please send the signed Mission Agreement to the above address. If you use a window envelope with left or right window, you can fold this cover sheet and put it in the envelope. The address is placed correctly. The address at the bottom right will be used by us to forward the Mission Agreement to the regional office. At the very end you will find an information sheet, which gives you information about the process of your mission. Please hand in the signed talon to the officer in charge on the first day of the mission.
+      filename: Service_agreement_of_%{full_name}.pdf
+  service_calculator:
+    end_date_cannot_be_on_weekend: Service end date can't be on a weekend
+    invalid_required_service_days: Invalid service days

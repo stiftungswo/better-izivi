@@ -29,7 +29,7 @@ module V1
     def show
       respond_to_json_and_pdf(
         Pdfs::ExpenseSheet::GeneratorService,
-        I18n.t('izivi.backend.pdfs.expense_sheet.filename', today: @expense_sheet.user.full_name),
+        I18n.t('pdfs.expense_sheet.filename', today: @expense_sheet.user.full_name),
         @expense_sheet
       )
     end

@@ -114,7 +114,7 @@ class ExpenseSheet < ApplicationRecord
   def legitimate_destroy
     return if open?
 
-    errors.add(:base, I18n.t('izivi.backend.expense_sheet.errors.already_paid'))
+    errors.add(:base, I18n.t('expense_sheet.errors.already_paid'))
     throw :abort
   end
 
@@ -123,6 +123,6 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def included_in_service_date_range
-    errors.add(:base, I18n.t('izivi.backend.expense_sheet.errors.outside_service_date_range')) if service.nil?
+    errors.add(:base, I18n.t('expense_sheet.errors.outside_service_date_range')) if service.nil?
   end
 end

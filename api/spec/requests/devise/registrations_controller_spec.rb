@@ -82,10 +82,10 @@ RSpec.describe Devise::RegistrationsController, type: :request do
       it_behaves_like 'renders a validation error response'
       it 'renders the correct error', :aggregate_failures do
         expect(response_json[:errors]).to eq(
-          community_password: I18n.t('izivi.backend.registrations.errors.community_password.not_valid.single')
+          community_password: I18n.t('registrations.errors.community_password.not_valid.single')
         )
         expect(response_json[:human_readable_descriptions]).to eq(
-          [I18n.t('izivi.backend.registrations.errors.community_password.not_valid.full')]
+          [I18n.t('registrations.errors.community_password.not_valid.full')]
         )
       end
     end
@@ -96,10 +96,10 @@ RSpec.describe Devise::RegistrationsController, type: :request do
       it_behaves_like 'renders a validation error response'
       it 'renders the correct error', :aggregate_failures do
         expect(response_json[:errors]).to eq(
-          community_password: I18n.t('izivi.backend.registrations.errors.community_password.not_valid.single')
+          community_password: I18n.t('registrations.errors.community_password.not_valid.single')
         )
         expect(response_json[:human_readable_descriptions]).to eq(
-          [I18n.t('izivi.backend.registrations.errors.community_password.not_valid.full')]
+          [I18n.t('registrations.errors.community_password.not_valid.full')]
         )
       end
     end

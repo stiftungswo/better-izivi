@@ -37,7 +37,7 @@ RSpec.describe Pdfs::PhoneListService, type: :service do
 
       let(:expected_texts) do
         [
-          I18n.t('izivi.backend.pdfs.phone_list.header', date: I18n.l(Time.zone.today)),
+          I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today)),
           'Telefonliste vom 01.01.2017 bis 31.12.2018',
           'MyServiceSpecification',
           'Vorname', 'Nachname', 'Adresse', 'PLZ / Ort', 'Telefonnummer', 'Email',

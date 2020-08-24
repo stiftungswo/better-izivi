@@ -20,7 +20,7 @@ RSpec.describe FeedbackMailer, type: :mailer do
     describe 'header' do
       it 'renders the headers' do
         ClimateControl.modify envs do
-          expect(mail.subject).to eq I18n.t('izivi.backend.feedback_mailer.feedback_reminder_mail.subject')
+          expect(mail.subject).to eq I18n.t('feedback_mailer.feedback_reminder_mail.subject')
           expect(mail.to).to eq([service.user.email])
           expect(mail.from).to eq(['from@example.com'])
         end

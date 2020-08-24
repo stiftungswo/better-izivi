@@ -13,7 +13,7 @@ module V1
           pdf = Pdfs::PhoneListService.new(@specifications, sanitized_filters)
 
           send_data pdf.render,
-                    filename: I18n.t('izivi.backend.pdfs.phone_list.filename', today: I18n.l(Time.zone.today)) + '.pdf',
+                    filename: I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today)) + '.pdf',
                     type: 'application/pdf',
                     disposition: 'inline'
         end

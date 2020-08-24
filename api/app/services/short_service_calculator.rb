@@ -16,11 +16,7 @@ class ShortServiceCalculator
   end
 
   def calculate_ending_date(required_service_days)
-    unless required_service_days.positive?
-      raise I18n.t(
-        'izivi.backend.service_calculator.invalid_required_service_days'
-      )
-    end
+    raise I18n.t('service_calculator.invalid_required_service_days') unless required_service_days.positive?
 
     EndingDateLooper.new(@beginning_date, required_service_days).ending_date
   end

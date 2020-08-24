@@ -51,7 +51,7 @@ module Pdfs
       def body
         move_down 180
 
-        text_box(I18n.t('izivi.backend.pdfs.service_agreement.body_content'), leading: 6.5, at: [bounds.left, cursor])
+        text_box(I18n.t('pdfs.service_agreement.body_content'), leading: 6.5, at: [bounds.left, cursor])
       end
 
       def footer

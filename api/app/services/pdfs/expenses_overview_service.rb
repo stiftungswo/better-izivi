@@ -27,9 +27,9 @@ module Pdfs
     private
 
     def headline
-      text I18n.t('izivi.backend.pdfs.expenses_overview.swo', date: I18n.l(Time.zone.today)), align: :right, size: 8
-      text I18n.t('izivi.backend.pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today)), align: :right, size: 8
-      text(I18n.t('izivi.backend.pdfs.expenses_overview.title', beginning: I18n.l(@beginning), ending: I18n.l(@ending)),
+      text I18n.t('pdfs.expenses_overview.swo', date: I18n.l(Time.zone.today)), align: :right, size: 8
+      text I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today)), align: :right, size: 8
+      text(I18n.t('pdfs.expenses_overview.title', beginning: I18n.l(@beginning), ending: I18n.l(@ending)),
            align: :left, style: :bold, size: 15)
     end
 

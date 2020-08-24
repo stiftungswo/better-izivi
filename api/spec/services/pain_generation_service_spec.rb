@@ -27,7 +27,7 @@ RSpec.describe PainGenerationService, type: :service do
           currency: 'CHF',
           iban: user.bank_iban,
           name: user.full_name,
-          remittance_information: I18n.t('izivi.backend.payment.expenses_from',
+          remittance_information: I18n.t('payment.expenses_from',
                                          from_date: I18n.l(
                                            expense_sheet.beginning,
                                            format: '%B %Y'

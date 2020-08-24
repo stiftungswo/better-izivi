@@ -1,338 +1,216 @@
 ---
 de:
-  izivi:
-    backend:
-      activerecord:
-        attributes:
-          expense_sheet:
-            accommodation_expenses: Unterkunft
-            bank_account_number: Bankkonto Nummer
-            beginning: Anfang
-            clothing: Kleider
-            clothing_expenses: Kleiderspesen
-            clothing_expenses_comment: Kleiderspesen - Kommentar
-            company_holiday_comment: Betriebsferien Kommentar
-            driving_expenses: Fahrspesen
-            driving_expenses_comment: Fahrspesenkommentar
-            ending: Ende
-            extraordinary_expenses: Ausserordentliche Spesen
-            extraordinary_expenses_comment: Ausserordentliche Spesen - Kommentar
-            paid_company_holiday_days: Bezahlte Betriebsferientage
-            paid_vacation_comment: Bezahlte Ferien - Kommentar
-            paid_vacation_days:
-              one: Ferientag
-              other: Ferientage
-            pocket_money: Taschengeld
-            sick_comment: Krankheitskommentar
-            sick_days:
-              one: Krankheitstag
-              other: Krankheitstage
-            sickness: Krankheit
-            state: Status
-            unpaid_company_holiday_days: Unbezahlte Betriebsferientage
-            unpaid_vacation_comment: Unbezahlte Ferien - Kommentar
-            unpaid_vacation_days:
-              one: Urlaubstag
-              other: Urlaubstage
-            way_expenses: Wegspesen
-            work_clothing_expenses: Arbeitskleider
-            work_days:
-              one: Arbeitstag
-              other: Arbeitstage
-            workfree: Arbeitsfrei
-            workfree_days:
-              one: Arbeitsfreier Tag
-              other: Arbeitsfreie Tage
-          holiday:
-            beginning: Anfang
-            description: Beschreibung
-            ending: Ende
-            holiday_type: Ferien Typ
-          regional_center:
-            address: Adresse
-            name: Name
-            short_name: Kurzname
-          service:
-            beginning: Anfang
-            confirmation_date: Bestätigungsdatum
-            ending: Ende
-            feedback_mail_sent: Feedback E-Mail versendet
-            first_swo_service: Erster SWO Einsatz
-            long_service: Langer Einsatz
-            probation_service: Probeeinsatz
-            service_days: Einsatzdauer
-            service_type: Einsatztyp
-          service_specification:
-            accommodation_expenses: Unterkunftsspesen
-            active: Aktiv
-            expense_keys:
-              breakfast: Morgen
-              dinner: Abend
-              lunch: Mittag
-            first_day_expenses: Spesen für den ersten Tag
-            identification_number: Identifikationsnummer
-            last_day_expenses: Spesen für den letzten Tag
-            location: Ort
-            name: Name
-            paid_vacation_expenses: Bezahlte Ferienspesen
-            short_name: Kurzname
-            work_clothing_expenses: Kleiderspesen
-            work_days_expenses: Arbeitstagesspesen
-          user:
-            address: Adresse
-            bank_iban: Bankverbindung
-            birthday: Geburtstag
-            chainsaw_workshop: Motorsägenworkshop
-            city: Stadt
-            driving_licence_b: Führerschein Kat. B
-            driving_licence_be: Führerschein Kat. BE
-            email: Email
-            first_name: Vorname
-            health_insurance: Krankenkasse
-            hometown: Heimatstadt
-            id: ID
-            internal_note: Interne Notiz
-            last_name: Nachname
-            phone: Telefonnummer
-            role: Rolle
-            work_experience: Arbeitserfahrung
-            zdp: ZDP-Nr.
-            zip: PLZ
-            zip_with_city: PLZ / Ort
-        errors:
-          messages:
-            before_beginning: vor Start
-            invalid_date: ungültiges Datum
-            not_a_friday: kein Freitag
-            not_a_monday: kein Montag
-            overlaps_service: überlappt existierenden Service
-          models:
-            expense_sheet:
-              attributes:
-                state:
-                  invalid_state_change: ungültiger Statuswechsel
-            service:
-              attributes:
-                bank_iban:
-                  bad_chars: ungültige Zeichen
-                  bad_check_digits: ungültige Prüffziffer
-                  bad_format: ungültiges Format
-                  bad_length: ungültige Länge
-                  unknown_country_code: unbekannter Landescode
-                service_days:
-                  invalid_length: kann nicht kürzer als 26 Tage sein.
-            user:
-              attributes:
-                bank_iban:
-                  bad_chars: ungültige Zeichen
-                  bad_check_digits: ungültige Prüffziffer
-                  bad_format: ungültiges Format
-                  bad_length: ungültige Länge
-                  unknown_country_code: unbekannter Landescode
-                base:
-                  cant_delete_himself: Du kannst dich nicht selbst löschen
-        models:
-          expense_sheet: Spesenblatt
-          holiday: Ferien
-          regional_center: Regionalzentrum
-          service: Einsatz
-          service_specification: Pflichtenheft
-          user: Benutzer
-      attributes:
-        payment_timestamp: Auszahlungszeitstempel
-        state: Status
-      date:
-        formats:
-          default: "%d.%m.%Y"
-          long: "%d.%b.%Y"
-          short: "%d.%m.%y"
-      devise:
-        confirmations:
-          confirmed: Ihre E-Mail-Adresse wurde erfolgreich bestätigt.
-          new:
-            resend_confirmation_instructions: Anleitung zur Bestätigung noch mal schicken
-          send_instructions: Sie erhalten in wenigen Minuten eine E-Mail, mit der Sie Ihre Registrierung bestätigen können.
-          send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine E-Mail, mit der Sie Ihre Registrierung bestätigen können.
-        failure:
-          already_authenticated: Sie sind bereits angemeldet.
-          inactive: Ihr Konto ist noch nicht aktiv.
-          invalid: "%{authentication_keys} oder Passwort ungültig."
-          last_attempt: Sie haben noch einen Versuch, bis Ihr Konto gesperrt wird.
-          locked: Ihr Konto ist gesperrt.
-          not_found_in_database: "%{authentication_keys} oder Passwort ungültig."
-          timeout: Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.
-          unauthenticated: Sie müssen sich anmelden oder registrieren, bevor Sie fortfahren können.
-          unconfirmed: Sie müssen Ihr Konto bestätigen, bevor Sie fortfahren können.
-        mailer:
-          confirmation_instructions:
-            action: Mein Konto bestätigen
-            greeting: Willkommen %{recipient}!
-            instruction: 'Folgen Sie dem untenstehenden Link, um Ihr Konto zu bestätigen:'
-            subject: Anleitung zur Bestätigung Ihres Kontos
-          email_changed:
-            greeting: Hallo %{recipient}!
-            message: Wir schreiben Ihnen, um Sie darüber zu informieren, dass Ihre E-Mail-Adresse zu %{email} geändert wurde.
-            subject: E-Mail-Adresse geändert
-          password_change:
-            greeting: Hallo %{recipient}!
-            message: Wir schreiben Ihnen, um Sie darüber zu informieren, dass Ihr Passwort geändert wurde.
-            subject: Passwort geändert
-          reset_password_instructions:
-            action: Passwort ändern
-            greeting: Hallo %{recipient}!
-            instruction: Jemand hat einen Link angefordert, um Ihr Passwort zu ändern. Klicken Sie auf den unten aufgeführten Link um das Passwort zu ändern.
-            instruction_2: Bitte ignorieren Sie diese E-Mail, wenn Sie kein neues Passwort angefordert haben.
-            instruction_3: Das Passwort wird nicht geändert bis Sie den obenstehenden Link abrufen und ein neues Passwort bestimmen.
-            subject: Anleitung für das Zurücksetzen Ihres Passworts
-          unlock_instructions:
-            action: Mein Konto entsperren
-            greeting: Hallo %{recipient}!
-            instruction: 'Folgen Sie dem untenstehenden Link, um Ihr Konto zu entsperren:'
-            message: Ihr Konto wurde aufgrund einer großen Anzahl von fehlgeschlagenen Anmeldeversuchen gesperrt.
-            subject: Anleitung für die Konto-Freischaltung
-        omniauth_callbacks:
-          failure: Sie konnten nicht mit Ihrem %{kind}-Konto angemeldet werden, weil "%{reason}".
-          success: Sie haben sich erfolgreich mit Ihrem %{kind}-Konto angemeldet.
-        passwords:
-          edit:
-            change_my_password: Ändere mein Passwort
-            change_your_password: Passwort ändern
-            confirm_new_password: Neues Passwort bestätigen
-            new_password: Neues Passwort
-          new:
-            forgot_your_password: Haben Sie Ihr Passwort vergessen?
-            send_me_reset_password_instructions: Schicken Sie mir die Anleitung, mein Passwort zurückzusetzen
-          no_token: Sie können sich nicht auf dieser Seite anmelden, wenn Sie nicht von einer Passwort-Zurücksetzen-E-Mail kommen. Wenn Sie von solch einer E-Mail kommen, überprüfen Sie bitte, ob Sie die gesamte URL verwendet haben.
-          send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
-          send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihr Passwort zurücksetzen können.
-          updated: Ihr Passwort wurde geändert. Sie sind jetzt angemeldet.
-          updated_not_active: Ihr Passwort wurde erfolgreich geändert.
-        registrations:
-          destroyed: Ihr Konto wurde gelöscht. Wir hoffen, das wir Sie bald wiedersehen.
-          edit:
-            are_you_sure: Sind Sie sicher?
-            cancel_my_account: Konto löschen
-            currently_waiting_confirmation_for_email: Warte auf Bestätigung von %{email}.
-            leave_blank_if_you_don_t_want_to_change_it: freilassen, wenn Sie das nicht ändern wollen
-            title: "%{resource} bearbeiten"
-            unhappy: Unzufrieden?
-            update: Aktualisieren
-            we_need_your_current_password_to_confirm_your_changes: wir benötigen Ihr aktuelles Passwort, um die Änderung zu bestätigen
-          new:
-            sign_up: Registrieren
-          signed_up: Sie haben sich erfolgreich registriert.
-          signed_up_but_inactive: Sie haben sich erfolgreich registriert. Wir konnten Sie jedoch nicht anmelden, weil Ihr Konto noch nicht aktiviert ist.
-          signed_up_but_locked: Sie haben sich erfolgreich registriert. Wir konnten Sie jedoch nicht anmelden, weil Ihr Konto gesperrt ist.
-          signed_up_but_unconfirmed: Sie erhalten in wenigen Minuten eine E-Mail mit einem Link für die Bestätigung der Registrierung. Klicken Sie auf den Link um Ihr Konto zu aktivieren.
-          update_needs_confirmation: Ihre Daten wurden aktualisiert, aber Sie müssen Ihre neue E-Mail-Adresse bestätigen. Sie erhalten in wenigen Minuten eine E-Mail, mit der Sie die Änderung Ihrer E-Mail-Adresse abschließen können.
-          updated: Ihre Daten wurden aktualisiert.
-          updated_but_not_signed_in: Ihre Daten wurden aktualisiert, aber da sich Ihr Passwort geändert hat, müssen Sie sich erneut anmelden
-        sessions:
-          already_signed_out: Erfolgreich abgemeldet.
-          new:
-            sign_in: Anmelden
-          signed_in: Erfolgreich angemeldet.
-          signed_out: Erfolgreich abgemeldet.
-        shared:
-          links:
-            back: Zurück
-            didn_t_receive_confirmation_instructions: Keine Anleitung zur Bestätigung erhalten?
-            didn_t_receive_unlock_instructions: Keine Anleitung zum Entsperren erhalten?
-            forgot_your_password: Passwort vergessen?
-            sign_in: Anmelden
-            sign_in_with_provider: Mit %{provider} anmelden
-            sign_up: Registrieren
-          minimum_password_length:
-            one: "(mindestens %{count} Zeichen)"
-            other: "(mindestens %{count} Zeichen)"
-        unlocks:
-          new:
-            resend_unlock_instructions: Anleitung zum Entsperren noch mal schicken
-          send_instructions: Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihr Konto entsperren können.
-          send_paranoid_instructions: Falls Ihre E-Mail-Adresse in unserer Datenbank existiert, erhalten Sie in wenigen Minuten eine E-Mail, mit der Anleitung, wie Sie Ihr Konto entsperren können.
-          unlocked: Ihr Konto wurde entsperrt. Bitte melden Sie sich an, um fortzufahren.
-      errors:
-        authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
-        format_error: Sie haben ein ungültiges Format angefordert
-        messages:
-          already_confirmed: wurde bereits bestätigt; bitte versuchen Sie, sich anzumelden
-          confirmation_period_expired: musste innerhalb von %{period} bestätigt werden, bitte neu anfordern.
-          expired: ist abgelaufen, bitte neu anfordern
-          not_found: nicht gefunden
-          not_locked: ist nicht gesperrt
-          not_saved:
-            one: "%{resource} konnte aufgrund eines Fehlers nicht gespeichert werden:"
-            other: "%{count} Fehler verhinderten das Speichern von %{resource}:"
+  activerecord:
+    attributes:
       expense_sheet:
-        errors:
-          already_paid: Spesenblatt wurde bereits ausgezahlt
-          outside_service_date_range: Spesenblatt kann nicht ausserhalb des Einsatzzeitraums sein
-      expense_sheet_calculator:
-        errors:
-          unknown_day_type: Ungültiger Spesentagestyp
-      feedback_mailer:
-        feedback_reminder_mail:
-          subject: Deine Meinung ist uns wichtig
-      payment:
-        errors:
-          not_found: Auszahlung nicht gefunden
-          ready_not_found: Keine für Auszahlung bereiten Spesenblätter gefunden
-        expenses_from: Spesen vom %{from_date}
-        pain_filename: Spesen_vom_%{from_date}
-      pdfs:
+        accommodation_expenses: Unterkunft
+        bank_account_number: Bankkonto Nummer
+        beginning: Anfang
+        clothing: Kleider
+        clothing_expenses: Kleiderspesen
+        clothing_expenses_comment: Kleiderspesen - Kommentar
+        company_holiday_comment: Betriebsferien Kommentar
+        driving_expenses: Fahrspesen
+        driving_expenses_comment: Fahrspesenkommentar
+        ending: Ende
+        extraordinary_expenses: Ausserordentliche Spesen
+        extraordinary_expenses_comment: Ausserordentliche Spesen - Kommentar
+        paid_company_holiday_days: Bezahlte Betriebsferientage
+        paid_vacation_comment: Bezahlte Ferien - Kommentar
+        paid_vacation_days:
+          one: Ferientag
+          other: Ferientage
+        pocket_money: Taschengeld
+        sick_comment: Krankheitskommentar
+        sick_days:
+          one: Krankheitstag
+          other: Krankheitstage
+        sickness: Krankheit
+        state: Status
+        unpaid_company_holiday_days: Unbezahlte Betriebsferientage
+        unpaid_vacation_comment: Unbezahlte Ferien - Kommentar
+        unpaid_vacation_days:
+          one: Urlaubstag
+          other: Urlaubstage
+        way_expenses: Wegspesen
+        work_clothing_expenses: Arbeitskleider
+        work_days:
+          one: Arbeitstag
+          other: Arbeitstage
+        workfree: Arbeitsfrei
+        workfree_days:
+          one: Arbeitsfreier Tag
+          other: Arbeitsfreie Tage
+      holiday:
+        beginning: Anfang
+        description: Beschreibung
+        ending: Ende
+        holiday_type: Ferien Typ
+      regional_center:
+        address: Adresse
+        name: Name
+        short_name: Kurzname
+      service:
+        beginning: Anfang
+        confirmation_date: Bestätigungsdatum
+        ending: Ende
+        feedback_mail_sent: Feedback E-Mail versendet
+        first_swo_service: Erster SWO Einsatz
+        long_service: Langer Einsatz
+        probation_service: Probeeinsatz
+        service_days: Einsatzdauer
+        service_type: Einsatztyp
+      service_specification:
+        accommodation_expenses: Unterkunftsspesen
+        active: Aktiv
+        expense_keys:
+          breakfast: Morgen
+          dinner: Abend
+          lunch: Mittag
+        first_day_expenses: Spesen für den ersten Tag
+        identification_number: Identifikationsnummer
+        last_day_expenses: Spesen für den letzten Tag
+        location: Ort
+        name: Name
+        paid_vacation_expenses: Bezahlte Ferienspesen
+        short_name: Kurzname
+        work_clothing_expenses: Kleiderspesen
+        work_days_expenses: Arbeitstagesspesen
+      user:
+        address: Adresse
+        bank_iban: Bankverbindung
+        birthday: Geburtstag
+        chainsaw_workshop: Motorsägenworkshop
+        city: Stadt
+        driving_licence_b: Führerschein Kat. B
+        driving_licence_be: Führerschein Kat. BE
+        email: Email
+        first_name: Vorname
+        health_insurance: Krankenkasse
+        hometown: Heimatstadt
+        id: ID
+        internal_note: Interne Notiz
+        last_name: Nachname
+        phone: Telefonnummer
+        role: Rolle
+        work_experience: Arbeitserfahrung
+        zdp: ZDP-Nr.
+        zip: PLZ
+        zip_with_city: PLZ / Ort
+    errors:
+      messages:
+        before_beginning: vor Start
+        invalid_date: ungültiges Datum
+        not_a_friday: kein Freitag
+        not_a_monday: kein Montag
+        overlaps_service: überlappt existierenden Service
+      models:
         expense_sheet:
-          expense_table:
-            footer:
-              total: Gesamt
-            headers:
-              full_amount: Total
-            row_headers:
-              extra: Extra
-              first_work_days: Erster Arbeitstag
-              last_work_days: Letzter Arbeitstag
-            supplement:
-              driving_expenses_comment_empty: Keine Angaben
-              unpaid_vacation_comment: inkl. %{comment}
-              work_clothing_expenses_comment:
-                one: CHF %{amount}/Tag für %{count} anrechenbarer Tag
-                other: CHF %{amount}/Tag für %{count} anrechenbare Tage
-          filename: Spesenrapport_%{today}
-          header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
-          info_block:
-            footer:
-              bank_account_number: 'Konto-Nr.:'
-            header:
-              complete_service:
-                label: Gesamteinsatz
-                value:
-                  one: "%{beginning} bis %{ending} (%{duration} Tag)"
-                  other: "%{beginning} bis %{ending} (%{duration} Tage)"
-              expense_sheet_time_duration:
-                label: Meldeperiode
-                value:
-                  one: "<b>%{beginning} bis %{ending} (%{duration} Tag)</b>"
-                  other: "<b>%{beginning} bis %{ending} (%{duration} Tage)</b>"
-          title: Spesenrapport_von_%{full_name}
-        expenses_overview:
-          basedon: Statistik basiert auf allen erledigten Meldeblättern
-          filename: Übersicht_Spesenstatistik_%{today}
-          swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Verfügung vom %{date}
-          title: Zivi-Spesen Detailübersicht (Zeitperiode %{beginning} - %{ending})
-        phone_list:
-          filename: Telefonliste_%{today}
-          header: Stand vom %{date}
-          title: Telefonliste vom %{beginning} bis %{ending}
-        service_agreement:
-          body_content: |-
-            Lieber Zivi
-            Bitte sende die unterzeichnete Einsatzvereinbarung an obige Adresse. Wenn du ein Fenstercouvert mit Fenster links oder rechts verwendest, kannst du dieses Deckblatt falten und in das Couvert stecken. Die Adresse ist richtig platziert. Die Adresse unten rechts wird von uns benutzt um die Einsatzvereinbarung an die Regionalstelle weiterzuleiten. Ganz am Ende findest du ein Informationsblatt, das dir Auskunft über den Ablauf deines Einsatzes gibt. Gib bitte den Talon darin am ersten Einsatztag unterschrieben dem Einsatzleiter ab.
-          filename: Einsatzvereinbarung_von_%{full_name}
-      registrations:
-        errors:
-          community_password:
-            not_valid:
-              full: Community Passwort ist nicht gültig
-              single: nicht gültig
-      service_calculator:
-        end_date_cannot_be_on_weekend: Einsatzende kann nicht an einem Wochenende sein
-        invalid_required_service_days: Ungültige Einsatztage
+          attributes:
+            state:
+              invalid_state_change: ungültiger Statuswechsel
+        service:
+          attributes:
+            bank_iban:
+              bad_chars: ungültige Zeichen
+              bad_check_digits: ungültige Prüffziffer
+              bad_format: ungültiges Format
+              bad_length: ungültige Länge
+              unknown_country_code: unbekannter Landescode
+            service_days:
+              invalid_length: kann nicht kürzer als 26 Tage sein.
+        user:
+          attributes:
+            bank_iban:
+              bad_chars: ungültige Zeichen
+              bad_check_digits: ungültige Prüffziffer
+              bad_format: ungültiges Format
+              bad_length: ungültige Länge
+              unknown_country_code: unbekannter Landescode
+            base:
+              cant_delete_himself: Du kannst dich nicht selbst löschen
+    models:
+      expense_sheet: Spesenblatt
+      holiday: Ferien
+      regional_center: Regionalzentrum
+      service: Einsatz
+      service_specification: Pflichtenheft
+      user: Benutzer
+  attributes:
+    payment_timestamp: Auszahlungszeitstempel
+    state: Status
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      long: "%d.%b.%Y"
+      short: "%d.%m.%y"
+  errors:
+    authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
+    format_error: Sie haben ein ungültiges Format angefordert
+  expense_sheet:
+    errors:
+      already_paid: Spesenblatt wurde bereits ausgezahlt
+      outside_service_date_range: Spesenblatt kann nicht ausserhalb des Einsatzzeitraums sein
+  expense_sheet_calculator:
+    errors:
+      unknown_day_type: Ungültiger Spesentagestyp
+  feedback_mailer:
+    feedback_reminder_mail:
+      subject: Deine Meinung ist uns wichtig
+  payment:
+    errors:
+      not_found: Auszahlung nicht gefunden
+      ready_not_found: Keine für Auszahlung bereiten Spesenblätter gefunden
+    expenses_from: Spesen vom %{from_date}
+    pain_filename: Spesen_vom_%{from_date}.xml
+  pdfs:
+    expense_sheet:
+      expense_table:
+        footer:
+          total: Gesamt
+        headers:
+          full_amount: Total
+        row_headers:
+          extra: Extra
+          first_work_days: Erster Arbeitstag
+          last_work_days: Letzter Arbeitstag
+        supplement:
+          driving_expenses_comment_empty: Keine Angaben
+          unpaid_vacation_comment: inkl. %{comment}
+          work_clothing_expenses_comment:
+            one: CHF %{amount}/Tag für %{count} anrechenbarer Tag
+            other: CHF %{amount}/Tag für %{count} anrechenbare Tage
+      filename: Spesenrapport_%{today}.pdf
+      header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
+      info_block:
+        footer:
+          bank_account_number: 'Konto-Nr.:'
+        header:
+          complete_service:
+            label: Gesamteinsatz
+            value:
+              one: "%{beginning} bis %{ending} (%{duration} Tag)"
+              other: "%{beginning} bis %{ending} (%{duration} Tage)"
+          expense_sheet_time_duration:
+            label: Meldeperiode
+            value:
+              one: "<b>%{beginning} bis %{ending} (%{duration} Tag)</b>"
+              other: "<b>%{beginning} bis %{ending} (%{duration} Tage)</b>"
+      title: Spesenrapport_von_%{full_name}.pdf
+    expenses_overview:
+      basedon: Statistik basiert auf allen erledigten Meldeblättern
+      filename: Übersicht_Spesenstatistik_%{today}.pdf
+      swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Verfügung vom %{date}
+      title: Zivi-Spesen Detailübersicht (Zeitperiode %{beginning} - %{ending})
+    phone_list:
+      filename: Telefonliste_%{today}.pdf
+      header: Stand vom %{date}
+      title: Telefonliste vom %{beginning} bis %{ending}
+    service_agreement:
+      body_content: |-
+        Lieber Zivi
+        Bitte sende die unterzeichnete Einsatzvereinbarung an obige Adresse. Wenn du ein Fenstercouvert mit Fenster links oder rechts verwendest, kannst du dieses Deckblatt falten und in das Couvert stecken. Die Adresse ist richtig platziert. Die Adresse unten rechts wird von uns benutzt um die Einsatzvereinbarung an die Regionalstelle weiterzuleiten. Ganz am Ende findest du ein Informationsblatt, das dir Auskunft über den Ablauf deines Einsatzes gibt. Gib bitte den Talon darin am ersten Einsatztag unterschrieben dem Einsatzleiter ab.
+      filename: Einsatzvereinbarung_von_%{full_name}.pdf
+  service_calculator:
+    end_date_cannot_be_on_weekend: Einsatzende kann nicht an einem Wochenende sein
+    invalid_required_service_days: Ungültige Einsatztage
