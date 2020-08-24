@@ -69,10 +69,8 @@ RSpec.describe Devise::RegistrationsController, type: :request do
           first_name: [I18n.t('errors.messages.blank')],
           last_name: [I18n.t('errors.messages.blank')]
         )
-        # TODO: activerecord translations like first_name and last_name seem to default back to english,
-        # because of the izivi.backend key.
-        expect(response_json[:human_readable_descriptions]).to contain_exactly('First name muss ausgefüllt werden',
-                                                                               'Last name muss ausgefüllt werden')
+        expect(response_json[:human_readable_descriptions]).to contain_exactly('Vorname muss ausgefüllt werden',
+                                                                               'Nachname muss ausgefüllt werden')
       end
     end
 
