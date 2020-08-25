@@ -6,4 +6,4 @@
 .vscode/
 frontend/cypress/videos/
 frontend/cypress/screenshots/
-.phrase.yml
+lokalise.yml

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+lokalise2 \
+  --config lokalise.yml \
+  file download \
+  --include-tags frontend \
+  --format json \
+  --placeholder-format icu \
+  --replace-breaks=false \
+  --indentation 2sp \
+  --directory-prefix "" \
+  --unzip-to frontend/src/locales/ \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file download \
+    --include-tags backend \
+    --format yml \
+    --yaml-include-root \
+    --placeholder-format icu \
+    --replace-breaks=false \
+    --indentation 2sp \
+    --directory-prefix "" \
+    --unzip-to api/config/locales/ \

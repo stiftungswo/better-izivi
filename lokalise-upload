@@ -1,0 +1,65 @@
+#!/bin/bash
+
+lokalise2 \
+  --config lokalise.yml \
+  file upload \
+  --file frontend/src/locales/messages.de.json \
+  --lang-iso de_CH \
+  --tags frontend \
+  --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file api/config/locales/de.yml \
+    --lang-iso de_CH \
+    --tags backend \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file api/config/locales/devise.de.yml \
+    --lang-iso de_CH \
+    --tags backend \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file frontend/src/locales/messages.fr.json \
+    --lang-iso fr_CH \
+    --tags frontend \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file api/config/locales/fr.yml \
+    --lang-iso fr_CH \
+    --tags backend \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file api/config/locales/devise.fr.yml \
+    --lang-iso fr_CH \
+    --tags backend \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file api/config/locales/en.yml \
+    --lang-iso en_CH \
+    --tags backend \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file api/config/locales/devise.en.yml \
+    --lang-iso en_CH \
+    --tags backend \
+    --replace-modified \
