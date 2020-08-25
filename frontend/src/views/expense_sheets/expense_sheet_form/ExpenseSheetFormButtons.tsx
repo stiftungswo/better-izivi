@@ -37,7 +37,7 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           onClick={onForceSave}
         >
           <FormattedMessage
-            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.force_save"
+            id="views.expense_sheets.expenseSheetFormButtons.force_save"
             defaultMessage="{icon} Speichern erzwingen"
             values={{ icon: <FontAwesomeIcon icon={ExclamationSolidIcon} /> }}
           />
@@ -51,7 +51,7 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           onClick={onSave}
         >
           <FormattedMessage
-            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.save"
+            id="views.expense_sheets.expenseSheetFormButtons.save"
             defaultMessage="{icon} Speichern"
             values={{ icon: <FontAwesomeIcon icon={SaveRegularIcon} /> }}
           />
@@ -69,7 +69,7 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
             style={{ pointerEvents: 'none' }}
           >
             <FormattedMessage
-              id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.save"
+              id="views.expense_sheets.expenseSheetFormButtons.save"
               defaultMessage="{icon} Speichern"
               values={{ icon: <FontAwesomeIcon icon={SaveRegularIcon} /> }}
             />
@@ -82,7 +82,7 @@ function getSaveButton({ safeOverride, onForceSave, onSave, expenseSheet }: Expe
           placement={'top'}
         >
           <FormattedMessage
-            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.only_open_expenses_can_be_modified"
+            id="views.expense_sheets.expenseSheetFormButtons.only_open_expenses_can_be_modified"
             defaultMessage="Nur offene Spesen können modifiziert werden!"
           />
         </UncontrolledTooltip>
@@ -96,7 +96,7 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
     return (
       <Button block color={'danger'} onClick={onDelete}>
         <FormattedMessage
-          id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.delete"
+          id="views.expense_sheets.expenseSheetFormButtons.delete"
           defaultMessage="{icon} Löschen"
           values={{ icon: <FontAwesomeIcon icon={TrashAltRegularIcon} /> }}
         />
@@ -113,7 +113,7 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
             style={{ pointerEvents: 'none' }}
           >
             <FormattedMessage
-              id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.delete"
+              id="views.expense_sheets.expenseSheetFormButtons.delete"
               defaultMessage="{icon} Löschen"
               values={{ icon: <FontAwesomeIcon icon={TrashAltRegularIcon} /> }}
             />
@@ -126,7 +126,7 @@ function getDeleteButton({ onDelete, expenseSheet }: ExpenseSheetFormButtonsProp
           placement={'top'}
         >
           <FormattedMessage
-            id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.only_open_expenses_can_be_deleted"
+            id="views.expense_sheets.expenseSheetFormButtons.only_open_expenses_can_be_deleted"
             defaultMessage="Nur offene Spesen können gelöscht werden!"
           />
         </UncontrolledTooltip>
@@ -141,7 +141,7 @@ function getPrintButton(mainStore: MainStore, expenseSheetId?: number) {
   return (
     <Button block color={'warning'} disabled={!expenseSheetId} href={printURL} tag={'a'} target={'_blank'}>
       <FormattedMessage
-        id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.print"
+        id="views.expense_sheets.expenseSheetFormButtons.print"
         defaultMessage="{icon} Drucken"
         values={{ icon: <FontAwesomeIcon icon={PrintSolidIcon} /> }}
       />
@@ -154,7 +154,7 @@ function getProfileButton(userId: number) {
     <Link to={'/users/' + userId} style={{ textDecoration: 'none' }}>
       <Button block>
         <FormattedMessage
-          id="izivi.frontend.views.expense_sheets.expenseSheetFormButtons.show_profile"
+          id="views.expense_sheets.expenseSheetFormButtons.show_profile"
           defaultMessage="{icon} Profil anzeigen"
           values={{ icon: <FontAwesomeIcon icon={UserIcon} /> }}
         />

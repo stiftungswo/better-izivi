@@ -63,7 +63,7 @@ class ValidatablePageInner extends React.Component<ValidatablePageInnerFullProps
       displayError(DomainStore.buildErrorMessage(
         { messages: data },
         this.intl.formatMessage({
-          id: 'izivi.frontend.register.validatePage.error',
+          id: 'register.validatePage.error',
           defaultMessage: 'Ein Fehler ist aufgetreten',
         }),
       ));

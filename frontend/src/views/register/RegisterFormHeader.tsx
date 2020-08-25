@@ -5,7 +5,7 @@ export const RegisterFormHeader = () => {
   const intl = useIntl();
 
   const SAMPLE_MAIL_SUBJECT = intl.formatMessage({
-    id: 'izivi.frontend.register.registerFormHeader.sample_mail_subject',
+    id: 'register.registerFormHeader.sample_mail_subject',
     defaultMessage: 'Einsatzplanung Zivildienst',
   });
 
@@ -29,7 +29,7 @@ export const RegisterFormHeader = () => {
     <div>
       <p>
         <FormattedMessage
-          id="izivi.frontend.register.registerFormHeader.contact_info"
+          id="register.registerFormHeader.contact_info"
           defaultMessage="Als zukünftiger Zivi musst du dich zuerst erkundigen, ob zum gewünschten Zeitpunkt ein Einsatz möglich ist. Kontaktiere hierfür bitte direkt {contactPerson} unter {email}."
           values={{
             contactPerson: MARC_LINK,
@@ -40,7 +40,7 @@ export const RegisterFormHeader = () => {
       <ul>
         <li>
           <FormattedMessage
-            id="izivi.frontend.register.registerFormHeader.instructions"
+            id="register.registerFormHeader.instructions"
             defaultMessage="Nach Eingabe deiner persönlichen Daten kannst du die Einsatzplanung ausdrucken, unterschreiben und an den Einsatzbetrieb
           zurückzuschicken. Nach erfolgreicher Prüfung werden wir diese direkt an dein zuständiges Regionalzentrum weiterleiten. Das
           Aufgebot erhältst du dann automatisch von deinem zuständigen Regionalzentrum."

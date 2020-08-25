@@ -38,7 +38,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       {
         id: 'first_name',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.name',
+          id: 'views.expense_sheets.expenseSheetOverview.name',
           defaultMessage: 'Name',
         }),
         format: ({ user: { id, full_name } }: ExpenseSheetListing) => (
@@ -48,7 +48,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       {
         id: 'start',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.from',
+          id: 'views.expense_sheets.expenseSheetOverview.from',
           defaultMessage: 'Von',
         }),
         format: ({ beginning }: ExpenseSheetListing) => this.props.mainStore!.formatDate(beginning),
@@ -56,7 +56,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       {
         id: 'end',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.until',
+          id: 'views.expense_sheets.expenseSheetOverview.until',
           defaultMessage: 'Bis',
         }),
         format: ({ ending }: ExpenseSheetListing) => this.props.mainStore!.formatDate(ending),
@@ -89,14 +89,14 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
         loading={this.state.loading}
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.expenseSheetOverview.expenses',
+            id: 'views.expense_sheets.expenseSheetOverview.expenses',
             defaultMessage: 'Spesen',
           })
         }
       >
         <Button outline className="mb-4 d-block" onClick={() => this.toggle()}>
           <FormattedMessage
-            id="izivi.frontend.views.expense_sheets.expenseSheetOverview.generate_expense_statistics"
+            id="views.expense_sheets.expenseSheetOverview.generate_expense_statistics"
             defaultMessage="Spesenstatistik generieren"
           />
         </Button>
@@ -107,7 +107,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
             onClick={() => this.updateSheetFilter(null)}
           >
             <FormattedMessage
-              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.all_expense_sheets"
+              id="views.expense_sheets.expenseSheetOverview.all_expense_sheets"
               defaultMessage="Alle Spesenblätter"
             />
           </Button>
@@ -117,7 +117,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
             onClick={() => this.updateSheetFilter('pending')}
           >
             <FormattedMessage
-              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.pending_expense_sheets"
+              id="views.expense_sheets.expenseSheetOverview.pending_expense_sheets"
               defaultMessage="Pendente Spesenblätter"
             />
           </Button>
@@ -127,7 +127,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
             onClick={() => this.updateSheetFilter('current')}
           >
             <FormattedMessage
-              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.current_expense_sheets"
+              id="views.expense_sheets.expenseSheetOverview.current_expense_sheets"
               defaultMessage="Aktuelle Spesenblätter"
             />
           </Button>
@@ -138,7 +138,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
           data={this.props.expenseSheetStore!.expenseSheets}
           renderActions={(e: ExpenseSheetListing) => <Link to={'/expense_sheets/' + e.id}>
             <FormattedMessage
-              id="izivi.frontend.views.expense_sheets.expenseSheetOverview.edit_expense_sheet"
+              id="views.expense_sheets.expenseSheetOverview.edit_expense_sheet"
               defaultMessage="Spesenblatt bearbeiten"
             />
           </Link>}

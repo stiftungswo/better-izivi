@@ -29,7 +29,7 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'zdp',
         label: this.intl.formatMessage({
-          id: 'izivi.frontend.views.users.userOverview.zdp',
+          id: 'views.users.userOverview.zdp',
           defaultMessage: 'ZDP',
         }),
         format: ({ zdp }: UserOverviewType) => zdp,
@@ -37,7 +37,7 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'name',
         label: this.intl.formatMessage({
-          id: 'izivi.frontend.views.users.userOverview.name',
+          id: 'views.users.userOverview.name',
           defaultMessage: 'Name',
         }),
         format: (user: UserOverviewType) => (
@@ -47,7 +47,7 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'start',
         label: this.intl.formatMessage({
-          id: 'izivi.frontend.views.users.userOverview.from',
+          id: 'views.users.userOverview.from',
           defaultMessage: 'Von',
         }),
         format: (user: UserOverviewType) =>
@@ -58,7 +58,7 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'end',
         label: this.intl.formatMessage({
-          id: 'izivi.frontend.views.users.userOverview.until',
+          id: 'views.users.userOverview.until',
           defaultMessage: 'Bis',
         }),
         format: (user: UserOverviewType) =>
@@ -67,14 +67,14 @@ export class UserOverview extends React.Component<Props> {
       {
         id: 'active',
         label: this.intl.formatMessage({
-          id: 'izivi.frontend.views.users.userOverview.active',
+          id: 'views.users.userOverview.active',
           defaultMessage: 'Aktiv',
         }),
       },
       {
         id: 'userRole',
         label: this.intl.formatMessage({
-          id: 'izivi.frontend.views.users.userOverview.group',
+          id: 'views.users.userOverview.group',
           defaultMessage: 'Gruppe',
         }),
         format: translateUserRole,
@@ -94,7 +94,7 @@ export class UserOverview extends React.Component<Props> {
             onClick={() => this.props.userStore!.delete(user.id!)}
           >
             <FormattedMessage
-              id="izivi.frontend.views.users.userOverview.delete"
+              id="views.users.userOverview.delete"
               defaultMessage="Löschen"
             />
           </Button>
@@ -171,7 +171,7 @@ export class UserOverview extends React.Component<Props> {
                   {
                     id: '',
                     name: this.intl.formatMessage({
-                      id: 'izivi.frontend.views.users.userOverview.all',
+                      id: 'views.users.userOverview.all',
                       defaultMessage: 'Alle',
                     }),
                   },
@@ -179,14 +179,14 @@ export class UserOverview extends React.Component<Props> {
                     id: 'civil_servant',
                     name: this.intl.formatMessage({
                       id:
-                        'izivi.frontend.views.users.userOverview.civil_servant',
+                        'views.users.userOverview.civil_servant',
                       defaultMessage: 'Zivi',
                     }),
                   },
                   {
                     id: 'admin',
                     name: this.intl.formatMessage({
-                      id: 'izivi.frontend.views.users.userOverview.admin',
+                      id: 'views.users.userOverview.admin',
                       defaultMessage: 'Admin',
                     }),
                   },

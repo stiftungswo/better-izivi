@@ -14,7 +14,7 @@ export const ExtraordinaryExpensesSegment = expenseSheetFormSegment(
         name={'extraordinary_expenses'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.ExtraordinaryExpensesSegment.extraordinary_expenses',
+            id: 'views.expense_sheets.ExtraordinaryExpensesSegment.extraordinary_expenses',
             defaultMessage: 'Ausserordentliche Spesen',
           })
         }
@@ -25,7 +25,7 @@ export const ExtraordinaryExpensesSegment = expenseSheetFormSegment(
         name={'extraordinary_expenses_comment'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.ExtraordinaryExpensesSegment.extraordinary_expenses_comment',
+            id: 'views.expense_sheets.ExtraordinaryExpensesSegment.extraordinary_expenses_comment',
             defaultMessage: 'Bemerkung',
           })
         }

@@ -68,12 +68,12 @@ export class ForgotPassword extends React.Component<Props> {
                 <div className="alert alert-info">
                   <h6>
                     <FormattedMessage
-                      id="izivi.frontend.views.forgotPassword.email_sent"
+                      id="views.forgotPassword.email_sent"
                       defaultMessage="E-Mail gesendet"
                     />
                   </h6>
                   <FormattedMessage
-                    id="izivi.frontend.views.forgotPassword.password_reset_email_sent"
+                    id="views.forgotPassword.password_reset_email_sent"
                     defaultMessage="Sie haben eine E-Mail mit einem Link zum Passwort-Reset erhalten, falls uns die E-Mail bekannt ist."
                   />
                 </div>

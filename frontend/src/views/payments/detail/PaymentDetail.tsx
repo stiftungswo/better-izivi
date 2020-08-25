@@ -59,7 +59,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
               {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
                 <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
                   <FormattedMessage
-                    id="izivi.frontend.payments.paymentDetail.download_payment_file"
+                    id="payments.paymentDetail.download_payment_file"
                     defaultMessage="{icon} Zahlungsdatei herunterladen"
                     values={{ icon: <FontAwesomeIcon className="mr-1" icon={DownloadIcon} /> }}
                   />
@@ -71,7 +71,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
                 data={this.props.paymentStore!.payment!.expense_sheets}
                 renderActions={(expenseSheet: PaymentExpenseSheet) => <Link to={`/expense_sheets/${expenseSheet.id!}`}>
                   <FormattedMessage
-                    id="izivi.frontend.payments.paymentDetail.expense_sheet"
+                    id="payments.paymentDetail.expense_sheet"
                     defaultMessage="Spesenblatt"
                   />
                 </Link>}
@@ -91,14 +91,14 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
         <ButtonGroup>
           <Button disabled={this.state.canceled} color="success" onClick={this.confirmButtonClicked} className="mb-4" target="_blank">
             <FormattedMessage
-              id="izivi.frontend.payments.paymentDetail.confirm_payment"
+              id="payments.paymentDetail.confirm_payment"
               defaultMessage="{icon} Zahlung bestätigen"
               values={{ icon: <FontAwesomeIcon className="mr-1" icon={CheckSolidIcon} /> }}
             />
           </Button>
           <Button color="danger" disabled={this.state.canceled} onClick={this.cancelButtonClicked} className="mb-4" target="_blank">
             <FormattedMessage
-              id="izivi.frontend.payments.paymentDetail.cancel_payment"
+              id="payments.paymentDetail.cancel_payment"
               defaultMessage="{icon} Zahlung abbrechen"
               values={{ icon: <FontAwesomeIcon className="mr-1" icon={ExclamationSolidIcon} /> }}
             />
@@ -115,7 +115,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
       {
         id: 'zdp',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.payments.paymentDetail.zdp',
+          id: 'payments.paymentDetail.zdp',
           defaultMessage: 'ZDP',
         }),
         format: ({ user: { zdp } }: PaymentExpenseSheet) => zdp,
@@ -123,7 +123,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
       {
         id: 'full_name',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.payments.paymentDetail.name',
+          id: 'payments.paymentDetail.name',
           defaultMessage: 'Name',
         }),
         format: (expenseSheet: PaymentExpenseSheet) => (
@@ -133,7 +133,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
       {
         id: 'iban',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.payments.paymentDetail.iban',
+          id: 'payments.paymentDetail.iban',
           defaultMessage: 'IBAN',
         }),
         format: ({ user: { bank_iban } }: PaymentExpenseSheet) => bank_iban,
@@ -141,7 +141,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
       {
         id: 'total',
         label: this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.payments.paymentDetail.amount',
+          id: 'payments.paymentDetail.amount',
           defaultMessage: 'Betrag',
         }),
         format: (expenseSheet: PaymentExpenseSheet) => new Formatter().formatCurrency(expenseSheet.total),

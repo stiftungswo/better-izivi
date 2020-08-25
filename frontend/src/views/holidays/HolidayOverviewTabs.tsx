@@ -51,7 +51,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                 onClick={submitForm}
               >
                 <FormattedMessage
-                  id="izivi.frontend.views.holidays.holidayOverviewTabs.add"
+                  id="views.holidays.holidayOverviewTabs.add"
                   defaultMessage="Hinzufügen"
                 />
               </Button>,
@@ -62,19 +62,19 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
       <TabList>
         <Tab>
           <FormattedMessage
-            id="izivi.frontend.views.holidays.holidayOverviewTabs.current"
+            id="views.holidays.holidayOverviewTabs.current"
             defaultMessage="Aktuell"
           />
         </Tab>
         <Tab>
           <FormattedMessage
-            id="izivi.frontend.views.holidays.holidayOverviewTabs.future"
+            id="views.holidays.holidayOverviewTabs.future"
             defaultMessage="Zukunft"
           />
         </Tab>
         <Tab>
           <FormattedMessage
-            id="izivi.frontend.views.holidays.holidayOverviewTabs.past"
+            id="views.holidays.holidayOverviewTabs.past"
             defaultMessage="Vergangenheit"
           />
         </Tab>
@@ -94,7 +94,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                     (
                       <Button color={'success'} disabled={isSubmitting} onClick={submitForm}>
                         <FormattedMessage
-                          id="izivi.frontend.views.holidays.holidayOverviewTabs.save"
+                          id="views.holidays.holidayOverviewTabs.save"
                           defaultMessage="Speichern"
                         />
                       </Button>
@@ -102,7 +102,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                     (
                       <Button color={'danger'} disabled={isSubmitting} onClick={() => holidayStore!.delete(holiday.id!)}>
                         <FormattedMessage
-                          id="izivi.frontend.views.holidays.holidayOverviewTabs.delete"
+                          id="views.holidays.holidayOverviewTabs.delete"
                           defaultMessage="Löschen"
                         />
                       </Button>
@@ -129,7 +129,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                     (
                       <Button color={'success'} disabled={isSubmitting} onClick={submitForm}>
                         <FormattedMessage
-                          id="izivi.frontend.views.holidays.holidayOverviewTabs.save"
+                          id="views.holidays.holidayOverviewTabs.save"
                           defaultMessage="Speichern"
                         />
                       </Button>
@@ -137,7 +137,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                     (
                       <Button color={'danger'} disabled={isSubmitting} onClick={() => holidayStore!.delete(holiday.id!)}>
                         <FormattedMessage
-                          id="izivi.frontend.views.holidays.holidayOverviewTabs.delete"
+                          id="views.holidays.holidayOverviewTabs.delete"
                           defaultMessage="Löschen"
                         />
                       </Button>
@@ -164,7 +164,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                     (
                       <Button color={'success'} disabled={isSubmitting} onClick={submitForm}>
                         <FormattedMessage
-                          id="izivi.frontend.views.holidays.holidayOverviewTabs.save"
+                          id="views.holidays.holidayOverviewTabs.save"
                           defaultMessage="Speichern"
                         />
                       </Button>
@@ -172,7 +172,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
                     (
                       <Button color={'danger'} disabled={isSubmitting} onClick={() => holidayStore!.delete(holiday.id!)}>
                         <FormattedMessage
-                          id="izivi.frontend.views.holidays.holidayOverviewTabs.delete"
+                          id="views.holidays.holidayOverviewTabs.delete"
                           defaultMessage="Löschen"
                         />
                       </Button>

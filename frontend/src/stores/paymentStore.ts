@@ -8,11 +8,11 @@ export class PaymentStore extends DomainStore<Payment> {
   protected get entityName() {
     return {
       singular: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.paymentStore.payment.one',
+        id: 'store.paymentStore.payment.one',
         defaultMessage: 'Die Auszahlung',
       }),
       plural: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.paymentStore.payment.other',
+        id: 'store.paymentStore.payment.other',
         defaultMessage: 'Die Auszahlungen',
       }),
     };
@@ -66,7 +66,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displaySuccess(
         this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.created',
+            id: 'store.created',
             defaultMessage: '{entityNameSingular} wurde erstellt.',
           },
           { entityNameSingular: this.entityName.singular },
@@ -76,7 +76,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.not_created',
+            id: 'store.not_created',
             defaultMessage: '{entityNameSingular} konnte nicht erstellt werden wurde erstellt.',
           },
           { entityNameSingular: this.entityName.singular },
@@ -93,7 +93,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displaySuccess(
         this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.paymentStore.confirmed',
+            id: 'store.paymentStore.confirmed',
             defaultMessage: '{entityNameSingular} wurde bestätigt!',
           },
           { entityNameSingular: this.entityName.singular },
@@ -103,7 +103,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.paymentStore.not_confirmed',
+            id: 'store.paymentStore.not_confirmed',
             defaultMessage: '{entityNameSingular} konnte nicht bestätigt werden',
           },
           { entityNameSingular: this.entityName.singular },
@@ -119,7 +119,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displaySuccess(
         this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.paymentStore.cancelled',
+            id: 'store.paymentStore.cancelled',
             defaultMessage: '{entityNameSingular} wurde abgebrochen!',
           },
           { entityNameSingular: this.entityName.singular },
@@ -129,7 +129,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.paymentStore.not_cancelled',
+            id: 'store.paymentStore.not_cancelled',
             defaultMessage: '{entityNameSingular} konnte nicht abgebrochen werden',
           },
           { entityNameSingular: this.entityName.singular },
@@ -147,7 +147,7 @@ export class PaymentStore extends DomainStore<Payment> {
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.domainStore.not_loaded.other',
+            id: 'store.domainStore.not_loaded.other',
             defaultMessage: '{entityNamePlural} konnten nicht geladen werden.',
           },
           { entityNamePlural: this.entityName.plural },

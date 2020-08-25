@@ -10,7 +10,7 @@ export const ContactPage = () => {
     <>
       <h3>
         <FormattedMessage
-          id="izivi.frontend.register.contactPage.title"
+          id="register.contactPage.title"
           defaultMessage="Kontaktinformationen"
         />
       </h3>
@@ -21,7 +21,7 @@ export const ContactPage = () => {
         name={'phone'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.telephone',
+            id: 'register.contactPage.telephone',
             defaultMessage: 'Telefon',
           })
         }
@@ -33,13 +33,13 @@ export const ContactPage = () => {
         name={'address'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.address',
+            id: 'register.contactPage.address',
             defaultMessage: 'Adresse',
           })
         }
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.address_placeholder',
+            id: 'register.contactPage.address_placeholder',
             defaultMessage: 'Strasse, Hausnummer',
           })
         }
@@ -50,13 +50,13 @@ export const ContactPage = () => {
         name={'city'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.city',
+            id: 'register.contactPage.city',
             defaultMessage: 'Stadt',
           })
         }
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.city_placeholder',
+            id: 'register.contactPage.city_placeholder',
             defaultMessage: 'Stadt',
           })
         }
@@ -67,13 +67,13 @@ export const ContactPage = () => {
         name={'zip'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.zip',
+            id: 'register.contactPage.zip',
             defaultMessage: 'Postleitzahl',
           })
         }
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.zip_placeholder',
+            id: 'register.contactPage.zip_placeholder',
             defaultMessage: 'z.B. 8000',
           })
         }
@@ -84,13 +84,13 @@ export const ContactPage = () => {
         name={'hometown'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.hometown',
+            id: 'register.contactPage.hometown',
             defaultMessage: 'Heimatort',
           })
         }
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.contactPage.hometown_placeholder',
+            id: 'register.contactPage.hometown_placeholder',
             defaultMessage: 'Heimatort',
           })
         }

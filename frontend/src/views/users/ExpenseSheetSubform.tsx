@@ -88,7 +88,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
       {
         id: 'beginning',
         label: intl.formatMessage({
-          id: 'izivi.frontend.views.users.expenseSheetSubform.from',
+          id: 'views.users.expenseSheetSubform.from',
           defaultMessage: 'Von',
         }),
         format: (expenseSheet: ShortExpenseSheetListing) => this.safeFormatDate(expenseSheet.beginning),
@@ -96,7 +96,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
       {
         id: 'end',
         label: intl.formatMessage({
-          id: 'izivi.frontend.views.users.expenseSheetSubform.until',
+          id: 'views.users.expenseSheetSubform.until',
           defaultMessage: 'Bis',
         }),
         format: (expenseSheet: ShortExpenseSheetListing) => this.safeFormatDate(expenseSheet.ending),
@@ -104,7 +104,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
       {
         id: 'days',
         label: intl.formatMessage({
-          id: 'izivi.frontend.views.users.expenseSheetSubform.number_of_days',
+          id: 'views.users.expenseSheetSubform.number_of_days',
           defaultMessage: 'Anzahl Tage',
         }),
         format: (expenseSheet: ShortExpenseSheetListing) => expenseSheet.duration,
@@ -112,7 +112,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
       {
         id: 'state',
         label: intl.formatMessage({
-          id: 'izivi.frontend.views.users.expenseSheetSubform.status',
+          id: 'views.users.expenseSheetSubform.status',
           defaultMessage: 'Status',
         }),
         format: this.formatExpenseSheetStateColumn.bind(this),
@@ -120,7 +120,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
       {
         id: 'print',
         label: intl.formatMessage({
-          id: 'izivi.frontend.views.users.expenseSheetSubform.print',
+          id: 'views.users.expenseSheetSubform.print',
           defaultMessage: 'Drucken',
         }),
         format: this.formatExpenseSheetPrintColumn.bind(this),
@@ -141,7 +141,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
           >
             <FontAwesomeIcon icon={PrintSolidIcon} /> <span>
               <FormattedMessage
-                id="izivi.frontend.views.users.expenseSheetSubform.print"
+                id="views.users.expenseSheetSubform.print"
                 defaultMessage="Drucken"
               />
             </span>
@@ -185,7 +185,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
         return {
           icon: HourGlassRegularIcon,
           tooltip: intl.formatMessage({
-            id: 'izivi.frontend.views.users.expenseSheetSubform.in_progress',
+            id: 'views.users.expenseSheetSubform.in_progress',
             defaultMessage: 'In Bearbeitung',
           }),
           color: 'orange',
@@ -194,7 +194,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
         return {
           icon: HourGlassRegularIcon,
           tooltip: intl.formatMessage({
-            id: 'izivi.frontend.views.users.expenseSheetSubform.in_progress',
+            id: 'views.users.expenseSheetSubform.in_progress',
             defaultMessage: 'In Bearbeitung',
           }),
           color: 'orange',
@@ -203,7 +203,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
         return {
           icon: CheckSquareRegularIcon,
           tooltip: intl.formatMessage({
-            id: 'izivi.frontend.views.users.expenseSheetSubform.done',
+            id: 'views.users.expenseSheetSubform.done',
             defaultMessage: 'Erledigt',
           }),
           color: 'green',
@@ -212,7 +212,7 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
         return {
           icon: ClockRegularIcon,
           tooltip: intl.formatMessage({
-            id: 'izivi.frontend.views.users.expenseSheetSubform.not_yet_due',
+            id: 'views.users.expenseSheetSubform.not_yet_due',
             defaultMessage: 'Noch nicht fällig',
           }),
           color: 'black',

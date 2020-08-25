@@ -9,7 +9,7 @@ export class NotFound extends React.Component {
     return (
       <Link to={'/'}>
         <FormattedMessage
-          id="izivi.frontend.views.notFound.here"
+          id="views.notFound.here"
           defaultMessage="Hier"
         />
       </Link>
@@ -21,7 +21,7 @@ export class NotFound extends React.Component {
       <IziviContent card showBackgroundImage title={'Seite nicht gefunden'}>
         <p>
           <FormattedMessage
-            id="izivi.frontend.views.notFound.not_found"
+            id="views.notFound.not_found"
             defaultMessage="Die angeforderte Seite konnte nicht gefunden werden. {link} geht es zurück zur Startseite."
             values={{ link: this.getLink() }}
           />

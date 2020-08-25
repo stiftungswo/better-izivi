@@ -16,7 +16,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'zdp',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.expenseSheetsReadyForPaymentTable.zdp',
+        id: 'payments.expenseSheetsReadyForPaymentTable.zdp',
         defaultMessage: 'ZDP',
       }),
       format: (expenseSheet: ExpenseSheetListing) => get(expenseSheet, 'user.zdp', ''),
@@ -24,7 +24,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'full_name',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.expenseSheetsReadyForPaymentTable.name',
+        id: 'payments.expenseSheetsReadyForPaymentTable.name',
         defaultMessage: 'Name',
       }),
       format: (expenseSheet: ExpenseSheetListing) => get(expenseSheet, 'user.full_name', ''),
@@ -32,7 +32,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'iban',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.expenseSheetsReadyForPaymentTable.iban',
+        id: 'payments.expenseSheetsReadyForPaymentTable.iban',
         defaultMessage: 'IBAN',
       }),
       format: (expenseSheet: ExpenseSheetListing) => get(expenseSheet, 'user.bank_iban', ''),
@@ -40,7 +40,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'total',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.expenseSheetsReadyForPaymentTable.amount',
+        id: 'payments.expenseSheetsReadyForPaymentTable.amount',
         defaultMessage: 'Betrag',
       }),
       format: (expenseSheet: ExpenseSheetListing) => new Formatter().formatCurrency(expenseSheet.total),
@@ -48,7 +48,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'notices',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.expenseSheetsReadyForPaymentTable.comment',
+        id: 'payments.expenseSheetsReadyForPaymentTable.comment',
         defaultMessage: 'Bemerkung',
       }),
       format: (expenseSheet: ExpenseSheetListing) => <ExpenseSheetPaymentWarnings expenseSheet={expenseSheet} />,
@@ -72,7 +72,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
           data={props.toBePaidExpenseSheets}
           renderActions={({ id }: ExpenseSheetListing) => <Link to={'/expense_sheets/' + id}>
             <FormattedMessage
-              id="izivi.frontend.payments.expenseSheetsReadyForPaymentTable.expense_sheet"
+              id="payments.expenseSheetsReadyForPaymentTable.expense_sheet"
               defaultMessage="Spesenblatt"
             />
           </Link>}
@@ -84,7 +84,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
           target="_blank"
         >
           <FormattedMessage
-            id="izivi.frontend.payments.expenseSheetsReadyForPaymentTable.start_payment"
+            id="payments.expenseSheetsReadyForPaymentTable.start_payment"
             defaultMessage="Zahlung starten"
           />
         </Button>
@@ -94,7 +94,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
     return (
       <div className="text-muted">
         <FormattedMessage
-          id="izivi.frontend.payments.expenseSheetsReadyForPaymentTable.no_expenses_ready_for_payment"
+          id="payments.expenseSheetsReadyForPaymentTable.no_expenses_ready_for_payment"
           defaultMessage="Keine Spesen zur Auszahlung bereit."
         />
       </div>

@@ -72,7 +72,7 @@ class RegisterFormInnerImplementation extends React.Component<
             {
               title: intl.formatMessage({
                 id:
-                  'izivi.frontend.register.registerFormInner.registration',
+                  'register.registerFormInner.registration',
                 defaultMessage: 'Registration',
               }),
             },
@@ -101,7 +101,7 @@ class RegisterFormInnerImplementation extends React.Component<
     return [
       {
         title: intl.formatMessage({
-          id: 'izivi.frontend.register.registerFormInner.community_password',
+          id: 'register.registerFormInner.community_password',
           defaultMessage: 'Community Passwort',
         }),
         component: withPageValidations(['community_password'])(
@@ -110,7 +110,7 @@ class RegisterFormInnerImplementation extends React.Component<
       },
       {
         title: intl.formatMessage({
-          id: 'izivi.frontend.register.registerFormInner.personal_information',
+          id: 'register.registerFormInner.personal_information',
           defaultMessage: 'Persönliche Informationen',
         }),
         component: withPageValidations([
@@ -127,7 +127,7 @@ class RegisterFormInnerImplementation extends React.Component<
       },
       {
         title: intl.formatMessage({
-          id: 'izivi.frontend.register.registerFormInner.contact_information',
+          id: 'register.registerFormInner.contact_information',
           defaultMessage: 'Kontakinformationen',
         }),
         component: withPageValidations([
@@ -141,7 +141,7 @@ class RegisterFormInnerImplementation extends React.Component<
       {
         title: intl.formatMessage({
           id:
-            'izivi.frontend.register.registerFormInner.bank_and_insurance_information',
+            'register.registerFormInner.bank_and_insurance_information',
           defaultMessage: 'Bank- und Versicherungsinformationen',
         }),
         component: withPageValidations(['bank_iban', 'health_insurance'])(

@@ -21,28 +21,28 @@ const getDailyExpensesSubcolumns = (intl: IntlShape) => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.first_day',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.first_day',
           defaultMessage: 'Erster Tag',
         }),
     },
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.work',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.work',
           defaultMessage: 'Arbeit',
         }),
     },
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.free',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.free',
           defaultMessage: 'Frei',
         }),
     },
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.last_day',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.last_day',
           defaultMessage: 'Letzter Tag',
         }),
     },
@@ -54,7 +54,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.active',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.active',
           defaultMessage: 'Aktiv',
         }),
       span: { row: 2 },
@@ -62,12 +62,12 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.id',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.id',
           defaultMessage: 'ID',
         }),
       tooltip:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.service_specification_number',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.service_specification_number',
           defaultMessage: 'Pflichtenheft Nummer',
         }),
       span: { row: 2 },
@@ -75,7 +75,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.name',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.name',
           defaultMessage: 'Name',
         }),
       span: { row: 2 },
@@ -83,12 +83,12 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.short_name_short',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.short_name_short',
           defaultMessage: 'KN',
         }),
       tooltip:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.short_name',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.short_name',
           defaultMessage: 'Kurz-Name',
         }),
       span: { row: 2 },
@@ -96,12 +96,12 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.pocket_money',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.pocket_money',
           defaultMessage: 'Taschengeld',
         }),
       tooltip:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.pocket_money_tooltip',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.pocket_money_tooltip',
           defaultMessage: 'Taschengeld (Fixer Betrag)',
         }),
       span: { row: 2 },
@@ -109,7 +109,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.accommodation',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.accommodation',
           defaultMessage: 'Unterkunft',
         }),
       span: { row: 2 },
@@ -117,7 +117,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.clothing',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.clothing',
           defaultMessage: 'Kleider',
         }),
       span: { row: 2 },
@@ -125,7 +125,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.breakfast',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.breakfast',
           defaultMessage: 'Frühstück',
         }),
       span: { col: 4 },
@@ -134,7 +134,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.lunch',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.lunch',
           defaultMessage: 'Mittagessen',
         }),
       span: { col: 4 },
@@ -143,7 +143,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
     {
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverviewTable.dinner',
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.dinner',
           defaultMessage: 'Abendessen',
         }),
       span: { col: 6 },

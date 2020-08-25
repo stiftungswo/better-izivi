@@ -8,11 +8,11 @@ export class HolidayStore extends DomainStore<Holiday> {
   protected get entityName() {
     return {
       singular: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.holidayStore.holiday.one',
+        id: 'store.holidayStore.holiday.one',
         defaultMessage: 'Der Feiertag',
       }),
       plural: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.holidayStore.holiday.other',
+        id: 'store.holidayStore.holiday.other',
         defaultMessage: 'Die Feiertage',
       }),
     };

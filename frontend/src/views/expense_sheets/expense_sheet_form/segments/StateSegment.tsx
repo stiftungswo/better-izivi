@@ -17,7 +17,7 @@ const getPaymentInProgressExplanation = () => {
       <div className="d-table-cell"><FontAwesomeIcon color="orange" className="mr-2" icon={HourGlassRegularIcon} /></div>
       <div className="d-table-cell">
         <FormattedMessage
-          id="izivi.frontend.views.expense_sheets.stateSegment.change_status_here"
+          id="views.expense_sheets.stateSegment.change_status_here"
           defaultMessage="Du kannst den Status in der {expensesOverview} ändern"
           values={{ expensesOverview: getExpensesOverviewLink() }}
         />
@@ -35,12 +35,12 @@ const getPaidExplanation = () => {
       </div>
       <div className="d-table-cell">
         <FormattedMessage
-          id="izivi.frontend.views.expense_sheets.stateSegment.expenses_were_paid"
+          id="views.expense_sheets.stateSegment.expenses_were_paid"
           defaultMessage="Das Spesenblatt wurde ausbezahlt"
         />
         <br />
         <FormattedMessage
-          id="izivi.frontend.views.expense_sheets.stateSegment.see_paid_expenses"
+          id="views.expense_sheets.stateSegment.see_paid_expenses"
           defaultMessage="Du siehst die ausbezahlten Spesen in der {expensesOverview}"
           values={{ expensesOverview: getExpensesOverviewLink() }}
         />
@@ -53,7 +53,7 @@ const getExpensesOverviewLink = () => {
   return (
     <Link to="/payments">
       <FormattedMessage
-        id="izivi.frontend.views.expense_sheets.stateSegment.payment_overview"
+        id="views.expense_sheets.stateSegment.payment_overview"
         defaultMessage="Auszahlungsübersicht"
       />
       {/*TODO: Link to exact payment*/}

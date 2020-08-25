@@ -12,7 +12,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'created_at',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.paymentsTable.date',
+        id: 'payments.paymentsTable.date',
         defaultMessage: 'Datum',
       }),
       format: (payment: Payment) => new Formatter().formatDate(PaymentStore.convertPaymentTimestamp(payment.payment_timestamp)),
@@ -20,7 +20,7 @@ function getClomuns(intl: IntlShape) {
     {
       id: 'amount',
       label: intl.formatMessage({
-        id: 'izivi.frontend.payments.paymentsTable.amount',
+        id: 'payments.paymentsTable.amount',
         defaultMessage: 'Betrag',
       }),
       format: (payment: Payment) => new Formatter().formatCurrency(payment.total),
@@ -38,7 +38,7 @@ export const PaymentsTable = ({ payments, emptyNotice, mainStore }: { payments: 
         data={payments}
         renderActions={({ payment_timestamp }: Payment) => <Link to={'/payments/' + payment_timestamp}>
           <FormattedMessage
-            id="izivi.frontend.payments.paymentsTable.details"
+            id="payments.paymentsTable.details"
             defaultMessage="Details"
           />
         </Link>}

@@ -9,11 +9,11 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
   protected get entityName() {
     return {
       singular: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.serviceStore.service.one',
+        id: 'store.serviceStore.service.one',
         defaultMessage: 'Der Zivildiensteinsatz',
       }),
       plural: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.serviceStore.service.other',
+        id: 'store.serviceStore.service.other',
         defaultMessage: 'Die Zivildiensteinsätze',
       }),
     };

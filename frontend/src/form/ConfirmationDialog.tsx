@@ -22,13 +22,13 @@ export default function ConfirmationDialog({ children, title, open, onClose, onC
       <ModalFooter>
         <Button onClick={onClose} color="primary">
           <FormattedMessage
-            id="izivi.frontend.form.confirmation_dialog.cancel"
+            id="form.confirmation_dialog.cancel"
             defaultMessage="Abbrechen"
           />
         </Button>
         <Button onClick={onConfirm} color="danger">
           <FormattedMessage
-            id="izivi.frontend.form.confirmation_dialog.ok"
+            id="form.confirmation_dialog.ok"
             defaultMessage="Ok"
           />
         </Button>

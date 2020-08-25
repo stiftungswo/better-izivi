@@ -35,7 +35,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
       .string()
       .required(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changeForgottenPassword.mandatory_field',
+          id: 'views.changeForgottenPassword.mandatory_field',
           defaultMessage: 'Pflichtfeld',
         }),
       )
@@ -43,7 +43,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
         6,
         this.intl.formatMessage({
           id:
-            'izivi.frontend.views.changeForgottenPassword.password_min_length',
+            'views.changeForgottenPassword.password_min_length',
           defaultMessage: 'Passwort muss mindestens 6 Zeichen sein',
         }),
       ),
@@ -51,7 +51,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
       .string()
       .required(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changeForgottenPassword.mandatory_field',
+          id: 'views.changeForgottenPassword.mandatory_field',
           defaultMessage: 'Pflichtfeld',
         }),
       )
@@ -59,7 +59,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
         6,
         this.intl.formatMessage({
           id:
-            'izivi.frontend.views.changeForgottenPassword.password_min_length',
+            'views.changeForgottenPassword.password_min_length',
           defaultMessage: 'Passwort muss mindestens 6 Zeichen sein',
         }),
       )
@@ -67,7 +67,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
         'passwords-match',
         this.intl.formatMessage({
           id:
-            'izivi.frontend.views.changeForgottenPassword.passwords_must_match',
+            'views.changeForgottenPassword.passwords_must_match',
           defaultMessage: 'Passwörter müssen übereinstimmen',
         }),
         function(value) {
@@ -88,7 +88,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
       await this.props.apiStore!.putChangePassword(values);
       this.props.mainStore!.displaySuccess(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changePassword.password_save_success',
+          id: 'views.changePassword.password_save_success',
           defaultMessage: 'Passwort wurde erfolgreich gespeichert!',
         }),
       );
@@ -114,7 +114,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
                 component={PasswordField}
                 name={'current_password'}
                 label={this.intl.formatMessage({
-                  id: 'izivi.frontend.views.changePassword.old_password',
+                  id: 'views.changePassword.old_password',
                   defaultMessage: 'Altes Passwort',
                 })}
                 placeholder={passwordPlaceholder}
@@ -123,7 +123,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
                 component={PasswordField}
                 name={'password'}
                 label={this.intl.formatMessage({
-                  id: 'izivi.frontend.views.changePassword.new_password',
+                  id: 'views.changePassword.new_password',
                   defaultMessage: 'Neues Passwort',
                 })}
                 placeholder={passwordPlaceholder}
@@ -132,7 +132,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
                 component={PasswordField}
                 name={'password_confirmation'}
                 label={this.intl.formatMessage({
-                  id: 'izivi.frontend.views.changePassword.repeat_new_password',
+                  id: 'views.changePassword.repeat_new_password',
                   defaultMessage: 'Neues Passwort wiederholen',
                 })}
                 placeholder={passwordPlaceholder}
@@ -162,7 +162,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
     if (this.isCurrentPasswordInvalid(error)) {
       this.props.mainStore!.displayError(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changePassword.password_wrong',
+          id: 'views.changePassword.password_wrong',
           defaultMessage: 'Das eingegebene Passwort ist falsch',
         }),
       );
@@ -172,7 +172,7 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
           error,
           this.intl.formatMessage({
             id:
-              'izivi.frontend.views.changePassword.internal_error_try_again_later',
+              'views.changePassword.internal_error_try_again_later',
             defaultMessage:
               'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
           }),

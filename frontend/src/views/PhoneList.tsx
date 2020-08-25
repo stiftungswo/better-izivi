@@ -56,7 +56,7 @@ export class PhoneListView extends React.Component<Props> {
       <IziviContent card title="Telefonliste">
         <p>
           <FormattedMessage
-            id="izivi.frontend.views.phoneList.info"
+            id="views.phoneList.info"
             defaultMessage="Geben Sie ein Anfangsdatum und ein Enddatum ein um eine Telefonliste mit allen Zivis zu erhalten, die in diesem Zeitraum arbeiten."
           />
         </p>
@@ -78,7 +78,7 @@ export class PhoneListView extends React.Component<Props> {
                     horizontal
                     component={DatePickerField}
                     label={intl.formatMessage({
-                      id: 'izivi.frontend.views.phoneList.start',
+                      id: 'views.phoneList.start',
                       defaultMessage: 'Anfang',
                     })}
                     name={'beginning'}
@@ -87,7 +87,7 @@ export class PhoneListView extends React.Component<Props> {
                     horizontal
                     component={DatePickerField}
                     label={intl.formatMessage({
-                      id: 'izivi.frontend.views.phoneList.end',
+                      id: 'views.phoneList.end',
                       defaultMessage: 'Ende',
                     })}
                     name={'ending'}

@@ -36,7 +36,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
       .string()
       .required(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changeForgottenPassword.mandatory_field',
+          id: 'views.changeForgottenPassword.mandatory_field',
           defaultMessage: 'Pflichtfeld',
         }),
       )
@@ -44,7 +44,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
         6,
         this.intl.formatMessage({
           id:
-            'izivi.frontend.views.changeForgottenPassword.password_min_length',
+            'views.changeForgottenPassword.password_min_length',
           defaultMessage: 'Passwort muss mindestens 6 Zeichen sein',
         }),
       ),
@@ -52,7 +52,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
       .string()
       .required(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changeForgottenPassword.mandatory_field',
+          id: 'views.changeForgottenPassword.mandatory_field',
           defaultMessage: 'Pflichtfeld',
         }),
       )
@@ -60,7 +60,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
         6,
         this.intl.formatMessage({
           id:
-            'izivi.frontend.views.changeForgottenPassword.password_min_length',
+            'views.changeForgottenPassword.password_min_length',
           defaultMessage: 'Passwort muss mindestens 6 Zeichen sein',
         }),
       )
@@ -68,7 +68,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
         'passwords-match',
         this.intl.formatMessage({
           id:
-            'izivi.frontend.views.changeForgottenPassword.passwords_must_match',
+            'views.changeForgottenPassword.passwords_must_match',
           defaultMessage: 'Passwörter müssen übereinstimmen',
         }),
         function(value) {
@@ -89,7 +89,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
       this.setState({ success: true, error: null });
       this.props.mainStore!.displaySuccess(
         this.intl.formatMessage({
-          id: 'izivi.frontend.views.changeForgottenPassword.password_reseted',
+          id: 'views.changeForgottenPassword.password_reseted',
           defaultMessage: 'Passwort zurückgesetzt',
         }),
       );
@@ -99,7 +99,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
           error,
           this.intl.formatMessage({
             id:
-              'izivi.frontend.views.changeForgottenPassword.password_reset_failed',
+              'views.changeForgottenPassword.password_reset_failed',
             defaultMessage: 'Konnte Passwort nicht zurücksetzen',
           }),
         ),
@@ -123,12 +123,12 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
                 component={PasswordField}
                 name={'password'}
                 label={this.intl.formatMessage({
-                  id: 'izivi.frontend.views.changeForgottenPassword.password',
+                  id: 'views.changeForgottenPassword.password',
                   defaultMessage: 'Passwort',
                 })}
                 placeholder={this.intl.formatMessage({
                   id:
-                    'izivi.frontend.views.changeForgottenPassword.new_password',
+                    'views.changeForgottenPassword.new_password',
                   defaultMessage: 'Neues Passwort',
                 })}
               />
@@ -137,12 +137,12 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
                 name={'password_confirmation'}
                 label={this.intl.formatMessage({
                   id:
-                    'izivi.frontend.views.changeForgottenPassword.confirm_password',
+                    'views.changeForgottenPassword.confirm_password',
                   defaultMessage: 'Passwort bestätigen',
                 })}
                 placeholder={this.intl.formatMessage({
                   id:
-                    'izivi.frontend.views.changeForgottenPassword.confirm_new_password',
+                    'views.changeForgottenPassword.confirm_new_password',
                   defaultMessage: 'Neues Passwort bestätigen',
                 })}
               />
@@ -152,7 +152,7 @@ class ChangeForgottenPasswordInner extends React.Component<Props> {
                 onClick={formikProps.submitForm}
               >
                 <FormattedMessage
-                  id="izivi.frontend.views.changeForgottenPassword.save"
+                  id="views.changeForgottenPassword.save"
                   defaultMessage="Speichern"
                 />
               </Button>

@@ -33,7 +33,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
         <LoadingInformation
           message={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.load_form',
+              id: 'register.personalDetailsPage.load_form',
               defaultMessage: 'Lade Formular',
             })
           }
@@ -46,7 +46,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
       <>
         <h3 className={'mb-3'}>
           <FormattedMessage
-            id="izivi.frontend.register.personalDetailsPage.title"
+            id="register.personalDetailsPage.title"
             defaultMessage="Persönliche Informationen"
           />
         </h3>
@@ -56,13 +56,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'zdp'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.zdp',
+              id: 'register.personalDetailsPage.zdp',
               defaultMessage: 'Zivildienstnummer (ZDP)',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.zdp_placeholder',
+              id: 'register.personalDetailsPage.zdp_placeholder',
               defaultMessage: 'Dies ist deine Zivildienst-Nummer, welche du auf deinem Aufgebot wiederfindest',
             })
           }
@@ -73,7 +73,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'regional_center_id'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.regional_center',
+              id: 'register.personalDetailsPage.regional_center',
               defaultMessage: 'Regionalzentrum',
             })
           }
@@ -85,13 +85,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'first_name'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.first_name',
+              id: 'register.personalDetailsPage.first_name',
               defaultMessage: 'Vorname',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.first_name_placeholder',
+              id: 'register.personalDetailsPage.first_name_placeholder',
               defaultMessage: 'Dein Vorname',
             })
           }
@@ -102,13 +102,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'last_name'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.last_name',
+              id: 'register.personalDetailsPage.last_name',
               defaultMessage: 'Nachname',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.last_name_placeholder',
+              id: 'register.personalDetailsPage.last_name_placeholder',
               defaultMessage: 'Dein Nachname',
             })
           }
@@ -119,13 +119,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'email'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.email',
+              id: 'register.personalDetailsPage.email',
               defaultMessage: 'Email',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.email_placeholder',
+              id: 'register.personalDetailsPage.email_placeholder',
               defaultMessage: 'Wird für das zukünftige Login sowie das Versenden von Systemnachrichten benötigt',
             })
           }
@@ -136,13 +136,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'birthday'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.birthday',
+              id: 'register.personalDetailsPage.birthday',
               defaultMessage: 'Geburtstag',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.birthday_placeholder',
+              id: 'register.personalDetailsPage.birthday_placeholder',
               defaultMessage: 'dd.mm.yyyy',
             })
           }
@@ -153,13 +153,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'password'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.password_min_chars',
+              id: 'register.personalDetailsPage.password_min_chars',
               defaultMessage: 'Passwort (mind. 6 Zeichen)',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.password_min_chars_placeholder',
+              id: 'register.personalDetailsPage.password_min_chars_placeholder',
               defaultMessage: 'Passwort mit mindestens 6 Zeichen',
             })
           }
@@ -170,13 +170,13 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'password_confirm'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.password_confirm',
+              id: 'register.personalDetailsPage.password_confirm',
               defaultMessage: 'Passwort Bestätigung',
             })
           }
           placeholder={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.password_confirm_placeholder',
+              id: 'register.personalDetailsPage.password_confirm_placeholder',
               defaultMessage: 'Wiederhole dein gewähltes Passwort',
             })
           }
@@ -187,7 +187,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           name={'newsletter'}
           label={
             this.intl.formatMessage({
-              id: 'izivi.frontend.register.personalDetailsPage.newsletter_yes',
+              id: 'register.personalDetailsPage.newsletter_yes',
               defaultMessage: 'Ja, ich möchte den SWO Newsletter erhalten',
             })
           }

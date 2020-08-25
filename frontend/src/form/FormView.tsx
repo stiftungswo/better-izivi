@@ -26,7 +26,7 @@ const IntlPrompt = ({ when }: { when: boolean }) => {
     <Prompt
       when={when}
       message={() =>
-        intl.formatMessage({ id: 'izivi.frontend.form.form_view.discard_changes', defaultMessage: 'Änderungen verwerfen?' })
+        intl.formatMessage({ id: 'form.form_view.discard_changes', defaultMessage: 'Änderungen verwerfen?' })
       }
     />
   );

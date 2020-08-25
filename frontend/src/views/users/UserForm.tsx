@@ -61,30 +61,30 @@ class UserFormInner extends React.Component<Props> {
           <Form>
             <h3>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.print"
+                id="views.users.userForm.print"
                 defaultMessage="Persönliche Informationen"
               />
             </h3>
             <p>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.info1"
+                id="views.users.userForm.info1"
                 defaultMessage="Bitte fülle die folgenden Felder zu deiner Person wahrheitsgetreu aus. Dadurch erleichterst du dir und uns den administrativen Aufwand."
               />
               <br />
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.info2"
+                id="views.users.userForm.info2"
                 defaultMessage="Wir verwenden diese Informationen ausschliesslich zur Erstellung der Einsatzplanung und zur administrativen Abwicklung."
               />
             </p>
             <p>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.info3"
+                id="views.users.userForm.info3"
                 defaultMessage="Bitte lies dir auch die näheren Informationen zu den jeweiligen Feldern unter dem Icon jeweils durch."
               />
             </p>
             <p>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.info4"
+                id="views.users.userForm.info4"
                 defaultMessage="Wichtig: Vergiss nicht zu speichern (Daten speichern) bevor du die Seite verlässt oder eine Einsatzplanung erfasst."
               />
             </p>
@@ -97,7 +97,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'zdp'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.zdp',
+                id: 'views.users.userForm.zdp',
                 defaultMessage: 'ZDP ',
               })}
             />
@@ -106,7 +106,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'first_name'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.first_name',
+                id: 'views.users.userForm.first_name',
                 defaultMessage: 'Vorname',
               })}
             />
@@ -115,7 +115,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'last_name'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.last_name',
+                id: 'views.users.userForm.last_name',
                 defaultMessage: 'Nachname',
               })}
             />
@@ -124,7 +124,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'address'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.street',
+                id: 'views.users.userForm.street',
                 defaultMessage: 'Strasse',
               })}
             />
@@ -133,7 +133,7 @@ class UserFormInner extends React.Component<Props> {
               component={NumberField}
               name={'zip'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.post_code',
+                id: 'views.users.userForm.post_code',
                 defaultMessage: 'PLZ',
               })}
             />
@@ -142,7 +142,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'city'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.place',
+                id: 'views.users.userForm.place',
                 defaultMessage: 'Ort',
               })}
             />
@@ -151,7 +151,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'hometown'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.home_town',
+                id: 'views.users.userForm.home_town',
                 defaultMessage: 'Heimatort',
               })}
             />
@@ -160,7 +160,7 @@ class UserFormInner extends React.Component<Props> {
               component={DatePickerField}
               name={'birthday'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.birthday',
+                id: 'views.users.userForm.birthday',
                 defaultMessage: 'Geburtstag',
               })}
             />
@@ -168,13 +168,13 @@ class UserFormInner extends React.Component<Props> {
             <SolidHorizontalRow />
             <h3>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.contact_possibility"
+                id="views.users.userForm.contact_possibility"
                 defaultMessage="Kontaktmöglichkeit"
               />
             </h3>
             <p>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.phone_format_info"
+                id="views.users.userForm.phone_format_info"
                 defaultMessage="Telefonnummer bitte im Format '044 123 45 67' angeben."
               />
             </p>
@@ -184,7 +184,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'email'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.email',
+                id: 'views.users.userForm.email',
                 defaultMessage: 'E-Mail',
               })}
             />
@@ -193,7 +193,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'phone'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.phone',
+                id: 'views.users.userForm.phone',
                 defaultMessage: 'Telefon',
               })}
             />
@@ -201,7 +201,7 @@ class UserFormInner extends React.Component<Props> {
             <SolidHorizontalRow />
             <h3>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.bank_post_connection"
+                id="views.users.userForm.bank_post_connection"
                 defaultMessage="Bank-/Postverbindung"
               />
             </h3>
@@ -211,7 +211,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'bank_iban'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.iban_number',
+                id: 'views.users.userForm.iban_number',
                 defaultMessage: 'IBAN-Nummer',
               })}
             />
@@ -219,7 +219,7 @@ class UserFormInner extends React.Component<Props> {
             <SolidHorizontalRow />
             <h3>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.healt_insurance"
+                id="views.users.userForm.healt_insurance"
                 defaultMessage="Krankenkasse"
               />
             </h3>
@@ -230,7 +230,7 @@ class UserFormInner extends React.Component<Props> {
               name={'health_insurance'}
               label={intl.formatMessage({
                 id:
-                  'izivi.frontend.views.users.userForm.healt_insurance_name_and_location',
+                  'views.users.userForm.healt_insurance_name_and_location',
                 defaultMessage: 'Krankenkasse (Name und Ort)',
               })}
             />
@@ -238,7 +238,7 @@ class UserFormInner extends React.Component<Props> {
             <SolidHorizontalRow />
             <h3>
               <FormattedMessage
-                id="izivi.frontend.views.users.userForm.various_information"
+                id="views.users.userForm.various_information"
                 defaultMessage="Diverse Informationen"
               />
             </h3>
@@ -249,7 +249,7 @@ class UserFormInner extends React.Component<Props> {
               component={TextField}
               name={'work_experience'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.work_experience',
+                id: 'views.users.userForm.work_experience',
                 defaultMessage: 'Berufserfahrung',
               })}
             />
@@ -258,7 +258,7 @@ class UserFormInner extends React.Component<Props> {
               component={SelectField}
               name={'regional_center_id'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.regional_center',
+                id: 'views.users.userForm.regional_center',
                 defaultMessage: 'Regionalzentrum',
               })}
               options={this.props.regionalCenterStore!.entities.map(
@@ -270,7 +270,7 @@ class UserFormInner extends React.Component<Props> {
               component={CheckboxField}
               name={'driving_licence_b'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.driving_licence_b',
+                id: 'views.users.userForm.driving_licence_b',
                 defaultMessage: 'Führerausweis Kat. B',
               })}
             />
@@ -279,7 +279,7 @@ class UserFormInner extends React.Component<Props> {
               component={CheckboxField}
               name={'driving_licence_be'}
               label={intl.formatMessage({
-                id: 'izivi.frontend.views.users.userForm.driving_licence_be',
+                id: 'views.users.userForm.driving_licence_be',
                 defaultMessage: 'Führerausweis Kat. BE',
               })}
             />
@@ -289,7 +289,7 @@ class UserFormInner extends React.Component<Props> {
               name={'chainsaw_workshop'}
               label={intl.formatMessage({
                 id:
-                  'izivi.frontend.views.users.userForm.chainsaw_workshop_already_done',
+                  'views.users.userForm.chainsaw_workshop_already_done',
                 defaultMessage: 'Motorsägekurs bereits absolviert',
               })}
             />
@@ -301,21 +301,21 @@ class UserFormInner extends React.Component<Props> {
                   component={SelectField}
                   name={'role'}
                   label={intl.formatMessage({
-                    id: 'izivi.frontend.views.users.userForm.user_role',
+                    id: 'views.users.userForm.user_role',
                     defaultMessage: 'Benutzerrolle',
                   })}
                   options={[
                     {
                       id: 'admin',
                       name: intl.formatMessage({
-                        id: 'izivi.frontend.views.users.userForm.admin',
+                        id: 'views.users.userForm.admin',
                         defaultMessage: 'Admin',
                       }),
                     },
                     {
                       id: 'civil_servant',
                       name: intl.formatMessage({
-                        id: 'izivi.frontend.views.users.userForm.civil_servant',
+                        id: 'views.users.userForm.civil_servant',
                         defaultMessage: 'Zivildienstleistender',
                       }),
                     },
@@ -327,7 +327,7 @@ class UserFormInner extends React.Component<Props> {
                   component={TextField}
                   name={'internal_note'}
                   label={intl.formatMessage({
-                    id: 'izivi.frontend.views.users.userForm.inernal_comment',
+                    id: 'views.users.userForm.inernal_comment',
                     defaultMessage: 'Interne Bemerkung',
                   })}
                 />
@@ -342,7 +342,7 @@ class UserFormInner extends React.Component<Props> {
                   onClick={formikProps.submitForm}
                 >
                   <FormattedMessage
-                    id="izivi.frontend.views.users.userForm.save"
+                    id="views.users.userForm.save"
                     defaultMessage="Speichern"
                   />
                 </Button>

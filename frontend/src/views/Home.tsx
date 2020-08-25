@@ -35,7 +35,7 @@ class HomeInner extends React.Component<Props> {
     return (
       <Link to={'/register/1'}>
         <FormattedMessage
-          id="izivi.frontend.view.home.register"
+          id="view.home.register"
           defaultMessage="registrieren"
         />
       </Link>
@@ -46,7 +46,7 @@ class HomeInner extends React.Component<Props> {
     return (
       <Link to={'/login'}>
         <FormattedMessage
-          id="izivi.frontend.view.home.login"
+          id="view.home.login"
           defaultMessage="anmelden"
         />
       </Link>
@@ -63,14 +63,14 @@ class HomeInner extends React.Component<Props> {
       <IziviContent className={classes.page} card showBackgroundImage>
         <CardSubtitle>
           <FormattedMessage
-            id="izivi.frontend.view.home.izivi_title"
+            id="view.home.izivi_title"
             defaultMessage="{title} ist ein Tool der SWO zur Erfassung und Planung von Zivildienst-Einsätzen"
             values={{ title: this.getTitle() }}
           />
         </CardSubtitle>
         <CardText>
           <FormattedMessage
-            id="izivi.frontend.view.home.intro"
+            id="view.home.intro"
             defaultMessage="Seit 1996 können Militärpflichtige, die den Militärdienst aus Gewissensgründen ablehnen, einen zivilen Ersatzdienst leisten. Die SWO hat den Zivildienst mitgestaltet und bietet Zivildienstleistenden eine Vielzahl von sinnvollen Einsatzmöglichkeiten zugunsten einer nachhaltigen Entwicklung."
           />
         </CardText>
@@ -78,14 +78,14 @@ class HomeInner extends React.Component<Props> {
           <>
             <CardText>
               <FormattedMessage
-                id="izivi.frontend.view.home.register_info"
+                id="view.home.register_info"
                 defaultMessage="Bist du das erste Mal bei uns und möchtest einen Einsatz planen? Dann kannst du dich über folgenden Link {registerLink}"
                 values={{ registerLink: this.getRegisterLink() }}
               />
             </CardText>
             <CardText>
               <FormattedMessage
-                id="izivi.frontend.view.home.login_info"
+                id="view.home.login_info"
                 defaultMessage="Falls du uns bereits bekannt bist, kannst du dich hier {loginLink}"
                 values={{ loginLink: this.getLoginLink() }}
               />

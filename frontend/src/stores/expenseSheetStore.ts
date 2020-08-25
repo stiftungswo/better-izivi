@@ -9,11 +9,11 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   protected get entityName() {
     return {
       singular: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.expenseSheetStore.expense_sheet.one',
+        id: 'store.expenseSheetStore.expense_sheet.one',
         defaultMessage: 'Das Spesenblatt',
       }),
       plural: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.expenseSheetStore.expense_sheet.other',
+        id: 'store.expenseSheetStore.expense_sheet.other',
         defaultMessage: 'Die Spesenblätter',
       }),
     };
@@ -65,7 +65,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
       this.mainStore.displayError(
         this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.domainStore.not_loaded.other',
+            id: 'store.domainStore.not_loaded.other',
             defaultMessage: '{entityNamePlural} konnten nicht geladen werden.',
           },
           { entityNamePlural: this.entityName.plural },
@@ -87,7 +87,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
       this.mainStore.displaySuccess(
         this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.expenseSheetStore.state_changed',
+            id: 'store.expenseSheetStore.state_changed',
             defaultMessage: '{entityNameSingular} wurde auf {state} geändert.',
           },
           {
@@ -102,7 +102,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.expenseSheetStore.state_changed',
+            id: 'store.expenseSheetStore.state_changed',
             defaultMessage: '{entityNameSingular} wurde auf {state} geändert.',
           },
           {
@@ -124,7 +124,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
       this.mainStore.displayError(
         this.mainStore.intl.formatMessage(
           {
-            id: 'izivi.frontend.store.expenseSheetStore.expense_hints_not_loaded',
+            id: 'store.expenseSheetStore.expense_hints_not_loaded',
             defaultMessage: 'Spesenvorschläge konnten nicht geladen werden',
           },
         ));
@@ -139,7 +139,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
     this.mainStore.displaySuccess(
       this.mainStore.intl.formatMessage(
         {
-          id: 'izivi.frontend.store.created',
+          id: 'store.created',
           defaultMessage: '{entityNameSingular} wurde erstellt.',
         },
         { entityNameSingular: this.entityName.singular },

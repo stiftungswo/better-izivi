@@ -13,7 +13,7 @@ export const PaidVacationSegment = expenseSheetFormSegment(
         name={'paid_vacation_days'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.paidVacationSegment.vacation',
+            id: 'views.expense_sheets.paidVacationSegment.vacation',
             defaultMessage: 'Ferien',
           })
         }
@@ -24,7 +24,7 @@ export const PaidVacationSegment = expenseSheetFormSegment(
         name={'paid_vacation_comment'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.paidVacationSegment.comment',
+            id: 'views.expense_sheets.paidVacationSegment.comment',
             defaultMessage: 'Bemerkung',
           })
         }

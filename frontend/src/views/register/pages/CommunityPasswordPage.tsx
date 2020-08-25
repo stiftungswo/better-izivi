@@ -10,7 +10,7 @@ export const CommunityPasswordPage = () => {
     <>
       <h3>
         <FormattedMessage
-          id="izivi.frontend.register.communityPasswordPage.title"
+          id="register.communityPasswordPage.title"
           defaultMessage="Community Passwort"
         />
       </h3>
@@ -21,7 +21,7 @@ export const CommunityPasswordPage = () => {
         className={'mt-2'}
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.communityPasswordPage.community_password_info',
+            id: 'register.communityPasswordPage.community_password_info',
             defaultMessage: 'Dieses erhältst du von der Einsatzleitung welche dich berechtigt einen Account zu eröffnen',
           })
         }

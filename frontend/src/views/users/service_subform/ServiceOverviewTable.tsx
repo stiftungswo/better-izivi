@@ -84,7 +84,7 @@ export default (params: OverviewTableParams) => {
       id: 'serviceSpecification',
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.users.serviceOverviewTable.service_specifaction',
+          id: 'views.users.serviceOverviewTable.service_specifaction',
           defaultMessage: 'Pflichtenheft',
         }),
       format: (service: Service) => {
@@ -101,7 +101,7 @@ export default (params: OverviewTableParams) => {
       id: 'beginning',
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.users.serviceOverviewTable.start',
+          id: 'views.users.serviceOverviewTable.start',
           defaultMessage: 'Start',
         }),
       format: (service: Service) => (service.beginning ? mainStore!.formatDate(moment(service.beginning)) : ''),
@@ -110,7 +110,7 @@ export default (params: OverviewTableParams) => {
       id: 'ending',
       label:
         intl.formatMessage({
-          id: 'izivi.frontend.views.users.serviceOverviewTable.end',
+          id: 'views.users.serviceOverviewTable.end',
           defaultMessage: 'Ende',
         }),
       format: (service: Service) => (service.ending ? mainStore!.formatDate(moment(service.ending)) : ''),

@@ -162,7 +162,7 @@ en:
       not_found: Payment not found
       ready_not_found: No ready for payment expense sheets found
     expenses_from: Expenses from %{from_date}
-    pain_filename: Expenses_from_%{from_date}.xml
+    pain_filename: Expenses_from_%{from_date}
   pdfs:
     expense_sheet:
       expense_table:
@@ -180,7 +180,7 @@ en:
           work_clothing_expenses_comment:
             one: CHF %{amount}/day for %{count} chargeable service day
             other: CHF %{amount}/day for %{count} chargeable service days
-      filename: ExpenseSheet_%{today}.pdf
+      filename: ExpenseSheet_%{today}
       header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach
       info_block:
         footer:
@@ -196,21 +196,21 @@ en:
             value:
               one: "%{beginning} to %{ending} (%{duration} day)"
               other: "%{beginning} to %{ending} (%{duration} days)"
-      title: Expense_report_of_%{full_name}.pdf
+      title: Expense_report_of_%{full_name}
     expenses_overview:
       basedon: Statistic bases on all finished reports
-      filename: Overview_expense_statistics_%{today}.pdf
+      filename: Overview_expense_statistics_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (deployment operation No. 423) - Provision vom %{date}
       title: Zivi-Expenses Detail-Overview (Timeperiod %{beginning} - %{ending})
     phone_list:
-      filename: Phonelist_%{today}.pdf
+      filename: Phonelist_%{today}
       header: Generated on %{date}
       title: Phonelist from %{beginning} to %{ending}
     service_agreement:
       body_content: |-
         Dear Zivis
         Please send the signed Mission Agreement to the above address. If you use a window envelope with left or right window, you can fold this cover sheet and put it in the envelope. The address is placed correctly. The address at the bottom right will be used by us to forward the Mission Agreement to the regional office. At the very end you will find an information sheet, which gives you information about the process of your mission. Please hand in the signed talon to the officer in charge on the first day of the mission.
-      filename: Service_agreement_of_%{full_name}.pdf
+      filename: Service_agreement_of_%{full_name}
   service_calculator:
     end_date_cannot_be_on_weekend: Service end date can't be on a weekend
     invalid_required_service_days: Invalid service days

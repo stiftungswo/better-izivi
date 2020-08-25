@@ -12,7 +12,7 @@ export const ClothingExpensesSegment = expenseSheetFormSegment(
         horizontal
         appendedLabels={[
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.ClothingExpensesSegment.hint_clothin_expenses',
+            id: 'views.expense_sheets.ClothingExpensesSegment.hint_clothin_expenses',
             defaultMessage: 'Vorschlag: {hintClothingExpenses}',
           }, { hintClothingExpenses: mainStore!.formatCurrency(hints.suggestions.clothing_expenses) },
         )]}
@@ -20,7 +20,7 @@ export const ClothingExpensesSegment = expenseSheetFormSegment(
         name={'clothing_expenses'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.absolvedDaysBreakdownSegment.clothing_expenses',
+            id: 'views.expense_sheets.absolvedDaysBreakdownSegment.clothing_expenses',
             defaultMessage: 'Kleiderspesen',
           })}
       />

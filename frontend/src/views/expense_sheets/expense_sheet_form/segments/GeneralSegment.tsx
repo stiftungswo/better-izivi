@@ -16,7 +16,7 @@ export const GeneralSegment = expenseSheetFormSegment(
         name={'beginning'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.GeneralSegment.beginning',
+            id: 'views.expense_sheets.GeneralSegment.beginning',
             defaultMessage: 'Start Spesenblattperiode',
           })}
       />
@@ -28,7 +28,7 @@ export const GeneralSegment = expenseSheetFormSegment(
         component={NumberField}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.GeneralSegment.holiday_claim',
+            id: 'views.expense_sheets.GeneralSegment.holiday_claim',
             defaultMessage: 'Ferienanspruch für Einsatz',
           })}
         value={service.eligible_paid_vacation_days}
@@ -40,7 +40,7 @@ export const GeneralSegment = expenseSheetFormSegment(
         name={'duration'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.GeneralSegment.duration',
+            id: 'views.expense_sheets.GeneralSegment.duration',
             defaultMessage: 'Dauer Spesenblattperiode',
           })}
       />

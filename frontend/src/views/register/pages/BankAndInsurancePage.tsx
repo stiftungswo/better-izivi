@@ -10,7 +10,7 @@ export const BankAndInsurancePage = () => {
     <>
       <h3>
         <FormattedMessage
-          id="izivi.frontend.register.bankAndInsurancePage.title"
+          id="register.bankAndInsurancePage.title"
           defaultMessage="Bank- und Versicherungsinformationen"
         />
       </h3>
@@ -22,13 +22,13 @@ export const BankAndInsurancePage = () => {
         name={'bank_iban'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.bankAndInsurancePage.iban',
+            id: 'register.bankAndInsurancePage.iban',
             defaultMessage: 'IBAN',
           })
         }
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.bankAndInsurancePage.iban_needed',
+            id: 'register.bankAndInsurancePage.iban_needed',
             defaultMessage: 'Deine IBAN wird für das Auszahlen der Spesen benötigt',
           })
         }
@@ -39,13 +39,13 @@ export const BankAndInsurancePage = () => {
         name={'health_insurance'}
         label={
           intl.formatMessage({
-            id: 'izivi.frontend.register.bankAndInsurancePage.healt_insurance',
+            id: 'register.bankAndInsurancePage.healt_insurance',
             defaultMessage: 'Krankenkasse',
           })
         }
         placeholder={
           intl.formatMessage({
-            id: 'izivi.frontend.register.bankAndInsurancePage.name_and_location_health_insurance',
+            id: 'register.bankAndInsurancePage.name_and_location_health_insurance',
             defaultMessage: 'Name & Ort der Krankenkasse',
           })
         }

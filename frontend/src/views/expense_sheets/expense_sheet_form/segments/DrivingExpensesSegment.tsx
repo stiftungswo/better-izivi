@@ -14,7 +14,7 @@ export const DrivingExpensesSegment = expenseSheetFormSegment(
         name={'driving_expenses'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.DrivingExpensesSegment.driving_expenses',
+            id: 'views.expense_sheets.DrivingExpensesSegment.driving_expenses',
             defaultMessage: 'Fahrspesen',
           })
         }
@@ -25,7 +25,7 @@ export const DrivingExpensesSegment = expenseSheetFormSegment(
         name={'driving_expenses_comment'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.DrivingExpensesSegment.driving_expenses_comment',
+            id: 'views.expense_sheets.DrivingExpensesSegment.driving_expenses_comment',
             defaultMessage: 'Bemerkung',
           })
         }

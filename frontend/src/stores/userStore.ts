@@ -9,11 +9,11 @@ export class UserStore extends DomainStore<User, UserOverview> {
   protected get entityName() {
     return {
       singular: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.userStore.user.one',
+        id: 'store.userStore.user.one',
         defaultMessage: 'Der Benutzer',
       }),
       plural: this.mainStore.intl.formatMessage({
-        id: 'izivi.frontend.store.userStore.user.other',
+        id: 'store.userStore.user.other',
         defaultMessage: 'Die Benutzer',
       }),
     };

@@ -65,50 +65,50 @@ export class Navigation extends React.Component<NavProps> {
                 {apiStore.isAdmin && (
                   <>
                     <NavEntry to="/users">
-                      <FormattedMessage id="izivi.frontend.layout.navigation.employee_list" defaultMessage="Mitarbeiterliste" />
+                      <FormattedMessage id="layout.navigation.employee_list" defaultMessage="Mitarbeiterliste" />
                     </NavEntry>
                     <NavEntry to="/phones">
-                      <FormattedMessage id="izivi.frontend.layout.navigation.phone_list" defaultMessage="Telefonliste" />
+                      <FormattedMessage id="layout.navigation.phone_list" defaultMessage="Telefonliste" />
                     </NavEntry>
                     <NavEntry to="/service_specifications">
-                      <FormattedMessage id="izivi.frontend.layout.navigation.service_specifications" defaultMessage="Pflichtenheft" />
+                      <FormattedMessage id="layout.navigation.service_specifications" defaultMessage="Pflichtenheft" />
                     </NavEntry>
                     <NavEntry to="/holidays">
-                      <FormattedMessage id="izivi.frontend.layout.navigation.holidays" defaultMessage="Freitage" />
+                      <FormattedMessage id="layout.navigation.holidays" defaultMessage="Freitage" />
                     </NavEntry>
                     {feedbacksUrlValid && (<NavEntry to={'/feedbacks'}>
-                      <FormattedMessage id="izivi.frontend.layout.navigation.feedback" defaultMessage="Einsatz Feedback" />
+                      <FormattedMessage id="layout.navigation.feedback" defaultMessage="Einsatz Feedback" />
                     </NavEntry>)}
                     <NavEntry to="/services">
-                      <FormattedMessage id="izivi.frontend.layout.navigation.planning" defaultMessage="Planung" />
+                      <FormattedMessage id="layout.navigation.planning" defaultMessage="Planung" />
                     </NavEntry>
                     <NavEntry to="/expense_sheets">
-                      <FormattedMessage id="izivi.frontend.layout.navigation.expenses" defaultMessage="Spesen" />
+                      <FormattedMessage id="layout.navigation.expenses" defaultMessage="Spesen" />
                     </NavEntry>
                     <NavEntry to={'/payments'}>
-                      <FormattedMessage id="izivi.frontend.layout.navigation.payments" defaultMessage="Auszahlungen" />
+                      <FormattedMessage id="layout.navigation.payments" defaultMessage="Auszahlungen" />
                     </NavEntry>
                   </>
                 )}
                 <NavEntry to="/profile">
-                  <FormattedMessage id="izivi.frontend.layout.navigation.profile" defaultMessage="Profil" />
+                  <FormattedMessage id="layout.navigation.profile" defaultMessage="Profil" />
                 </NavEntry>
                 <NavEntry to="/changePassword">
-                  <FormattedMessage id="izivi.frontend.layout.navigation.change_password" defaultMessage="Passwort ändern" />
+                  <FormattedMessage id="layout.navigation.change_password" defaultMessage="Passwort ändern" />
                 </NavEntry>
                 <NavItem>
                   <NavLink href="/logout" onClick={this.handleLogout}>
-                    <FormattedMessage id="izivi.frontend.layout.navigation.logout" defaultMessage="Abmelden" />
+                    <FormattedMessage id="layout.navigation.logout" defaultMessage="Abmelden" />
                   </NavLink>
                 </NavItem>
               </>
             ) : (
                 <>
                   <NavEntry to="/register/1">
-                    <FormattedMessage id="izivi.frontend.layout.navigation.register" defaultMessage="Registrieren" />
+                    <FormattedMessage id="layout.navigation.register" defaultMessage="Registrieren" />
                   </NavEntry>
                   <NavEntry to="/login">
-                    <FormattedMessage id="izivi.frontend.layout.navigation.login" defaultMessage="Anmelden" />
+                    <FormattedMessage id="layout.navigation.login" defaultMessage="Anmelden" />
                   </NavEntry>
                 </>
               )}

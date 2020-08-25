@@ -73,7 +73,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
         loading={this.state.loading}
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.views.service_specification.ServiceSpecificationsOverview.service_specification',
+            id: 'views.service_specification.ServiceSpecificationsOverview.service_specification',
             defaultMessage: 'Pflichtenheft',
           })
         }

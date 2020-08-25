@@ -82,15 +82,15 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
           expenseSheet
             ? this.user
               ? this.props.mainStore!.intl.formatMessage({
-                id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.edit_expense_sheet_from',
+                id: 'views.expense_sheets.expenseSheetStatisticFormDialog.edit_expense_sheet_from',
                 defaultMessage: 'Spesenblatt von {firstName} {lastName} bearbeiten',
               }, { firstName: this.user.first_name, lastName: this.user.last_name })
               : this.props.mainStore!.intl.formatMessage({
-                id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.edit_expense_sheet',
+                id: 'views.expense_sheets.expenseSheetStatisticFormDialog.edit_expense_sheet',
                 defaultMessage: 'Spesenblatt bearbeiten',
               })
             : this.props.mainStore!.intl.formatMessage({
-              id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.loading_expense_sheet',
+              id: 'views.expense_sheets.expenseSheetStatisticFormDialog.loading_expense_sheet',
               defaultMessage: 'Spesenblatt wird geladen',
             })
         }

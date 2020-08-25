@@ -106,7 +106,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
                   onChange={this.handleInformationChecked}
                   label={
                     this.props.mainStore!.intl.formatMessage({
-                      id: 'izivi.frontend.views.users.serviceModal.details_are_up_to_date',
+                      id: 'views.users.serviceModal.details_are_up_to_date',
                       defaultMessage: 'Meine Angaben (IBAN, Telefon) sind aktuell',
                     })
                   }
@@ -124,7 +124,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
                   {' '}
                   <Button color="secondary" onClick={this.onConfirmationPut}>
                     <FormattedMessage
-                      id="izivi.frontend.views.users.serviceModal.got_draft"
+                      id="views.users.serviceModal.got_draft"
                       defaultMessage="Aufgebot erhalten"
                     />
                   </Button>
@@ -142,7 +142,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
       this.props.onServiceConfirmed(this.props.service!).then(() => {
         this.props.mainStore!.displaySuccess(
           this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.views.users.serviceModal.saved_successfully',
+            id: 'views.users.serviceModal.saved_successfully',
             defaultMessage: 'Speichern erfolgreich',
           }),
         );

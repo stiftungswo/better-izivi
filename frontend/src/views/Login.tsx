@@ -57,14 +57,14 @@ export class Login extends React.Component<Props> {
       ) {
         this.props.mainStore!.displayError(
           this.intl.formatMessage({
-            id: 'izivi.frontend.views.login.invalid_password_or_username',
+            id: 'views.login.invalid_password_or_username',
             defaultMessage: 'Ungültiger Benutzername/Passwort',
           }),
         );
       } else {
         this.props.mainStore!.displayError(
           this.intl.formatMessage({
-            id: 'izivi.frontend.views.login.internal_error_try_again_later',
+            id: 'views.login.internal_error_try_again_later',
             defaultMessage:
               'Ein interner Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
           }),
@@ -107,7 +107,7 @@ export class Login extends React.Component<Props> {
             <Form onSubmit={formikProps.handleSubmit}>
               <h2 className="form-signin-heading">
                 <FormattedMessage
-                  id="izivi.frontend.views.login.login"
+                  id="views.login.login"
                   defaultMessage="Anmelden"
                 />
               </h2>
@@ -115,7 +115,7 @@ export class Login extends React.Component<Props> {
                 component={TextField}
                 name={'email'}
                 label={this.intl.formatMessage({
-                  id: 'izivi.frontend.views.login.email',
+                  id: 'views.login.email',
                   defaultMessage: 'Email',
                 })}
                 placeholder={'zivi@example.org'}
@@ -124,7 +124,7 @@ export class Login extends React.Component<Props> {
                 component={PasswordField}
                 name={'password'}
                 label={this.intl.formatMessage({
-                  id: 'izivi.frontend.views.login.password',
+                  id: 'views.login.password',
                   defaultMessage: 'Passwort',
                 })}
                 placeholder={'****'}
@@ -136,7 +136,7 @@ export class Login extends React.Component<Props> {
                 type="submit"
               >
                 <FormattedMessage
-                  id="izivi.frontend.views.login.login"
+                  id="views.login.login"
                   defaultMessage="Anmelden"
                 />
               </Button>
@@ -146,7 +146,7 @@ export class Login extends React.Component<Props> {
         <p>
           <Link to="/users/password/reset">
             <FormattedMessage
-              id="izivi.frontend.views.login.forgot_password"
+              id="views.login.forgot_password"
               defaultMessage="Passwort vergessen?"
             />
           </Link>

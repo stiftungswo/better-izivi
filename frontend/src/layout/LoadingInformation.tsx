@@ -9,7 +9,7 @@ class LoadingInformation extends React.Component<{ message?: string, className?:
         <Spinner size="sm" color="primary" className="mr-2" />
         {this.props.message ||
          <FormattedMessage
-           id="izivi.frontend.layout.loading_information.loading"
+           id="layout.loading_information.loading"
            defaultMessage="Inhalt wird geladen, einen Moment"
          />
         }

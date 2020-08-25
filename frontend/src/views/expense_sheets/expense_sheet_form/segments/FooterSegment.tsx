@@ -15,7 +15,7 @@ export const FooterSegment = expenseSheetFormSegment(
         name={'ignore_first_last_day'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.FooterSegment.ignore_first_last_day',
+            id: 'views.expense_sheets.FooterSegment.ignore_first_last_day',
             defaultMessage: 'Erster / Letzter Tag nicht speziell behandeln',
           })
         }
@@ -27,7 +27,7 @@ export const FooterSegment = expenseSheetFormSegment(
         name={'total'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.FooterSegment.total',
+            id: 'views.expense_sheets.FooterSegment.total',
             defaultMessage: 'Total',
           })}
       />
@@ -37,7 +37,7 @@ export const FooterSegment = expenseSheetFormSegment(
         name={'bank_account_number'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.FooterSegment.bank_account_number',
+            id: 'views.expense_sheets.FooterSegment.bank_account_number',
             defaultMessage: 'Konto-Nr.',
           })}
       />

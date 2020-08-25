@@ -24,14 +24,14 @@ export const HolidayTableRow = (params: { buttons: React.ReactElement[], mainSto
             {
               id: 'company_holiday',
               name: mainStore.intl.formatMessage({
-                id: 'izivi.frontend.views.holidays.holidayTableRow.company_holiday',
+                id: 'views.holidays.holidayTableRow.company_holiday',
                 defaultMessage: 'Betriebsferien',
               }),
             },
             {
               id: 'public_holiday',
               name: mainStore.intl.formatMessage({
-                id: 'izivi.frontend.views.holidays.holidayTableRow.public_holiday',
+                id: 'views.holidays.holidayTableRow.public_holiday',
                 defaultMessage: 'Feiertag',
               }),
             },

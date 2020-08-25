@@ -23,7 +23,7 @@ interface PagedFormProps {
 const getNextButton = (isDisabled: boolean, onClick: () => void, intl: IntlShape) => {
   const title = isDisabled
     ? intl.formatMessage({
-      id: 'izivi.frontend.register.pagedForm.form_has_invalid_fields ',
+      id: 'register.pagedForm.form_has_invalid_fields ',
       defaultMessage: 'Das Formular hat noch ungültige Felder',
     })
     : undefined;
@@ -34,7 +34,7 @@ const getNextButton = (isDisabled: boolean, onClick: () => void, intl: IntlShape
       title={title}
     >
       <FormattedMessage
-        id="izivi.frontend.register.pagedForm.forward"
+        id="register.pagedForm.forward"
         defaultMessage="Vorwärts"
       />
     </Button>
@@ -49,7 +49,7 @@ const getSubmitButton = (formikProps: FormikProps<RegisterFormValues>, isDisable
       onClick={onClick}
     >
       <FormattedMessage
-        id="izivi.frontend.register.pagedForm.register"
+        id="register.pagedForm.register"
         defaultMessage="Registrieren"
       />
     </Button>
@@ -102,7 +102,7 @@ export class PagedForm extends React.Component<PagedFormProps, { currentPageIsVa
         <Link to={`/register/${this.sanitizedPage - 1}`}>
           <Button disabled={this.sanitizedPage === 1} className={'mr-2'}>
             <FormattedMessage
-              id="izivi.frontend.register.pagedForm.back"
+              id="register.pagedForm.back"
               defaultMessage="Zurück"
             />
           </Button>

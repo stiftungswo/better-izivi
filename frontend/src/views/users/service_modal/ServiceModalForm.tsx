@@ -19,7 +19,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
       <Form>
         <Alert color="info">
           <FormattedMessage
-            id="izivi.frontend.views.users.serviceModalForm.note"
+            id="views.users.serviceModalForm.note"
             defaultMessage="Du kannst entweder das gewünschte Enddatum für deinen Einsatz eingeben, und die anrechenbaren Einsatztage werden gerechnet, oder die gewünschten Einsatztage eingeben, und das Enddatum wird berechnet. In beiden Fällen musst du das Startdatum bereits eingegeben haben."
           />
         </Alert>
@@ -29,7 +29,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'service_specification_id'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.service_specification',
+              id: 'views.users.serviceModalForm.service_specification',
               defaultMessage: 'Pflichtenheft',
             })
           }
@@ -40,7 +40,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'service_type'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.service_type',
+              id: 'views.users.serviceModalForm.service_type',
               defaultMessage: 'Einsatzart',
             })
           }
@@ -49,14 +49,14 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
             {
               id: 'first', name:
                 intl.formatMessage({
-                  id: 'izivi.frontend.views.users.serviceModalForm.first_service',
+                  id: 'views.users.serviceModalForm.first_service',
                   defaultMessage: 'Erster Einsatz',
                 }),
             },
             {
               id: 'last', name:
                 intl.formatMessage({
-                  id: 'izivi.frontend.views.users.serviceModalForm.last_service',
+                  id: 'views.users.serviceModalForm.last_service',
                   defaultMessage: 'Letzter Einsatz',
                 }),
             },
@@ -69,7 +69,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'beginning'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.service_start',
+              id: 'views.users.serviceModalForm.service_start',
               defaultMessage: 'Einsatzbeginn',
             })
           }
@@ -80,7 +80,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'ending'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.service_end',
+              id: 'views.users.serviceModalForm.service_end',
               defaultMessage: 'Einsatzende',
             })
           }
@@ -91,7 +91,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'service_days'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.service_days',
+              id: 'views.users.serviceModalForm.service_days',
               defaultMessage: 'Einsatztage',
             })
           }
@@ -102,7 +102,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'first_swo_service'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.is_first_service',
+              id: 'views.users.serviceModalForm.is_first_service',
               defaultMessage: 'Erster SWO Einsatz?',
             })
           }
@@ -113,7 +113,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'long_service'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.is_long_service',
+              id: 'views.users.serviceModalForm.is_long_service',
               defaultMessage: 'Langer Einsatz?',
             })
           }
@@ -124,7 +124,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           name={'probation_period'}
           label={
             intl.formatMessage({
-              id: 'izivi.frontend.views.users.serviceModalForm.is_trail_service',
+              id: 'views.users.serviceModalForm.is_trail_service',
               defaultMessage: 'Probe-einsatz?',
             })
           }

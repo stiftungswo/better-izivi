@@ -13,13 +13,13 @@ export const ExpenseSheetPaymentWarnings = (props: { expenseSheet: ExpenseSheetL
       <>
         {!addressIsValid(props.expenseSheet.user) && <div className="text-danger">
           <FormattedMessage
-            id="izivi.frontend.payments.expenseSheetPaymentWarnings.address_incomplete"
+            id="payments.expenseSheetPaymentWarnings.address_incomplete"
             defaultMessage="Adresse unvollständig!"
           />
         </div>}
         {!MainStore.validateIBAN(props.expenseSheet.user.bank_iban) && <div className="text-danger">
           <FormattedMessage
-            id="izivi.frontend.payments.expenseSheetPaymentWarnings.iban_not_valid"
+            id="payments.expenseSheetPaymentWarnings.iban_not_valid"
             defaultMessage="IBAN ist ungültig!"
           />
         </div>}

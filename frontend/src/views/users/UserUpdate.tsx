@@ -54,11 +54,11 @@ export class UserUpdate extends React.Component<Props> {
         title={
           user
             ? intl.formatMessage({
-                id: 'izivi.frontend.views.users.userUpdate.profile',
+                id: 'views.users.userUpdate.profile',
                 defaultMessage: 'Profil',
               })
             : intl.formatMessage({
-                id: 'izivi.frontend.views.users.userUpdate.profile_is_loading',
+                id: 'views.users.userUpdate.profile_is_loading',
                 defaultMessage: 'Profil wird geladen',
               })
         }

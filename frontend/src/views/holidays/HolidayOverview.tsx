@@ -57,7 +57,7 @@ export class HolidayOverview extends React.Component<Props, State> {
         loading={this.state.loading}
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.views.holidays.holidayOverview.free_days',
+            id: 'views.holidays.holidayOverview.free_days',
             defaultMessage: 'Freitage',
           })
         }

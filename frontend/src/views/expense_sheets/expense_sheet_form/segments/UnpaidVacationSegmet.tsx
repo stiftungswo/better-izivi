@@ -13,7 +13,7 @@ export const UnpaidVacationSegment = expenseSheetFormSegment(
         name={'unpaid_vacation_days'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.unpaidVacationSegment.vacation',
+            id: 'views.expense_sheets.unpaidVacationSegment.vacation',
             defaultMessage: 'Persönlicher Urlaub',
           })
         }
@@ -24,7 +24,7 @@ export const UnpaidVacationSegment = expenseSheetFormSegment(
         name={'unpaid_vacation_comment'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.unpaidVacationSegment.comment',
+            id: 'views.expense_sheets.unpaidVacationSegment.comment',
             defaultMessage: 'Bemerkung',
           })
         }

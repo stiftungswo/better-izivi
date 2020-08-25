@@ -11,7 +11,7 @@ function getColumns(formatDate: (date: string | Moment) => string, intl: IntlSha
       id: 'beginning',
       numeric: false,
       label: intl.formatMessage({
-        id: 'izivi.frontend.views.holidays.holidayOverviewTable.start',
+        id: 'views.holidays.holidayOverviewTable.start',
         defaultMessage: 'Start',
       }),
       format: ({ beginning }: Holiday) => formatDate(beginning),
@@ -20,7 +20,7 @@ function getColumns(formatDate: (date: string | Moment) => string, intl: IntlSha
       id: 'ending',
       numeric: false,
       label: intl.formatMessage({
-        id: 'izivi.frontend.views.holidays.holidayOverviewTable.end',
+        id: 'views.holidays.holidayOverviewTable.end',
         defaultMessage: 'Ende',
       }),
       format: ({ ending }: Holiday) => formatDate(ending),
@@ -29,7 +29,7 @@ function getColumns(formatDate: (date: string | Moment) => string, intl: IntlSha
       id: 'holiday_type_id',
       numeric: false,
       label: intl.formatMessage({
-        id: 'izivi.frontend.views.holidays.holidayOverviewTable.type',
+        id: 'views.holidays.holidayOverviewTable.type',
         defaultMessage: 'Art',
       }),
     },
@@ -37,7 +37,7 @@ function getColumns(formatDate: (date: string | Moment) => string, intl: IntlSha
       id: 'description',
       numeric: false,
       label: intl.formatMessage({
-        id: 'izivi.frontend.views.holidays.holidayOverviewTable.description',
+        id: 'views.holidays.holidayOverviewTable.description',
         defaultMessage: 'Beschreibung',
       }),
     },

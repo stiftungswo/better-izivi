@@ -54,7 +54,7 @@ export class PaymentOverview extends React.Component<Props, State> {
         <PaymentsTable
           payments={this.props.paymentStore!.paymentsInProgress}
           emptyNotice={this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.payments.paymentOverview.no_payment_in_progress',
+            id: 'payments.paymentOverview.no_payment_in_progress',
             defaultMessage: 'Keine Zahlung in Bearbeitung',
           })}
           mainStore={this.props.mainStore!}
@@ -81,7 +81,7 @@ export class PaymentOverview extends React.Component<Props, State> {
         <PaymentsTable
           payments={this.props.paymentStore!.paidPayments}
           emptyNotice={this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.payments.paymentOverview.no_done_payments',
+            id: 'payments.paymentOverview.no_done_payments',
             defaultMessage: 'Keine getätigten Zahlungen',
           })}
           mainStore={this.props.mainStore!}
@@ -102,11 +102,11 @@ export class PaymentOverview extends React.Component<Props, State> {
         >
           {this.state.isLoadingMoreArchivedPayments
             ? this.props.mainStore!.intl.formatMessage({
-              id: 'izivi.frontend.payments.paymentOverview.loading_content',
+              id: 'payments.paymentOverview.loading_content',
               defaultMessage: 'Inhalt wird geladen...',
             })
             : this.props.mainStore!.intl.formatMessage({
-              id: 'izivi.frontend.payments.paymentOverview.load_more_payments',
+              id: 'payments.paymentOverview.load_more_payments',
               defaultMessage: 'Weitere archivierte Auszahlungen laden',
             })}
         </Button>

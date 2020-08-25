@@ -12,7 +12,7 @@ export const CompanyHolidaysSegment = expenseSheetFormSegment(
         horizontal
         appendedLabels={[
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.CompanyHolidaysSegment.unpaid_company_holidays',
+            id: 'views.expense_sheets.CompanyHolidaysSegment.unpaid_company_holidays',
             defaultMessage: 'Vorschlag: {unpaidCompanyHolidays} Tage',
           }, { unpaidCompanyHolidays: hints.suggestions.unpaid_company_holiday_days },
           )]}
@@ -20,7 +20,7 @@ export const CompanyHolidaysSegment = expenseSheetFormSegment(
         name={'unpaid_company_holiday_days'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.absolvedDaysBreakdownSegment.unpaid_company_holiday_days',
+            id: 'views.expense_sheets.absolvedDaysBreakdownSegment.unpaid_company_holiday_days',
             defaultMessage: 'Betriebsferien (Urlaub)',
           })}
       />
@@ -28,7 +28,7 @@ export const CompanyHolidaysSegment = expenseSheetFormSegment(
         horizontal
         appendedLabels={[
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.CompanyHolidaysSegment.paid_company_holidays',
+            id: 'views.expense_sheets.CompanyHolidaysSegment.paid_company_holidays',
             defaultMessage: 'Vorschlag: {paidCompanyHolidays} Tage',
           }, { paidCompanyHolidays: hints.suggestions.paid_company_holiday_days },
         )]}
@@ -36,7 +36,7 @@ export const CompanyHolidaysSegment = expenseSheetFormSegment(
         name={'paid_company_holiday_days'}
         label={
           mainStore.intl.formatMessage({
-            id: 'izivi.frontend.views.expense_sheets.absolvedDaysBreakdownSegment.paid_company_holiday_days',
+            id: 'views.expense_sheets.absolvedDaysBreakdownSegment.paid_company_holiday_days',
             defaultMessage: 'Betriebsferien (Ferien)',
           })}
       />

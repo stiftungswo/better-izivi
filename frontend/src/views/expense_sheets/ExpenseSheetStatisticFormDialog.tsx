@@ -38,7 +38,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
       <Modal isOpen={isOpen}>
         <ModalHeader>
           <FormattedMessage
-            id="izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.create_expense_statistics"
+            id="views.expense_sheets.expenseSheetStatisticFormDialog.create_expense_statistics"
             defaultMessage="Spesenstatistik erstellen"
           />
         </ModalHeader>
@@ -69,14 +69,14 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                     {
                       id: '0',
                       name: this.props.mainStore!.intl.formatMessage({
-                        id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.whole_year',
+                        id: 'views.expense_sheets.expenseSheetStatisticFormDialog.whole_year',
                         defaultMessage: 'Gesamtes Jahr ',
                       }),
                     },
                     {
                       id: '1',
                       name: this.props.mainStore!.intl.formatMessage({
-                        id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.from_to',
+                        id: 'views.expense_sheets.expenseSheetStatisticFormDialog.from_to',
                         defaultMessage: 'Von / Bis',
                       }),
                     },
@@ -90,7 +90,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                   ]}
                   label={
                     this.props.mainStore!.intl.formatMessage({
-                      id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.timespan',
+                      id: 'views.expense_sheets.expenseSheetStatisticFormDialog.timespan',
                       defaultMessage: 'Zeitspanne',
                     })
                   }
@@ -104,7 +104,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                     options={yearOptions()}
                     label={
                       this.props.mainStore!.intl.formatMessage({
-                        id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.year',
+                        id: 'views.expense_sheets.expenseSheetStatisticFormDialog.year',
                         defaultMessage: 'Jahr',
                       })
                     }
@@ -119,7 +119,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                       name={'beginning'}
                       label={
                         this.props.mainStore!.intl.formatMessage({
-                          id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.start',
+                          id: 'views.expense_sheets.expenseSheetStatisticFormDialog.start',
                           defaultMessage: 'Start',
                         })
                       }
@@ -130,7 +130,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                       name={'ending'}
                       label={
                         this.props.mainStore!.intl.formatMessage({
-                          id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.end',
+                          id: 'views.expense_sheets.expenseSheetStatisticFormDialog.end',
                           defaultMessage: 'Ende',
                         })
                       }
@@ -143,7 +143,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                   name={'only_done_sheets'}
                   label={
                     this.props.mainStore!.intl.formatMessage({
-                      id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.only_show_finished_expense_sheets',
+                      id: 'views.expense_sheets.expenseSheetStatisticFormDialog.only_show_finished_expense_sheets',
                       defaultMessage: 'Nur erledigte Spesenblätter anzeigen?',
                     })
                   }
@@ -154,7 +154,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                   name={'detail_view'}
                   label={
                     this.props.mainStore!.intl.formatMessage({
-                      id: 'izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.only_show_detailed_view',
+                      id: 'views.expense_sheets.expenseSheetStatisticFormDialog.only_show_detailed_view',
                       defaultMessage: 'Detaillierte Ansicht anzeigen?',
                     })
                   }
@@ -170,7 +170,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                   target={'_blank'}
                 >
                   <FormattedMessage
-                    id="izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.generate_pdf"
+                    id="views.expense_sheets.expenseSheetStatisticFormDialog.generate_pdf"
                     defaultMessage="PDF generieren"
                   />
                 </Button>{' '}
@@ -179,7 +179,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                   onClick={toggle}
                 >
                   <FormattedMessage
-                    id="izivi.frontend.views.expense_sheets.expenseSheetStatisticFormDialog.cancel"
+                    id="views.expense_sheets.expenseSheetStatisticFormDialog.cancel"
                     defaultMessage="Abbrechen"
                   />
                 </Button>

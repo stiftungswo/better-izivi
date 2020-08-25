@@ -25,7 +25,7 @@ export class Register extends React.Component<RegisterProps> {
       this.props.history.push(this.getReferrer() || '/');
       this.props.mainStore!.displaySuccess(
         this.props.mainStore!.intl.formatMessage({
-          id: 'izivi.frontend.register.register.successfully_registered',
+          id: 'register.register.successfully_registered',
           defaultMessage: 'Erfolgreich registriert',
         }),
       );
@@ -35,7 +35,7 @@ export class Register extends React.Component<RegisterProps> {
         DomainStore.buildErrorMessage(
           error,
           this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.register.register.error_during_registration',
+            id: 'register.register.error_during_registration',
             defaultMessage: 'Ein Fehler ist bei der Registration aufgetreten',
           }),
         ),
@@ -74,7 +74,7 @@ export class Register extends React.Component<RegisterProps> {
         showBackgroundImage
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'izivi.frontend.register.register.register',
+            id: 'register.register.register',
             defaultMessage: 'Registrieren',
           })
         }
