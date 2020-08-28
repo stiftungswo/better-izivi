@@ -4,62 +4,79 @@ lokalise2 \
   --config lokalise.yml \
   file upload \
   --file frontend/src/locales/messages.de.json \
-  --lang-iso de_CH \
+  --lang-iso de \
   --tags frontend \
+  --convert-placeholders=true \
   --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file api/config/locales/de.yml \
-    --lang-iso de_CH \
+    --lang-iso de \
     --tags backend \
+    --convert-placeholders=false \
     --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file api/config/locales/devise.de.yml \
-    --lang-iso de_CH \
+    --lang-iso de \
     --tags backend \
+    --convert-placeholders=false \
     --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file frontend/src/locales/messages.fr.json \
-    --lang-iso fr_CH \
+    --lang-iso fr \
     --tags frontend \
+    --convert-placeholders=true \
     --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file api/config/locales/fr.yml \
-    --lang-iso fr_CH \
+    --lang-iso fr \
     --tags backend \
+    --convert-placeholders=false \
     --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file api/config/locales/devise.fr.yml \
-    --lang-iso fr_CH \
+    --lang-iso fr \
     --tags backend \
+    --convert-placeholders=false \
+    --replace-modified \
+  && \
+  lokalise2 \
+    --config lokalise.yml \
+    file upload \
+    --file frontend/src/locales/messages.en.json \
+    --lang-iso en \
+    --tags frontend \
+    --convert-placeholders=true \
     --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file api/config/locales/en.yml \
-    --lang-iso en_CH \
+    --lang-iso en \
     --tags backend \
+    --convert-placeholders=false \
     --replace-modified \
   && \
   lokalise2 \
     --config lokalise.yml \
     file upload \
     --file api/config/locales/devise.en.yml \
-    --lang-iso en_CH \
+    --lang-iso en \
     --tags backend \
+    --convert-placeholders=false \
     --replace-modified \
