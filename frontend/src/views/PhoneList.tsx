@@ -53,7 +53,13 @@ export class PhoneListView extends React.Component<Props> {
   render() {
     const intl = this.props.mainStore!.intl;
     return (
-      <IziviContent card title="Telefonliste">
+      <IziviContent
+        card
+        title={intl.formatMessage({
+          id: 'layout.navigation.phone_list',
+          defaultMessage: 'Telefonliste',
+        })}
+      >
         <p>
           <FormattedMessage
             id="views.phoneList.info"

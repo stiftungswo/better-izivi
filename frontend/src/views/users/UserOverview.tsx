@@ -1,6 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, IntlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import FormGroup from 'reactstrap/lib/FormGroup';
@@ -21,10 +21,11 @@ interface Props {
 @observer
 export class UserOverview extends React.Component<Props> {
   columns: Array<Column<UserOverviewType>>;
-  intl = this.props.mainStore!.intl;
+  intl: IntlShape;
 
   constructor(props: Props) {
     super(props);
+    this.intl = this.props.mainStore!.intl;
     this.columns = [
       {
         id: 'zdp',
@@ -87,7 +88,10 @@ export class UserOverview extends React.Component<Props> {
       <Overview
         columns={this.columns}
         store={this.props.userStore!}
-        title={'Benutzer'}
+        title={this.intl.formatMessage({
+          id: 'layout.navigation.employee_list',
+          defaultMessage: 'Mitarbeiterliste',
+        })}
         renderActions={(user: UserOverviewType) => (
           <Button
             color={'danger'}

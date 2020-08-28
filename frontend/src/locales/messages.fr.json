@@ -140,6 +140,7 @@
   "views.changeForgottenPassword.password_reseted": "réinitialisation du mot de passe",
   "views.changeForgottenPassword.passwords_must_match": "Les mots de passe doivent correspondre",
   "views.changeForgottenPassword.save": "Sauvegarder",
+  "views.changePassword.cancel": "Annuler",
   "views.changePassword.internal_error_try_again_later": "Une erreur interne s'est produite. Veuillez réessayer plus tard.",
   "views.changePassword.new_password": "Nouveau mot de passe",
   "views.changePassword.old_password": "Ancien mot de passe",
@@ -170,7 +171,6 @@
   "views.expense_sheets.expenseSheetOverview.all_expense_sheets": "Toutes les notes de frais",
   "views.expense_sheets.expenseSheetOverview.current_expense_sheets": "Feuilles de dépenses courantes",
   "views.expense_sheets.expenseSheetOverview.edit_expense_sheet": "Modifier la fiche de frais",
-  "views.expense_sheets.expenseSheetOverview.expenses": "Dépenses",
   "views.expense_sheets.expenseSheetOverview.from": "Tiré de",
   "views.expense_sheets.expenseSheetOverview.generate_expense_statistics": "Générer des statistiques sur les dépenses",
   "views.expense_sheets.expenseSheetOverview.name": "Nom",
@@ -208,7 +208,6 @@
   "views.expense_sheets.unpaidVacationSegment.vacation": "Vacances personnelles",
   "views.forgotPassword.email_sent": "Courriel envoyé",
   "views.forgotPassword.password_reset_email_sent": "Vous avez reçu un e-mail avec un lien pour réinitialiser votre mot de passe, si nous connaissons l'e-mail.",
-  "views.holidays.holidayOverview.free_days": "Vacances",
   "views.holidays.holidayOverviewTable.description": "Description",
   "views.holidays.holidayOverviewTable.end": "Fin",
   "views.holidays.holidayOverviewTable.start": "Démarrer",
@@ -232,7 +231,6 @@
   "views.phoneList.end": "Fin",
   "views.phoneList.info": "Entrez une date de début et une date de fin pour obtenir une liste téléphonique de tous les civils qui travaillent pendant cette période.",
   "views.phoneList.start": "Démarrer",
-  "views.service_specification.ServiceSpecificationsOverview.service_specification": "Spécifications",
   "views.service_specification.ServiceSpecificationsOverviewTable.accommodation": "Hébergement",
   "views.service_specification.ServiceSpecificationsOverviewTable.active": "Actif",
   "views.service_specification.ServiceSpecificationsOverviewTable.breakfast": "Petit déjeuner",
@@ -322,6 +320,5 @@
   "views.users.userOverview.name": "Nom",
   "views.users.userOverview.until": "À l'adresse suivante :",
   "views.users.userOverview.zdp": "ZDP",
-  "views.users.userUpdate.profile": "Profil",
   "views.users.userUpdate.profile_is_loading": "Le profil est chargé"
 }

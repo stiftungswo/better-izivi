@@ -54,13 +54,13 @@ export class UserUpdate extends React.Component<Props> {
         title={
           user
             ? intl.formatMessage({
-                id: 'views.users.userUpdate.profile',
-                defaultMessage: 'Profil',
-              })
+              id: 'layout.navigation.profile',
+              defaultMessage: 'Profil',
+            })
             : intl.formatMessage({
-                id: 'views.users.userUpdate.profile_is_loading',
-                defaultMessage: 'Profil wird geladen',
-              })
+              id: 'views.users.userUpdate.profile_is_loading',
+              defaultMessage: 'Profil wird geladen',
+            })
         }
       />
     );

@@ -89,7 +89,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
         loading={this.state.loading}
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'views.expense_sheets.expenseSheetOverview.expenses',
+            id: 'layout.navigation.expenses',
             defaultMessage: 'Spesen',
           })
         }

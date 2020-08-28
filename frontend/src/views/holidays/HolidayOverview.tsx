@@ -57,8 +57,8 @@ export class HolidayOverview extends React.Component<Props, State> {
         loading={this.state.loading}
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'views.holidays.holidayOverview.free_days',
-            defaultMessage: 'Freitage',
+            id: 'layout.navigation.holidays',
+            defaultMessage: 'Feiertage',
           })
         }
         card={true}

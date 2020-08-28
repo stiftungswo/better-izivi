@@ -2,6 +2,7 @@ import { Formik, FormikActions } from 'formik';
 import { repeat } from 'lodash';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Form } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
 import * as yup from 'yup';
@@ -103,7 +104,13 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
   render(): React.ReactNode {
     const passwordPlaceholder = repeat('*', 7);
     return (
-      <IziviContent card title={'Passwort ändern'}>
+      <IziviContent
+        card
+        title={this.intl.formatMessage({
+          id: 'layout.navigation.change_password',
+          defaultMessage: 'Passwort ändern',
+        })}
+      >
         <Formik
           initialValues={template}
           validationSchema={this.changePasswordSchema}
@@ -142,14 +149,20 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
                 disabled={formikProps.isSubmitting}
                 onClick={formikProps.submitForm}
               >
-                Passwort ändern
+                <FormattedMessage
+                  id="layout.navigation.change_password"
+                  defaultMessage="Passwort ändern"
+                />
               </Button>
               <Button
                 className={'ml-3'}
                 color={'danger'}
                 onClick={() => (window.location.pathname = '/')}
               >
-                Abbrechen
+                <FormattedMessage
+                  id="views.changePassword.cancel"
+                  defaultMessage="Abbrechen"
+                />
               </Button>
             </Form>
           )}

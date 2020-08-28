@@ -3,6 +3,7 @@ import moment from 'moment';
 import * as React from 'react';
 
 import { autorun, computed, observable, reaction } from 'mobx';
+import { IntlShape } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
@@ -45,6 +46,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   cookiePrefixSpec = 'service-overview-checkbox-';
   cookieYear = 'service-overview-year';
   currYear = moment().year();
+  intl: IntlShape;
 
   constructor(props: ServiceOverviewProps) {
     super(props);
@@ -66,6 +68,8 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     reaction(() => this.props.mainStore!.monthNames, () => {
       this.setWeekAndMonthHeaders();
     });
+
+    this.intl = this.props.mainStore!.intl;
   }
 
   componentDidMount(): void {
@@ -202,7 +206,10 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
 
     const { classes, serviceSpecificationStore } = this.props;
 
-    const title = 'Einsatzübersicht';
+    const title = this.intl.formatMessage({
+      id: 'layout.navigation.planning',
+      defaultMessage: 'Planung',
+    });
 
     return (
       <IziviContent loading={this.state.loadingServiceSpecifications} title={title} card={true} fullscreen>

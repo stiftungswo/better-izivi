@@ -140,6 +140,7 @@
   "views.changeForgottenPassword.password_reseted": "password reset",
   "views.changeForgottenPassword.passwords_must_match": "Passwords must match",
   "views.changeForgottenPassword.save": "Save",
+  "views.changePassword.cancel": "Cancel",
   "views.changePassword.internal_error_try_again_later": "An internal error has occurred. Please try again later.",
   "views.changePassword.new_password": "New password",
   "views.changePassword.old_password": "Old password",
@@ -170,7 +171,6 @@
   "views.expense_sheets.expenseSheetOverview.all_expense_sheets": "All expense sheets",
   "views.expense_sheets.expenseSheetOverview.current_expense_sheets": "Current expense sheets",
   "views.expense_sheets.expenseSheetOverview.edit_expense_sheet": "Edit expense sheet",
-  "views.expense_sheets.expenseSheetOverview.expenses": "Expenses",
   "views.expense_sheets.expenseSheetOverview.from": "From",
   "views.expense_sheets.expenseSheetOverview.generate_expense_statistics": "Generate expense statistics",
   "views.expense_sheets.expenseSheetOverview.name": "Name",
@@ -208,7 +208,6 @@
   "views.expense_sheets.unpaidVacationSegment.vacation": "Personal holiday",
   "views.forgotPassword.email_sent": "Email sent",
   "views.forgotPassword.password_reset_email_sent": "You have received an e-mail with a link to reset your password, if we know the e-mail.",
-  "views.holidays.holidayOverview.free_days": "Holidays",
   "views.holidays.holidayOverviewTable.description": "Description",
   "views.holidays.holidayOverviewTable.end": "End",
   "views.holidays.holidayOverviewTable.start": "Start",
@@ -232,7 +231,6 @@
   "views.phoneList.end": "End",
   "views.phoneList.info": "Enter a start date and an end date to get a phone list with all the civilians who are working during this period.",
   "views.phoneList.start": "Start",
-  "views.service_specification.ServiceSpecificationsOverview.service_specification": "Specifications",
   "views.service_specification.ServiceSpecificationsOverviewTable.accommodation": "Accommodation",
   "views.service_specification.ServiceSpecificationsOverviewTable.active": "Active",
   "views.service_specification.ServiceSpecificationsOverviewTable.breakfast": "Breakfast",
@@ -322,6 +320,5 @@
   "views.users.userOverview.name": "Name",
   "views.users.userOverview.until": "To",
   "views.users.userOverview.zdp": "ZDP",
-  "views.users.userUpdate.profile": "Profile",
   "views.users.userUpdate.profile_is_loading": "Profile is loaded"
 }

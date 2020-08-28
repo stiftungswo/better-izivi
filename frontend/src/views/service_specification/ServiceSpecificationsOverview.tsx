@@ -73,7 +73,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
         loading={this.state.loading}
         title={
           this.props.mainStore!.intl.formatMessage({
-            id: 'views.service_specification.ServiceSpecificationsOverview.service_specification',
+            id: 'layout.navigation.service_specifications',
             defaultMessage: 'Pflichtenheft',
           })
         }
