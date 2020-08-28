@@ -22,3 +22,7 @@ lokalise2 \
     --indentation 2sp \
     --directory-prefix "" \
     --unzip-to api/config/locales/ \
+  && \
+  cd api \
+  && \
+  i18n-tasks normalize
