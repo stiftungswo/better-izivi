@@ -141,9 +141,9 @@ fr:
     state: Statut
   date:
     formats:
-      default: "{d.}m.%Y"
-      long: "{d.}b.%Y"
-      short: "{d.}m.%y"
+      default: "%d.%m.%Y"
+      long: "%d.%m.%Y"
+      short: "%d.%m.%Y"
   errors:
     authorization_error: Vous n'avez pas les droits requis pour cette demande.
     format_error: Vous avez demandé un format invalide

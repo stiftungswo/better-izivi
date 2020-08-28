@@ -141,9 +141,9 @@ de:
     state: Status
   date:
     formats:
-      default: "{d.}m.%Y"
-      long: "{d.}b.%Y"
-      short: "{d.}m.%y"
+      default: "%d.%m.%Y"
+      long: "%d.%m.%Y"
+      short: "%d.%m.%Y"
   errors:
     authorization_error: Sie haben nicht die benötigten Rechte für diese Anfrage
     format_error: Sie haben ein ungültiges Format angefordert

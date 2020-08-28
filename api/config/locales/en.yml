@@ -141,9 +141,9 @@ en:
     state: State
   date:
     formats:
-      default: "{d.}m.%Y"
-      long: "{d.}b.%Y"
-      short: "{d.}m.%y"
+      default: "%d.%m.%Y"
+      long: "%d.%m.%Y"
+      short: "%d.%m.%Y"
   errors:
     authorization_error: You are not authorized to perform this action
     format_error: You requested an invalid format
