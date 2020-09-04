@@ -7,7 +7,8 @@ class PainGenerationService
 
   def generate_pain
     @sheets.each do |sheet|
-      sepa_credit_transfer.add_transaction(build_transaction(sheet))
+      transaction = build_transaction(sheet)
+      sepa_credit_transfer.add_transaction(transaction) unless transaction[:amount] <= 0
     end
 
     sepa_credit_transfer

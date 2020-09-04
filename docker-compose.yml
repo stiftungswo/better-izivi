@@ -17,6 +17,9 @@ services:
             - DATABASE_HOST=mysql
             - DATABASE_USERNAME=root
             - DATABASE_PASSWORD=
+            - DEVISE_JWT_SECRET_KEY=verysecret
+            - DEVISE_SECRET_KEY=verysecret
+
     frontend:
         image: node:10
         container_name: better_izivi_frontend
@@ -26,6 +29,7 @@ services:
         ports:
             - "23000:3000"
         command: bash -c "yarn install && yarn run start"
+
     mysql:
         image: mariadb:10.3.14
         container_name: better_izivi_db
@@ -35,6 +39,7 @@ services:
             - "23306:3306"
         volumes:
             - ./database:/var/lib/mysql
+
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: better_izivi_phpmyadmin

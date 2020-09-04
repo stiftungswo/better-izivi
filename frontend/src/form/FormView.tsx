@@ -15,6 +15,7 @@ export interface FormViewProps<T> {
 
 interface Props<T> extends FormViewProps<T> {
   render: (props: FormikProps<T>) => React.ReactNode;
+  validationSchema: any;
 }
 
 export class FormView<Values, ExtraProps = {}> extends React.Component<FormikConfig<Values> & ExtraProps & Props<Values>> {

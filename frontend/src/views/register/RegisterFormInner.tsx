@@ -74,7 +74,7 @@ const RegisterFormInnerImplementation = (props: FormikProps<FormValues> & Regist
         history={props.history}
         formikProps={formikProps}
         currentPage={currentPage}
-        pages={REGISTER_FORM_PAGES.map(({ component }) => component)}
+        pages={REGISTER_FORM_PAGES.map(({ component }) => component as any)}
       />
     </>
   );
