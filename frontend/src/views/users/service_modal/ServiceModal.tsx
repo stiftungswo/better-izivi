@@ -95,7 +95,12 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
         validationSchema={serviceSchema}
         render={(formikProps: FormikProps<Service>) => (
           <Modal isOpen toggle={onClose}>
-            <ModalHeader toggle={onClose}>Zivildiensteinsatz</ModalHeader>
+            <ModalHeader toggle={onClose}>
+              <FormattedMessage
+                id="views.users.serviceModal.civil_service_mission"
+                defaultMessage="Zivildiensteinsatz"
+              />
+            </ModalHeader>
             <ModalBody>
               <ServiceModalForm serviceDateRangeChangeHandler={this.handleServiceDateRangeChange} />
             </ModalBody>
@@ -117,7 +122,10 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
                 onClick={formikProps.submitForm}
                 disabled={!this.state.informationChecked && !isAdmin}
               >
-                Daten speichern
+                <FormattedMessage
+                  id="views.users.serviceModal.save_data"
+                  defaultMessage="Daten speichern"
+                />
               </Button>
               {(isAdmin && this.props.service && this.props.service.confirmation_date == null) && (
                 <>
