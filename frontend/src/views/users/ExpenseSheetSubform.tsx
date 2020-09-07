@@ -58,7 +58,12 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
 
     return (
       <div id="expense-sheets">
-        <h3 className="mb-3">Spesenblätter</h3>
+        <h3 className="mb-3">
+          <FormattedMessage
+            id="views.users.expenseSheetSubform.expense_sheets"
+            defaultMessage="Spesenblätter"
+          />
+        </h3>
         {user && (
           <OverviewTable
             data={user.expense_sheets}
@@ -68,7 +73,13 @@ class ExpenseSheetSubformInner extends React.Component<Props, ExpenseSheetSubfor
                 {mainStore!.isAdmin() && (
                   <div className={classes.hideButtonText}>
                     <Button color={'warning'} href={'/expense_sheets/' + expenseSheet.id} tag={'a'} target={'_blank'}>
-                      <FontAwesomeIcon icon={EditSolidIcon} /> <span>Bearbeiten</span>
+                      <FormattedMessage
+                        id="views.users.expenseSheetSubform.edit"
+                        defaultMessage="{icon} Bearbeiten"
+                        values={{
+                          icon: <FontAwesomeIcon icon={EditSolidIcon} />,
+                        }}
+                      />
                     </Button>
                   </div>
                 )}

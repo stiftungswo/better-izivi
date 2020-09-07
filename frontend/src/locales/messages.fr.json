@@ -260,6 +260,8 @@
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name_short": "KN",
   "views.service_specification.ServiceSpecificationsOverviewTable.work": "Travail",
   "views.users.expenseSheetSubform.done": "Fait",
+  "views.users.expenseSheetSubform.edit": "{icon} Modifier",
+  "views.users.expenseSheetSubform.expense_sheets": "Les notes de frais",
   "views.users.expenseSheetSubform.from": "Tiré de",
   "views.users.expenseSheetSubform.in_progress": "En cours",
   "views.users.expenseSheetSubform.not_yet_due": "Pas encore due",

@@ -260,6 +260,8 @@
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name_short": "KN",
   "views.service_specification.ServiceSpecificationsOverviewTable.work": "Arbeit",
   "views.users.expenseSheetSubform.done": "Erledigt",
+  "views.users.expenseSheetSubform.edit": "{icon} Bearbeiten",
+  "views.users.expenseSheetSubform.expense_sheets": "Spesenblätter",
   "views.users.expenseSheetSubform.from": "Von",
   "views.users.expenseSheetSubform.in_progress": "In Bearbeitung",
   "views.users.expenseSheetSubform.not_yet_due": "Noch nicht fällig",
