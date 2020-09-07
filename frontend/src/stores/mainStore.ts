@@ -32,7 +32,7 @@ export const messages: { [locale in Locale]: any } = {
 
 export const languages = {
   [germanLocale]: 'Deutsch',
-  [frenchLocale]: 'Français',
+  [frenchLocale]: 'Français (Beta)',
   // [englishLocale]: "English"
 };
 
