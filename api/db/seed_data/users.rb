@@ -16,7 +16,8 @@ User.create!(
       hometown: 'Better Zivitown',
       phone: '076 987 65 43',
       zdp: 739_539,
-      regional_center: RegionalCenter.find_by(short_name: 'Ru')
+      regional_center: RegionalCenter.find_by(short_name: 'Ru'),
+      locale: 'de'
     },
     {
       email: 'zivi2@example.com',
@@ -32,7 +33,8 @@ User.create!(
       hometown: 'Better Zivitown',
       phone: '076 876 54 32',
       zdp: 739_540,
-      regional_center: RegionalCenter.find_by(short_name: 'Ru')
+      regional_center: RegionalCenter.find_by(short_name: 'Ru'),
+      locale: 'de'
     },
     {
       email: 'zivi_francise@france.ch',
@@ -48,7 +50,8 @@ User.create!(
       hometown: 'Meilleur Village',
       phone: '076 876 54 32',
       zdp: 739_541,
-      regional_center: RegionalCenter.find_by(short_name: 'Th')
+      regional_center: RegionalCenter.find_by(short_name: 'Th'),
+      locale: 'fr'
     },
     {
       email: 'admin@example.com',
@@ -65,7 +68,8 @@ User.create!(
       phone: '076 876 54 32',
       zdp: 739_542,
       regional_center: RegionalCenter.find_by(short_name: 'Ru'),
-      role: :admin
+      role: :admin,
+      locale: 'de'
     }
   ]
 )
