@@ -1,5 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
 import IziviContent from '../../layout/IziviContent';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
@@ -42,7 +43,12 @@ export class PaymentOverview extends React.Component<Props, State> {
   render() {
     return (
       <IziviContent card loading={this.state.loading}>
-        <h1 className="mb-4">Pendente Spesenblätter für Auszahlung</h1>
+        <h1 className="mb-4">
+          <FormattedMessage
+            id="payments.paymentOverview.pending_payments"
+            defaultMessage="Pendente Spesenblätter für Auszahlung"
+          />
+        </h1>
         <ExpenseSheetsReadyForPaymentTable
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
           paymentStore={this.props.paymentStore!}
@@ -50,7 +56,12 @@ export class PaymentOverview extends React.Component<Props, State> {
           mainStore={this.props.mainStore!}
         />
 
-        <h1 className="mb-4 mt-5">In Auszahlung</h1>
+        <h1 className="mb-4 mt-5">
+          <FormattedMessage
+            id="payments.paymentOverview.in_payment"
+            defaultMessage="In Auszahlung"
+          />
+        </h1>
         <PaymentsTable
           payments={this.props.paymentStore!.paymentsInProgress}
           emptyNotice={this.props.mainStore!.intl.formatMessage({
@@ -60,7 +71,12 @@ export class PaymentOverview extends React.Component<Props, State> {
           mainStore={this.props.mainStore!}
         />
 
-        <h1 className="mb-4 mt-5">Archiv</h1>
+        <h1 className="mb-4 mt-5">
+          <FormattedMessage
+            id="payments.paymentOverview.archive"
+            defaultMessage="Archiv"
+          />
+        </h1>
         {this.archivedPayments()}
       </IziviContent>
     );

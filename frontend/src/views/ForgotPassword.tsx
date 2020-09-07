@@ -63,7 +63,12 @@ export class ForgotPassword extends React.Component<Props> {
           onSubmit={this.handleSubmit}
           render={(formikProps) => (
             <Form onSubmit={formikProps.handleSubmit}>
-              <h2>Passwort vergessen</h2>
+              <h2>
+                <FormattedMessage
+                  id="views.forgotPassword.title"
+                  defaultMessage="Passwort vergessen"
+                />
+              </h2>
               {this.state.success && (
                 <div className="alert alert-info">
                   <h6>
@@ -91,7 +96,10 @@ export class ForgotPassword extends React.Component<Props> {
                   disabled={formikProps.isSubmitting}
                   onClick={formikProps.submitForm}
                 >
-                  Weiter
+                  <FormattedMessage
+                    id="views.forgotPassword.continue"
+                    defaultMessage="Weiter"
+                  />
                 </Button>
               )}
             </Form>

@@ -1,5 +1,6 @@
 import { inject } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
@@ -94,7 +95,10 @@ class ServiceSubformInner extends React.Component<Props, ServiceSubformState> {
                 this.setState({ new_service: true });
               }}
             >
-              Neue Einsatzplanung hinzufügen
+              <FormattedMessage
+                id="views.users.serviceSubform.add_new_servive_plan"
+                defaultMessage="Neue Einsatzplanung hinzufügen"
+              />
             </Button>
             <ServiceModal
               onSubmit={submitService}

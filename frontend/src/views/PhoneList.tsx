@@ -107,7 +107,10 @@ export class PhoneListView extends React.Component<Props> {
                     onClick={formikProps.submitForm}
                     style={{ width: '100%' }}
                   >
-                    Laden
+                    <FormattedMessage
+                      id="views.phoneList.load"
+                      defaultMessage="Laden"
+                    />
                   </Button>
                 </Col>
               </Row>

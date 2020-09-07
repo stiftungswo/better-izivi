@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
+import { FormattedMessage } from 'react-intl';
 import Table from 'reactstrap/lib/Table';
 import { Column } from '../types';
 import { SafeClickableTableRow } from '../utilities/SafeClickableTableRow';
@@ -69,7 +70,15 @@ export class OverviewTable<T> extends React.Component<TableProps<T>> {
         <tfoot>
           <tr>
             <td>
-              <b>Betrag Total: {calcsum(data).toFixed(2)} CHF</b>
+              <b>
+                <FormattedMessage
+                  id="layout.overviewTable.total_amount"
+                  defaultMessage="Betrag Total: {amount}"
+                  values={{
+                    amount: calcsum(data).toFixed(2) + ' CHF',
+                  }}
+                />
+              </b>
             </td>
           </tr>
         </tfoot>}

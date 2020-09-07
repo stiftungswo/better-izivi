@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 import * as React from 'react';
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { WithSheet } from 'react-jss';
 import { UncontrolledTooltip } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
@@ -139,7 +139,11 @@ export default (params: OverviewTableParams) => {
         href={mainStore!.apiURL('services/' + service.id + '.pdf', {}, true)}
         target={'_blank'}
       >
-        <FontAwesomeIcon icon={PrintSolidIcon} /> <span>Drucken</span>
+          <FormattedMessage
+            id="views.users.serviceOverviewTable.print"
+            defaultMessage="{icon} Drucken"
+            values={{ icon: <FontAwesomeIcon icon={PrintSolidIcon} /> }}
+          />
       </a>
     );
   }
@@ -147,7 +151,11 @@ export default (params: OverviewTableParams) => {
   function editButton(service: Service) {
     return (
       <Button color={'warning'} type={'button'} className="mr-1" onClick={() => onModalOpen(service)}>
-        <FontAwesomeIcon icon={EditSolidIcon} /> <span>Bearbeiten</span>
+        <FormattedMessage
+          id="views.users.serviceOverviewTable.edit"
+          defaultMessage="{icon} Bearbeiten"
+          values={{ icon: <FontAwesomeIcon icon={EditSolidIcon} /> }}
+        />
       </Button>
     );
   }
@@ -159,9 +167,21 @@ export default (params: OverviewTableParams) => {
           id={service.id ? 'Service-' + service.id.toString() : ''}
           onConfirm={() => onServiceDeleteConfirm(service, serviceStore!, userStore!)}
           disabled={!service.deletable}
-          tooltip={service.deletable ? undefined : 'Zuerst Spesenblatt löschen!'}
+          tooltip={
+          service.deletable
+          ? undefined
+          : intl.formatMessage({
+            id: 'views.users.serviceOverviewTable.first_delete_expense_sheet',
+            defaultMessage: 'Zuerst Spesenblatt löschen!',
+          })}
         >
-          <FontAwesomeIcon icon={TrashAltRegularIcon} /> <span>Löschen</span>
+          <FormattedMessage
+            id="views.users.serviceOverviewTable.delete"
+            defaultMessage="{icon} Löschen"
+            values={{
+              icon: <FontAwesomeIcon icon={TrashAltRegularIcon} />,
+            }}
+          />
         </DeleteButton>{' '}
         {
           service.confirmation_date !== null && (
@@ -170,7 +190,11 @@ export default (params: OverviewTableParams) => {
               color={'success'}
               type={'button'}
             >
-              <FontAwesomeIcon icon={PlusSquareRegularIcon} /> <span>Spesenblatt</span>
+              <FormattedMessage
+               id="views.users.serviceOverviewTable.expense_sheet"
+               defaultMessage="{icon} Spesenblatt"
+               values={{ icon: <FontAwesomeIcon icon={PlusSquareRegularIcon} /> }}
+              />
             </Button>
           )
         }

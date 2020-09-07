@@ -3,7 +3,7 @@ import moment from 'moment';
 import * as React from 'react';
 
 import { autorun, computed, observable, reaction } from 'mobx';
-import { IntlShape } from 'react-intl';
+import { FormattedMessage, IntlShape } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import Col from 'reactstrap/lib/Col';
@@ -255,7 +255,12 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
             </Col>
 
             <Col sm="12" md="2">
-              <Button onClick={() => window.print()}>Drucken</Button>
+              <Button onClick={() => window.print()}>
+                <FormattedMessage
+                  id="views.service_overview.serviceOverview.print"
+                  defaultMessage="Drucken"
+                />
+              </Button>
             </Col>
           </Row>
 
@@ -278,7 +283,15 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
                         style={{ textAlign: 'left', paddingLeft: '8px !important', fontWeight: 'bold', whiteSpace: 'nowrap' }}
                         className={classes.rowTd}
                       >
-                        Ø / Woche: {(this.state.totalCount / 52).toFixed(2)}
+
+                        <FormattedMessage
+                          id="views.service_overview.serviceOverview.week"
+                          defaultMessage="{averageSymbol} Woche{average}"
+                          values={{
+                            averageSymbol: 'Ø /',
+                            average: ': ' + (this.state.totalCount / 52).toFixed(2),
+                          }}
+                        />
                       </td>
                       {this.state.weekTotalHeaders}
                     </tr>

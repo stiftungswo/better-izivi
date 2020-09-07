@@ -1,6 +1,8 @@
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { UncontrolledTooltip } from 'reactstrap';
 import Button from 'reactstrap/lib/Button';
+import { MainStore } from '../stores/mainStore';
 import ConfirmationDialog from './ConfirmationDialog';
 
 interface DeleteButtonProps {
@@ -9,12 +11,15 @@ interface DeleteButtonProps {
   disabled?: boolean;
   id?: string;
   tooltip?: string;
+  mainStore?: MainStore;
 }
 
 interface DeleteButtonState {
   open: boolean;
 }
 
+@inject('mainStore')
+@observer
 export class DeleteButton extends React.Component<DeleteButtonProps, DeleteButtonState> {
   state = {
     open: false,
@@ -60,10 +65,24 @@ export class DeleteButton extends React.Component<DeleteButtonProps, DeleteButto
   }
 
   render = () => {
+    const intl = this.props.mainStore!.intl;
     return (
       <>
-        <ConfirmationDialog onClose={this.handleClose} onConfirm={this.handleConfirm} open={this.state.open} title={'Löschen'}>
-          {this.props.message ? this.props.message : 'Wirklich löschen?'}
+        <ConfirmationDialog
+          onClose={this.handleClose}
+          onConfirm={this.handleConfirm}
+          open={this.state.open}
+          title={intl.formatMessage({
+            id: 'form.deleteButton.delete',
+            defaultMessage: 'Löschen',
+          })}
+        >
+          {this.props.message
+          ? this.props.message
+          : intl.formatMessage({
+            id: 'form.deleteButton.really_delete',
+            defaultMessage: 'Wirklich löschen?',
+          })}
         </ConfirmationDialog>
         {this.getDeleteButtonWithTooltipWrapper()}
         {this.props.id && this.props.tooltip && (
