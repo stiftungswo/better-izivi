@@ -4,31 +4,63 @@ import moment from 'moment';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import momentLocalizer from 'react-widgets-moment';
 import messagesDe from '../locales/messages.de.json';
+import messagesEn from '../locales/messages.en.json';
 import messagesFr from '../locales/messages.fr.json';
 import { Locale } from '../types';
 import { Formatter } from '../utilities/formatter';
 import { buildURL } from '../utilities/helpers';
-import { displayError, displaySuccess, displayWarning } from '../utilities/notification';
+import {
+  displayError,
+  displaySuccess,
+  displayWarning,
+} from '../utilities/notification';
 import { ApiStore, baseUrl } from './apiStore';
 
 const cache = createIntlCache();
 
+const KEY_LOCALE = 'izivi_Locale';
+
 const germanLocale = 'de';
 const frenchLocale = 'fr';
+// const englishLocale = "en";
 
 export const messages: { [locale in Locale]: any } = {
   [germanLocale]: messagesDe,
   [frenchLocale]: messagesFr,
+  // [englishLocale]: messagesEn
 };
 
 export const languages = {
   [germanLocale]: 'Deutsch',
   [frenchLocale]: 'Français',
+  // [englishLocale]: "English"
 };
+
+export const defaultLocale = germanLocale;
 
 export class MainStore {
   get api() {
     return this.apiStore.api;
+  }
+
+  @computed
+  get intl() {
+    return createIntl(
+      {
+        locale: this.currentLocale,
+        messages: messages[this.currentLocale],
+      },
+      cache,
+    );
+  }
+
+  get locale() {
+    return this.currentLocale;
+  }
+
+  set locale(locale: Locale) {
+    this.currentLocale = locale;
+    localStorage.setItem(KEY_LOCALE, locale);
   }
 
   static validateIBAN(value: string) {
@@ -43,19 +75,7 @@ export class MainStore {
   showArchived = false;
 
   @observable
-  locale: Locale = germanLocale;
-
-  @observable
   monthNames: string[] = moment.months();
-
-  @computed
-  get intl() {
-    return createIntl({
-      locale: this.locale,
-      messages: messages[this.locale],
-    },
-      cache);
-  }
 
   // --- formatting
   formatDate = this.formatter.formatDate;
@@ -68,27 +88,40 @@ export class MainStore {
   displaySuccess = displaySuccess;
   displayError = displayError;
 
-  constructor(private apiStore: ApiStore, readonly formatter: Formatter, private history: History) {
+  @observable
+  private currentLocale: Locale;
+
+  constructor(
+    private apiStore: ApiStore,
+    readonly formatter: Formatter,
+    private history: History,
+  ) {
     autorun(() => {
-      moment.locale(this.locale);
+      moment.locale(this.currentLocale);
       this.monthNames = moment.months();
     });
-}
 
-// --- routing / navigation
+    this.currentLocale  = localStorage.getItem(KEY_LOCALE) as Locale || defaultLocale;
+  }
+
+  // --- routing / navigation
   @action
-navigateTo(path: string): void {
-  this.history.push(path);
-}
+  navigateTo(path: string): void {
+    this.history.push(path);
+  }
 
-  apiURL(path: string, params: object = {}, includeAuth: boolean = true): string {
-  return buildURL(baseUrl + '/' + path, {
-    ...params,
-    token: includeAuth ? this.apiStore.rawToken : undefined,
-  });
-}
+  apiURL(
+    path: string,
+    params: object = {},
+    includeAuth: boolean = true,
+  ): string {
+    return buildURL(baseUrl + '/' + path, {
+      ...params,
+      token: includeAuth ? this.apiStore.rawToken : undefined,
+    });
+  }
 
   isAdmin() {
-  return this.apiStore.isAdmin;
-}
+    return this.apiStore.isAdmin;
+  }
 }
