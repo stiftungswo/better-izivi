@@ -1,6 +1,8 @@
 import { History } from 'history';
 import { action, autorun, computed, observable, reaction } from 'mobx';
 import moment from 'moment';
+import 'moment/locale/de';
+import 'moment/locale/fr';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import momentLocalizer from 'react-widgets-moment';
 import messagesDe from '../locales/messages.de.json';
