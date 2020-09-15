@@ -12,7 +12,6 @@ module V1
     before_action :set_service, only: :create
     before_action :protect_foreign_resource!, except: %i[index create], unless: -> { current_user.admin? }
     before_action :authorize_admin!, only: %i[index hints]
-    before_action :protect_confirmed_service!, only: :update, unless: -> { current_user.admin? }
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
       beginning ending work_days unpaid_company_holiday_days
@@ -85,6 +84,10 @@ module V1
 
     def expense_sheet_params
       params.require(:expense_sheet).permit(*PERMITTED_EXPENSE_SHEET_KEYS)
+    end
+
+    def protect_foreign_resource!
+      raise AuthorizationError unless @expense_sheet.user.id == current_user.id
     end
 
     def filter_param
