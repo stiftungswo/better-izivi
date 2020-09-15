@@ -10,7 +10,6 @@ module V1
     before_action :authenticate_from_params!, if: -> { request.format.pdf? }
     before_action :set_expense_sheet, only: %i[show update destroy hints]
     before_action :set_service, only: :create
-    before_action :protect_foreign_resource!, except: %i[index], unless: -> { current_user.admin? }
     before_action :authorize_admin!, unless: -> { request.format.pdf? }
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
@@ -84,10 +83,6 @@ module V1
 
     def expense_sheet_params
       params.require(:expense_sheet).permit(*PERMITTED_EXPENSE_SHEET_KEYS)
-    end
-
-    def protect_foreign_resource!
-      raise AuthorizationError unless @expense_sheet.user.id == current_user.id
     end
 
     def filter_param
