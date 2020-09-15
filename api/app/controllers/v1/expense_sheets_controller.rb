@@ -10,7 +10,9 @@ module V1
     before_action :authenticate_from_params!, if: -> { request.format.pdf? }
     before_action :set_expense_sheet, only: %i[show update destroy hints]
     before_action :set_service, only: :create
+    before_action :protect_foreign_resource!, except: %i[index create], unless: -> { current_user.admin? }
     before_action :authorize_admin!, only: %i[index hints]
+    before_action :protect_confirmed_service!, only: :update, unless: -> { current_user.admin? }
 
     PERMITTED_EXPENSE_SHEET_KEYS = %i[
       beginning ending work_days unpaid_company_holiday_days
