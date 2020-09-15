@@ -453,6 +453,7 @@ RSpec.describe V1::ExpensesOverviewController, type: :request do
           expect(response.headers['Content-Type']).to include 'pdf'
         end
       end
+
     end
 
     context 'when no token is provided' do
