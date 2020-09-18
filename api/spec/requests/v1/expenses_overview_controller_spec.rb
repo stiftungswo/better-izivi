@@ -454,6 +454,10 @@ RSpec.describe V1::ExpensesOverviewController, type: :request do
         end
       end
 
+      context 'when user is civil servant' do
+        it_behaves_like 'admin protected resource'
+      end
+
     end
 
     context 'when no token is provided' do
