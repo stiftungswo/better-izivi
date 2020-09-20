@@ -17,6 +17,7 @@ iZivi ist ein Tool, um Schweizer Zivildienstleistende in einem Einsatzbetrieb zu
 | Javascript (ES6) | Basis für das Frontend                                | [Basis-Tutorial von Mozilla](https://developer.mozilla.org/de/docs/Learn/Getting_started_with_the_web/JavaScript_basis) <br>[Neue Funktionen in ES6](http://es6-features.org/) |
 | Docker           | Software-Virtualisierung, genutzt für die Entwicklung | [Einführung in Docker](https://docs.docker.com/get-started/) <br>[Einführung in docker-compose](https://docs.docker.com/compose/)                                              |
 | Git              | Versionsverwaltung                                    | [Einführung in Git](https://git-scm.com/book/en/v2/Getting-Started-Git-Basics)                                                                                                 |
+| Lokalise         | Localization and translation management platform      | [Lokalise](https://app.lokalise.com/login)                                                                                                 |
 
 ### Backend
 
@@ -146,6 +147,15 @@ Installation gemäss der Installationsanleitung auf der [Website](https://docs.d
 3. Die .env-Datei ausfüllen
 4. `bin/setup` ausführen, oder falls ein Docker container zur Entwicklung verwendet wird: `docker run -it [docker-container-name] api/bin/setup` 
 5. Die API ist nun unter `localhost:28000` erreichbar.
+
+### Lokalise
+
+Um das iZivi in verschiedenen Sprachen zu übersetzen, wurden alle Strings der Applikation durch Keys ersetzt. Für jede Sprache gibt es ein oder mehrere JSON-Files mit allen Keys und der entsprechenden Übersetzung. Diese Files sind im GitHub-Repository eingecheckt. Gleichzeitig sind die Übersetzungen auf die Internationalisierung Plattform Lokalise synchronisiert. Dort können sie übersichtlich verwaltet, und auch automatisiert übersetzt werden. Im root Verzeichnis vom iZivi befinden sich zwei bash scripts (`lokalise-upload` und `lokalise-download`) mit denen die Übersetzungen hoch- und runtergeladen werden können. Dies muss im Moment noch manuell von dem Entwickler gemacht werden.
+
+1. Lokalise CLI tool installieren: [Lokalise CLI](https://github.com/lokalise/lokalise-cli-2-go)
+2. Ruby i18n-task installieren: `gem install i18n-tasks`
+2. Die lokalise.yml Datei kopieren `cp lokalise.example.yml lokalise.yml`
+3. lokalise.yml Datei ausfüllen mit den Lokalise Credentials (KeePass)
 
 ### Tipps für Windows
 
