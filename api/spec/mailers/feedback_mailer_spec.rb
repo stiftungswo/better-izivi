@@ -9,6 +9,7 @@ RSpec.describe FeedbackMailer, type: :mailer do
     let(:envs) do
       {
         FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%<service_id>s',
+        FEEDBACK_MAIL_TESTIMONIAL_URL: 'https://naturzivi.ch/testimonial',
         MAIL_SENDER: 'from@example.com'
       }
     end
