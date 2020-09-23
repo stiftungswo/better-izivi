@@ -13,6 +13,10 @@ services:
             - mysql
         ports:
             - "28000:8000"
+            - "1234:1234"
+            - "26162:26162"
+        extra_hosts:
+          - "localhost:192.168.56.1"
         environment:
             - DATABASE_HOST=mysql
             - DATABASE_USERNAME=root
@@ -24,15 +28,15 @@ services:
             - PAIN_CREDITOR_BIC=POFICHBEXXX
             - PAIN_CREDITOR_IBAN=CH9300762011623852957
             - MAIL_SENDER=no-reply@stiftungswo.ch
-            - SMTP_HOST=example.com
+            - SMTP_HOST=localhost
             - SMTP_PORT=25
             - SMTP_USER_NAME=username
             - SMTP_PASSWORD=password
             - SERVICE_AGREEMENT_LETTER_SENDER_NAME=My Company Name
             - SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS=MyStreet 111
             - SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY=1234 MyCity
-            - FEEDBACK_MAIL_SURVEY_URL="e.g. http://survey.stiftungswo.ch/my/survey?service_id=%{service_id}"
-            - FEEDBACK_MAIL_TESTIMONIAL_URL="https://naturzivi.ch/testimonial"
+            - FEEDBACK_MAIL_SURVEY_URL=http://survey.stiftungswo.ch/my/survey?service_id=%{service_id}
+            - FEEDBACK_MAIL_TESTIMONIAL_URL=https://naturzivi.ch/testimonial
             - PASSWORD_RESET_LINK="e.g. http://izivi.localhost:3000/users/passwords/edit/%{token}"
 
     frontend:
