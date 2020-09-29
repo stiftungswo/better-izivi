@@ -10,6 +10,7 @@ RSpec.describe FeedbackMailer, type: :mailer do
       {
         FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%<service_id>s',
         FEEDBACK_MAIL_TESTIMONIAL_URL: 'https://naturzivi.ch/testimonial',
+        FEEDBACK_MAIL_GOOGLE_REVIEW_URL: 'https://g.page/r/Ceus2ke10hBiEAg/review',
         MAIL_SENDER: 'from@example.com'
       }
     end
