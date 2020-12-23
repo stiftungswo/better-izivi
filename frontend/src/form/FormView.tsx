@@ -6,7 +6,7 @@ import IziviContent from '../layout/IziviContent';
 import { HandleFormikSubmit } from '../types';
 import { FormikSubmitDetector } from './FormikSubmitDetector';
 
-var submitted = false
+let submitted = false;
 
 export interface FormViewProps<T> {
   card?: boolean;
@@ -63,7 +63,7 @@ export class FormView<Values, ExtraProps = {}> extends React.Component<FormikCon
   private handleSubmit: HandleFormikSubmit<Values> = async (values, formikBag) => {
     try {
       await this.props.onSubmit(this.props.validationSchema.cast(values), formikBag);
-      submitted = true
+      submitted = true;
     } finally {
       formikBag.setSubmitting(false);
     }
