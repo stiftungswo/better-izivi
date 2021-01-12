@@ -13,12 +13,18 @@ interface Props {
 @observer
 export class FormikSubmitDetector extends React.Component<Props> {
   // SOURCE: https://github.com/jaredpalmer/formik/issues/1019
+  intl = this.props.mainStore!.intl;
   componentDidUpdate(prevProps: Props) {
     if (prevProps.isSubmitting && !this.props.isSubmitting && !this.props.isValid) {
-      this.props.mainStore!.displayError('Die Daten konnten nicht gespeichert werden, da das Formular ungültige Angaben enthält.');
+      this.props.mainStore!.displayError(
+        this.intl.formatMessage({
+          id: 'register.pagedForm.form_has_invalid_fields ',
+          defaultMessage:
+            'Das Formular hat noch ungültige Felder',
+        }),
+      );
     }
   }
-
   render() {
     return <>{this.props.children}</>;
   }
