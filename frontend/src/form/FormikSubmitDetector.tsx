@@ -25,6 +25,7 @@ export class FormikSubmitDetector extends React.Component<Props> {
       );
     }
   }
+
   render() {
     return <>{this.props.children}</>;
   }
