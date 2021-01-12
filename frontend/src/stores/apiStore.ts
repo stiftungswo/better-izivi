@@ -90,7 +90,7 @@ export class ApiStore {
     this.updateSentryContext();
     this.initializeApiClient(this._token);
   }
-  
+
   @action
   setLanguageForApi(Locale = 'de') {
     axios.defaults.params = { locale: Locale };
