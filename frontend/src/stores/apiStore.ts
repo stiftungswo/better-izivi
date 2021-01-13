@@ -92,7 +92,7 @@ export class ApiStore {
   }
 
   @action
-  setLanguageForApi(Locale = 'de') {
+  setLanguageForApi(Locale: string) {
     axios.defaults.params = { locale: Locale };
   }
 
