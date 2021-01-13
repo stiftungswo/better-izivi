@@ -19,8 +19,7 @@ export class FormikSubmitDetector extends React.Component<Props> {
       this.props.mainStore!.displayError(
         this.intl.formatMessage({
           id: 'register.pagedForm.form_has_invalid_fields ',
-          defaultMessage:
-            'Das Formular hat noch ungültige Felder',
+          defaultMessage: 'Das Formular hat noch ungültige Felder',
         }),
       );
     }
