@@ -101,10 +101,11 @@ export class MainStore {
     autorun(() => {
       moment.locale(this.currentLocale);
       this.monthNames = moment.months();
+      this.apiStore.setLanguageForApi(this.currentLocale);
     });
 
     this.currentLocale  = localStorage.getItem(KEY_LOCALE) as Locale || defaultLocale;
-    this.apiStore.setLanguageForApi(this.currentLocale);
+
   }
 
   // --- routing / navigation
