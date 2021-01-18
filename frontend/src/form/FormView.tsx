@@ -41,6 +41,8 @@ export class FormView<Values, ExtraProps = {}> extends React.Component<FormikCon
           <>
             <Formik
               {...rest}
+              isInitialValid={true}
+              enableReinitialize
               onSubmit={this.handleSubmit}
               render={(formikProps: FormikProps<Values>) => (
                 <FormikSubmitDetector {...formikProps}>
