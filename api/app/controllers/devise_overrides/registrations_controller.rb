@@ -1,5 +1,8 @@
 # frozen_string_literal: true
-
+require 'net/http'
+require 'openssl'
+require 'json'
+require 'uri'
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
     def create
@@ -10,12 +13,11 @@ module DeviseOverrides
 
     def validate
       validation_error = ValidationError.new User.validate_given_params(sign_up_params)
-
       should_display_community_error = community_password && !valid_community_password?
       validation_error.merge! invalid_community_password_error if should_display_community_error
 
       raise validation_error unless validation_error.empty?
-
+      subscribe_to_newsletter
       head :no_content
     end
 
@@ -36,5 +38,23 @@ module DeviseOverrides
     def community_password
       params.require(:user).permit(:community_password)[:community_password]
     end
+
+    def subscribe_to_newsletter
+      #begin
+      if params['user']['newsletter'] == true
+        uri = URI('https://www.stiftungswo.ch/wp-json/newsletter/v2/subscribers')
+        req = Net::HTTP::Post.new(uri,  'Content-Type' => 'application/json')
+        req.body = {email: params['user']['email'], first_name: params['user']['first_name'], last_name: params['user']['last_name']}.to_json
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        req.basic_auth ENV.fetch('NEWSLETTER_API_CLIENT_KEY'), ENV.fetch('NEWSLETTER_API_CLIENT_SECRET')
+        res = http.request(req)
+      end
+      #rescue
+        #print "Unable to subscribe to newsletter. Response:", res.body
+      #end
+    end
+
   end
 end
