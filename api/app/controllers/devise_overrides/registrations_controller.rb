@@ -40,20 +40,20 @@ module DeviseOverrides
     end
 
     def subscribe_to_newsletter
-      #begin
-      if params['user']['newsletter'] == true
-        uri = URI('https://www.stiftungswo.ch/wp-json/newsletter/v2/subscribers')
-        req = Net::HTTP::Post.new(uri,  'Content-Type' => 'application/json')
-        req.body = {email: params['user']['email'], first_name: params['user']['first_name'], last_name: params['user']['last_name']}.to_json
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        req.basic_auth ENV.fetch('NEWSLETTER_API_CLIENT_KEY'), ENV.fetch('NEWSLETTER_API_CLIENT_SECRET')
-        res = http.request(req)
+      begin
+        if params['user']['newsletter'] == true
+          uri = URI('https://www.stiftungswo.ch/wp-json/newsletter/v2/subscribers')
+          req = Net::HTTP::Post.new(uri,  'Content-Type' => 'application/json')
+          req.body = {email: params['user']['email'], first_name: params['user']['first_name'], last_name: params['user']['last_name']}.to_json
+          http = Net::HTTP.new(uri.host, uri.port)
+          http.use_ssl = true
+          http.verify_mode = OpenSSL::SSL::VERIFY_PEER
+          req.basic_auth ENV['NEWSLETTER_API_CLIENT_KEY'], ENV['NEWSLETTER_API_CLIENT_SECRET']
+          res = http.request(req)
+        end
+      rescue
+        print "Unable to subscribe to newsletter."
       end
-      #rescue
-        #print "Unable to subscribe to newsletter. Response:", res.body
-      #end
     end
 
   end
