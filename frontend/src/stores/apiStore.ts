@@ -82,8 +82,6 @@ export class ApiStore {
   private _token: string = ''; // tslint:disable-line:variable-name
 
   constructor(private history: History) {
-    // TODO: Pass real language
-    //axios.defaults.params = { locale: 'de' };
     this._api = axios.create({
       baseURL: baseUrl,
     });
