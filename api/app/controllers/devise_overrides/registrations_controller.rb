@@ -25,6 +25,10 @@ module DeviseOverrides
       head :no_content
     end
 
+    def subscribe_to_newsletter
+      Subscribe_to_newsletter.new(params) if params['user']['newsletter'] == true
+    end
+
     private
 
     # :reek:UtilityFunction
@@ -41,23 +45,6 @@ module DeviseOverrides
 
     def community_password
       params.require(:user).permit(:community_password)[:community_password]
-    end
-
-    def subscribe_to_newsletter
-      post_to_newsletter_api if params['user']['newsletter'] == true
-    end
-
-    def post_to_newsletter_api
-      uri = URI('https://www.stiftungswo.ch/wp-json/newsletter/v2/subscribers')
-      req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
-      req.body = { email: params['user']['email'],
-                   first_name: params['user']['first_name'],
-                   last_name: params['user']['last_name'] }.to_json
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      req.basic_auth ENV['NEWSLETTER_API_CLIENT_KEY'], ENV['NEWSLETTER_API_CLIENT_SECRET']
-      http.request(req)
     end
   end
 end
