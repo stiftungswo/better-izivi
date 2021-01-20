@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'net/http'
+
 class SubscribeToNewsletter
   # :reek:FeatureEnvy
   def initialize(params)
