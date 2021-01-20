@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class SubscribeToNewsletter
+  # :reek:FeatureEnvy
   def initialize(params)
-    @body = { email: params['user']['email'],
-              first_name: params['user']['first_name'],
-              last_name: params['user']['last_name'] }.to_json
+    @body = { email: params['email'],
+              first_name: params['first_name'],
+              last_name: params['last_name'] }.to_json
     make_post
   end
 

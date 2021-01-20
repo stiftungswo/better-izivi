@@ -21,7 +21,7 @@ module DeviseOverrides
     end
 
     def subscribe_to_newsletter
-      SubscribeToNewsletter.new(params) if params['user']['newsletter'] == true
+      SubscribeToNewsletter.new(params['user']) if params['user']['newsletter'] == true
     end
 
     private
