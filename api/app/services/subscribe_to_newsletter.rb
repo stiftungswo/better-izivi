@@ -16,6 +16,6 @@ class SubscribeToNewsletter
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
     req.body = @body
-    http.request(req).
+    http.request(req)
   end
 end
