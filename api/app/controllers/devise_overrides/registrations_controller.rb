@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/http'
-require 'openssl'
-require 'json'
-require 'uri'
-
 module DeviseOverrides
   class RegistrationsController < Devise::RegistrationsController
     def create
