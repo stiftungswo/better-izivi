@@ -9,6 +9,7 @@ class SubscribeToNewsletter
     make_post
   end
 
+  # :reek:FeatureEnvy
   def make_post
     uri = URI('https://www.stiftungswo.ch/wp-json/newsletter/v2/subscribers')
     req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
