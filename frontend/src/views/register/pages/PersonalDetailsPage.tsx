@@ -182,7 +182,6 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           }
         />
         <WiredField
-          horizontal={true}
           component={CheckboxField}
           name={'newsletter'}
           label={
