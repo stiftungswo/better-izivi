@@ -182,19 +182,15 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
           }
         />
         <WiredField
+          horizontal={true}
           component={CheckboxField}
           name={'newsletter'}
-          label={//<span><a href="https://www.stiftungswo.ch/datenschutzerklaerung/">Datenschutzerklärung</a>
-             this.intl.formatMessage({
-               id: 'register.personalDetailsPage.newsletter_yes',
-               defaultMessage: 'Ja, ich möchte den SWO Newsletter erhalten',
-             },
-             {
-               link: <a href="https://www.stiftungswo.ch/datenschutzerklaerung/">Datenschutzerklärung</a>
-             })
-
-           //</span>
-         }
+          label={
+            this.intl.formatMessage({
+              id: 'register.personalDetailsPage.newsletter_yes',
+              defaultMessage: 'Ja, ich möchte den SWO Newsletter erhalten',
+            })
+          }
         />
       </>
     );
