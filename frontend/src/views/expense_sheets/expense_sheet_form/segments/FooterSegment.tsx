@@ -12,22 +12,11 @@ export const FooterSegment = expenseSheetFormSegment(
       <WiredField
         horizontal
         component={CheckboxField}
-        name={'ignore_first_day'}
+        name={'ignore_first_last_day'}
         label={
           mainStore.intl.formatMessage({
-            id: 'views.expense_sheets.FooterSegment.ignore_first_day',
-            defaultMessage: 'Erster Tag nicht speziell behandeln',
-          })
-        }
-      />
-      <WiredField
-        horizontal
-        component={CheckboxField}
-        name={'ignore_last_day'}
-        label={
-          mainStore.intl.formatMessage({
-            id: 'views.expense_sheets.FooterSegment.ignore_last_day',
-            defaultMessage: 'Letzter Tag nicht speziell behandeln',
+            id: 'views.expense_sheets.FooterSegment.ignore_first_last_day',
+            defaultMessage: 'Erster / Letzter Tag nicht speziell behandeln',
           })
         }
       />

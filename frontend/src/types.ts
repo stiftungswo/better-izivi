@@ -64,8 +64,6 @@ export interface ExpenseSheet {
   service_id: number;
   deletable: boolean;
   modifiable: boolean;
-  ignore_first_day: boolean;
-  ignore_last_day: boolean;
 }
 
 export interface ExpenseSheetHints {
