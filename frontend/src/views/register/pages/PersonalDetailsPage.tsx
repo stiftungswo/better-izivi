@@ -192,7 +192,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
              {
                link_de: <a href="https://www.stiftungswo.ch/datenschutzerklaerung/">Datenschutzerklärung</a>,
                link_fr: <a href="https://www.stiftungswo.ch/datenschutzerklaerung/">charte de confidentialité</a>,
-               link_en: <a href="https://www.stiftungswo.ch/datenschutzerklaerung/">privacy policy</a>
+               link_en: <a href="https://www.stiftungswo.ch/datenschutzerklaerung/">privacy policy</a>,
              })
            }
         />
