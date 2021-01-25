@@ -19,8 +19,7 @@ module V1
       paid_vacation_days paid_vacation_comment unpaid_vacation_days
       unpaid_vacation_comment driving_expenses driving_expenses_comment
       extraordinary_expenses extraordinary_expenses_comment clothing_expenses
-      clothing_expenses_comment bank_account_number state ignore_first_day
-      ignore_last_day
+      clothing_expenses_comment bank_account_number state
     ].freeze
 
     def index

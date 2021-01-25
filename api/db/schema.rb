@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 2019_09_10_072623) do
     t.datetime "updated_at", null: false
     t.datetime "payment_timestamp"
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
-    t.boolean "ignore_last_day"
-    t.boolean "ignore_first_day"
   end
 
   create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
