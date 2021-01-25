@@ -35,6 +35,8 @@ export const expenseSheetSchema = yup.object({
     }),
   unpaid_vacation_comment: yup.string().nullable(true),
   ignore_first_last_day: yup.boolean(),
+  ignore_first_day: yup.boolean(),
+  ignore_last_day: yup.boolean(),
   sick_days: yup
     .number()
     .required()

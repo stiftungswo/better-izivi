@@ -82,11 +82,11 @@ class ExpenseSheet < ApplicationRecord
   end
 
   def at_service_beginning?
-    beginning == service.beginning
+    beginning == service.beginning  && ignore_first_day == false
   end
 
   def at_service_ending?
-    ending == service.ending
+    ending == service.ending && ignore_last_day == false
   end
 
   def readonly?
