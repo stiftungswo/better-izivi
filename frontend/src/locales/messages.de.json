@@ -77,7 +77,7 @@
   "register.personalDetailsPage.last_name": "Nachname",
   "register.personalDetailsPage.last_name_placeholder": "Dein Nachname",
   "register.personalDetailsPage.load_form": "Lade Formular",
-  "register.personalDetailsPage.newsletter_yes": "Ja, ich möchte den SWO Newsletter erhalten (dazu musst du mit der SWO {link_de} einverstanden sein)",
+  "register.personalDetailsPage.newsletter_yes": "Ja, ich möchte den SWO Newsletter erhalten",
   "register.personalDetailsPage.password_confirm": "Passwort Bestätigung",
   "register.personalDetailsPage.password_confirm_placeholder": "Wiederhole dein gewähltes Passwort",
   "register.personalDetailsPage.password_min_chars": "Passwort (mind. 6 Zeichen)",
