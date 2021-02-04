@@ -16,7 +16,12 @@ module DeviseOverrides
 
       raise validation_error unless validation_error.empty?
 
+      subscribe_to_newsletter
       head :no_content
+    end
+
+    def subscribe_to_newsletter
+      SubscribeToNewsletter.new(params['user']) if params['user']['newsletter'] == true
     end
 
     private
