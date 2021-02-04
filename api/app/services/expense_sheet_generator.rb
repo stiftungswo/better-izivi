@@ -40,6 +40,8 @@ class ExpenseSheetGenerator
   def create_expense_sheet(beginning, ending)
     ExpenseSheet.create(
       user: @service.user,
+      ignore_first_day: false,
+      ignore_last_day: false,
       beginning: beginning,
       ending: ending,
       work_days: DayCalculator.new(beginning, ending).calculate_work_days,
