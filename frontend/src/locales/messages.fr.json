@@ -77,7 +77,7 @@
   "register.personalDetailsPage.last_name": "Nom de famille",
   "register.personalDetailsPage.last_name_placeholder": "Votre nom de famille",
   "register.personalDetailsPage.load_form": "Chargement du formulaire",
-  "register.personalDetailsPage.newsletter_yes": "Oui, je souhaite recevoir la lettre d'information de l'OSF (tu dois etre d'accord avec le {link_fr} de l'OSF pour ca)",
+  "register.personalDetailsPage.newsletter_yes": "Oui, je souhaite recevoir la lettre d'information de l'OSF (tu dois accepter la {link_fr} de l'OSF)",
   "register.personalDetailsPage.password_confirm": "Confirmation du mot de passe",
   "register.personalDetailsPage.password_confirm_placeholder": "Répétez le mot de passe que vous avez choisi",
   "register.personalDetailsPage.password_min_chars": "Mot de passe (min. 6 caractères)",
