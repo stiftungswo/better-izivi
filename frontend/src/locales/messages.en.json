@@ -77,7 +77,7 @@
   "register.personalDetailsPage.last_name": "Last name",
   "register.personalDetailsPage.last_name_placeholder": "Your last name",
   "register.personalDetailsPage.load_form": "Loading form",
-  "register.personalDetailsPage.newsletter_yes": "Yes, I would like to receive the SWO Newsletter",
+  "register.personalDetailsPage.newsletter_yes": "Yes, I would like to receive the SWO Newsletter (you have to accept the SWO {link_en})",
   "register.personalDetailsPage.password_confirm": "Password confirmation",
   "register.personalDetailsPage.password_confirm_placeholder": "Repeat your chosen password",
   "register.personalDetailsPage.password_min_chars": "Password (min. 6 characters)",
