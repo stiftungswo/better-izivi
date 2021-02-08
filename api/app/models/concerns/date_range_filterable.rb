@@ -19,7 +19,7 @@ module Concerns
 
       # All instances with an ending after the given date
       scope :after_date, (lambda do |ending|
-        where(arel_table[:ending].gteq(ending))
+        where(arel_table[:ending].gt(ending))
       end)
 
       # All instances whose beginning and ending range is fully or partially covering the passed date range
