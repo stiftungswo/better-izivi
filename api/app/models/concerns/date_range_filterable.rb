@@ -17,6 +17,11 @@ module Concerns
           .where(arel_table[:ending].gteq(ending))
       end)
 
+      # All instances with an ending after the given date
+      scope :after_date, (lambda do |ending|
+        where(arel_table[:ending].gteq(ending))
+      end)
+
       # All instances whose beginning and ending range is fully or partially covering the passed date range
       scope :overlapping_date_range, (lambda do |beginning, ending|
         where(arel_table[:beginning].lteq(ending))

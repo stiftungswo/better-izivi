@@ -119,6 +119,7 @@ fr:
               unknown_country_code: code de pays inconnu
             service_days:
               invalid_length: ne peut être inférieure à 26 jours.
+              cannot_be_shortened: peut être réduite si vous ne supprimez pas au préalable les notes de frais non utilisées.
         user:
           attributes:
             bank_iban:

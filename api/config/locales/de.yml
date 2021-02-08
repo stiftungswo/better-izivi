@@ -119,6 +119,7 @@ de:
               unknown_country_code: unbekannter Landescode
             service_days:
               invalid_length: kann nicht kürzer als 26 Tage sein.
+              cannot_be_shortened: kann nicht gekürzt werden, wenn du nicht die vorher die nicht gebrauchten Spesenblätter löschst.
         user:
           attributes:
             bank_iban:

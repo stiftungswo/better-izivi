@@ -27,6 +27,7 @@ class Service < ApplicationRecord
   validate :beginning_is_monday
   validate :no_overlapping_service
   validate :length_is_valid
+  validate :check_if_service_can_be_shorten?
   validate :validate_iban, on: :create, unless: :no_user?
 
   scope :at_date, ->(date) { where(arel_table[:beginning].lteq(date)).where(arel_table[:ending].gteq(date)) }
@@ -80,6 +81,11 @@ class Service < ApplicationRecord
   def deletable?
     sheets_in_range = user.expense_sheets.in_date_range(beginning, ending)
     sheets_in_range.nil? || sheets_in_range.count.zero?
+  end
+
+  def check_if_service_can_be_shorten?
+    sheets_in_range = user.expense_sheets.after_date(ending + 1)
+    errors.add(:service_days, :cannot_be_shortened) if not sheets_in_range.empty?
   end
 
   def date_range
