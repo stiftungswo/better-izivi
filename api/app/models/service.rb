@@ -85,7 +85,7 @@ class Service < ApplicationRecord
 
   def check_if_service_can_be_shorten?
     sheets_in_range = user.expense_sheets.after_date(ending + 1)
-    errors.add(:service_days, :cannot_be_shortened) if not sheets_in_range.empty?
+    errors.add(:service_days, :cannot_be_shortened) unless sheets_in_range.empty?
   end
 
   def date_range
