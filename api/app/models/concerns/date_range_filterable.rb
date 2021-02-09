@@ -27,7 +27,6 @@ module Concerns
       scope :before_begin, (lambda do |beginning|
         where(arel_table[:ending].gteq(beginning))
           .where(arel_table[:beginning].lt(beginning))
-
       end)
 
       # All instances whose beginning and ending range is fully or partially covering the passed date range
