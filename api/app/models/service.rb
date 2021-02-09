@@ -25,7 +25,7 @@ class Service < ApplicationRecord
 
   validate :ending_is_friday, unless: :last_civil_service?
   validate :beginning_is_monday
-  validate :check_if_service_can_be_shorten?
+  validate :check_if_service_can_be_shorten?, on: :update
   validate :no_overlapping_service
   validate :length_is_valid
   validate :validate_iban, on: :create, unless: :no_user?
