@@ -118,8 +118,8 @@ en:
               bad_length: bad length
               unknown_country_code: unknown country code
             service_days:
-              invalid_length: can not be less then 26.
               cannot_be_shortened: cannot be shortened, if you don't delete the expenses sheets, which aren't needed anymore.
+              invalid_length: can not be less then 26.
         user:
           attributes:
             bank_iban:
