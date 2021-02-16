@@ -118,6 +118,7 @@ fr:
               bad_length: longueur incorrecte
               unknown_country_code: code de pays inconnu
             service_days:
+              cannot_be_shortened: peut être réduite si vous ne supprimez pas au préalable les notes de frais non utilisées.
               invalid_length: ne peut être inférieure à 26 jours.
         user:
           attributes:
