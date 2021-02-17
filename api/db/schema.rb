@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_072623) do
+ActiveRecord::Schema.define(version: 2021_02_16_142618) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "beginning", null: false
@@ -38,9 +38,9 @@ ActiveRecord::Schema.define(version: 2019_09_10_072623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "payment_timestamp"
-    t.index ["user_id"], name: "index_expense_sheets_on_user_id"
-    t.boolean "ignore_last_day", default: false, null: false
     t.boolean "ignore_first_day", default: false, null: false
+    t.boolean "ignore_last_day", default: false, null: false
+    t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 
   create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
