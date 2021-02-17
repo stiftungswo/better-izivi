@@ -142,7 +142,11 @@ export class PaymentStore extends DomainStore<Payment> {
   async fetchAllWithYearDelta(delta: number) {
     try {
       const res = await this.mainStore.api.get<Payment[]>(`/payments?filter[year_delta]=${delta}`);
-      this.payments = [...res.data];
+      if (delta == 1){
+        this.payments = [...res.data];
+    } else {
+        this.payments = [...this.payments, ...res.data];
+    }
     } catch (e) {
       this.mainStore.displayError(
         DomainStore.buildErrorMessage(e, this.mainStore.intl.formatMessage(
