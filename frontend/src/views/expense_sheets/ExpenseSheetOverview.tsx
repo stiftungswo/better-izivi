@@ -66,7 +66,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
     this.state = {
       loading: true,
       modalOpen: false,
-      expenseSheetStateFilter: 'pending',
+      expenseSheetStateFilter: 'current',
     };
   }
 
