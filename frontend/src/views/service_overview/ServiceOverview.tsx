@@ -75,6 +75,9 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   }
 
   getNrWeeks(): void {
+    /* Since not all years have 52 weeks in the iso week date format
+    (some have 53, 2020/2026 for example)
+    this function sets totalWeeks to 52 or 53 for the whole class */
     const localCookieYear = window.localStorage.getItem(this.cookieYear);
     const fetchYear = localCookieYear == null ? this.currYear.toString() : localCookieYear!;
     const lastWeek = moment()
@@ -82,6 +85,9 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
       .isoWeek(53)
       .isoWeekday(4)
       .toDate();
+    /* lastWeek defines the last thursday in the last week with the beginning in
+    fetchYear, because of it's importance to
+    determine if the year has 52 or 53 weeks */
     if (moment(lastWeek).year() === parseInt(fetchYear, 10)) {
       this.setState({
         totalWeeks: 53,
