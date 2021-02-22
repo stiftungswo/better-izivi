@@ -49,25 +49,6 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   currYear = moment().year();
   intl: IntlShape;
 
-  getNrWeeks(): void {
-    const localCookieYear = window.localStorage.getItem(this.cookieYear);
-    const fetchYear = localCookieYear == null ? this.currYear.toString() : localCookieYear!;
-    const lastWeek = moment()
-      .year(parseInt(fetchYear, 10))
-      .isoWeek(53)
-      .isoWeekday(4)
-      .toDate();
-    if (moment(lastWeek).year() === parseInt(fetchYear, 10)) {
-      this.setState({
-        totalWeeks: 53
-      })
-    } else {
-      this.setState({
-        totalWeeks: 52
-      })
-    }
-  }
-
   constructor(props: ServiceOverviewProps) {
     super(props);
 
@@ -91,6 +72,25 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     });
 
     this.intl = this.props.mainStore!.intl;
+  }
+
+  getNrWeeks(): void {
+    const localCookieYear = window.localStorage.getItem(this.cookieYear);
+    const fetchYear = localCookieYear == null ? this.currYear.toString() : localCookieYear!;
+    const lastWeek = moment()
+      .year(parseInt(fetchYear, 10))
+      .isoWeek(53)
+      .isoWeekday(4)
+      .toDate();
+    if (moment(lastWeek).year() === parseInt(fetchYear, 10)) {
+      this.setState({
+        totalWeeks: 53,
+      });
+    } else {
+      this.setState({
+        totalWeeks: 52,
+      });
+    }
   }
 
   componentDidMount(): void {
@@ -517,7 +517,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     } else if (endWeek !== 53) {
       return week > startWeek && week < endWeek;
     } else {
-      return false
+      return false;
     }
   }
 
@@ -528,7 +528,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     } else if (endWeek !== 53) {
       return week === endWeek;
     } else {
-      return false
+      return false;
     }
   }
 
@@ -556,7 +556,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
 
   getEndWeek(service: ServiceCollection): number {
     let endWeek = moment(service.ending!).isoWeek();
-    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10) && endWeek != 53) {
+    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10) && endWeek !== 53) {
       endWeek = 55;
     }
     return endWeek;
