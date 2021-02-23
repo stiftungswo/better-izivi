@@ -38,6 +38,7 @@ interface ServiceOverviewState {
   totalCount: number;
   weekTotalHeaders: React.ReactNode[];
   weekCount: Map<number, Map<number, number>>;
+  totalWeeks: number;
 }
 
 @inject('serviceStore', 'serviceSpecificationStore', 'mainStore')
@@ -63,6 +64,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
       weekTotalHeaders: [],
       serviceRows: new Map<number, React.ReactNode>(),
       weekCount: new Map<number, Map<number, number>>(),
+      totalWeeks: 52,
     };
 
     reaction(() => this.props.mainStore!.monthNames, () => {
@@ -70,6 +72,31 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     });
 
     this.intl = this.props.mainStore!.intl;
+  }
+
+  getNrWeeks(): void {
+    /* Since not all years have 52 weeks in the iso week date format
+    (some have 53, 2020/2026 for example)
+    this function sets totalWeeks to 52 or 53 for the whole class */
+    const localCookieYear = window.localStorage.getItem(this.cookieYear);
+    const fetchYear = localCookieYear == null ? this.currYear.toString() : localCookieYear!;
+    const lastWeek = moment()
+      .year(parseInt(fetchYear, 10))
+      .isoWeek(53)
+      .isoWeekday(4)
+      .toDate();
+    /* lastWeek defines the last thursday in the last week with the beginning in
+    fetchYear, because of it's importance to
+    determine if the year has 52 or 53 weeks */
+    if (moment(lastWeek).year() === parseInt(fetchYear, 10)) {
+      this.setState({
+        totalWeeks: 53,
+      });
+    } else {
+      this.setState({
+        totalWeeks: 52,
+      });
+    }
   }
 
   componentDidMount(): void {
@@ -107,6 +134,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
 
   loadServices() {
     this.props.serviceStore!.fetchByYear(this.state.fetchYear).then(() => {
+      this.getNrWeeks();
       this.calculateServiceRows();
       this.setState({ loadingServices: false }, () => {
         this.scrollTableHeader(document.querySelector('table'));
@@ -137,7 +165,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     // First and last date of weeks for popOver
     const startDates: string[] = [];
     const endDates: string[] = [];
-    for (let x = 1; x <= 52; x++) {
+    for (let x = 1; x <= this.state.totalWeeks; x++) {
       startDates[x] = moment(fetchYear + ' ' + x + ' 1', 'YYYY WW E').format('DD.MM.YYYY');
       endDates[x] = moment(fetchYear + ' ' + x + ' 5', 'YYYY WW E').format('DD.MM.YYYY');
     }
@@ -217,9 +245,9 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
           <Row className={classes.filter} style={{ marginBottom: '2vh' }}>
             <Col sm="12" md="2">
               <div>
-                {/* All years from 2005 to next year */}
+                {/* All years from 2005 to next four years */}
                 <SelectField
-                  options={Array.from(Array(this.currYear - 2002).keys())
+                  options={Array.from(Array(this.currYear - 2000).keys())
                     .map(k => {
                       return {
                         id: (2005 + k).toString(),
@@ -289,7 +317,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
                           defaultMessage="{averageSymbol} Woche{average}"
                           values={{
                             averageSymbol: 'Ø /',
-                            average: ': ' + (this.state.totalCount / 52).toFixed(2),
+                            average: ': ' + (this.state.totalCount / this.state.totalWeeks).toFixed(2),
                           }}
                         />
                       </td>
@@ -331,7 +359,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
       .month();
 
     // looping through every week of the year
-    for (let currWeek = 1; currWeek <= 52; currWeek++) {
+    for (let currWeek = 1; currWeek <= this.state.totalWeeks; currWeek++) {
       weekHeaders.push(
         (
           <td className={classes.rowTd} key={currWeek}>
@@ -388,7 +416,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     const { classes } = this.props;
     const weekTotalHeaders = [];
     let totalCount = 0;
-    for (let currWeek = 1; currWeek <= 52; currWeek++) {
+    for (let currWeek = 1; currWeek <= this.state.totalWeeks; currWeek++) {
       let weekCountSum = 0;
 
       this.props.serviceSpecificationStore!.entities.forEach(spec => {
@@ -418,7 +446,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     const { classes } = this.props;
 
     // filling ServiceRow for currServices
-    for (let currWeek = 1; currWeek <= 52; currWeek++) {
+    for (let currWeek = 1; currWeek <= this.state.totalWeeks; currWeek++) {
       const popOverStart = startDates[currWeek];
       const popOverEnd = endDates[currWeek];
       const title = popOverStart + ' - ' + popOverEnd;
@@ -490,11 +518,24 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     const startWeek = this.getStartWeek(service);
     const endWeek = this.getEndWeek(service);
 
-    return week > startWeek && week < endWeek;
+    if (endWeek === 53 && moment(service.ending).year() > parseInt(this.state.fetchYear, 10)) {
+      return week > startWeek && week < endWeek;
+    } else if (endWeek !== 53) {
+      return week > startWeek && week < endWeek;
+    } else {
+      return false;
+    }
   }
 
   isWeekEndWeek(week: number, service: ServiceCollection): boolean {
-    return week === this.getEndWeek(service);
+    const endWeek = this.getEndWeek(service);
+    if (endWeek === 53 && moment(service.ending).year() > parseInt(this.state.fetchYear, 10)) {
+      return week === endWeek;
+    } else if (endWeek !== 53) {
+      return week === endWeek;
+    } else {
+      return false;
+    }
   }
 
   isWeekDuringService(week: number, service: ServiceCollection): boolean {
@@ -521,7 +562,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
 
   getEndWeek(service: ServiceCollection): number {
     let endWeek = moment(service.ending!).isoWeek();
-    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10)) {
+    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10) && endWeek !== 53) {
       endWeek = 55;
     }
     return endWeek;
@@ -531,7 +572,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     const weekCount = new Map<number, Map<number, number>>();
     for (const spec of this.props.serviceSpecificationStore!.entities) {
       weekCount[spec.identification_number!] = [];
-      for (let i = 1; i <= 52; i++) {
+      for (let i = 1; i <= this.state.totalWeeks; i++) {
         weekCount[spec.identification_number!][i] = 0;
       }
     }
