@@ -25,6 +25,7 @@ class Service < ApplicationRecord
 
   validate :ending_is_friday, unless: :last_civil_service?
   validate :beginning_is_monday
+  validate :check_if_service_can_be_shorten?, on: :update
   validate :no_overlapping_service
   validate :length_is_valid
   validate :validate_iban, on: :create, unless: :no_user?
@@ -80,6 +81,13 @@ class Service < ApplicationRecord
   def deletable?
     sheets_in_range = user.expense_sheets.in_date_range(beginning, ending)
     sheets_in_range.nil? || sheets_in_range.count.zero?
+  end
+
+  def check_if_service_can_be_shorten?
+    sheets_to_be_deleted_at_ending = user.expense_sheets.after_end(ending)
+    sheets_to_be_deleted_at_start = user.expense_sheets.before_begin(beginning)
+    errors.add(:service_days, :cannot_be_shortened) unless sheets_to_be_deleted_at_start.empty?
+    errors.add(:service_days, :cannot_be_shortened) unless sheets_to_be_deleted_at_ending.empty?
   end
 
   def date_range
