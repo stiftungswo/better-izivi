@@ -40,7 +40,7 @@ export const HolidayTableRow = (params: { buttons: React.ReactElement[], mainSto
       </td>
       <td>
         <WiredField
-          style={{display: 'inline'}}
+          style={{ display: 'inline' }}
           component={TextField}
           name={'description'}
         />
