@@ -39,6 +39,28 @@ module Pdfs
         }
       }.freeze
 
+      REGIONAL_CENTER = {
+        fr: {
+          name: 'regional_center',
+        },
+        de: {
+          name: 'regional_center',
+        }
+      }.freeze
+
+      REGIONAL_CENTER_ADDRESS = {
+        fr: {
+          second: 'tfRZ',
+          third: 'tfStrasse',
+          fourth: 'tfPLZ',
+        },
+        de: {
+          second: 'tfRZ',
+          third: 'tfStrasse',
+          fourth: 'tfPLZ',
+        }
+      }.freeze
+
       SERVICE_CHECKBOX_FIELDS = {
         fr: {
           conventional_service: 'affectation',

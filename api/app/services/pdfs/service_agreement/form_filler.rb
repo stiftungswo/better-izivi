@@ -41,11 +41,26 @@ module Pdfs
           .merge(load_service_checkboxes)
           .merge(load_service_specification_fields)
           .merge(load_company_holiday_fields)
+          .merge(load_regional_center)
+          .merge(load_regional_center_address)
       end
 
       def load_user_fields
         convert_to_form_fields_hash(FormFields::USER_FORM_FIELDS) do |key, value|
           [value, @service.user.public_send(key)]
+        end
+      end
+
+      def load_regional_center
+        convert_to_form_fields_hash(FormFields::REGIONAL_CENTER) do |key, value|
+          [value, @service.user.regional_center.public_send(key)]
+        end
+      end
+
+      def load_regional_center_address
+        address_data = @service.user.regional_center.address.split ', '
+        convert_to_form_fields_hash(FormFields::REGIONAL_CENTER_ADDRESS) do |key, value|
+          [value, address_data.public_send(key)]
         end
       end
 
