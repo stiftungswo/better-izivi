@@ -2,6 +2,7 @@
 
 module Pdfs
   module ServiceAgreement
+    # :reek:TooManyConstants { max_constants: 7 }
     module FormFields
       USER_FORM_FIELDS = {
         fr: {
