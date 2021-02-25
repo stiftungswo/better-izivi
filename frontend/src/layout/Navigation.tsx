@@ -26,9 +26,9 @@ const NavEntry = ({ to, children, exact }: NavEntryProps) => (
     exact={exact}
     children={({ match }) => (
       <NavItem active={Boolean(match)}>
-        <Link className="nav-link" to={to}>
+        <NavLink className="nav-link" href={to}>
           {children}
-        </Link>
+        </NavLink>
       </NavItem>
     )}
   />
