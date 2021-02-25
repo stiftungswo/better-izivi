@@ -41,10 +41,10 @@ module Pdfs
 
       REGIONAL_CENTER = {
         fr: {
-          name: 'regional_center',
+          name: 'regional_center'
         },
         de: {
-          name: 'regional_center',
+          name: 'regional_center'
         }
       }.freeze
 
@@ -52,12 +52,12 @@ module Pdfs
         fr: {
           second: 'tfRZ',
           third: 'tfStrasse',
-          fourth: 'tfPLZ',
+          fourth: 'tfPLZ'
         },
         de: {
           second: 'tfRZ',
           third: 'tfStrasse',
-          fourth: 'tfPLZ',
+          fourth: 'tfPLZ'
         }
       }.freeze
 
