@@ -1,4 +1,5 @@
 // tslint:disable:no-console
+import * as _ from 'lodash';
 import { action, computed, observable } from 'mobx';
 import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState } from '../types';
 import { stateTranslation } from '../utilities/helpers';
@@ -46,6 +47,12 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   @observable
   expenseSheet?: ExpenseSheet;
 
+  @observable
+  button_deactive: boolean;
+
+  @observable
+  totalSum: string;
+
   hints?: ExpenseSheetHints;
 
   protected entityURL = '/expense_sheets/';
@@ -53,13 +60,15 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
 
   constructor(mainStore: MainStore) {
     super(mainStore);
+    this.button_deactive = false
+    this.totalSum = ''
   }
 
   @action
   async fetchToBePaidAll(): Promise<void> {
     try {
       this.toBePaidExpenseSheets = [];
-      const response = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { filter: 'ready_for_payment' } });
+      const response = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { filter: 'ready_for_payment'  } });
       this.toBePaidExpenseSheets = response.data;
     } catch (e) {
       this.mainStore.displayError(
@@ -146,8 +155,58 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
       ));
   }
 
-  protected async doFetchAll(params: object = {}): Promise<void> {
-    const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { ...params } });
-    this.expenseSheets = res.data;
+  async doFetchPage(params: object = {}): Promise<void> {
+    try {
+      const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { ...params } });
+      if (res.data.length === parseInt(params['items'])){
+          this.button_deactive = true
+      }
+      else if (res.data.length === (parseInt(params['items']) + 1)) {
+          this.button_deactive = false
+          res.data.splice(-1, 1)
+      }
+      else if (res.data.length < parseInt(params['items'])){
+          this.button_deactive = true
+      }
+      this.expenseSheets = res.data;
+    } catch (e) {
+      this.mainStore.displayError(
+        this.mainStore.intl.formatMessage(
+          {
+            id: 'store.domainStore.not_loaded.other',
+            defaultMessage: '{entityNamePlural} konnten nicht geladen werden.',
+          },
+          { entityNamePlural: this.entityName.plural },
+        ));
+      console.error(e);
+      throw e;
+    }
   }
+
+  calcsum(arr: any[]): number {
+    return _.sumBy(arr, object => object) / 100;
+  }
+
+  async doFetchTotal(params: object = {}) {
+    try {
+      var list_total: Array<number> = []
+      const res = await this.mainStore.api.get(`/expenses_sheet_sum`, { params: { ...params } });
+
+      for(var i=0; i < res.data.length; i++){
+        list_total[i] = res.data[i].total
+      }
+      this.totalSum = this.calcsum(list_total).toFixed(2)
+    } catch (e) {
+      this.mainStore.displayError(
+        this.mainStore.intl.formatMessage(
+          {
+            id: '"store.domainStore.error"',
+            defaultMessage: 'Fehler',
+          },
+          { entityNamePlural: this.entityName.plural },
+        ));
+      console.error(e);
+      throw e;
+    }
+    }
 }

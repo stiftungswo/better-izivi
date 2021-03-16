@@ -112,6 +112,7 @@
   "store.expenseSheetStore.expense_hints_not_loaded": "Les suggestions de dépenses n'ont pas pu être chargées",
   "store.expenseSheetStore.expense_sheet.one": "La fiche de dépenses",
   "store.expenseSheetStore.expense_sheet.other": "Les notes de frais",
+  "store.expenseSheetStore.expense_sheet_per_site": "notes de frais par page:",
   "store.expenseSheetStore.state_changed": "{entityNameSingular} a été remplacé par {state}.",
   "store.holidayStore.holiday.one": "La fête",
   "store.holidayStore.holiday.other": "Les vacances",
@@ -342,5 +343,9 @@
   "views.users.userOverview.name": "Nom",
   "views.users.userOverview.until": "À l'adresse suivante :",
   "views.users.userOverview.zdp": "ZDP",
+  "views.users.userOverview.site": "page: ",
+  "views.users.userOverview.employeespersite": "employés par page: ",
+  "views.users.userOverview.next_page": "prochaine page",
+  "views.users.userOverview.previous_page": "dernière page",
   "views.users.userUpdate.profile_is_loading": "Le profil est chargé"
 }

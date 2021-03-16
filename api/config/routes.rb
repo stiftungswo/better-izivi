@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
     get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'
     get 'expenses_overview', to: 'expenses_overview#show', as: 'expenses_overview_export'
+    get 'expenses_sheet_sum', to: 'expense_sheets#sum'
 
     put 'payments/:payment_timestamp/confirm', to: 'payments#confirm', as: 'payment_confirm'
   end

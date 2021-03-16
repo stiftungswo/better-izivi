@@ -25,6 +25,8 @@ module V1
 
     def index
       @expense_sheets = filtered_expense_sheets.order(beginning: :asc, ending: :asc)
+                                               .limit(Integer(items_param) + 1)
+                                               .offset((Integer(site_param) - 1) * Integer(items_param))
     end
 
     def show
@@ -40,6 +42,10 @@ module V1
       remaining_days = ExpenseSheetCalculators::RemainingDaysCalculator.new(@expense_sheet.service).remaining_days
 
       render :hints, locals: { suggestions: suggestions, remaining_days: remaining_days }
+    end
+
+    def sum
+      @expense_sheets_sum = filtered_expense_sheets
     end
 
     def create
@@ -88,6 +94,14 @@ module V1
 
     def filter_param
       params[:filter]
+    end
+
+    def items_param
+      params[:items].nil? ? 10_000_000 : params[:items]
+    end
+
+    def site_param
+      params[:site].nil? ? 1 : params[:site]
     end
   end
 end

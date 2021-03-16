@@ -11,21 +11,31 @@ import { MainStore } from '../../stores/mainStore';
 import { UserStore } from '../../stores/userStore';
 import { Column, UserOverview as UserOverviewType } from '../../types';
 import { translateUserRole } from '../../utilities/helpers';
+import IziviContent from '../../layout/IziviContent';
 
 interface Props {
   mainStore?: MainStore;
   userStore?: UserStore;
 }
 
+interface State {
+  users_per_page: string;
+  current_site: number;
+}
+
 @inject('mainStore', 'userStore')
 @observer
-export class UserOverview extends React.Component<Props> {
+export class UserOverview extends React.Component<Props, State> {
   columns: Array<Column<UserOverviewType>>;
   intl: IntlShape;
 
   constructor(props: Props) {
     super(props);
     this.intl = this.props.mainStore!.intl;
+    this.state = {
+      users_per_page: '200',
+      current_site: 1
+    }
     this.columns = [
       {
         id: 'zdp',
@@ -104,6 +114,106 @@ export class UserOverview extends React.Component<Props> {
           </Button>
         )}
         filter={true}
+        lastRow={
+          <tfoot>
+            <tr>
+              <td>
+                <Button
+                  color={'danger'}
+                  disabled={(this.state.current_site === 1)? true : false}
+                  onClick={() => {
+                    var site = this.state.current_site - 1
+                    this.setState(prevState => ({
+                    ...prevState,
+                    current_site: site,
+                    }))
+                    this.props.userStore!.updateFilters({ site: String(site), no_keywords: true });}}
+                  >
+                    {
+                      this.intl.formatMessage({
+                        id: 'views.users.userOverview.previous_page',
+                        defaultMessage: 'Vorherige Seite',
+                        })
+                    }
+                  </Button>
+              </td>
+              <td>
+                {
+                  this.intl.formatMessage({
+                    id: 'views.users.userOverview.site',
+                    defaultMessage: 'Seite:',
+                    })
+                }
+                {this.state.current_site}
+              </td>
+              <td>
+                <Button
+                  color={'danger'}
+                  disabled={this.props.userStore!.userFilters.button_deactive}
+                  onClick={() => {
+                    var site = this.state.current_site + 1
+                    this.setState(prevState => ({
+                      ...prevState,
+                      current_site: site,
+                      }))
+                    this.props.userStore!.updateFilters({ site: String(site), no_keywords: true });}}
+                 >
+                  {
+                    this.intl.formatMessage({
+                      id: 'views.users.userOverview.next_page',
+                      defaultMessage: 'Nächste Seite',
+                      })
+                  }
+                </Button>
+              </td>
+              <td>
+                {
+                  this.intl.formatMessage({
+                    id: 'views.users.userOverview.employeespersite',
+                    defaultMessage: 'Mitarbeiter pro Seite:',
+                    })
+                }
+              </td>
+              <td>
+                <Input
+                  type={'select'}
+                  onChange={({
+                    target: { value },
+                  }: React.ChangeEvent<HTMLInputElement>) => {
+                    this.props.userStore!.users.length
+                    this.props.userStore!.updateFilters({ items: value, no_keywords: true, site: '1' })
+                    this.setState(prevState => ({
+                      ...prevState,
+                      current_site: 1,
+                           }))
+                    }
+                  }
+                  value={this.props.userStore!.userFilters.no_keywords? this.props.userStore!.userFilters.items : 1}
+                >
+
+                  {[
+                    {
+                      id: '200',
+                      name: '200'
+                    },
+                    {
+                      id: '100',
+                      name: '100'
+                    },
+                    {
+                      id: '50',
+                      name: '50'
+                    },
+                  ].map((option) => (
+                    <option value={option.id} key={option.id}>
+                      {option.name}
+                    </option>
+                  ))}
+                </Input>
+              </td>
+            </tr>
+          </tfoot>
+          }
         firstRow={
           <tr>
             <td>
@@ -112,7 +222,7 @@ export class UserOverview extends React.Component<Props> {
                 onChange={({
                   target: { value },
                 }: React.ChangeEvent<HTMLInputElement>) => {
-                  this.props.userStore!.updateFilters({ zdp: value });
+                  this.props.userStore!.updateFilters({ zdp: value, no_keywords: false, site: '1' });
                 }}
                 value={this.props.userStore!.userFilters.zdp || ''}
               />
@@ -123,7 +233,7 @@ export class UserOverview extends React.Component<Props> {
                 onChange={({
                   target: { value },
                 }: React.ChangeEvent<HTMLInputElement>) => {
-                  this.props.userStore!.updateFilters({ name: value });
+                  this.props.userStore!.updateFilters({ name: value, no_keywords: false, site: '1' });
                 }}
                 value={this.props.userStore!.userFilters.name}
               />
@@ -134,6 +244,7 @@ export class UserOverview extends React.Component<Props> {
                 onChange={(date: Date) => {
                   this.props.userStore!.updateFilters({
                     beginning: date.toISOString(),
+                    no_keywords: false
                   });
                 }}
               />
@@ -144,6 +255,7 @@ export class UserOverview extends React.Component<Props> {
                 onChange={(date: Date) => {
                   this.props.userStore!.updateFilters({
                     ending: date.toISOString(),
+                    no_keywords: false
                   });
                 }}
               />
@@ -155,7 +267,7 @@ export class UserOverview extends React.Component<Props> {
                   onChange={({
                     target: { checked },
                   }: React.ChangeEvent<HTMLInputElement>) => {
-                    this.props.userStore!.updateFilters({ active: checked });
+                    this.props.userStore!.updateFilters({ active: checked, no_keywords: false, site: '1' });
                   }}
                   checked={this.props.userStore!.userFilters.active}
                 />
@@ -167,7 +279,7 @@ export class UserOverview extends React.Component<Props> {
                 onChange={({
                   target: { value },
                 }: React.ChangeEvent<HTMLInputElement>) => {
-                  this.props.userStore!.updateFilters({ role: value });
+                  this.props.userStore!.updateFilters({ role: value, no_keywords: false, site: '1' });
                 }}
                 value={this.props.userStore!.userFilters.role || ''}
               >

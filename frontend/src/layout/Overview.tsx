@@ -15,6 +15,7 @@ interface Props<ListingType> {
   columns?: Array<Column<ListingType>>;
   onClickRow?: ((e: ListingType) => void) | string;
   firstRow?: React.ReactNode;
+  lastRow?: React.ReactNode;
   filter?: boolean;
   mainStore?: MainStore;
 }
@@ -28,15 +29,13 @@ interface State {
 export default class Overview<ListingType extends Listing> extends React.Component<Props<ListingType>, State> {
   constructor(props: Props<ListingType>) {
     super(props);
-    props.store!.fetchAll().then(() => {
-      this.setState({ loading: false });
-      if (this.props.filter) {
-        this.props.store!.filter();
-      }
-    });
     this.state = {
-      loading: true,
+      loading: false,
     };
+    if (this.props.filter) {
+      this.props.store!.filter();
+    }
+    ;
   }
 
   handleClick = (e: ListingType) => {
@@ -62,6 +61,7 @@ export default class Overview<ListingType extends Listing> extends React.Compone
             data={entities}
             onClickRow={this.handleClick}
             firstRow={this.props.firstRow}
+            lastRow={this.props.lastRow}
           />
         )}
       </IziviContent>
