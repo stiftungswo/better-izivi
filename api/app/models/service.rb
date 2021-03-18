@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ClassLength
-class Service < ApplicationRecord
-  # :reek:TooManyMethods
 
+# :reek:TooManyMethods
+class Service < ApplicationRecord
   FRIDAY_WEEKDAY = Date::DAYNAMES.index('Friday').freeze
   MONDAY_WEEKDAY = Date::DAYNAMES.index('Monday').freeze
   SATURDAY_WEEKDAY = Date::DAYNAMES.index('Saturday').freeze
