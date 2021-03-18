@@ -147,7 +147,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
         <OverviewTable
           columns={this.columns}
           data={this.props.expenseSheetStore!.expenseSheets}
-          lastRow={
+          lastRow={(
           <tfoot>
             <tr>
               <td>
@@ -258,7 +258,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
               </td>
             </tr>
           </tfoot>
-          }
+          )}
           renderActions={(e: ExpenseSheetListing) => <Link to={'/expense_sheets/' + e.id}>
             <FormattedMessage
               id="views.expense_sheets.expenseSheetOverview.edit_expense_sheet"

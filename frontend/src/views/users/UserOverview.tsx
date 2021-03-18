@@ -114,7 +114,7 @@ export class UserOverview extends React.Component<Props, State> {
           </Button>
         )}
         filter={true}
-        lastRow={
+        lastRow={(
           <tfoot>
             <tr>
               <td>
@@ -214,8 +214,8 @@ export class UserOverview extends React.Component<Props, State> {
               </td>
             </tr>
           </tfoot>
-          }
-        firstRow={
+          )}
+        firstRow={(
           <tr>
             <td>
               <Input
@@ -315,7 +315,7 @@ export class UserOverview extends React.Component<Props, State> {
               </Input>
             </td>
           </tr>
-        }
+        )}
       />
     );
   }
