@@ -158,7 +158,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   async doFetchPage(params: object = {}): Promise<void> {
     try {
       const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { ...params } });
-      let items = 'items' // to shut up tslint (object access via string literals is disallowed)
+      const items = 'items'; // to shut up tslint (object access via string literals is disallowed)
       if (res.data.length === parseInt(params[items], 10)) {
           this.buttonDeactive = true;
       }
@@ -190,7 +190,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
 
   async doFetchTotal(params: object = {}) {
     try {
-      let listTotal = [];
+      const listTotal = [];
       const res = await this.mainStore.api.get('/expenses_sheet_sum', { params: { ...params } });
 
       for (let i = 0; i < res.data.length; i++) {

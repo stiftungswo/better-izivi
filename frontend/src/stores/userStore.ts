@@ -74,7 +74,7 @@ export class UserStore extends DomainStore<User, UserOverview> {
         }
         return moment(leftUser.beginning).isBefore(rightUser.beginning) ? 1 : -1;
       });
-  });}, 100);
+  }); }, 100);
 
   protected entityURL = '/users/';
   protected entitiesURL = '/users/';

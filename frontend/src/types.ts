@@ -185,7 +185,7 @@ export interface UserFilter {
   items: string;
   no_keywords: boolean;
   site: string;
-  button_deactive: boolean
+  button_deactive: boolean;
 }
 
 export interface Service {
