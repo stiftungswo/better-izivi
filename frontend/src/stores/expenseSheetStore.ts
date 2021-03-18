@@ -48,7 +48,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   expenseSheet?: ExpenseSheet;
 
   @observable
-  button_deactive: boolean;
+  buttonDeactive: boolean;
 
   @observable
   totalSum: string;
@@ -60,8 +60,8 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
 
   constructor(mainStore: MainStore) {
     super(mainStore);
-    this.button_deactive = false
-    this.totalSum = ''
+    this.buttonDeactive = false;
+    this.totalSum = '';
   }
 
   @action
@@ -158,15 +158,16 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   async doFetchPage(params: object = {}): Promise<void> {
     try {
       const res = await this.mainStore.api.get<ExpenseSheetListing[]>('/expense_sheets', { params: { ...params } });
-      if (res.data.length === parseInt(params['items'])){
-          this.button_deactive = true
+      let items = 'items' // to shut up tslint (object access via string literals is disallowed)
+      if (res.data.length === parseInt(params[items], 10)) {
+          this.buttonDeactive = true;
       }
-      else if (res.data.length === (parseInt(params['items']) + 1)) {
-          this.button_deactive = false
-          res.data.splice(-1, 1)
+      if (res.data.length === (parseInt(params[items], 10) + 1)) {
+          this.buttonDeactive = false;
+          res.data.splice(-1, 1);
       }
-      else if (res.data.length < parseInt(params['items'])){
-          this.button_deactive = true
+      if (res.data.length < parseInt(params[items], 10)) {
+          this.buttonDeactive = true;
       }
       this.expenseSheets = res.data;
     } catch (e) {
@@ -189,13 +190,13 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
 
   async doFetchTotal(params: object = {}) {
     try {
-      var list_total: Array<number> = []
-      const res = await this.mainStore.api.get(`/expenses_sheet_sum`, { params: { ...params } });
+      let listTotal = [];
+      const res = await this.mainStore.api.get('/expenses_sheet_sum', { params: { ...params } });
 
-      for(var i=0; i < res.data.length; i++){
-        list_total[i] = res.data[i].total
+      for (let i = 0; i < res.data.length; i++) {
+        listTotal[i] = res.data[i].total;
       }
-      this.totalSum = this.calcsum(list_total).toFixed(2)
+      this.totalSum = this.calcsum(listTotal).toFixed(2);
     } catch (e) {
       this.mainStore.displayError(
         this.mainStore.intl.formatMessage(

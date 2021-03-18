@@ -73,9 +73,9 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       modalOpen: false,
       expenseSheetStateFilter: 'current',
       users_per_page: '200',
-      current_site: 1
+      current_site: 1,
     };
-    this.props.expenseSheetStore!.doFetchTotal({ filter: this.state.expenseSheetStateFilter })
+    this.props.expenseSheetStore!.doFetchTotal({ filter: this.state.expenseSheetStateFilter });
   }
 
   componentDidMount(): void {
@@ -83,7 +83,10 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
   }
 
   loadContent = () => {
-    this.props.expenseSheetStore!.doFetchPage({ filter: this.state.expenseSheetStateFilter, items: this.state.users_per_page, site: this.state.current_site }).then(() => this.setState({ loading: false }));
+    this.props.expenseSheetStore!.doFetchPage({ filter: this.state.expenseSheetStateFilter,
+                                                items: this.state.users_per_page,
+                                                site: this.state.current_site })
+                                                .then(() => this.setState({ loading: false }));
   }
 
   updateSheetFilter = (state: string | null) => {
@@ -150,14 +153,15 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
               <td>
                 <Button
                   color={'danger'}
-                  disabled={(this.state.current_site === 1)? true : false}
+                  disabled={(this.state.current_site === 1) ? true : false}
                   onClick={() => {
-                    var site = this.state.current_site - 1
+                    const site = this.state.current_site - 1;
                     this.setState(prevState => ({
                     ...prevState,
                     current_site: site,
-                    }), () => this.loadContent())}}
-                  >
+                    }), () => this.loadContent());
+                  }}
+                >
                   {
                     this.intl.formatMessage({
                       id: 'views.users.userOverview.previous_page',
@@ -176,16 +180,17 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
                 {this.state.current_site}
               </td>
               <td>
-                  <Button
-                    color={'danger'}
-                    onClick={() => {
-                      var site = this.state.current_site + 1
-                      this.setState(prevState => ({
-                      ...prevState,
-                      current_site: site,
-                      }), () => this.loadContent())}}
-                    disabled={this.props.expenseSheetStore!.button_deactive}
-                   >
+                <Button
+                  color={'danger'}
+                  onClick={() => {
+                    const site = this.state.current_site + 1;
+                    this.setState(prevState => ({
+                    ...prevState,
+                    current_site: site,
+                    }), () => this.loadContent());
+                  }}
+                  disabled={this.props.expenseSheetStore!.buttonDeactive}
+                >
                   {
                     this.intl.formatMessage({
                       id: 'views.users.userOverview.next_page',
@@ -212,7 +217,7 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
                       ...prevState,
                       users_per_page: value,
                       current_site: 1,
-                      }), () => this.loadContent())
+                      }), () => this.loadContent());
                     }
                   }
                   value={this.state.users_per_page}
@@ -221,15 +226,15 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
                   {[
                     {
                       id: '200',
-                      name: '200'
+                      name: '200',
                     },
                     {
                       id: '100',
-                      name: '100'
+                      name: '100',
                     },
                     {
                       id: '50',
-                      name: '50'
+                      name: '50',
                     },
                   ].map((option) => (
                     <option value={option.id} key={option.id}>

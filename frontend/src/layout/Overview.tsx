@@ -35,7 +35,6 @@ export default class Overview<ListingType extends Listing> extends React.Compone
     if (this.props.filter) {
       this.props.store!.filter();
     }
-    ;
   }
 
   handleClick = (e: ListingType) => {
