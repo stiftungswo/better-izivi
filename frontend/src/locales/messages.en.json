@@ -112,6 +112,7 @@
   "store.expenseSheetStore.expense_hints_not_loaded": "Expense suggestions could not be loaded",
   "store.expenseSheetStore.expense_sheet.one": "The expense sheet",
   "store.expenseSheetStore.expense_sheet.other": "The expense sheets",
+  "store.expenseSheetStore.expense_sheet_per_site": "expense sheets per page:",
   "store.expenseSheetStore.state_changed": "{entityNameSingular} was changed to {state}.",
   "store.holidayStore.holiday.one": "The holiday",
   "store.holidayStore.holiday.other": "The holidays",
@@ -342,5 +343,9 @@
   "views.users.userOverview.name": "Name",
   "views.users.userOverview.until": "To",
   "views.users.userOverview.zdp": "ZDP",
+  "views.users.userOverview.site": "site: ",
+  "views.users.userOverview.employeespersite": "employees per site: ",
+  "views.users.userOverview.next_page": "next page",
+  "views.users.userOverview.previous_page": "previous page",
   "views.users.userUpdate.profile_is_loading": "Profile is loaded"
 }

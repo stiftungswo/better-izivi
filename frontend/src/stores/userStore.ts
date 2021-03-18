@@ -1,3 +1,4 @@
+// tslint:disable:no-console
 import debounce from 'lodash.debounce';
 import { action, computed, observable, reaction } from 'mobx';
 import moment from 'moment';
@@ -47,6 +48,8 @@ export class UserStore extends DomainStore<User, UserOverview> {
   userFilters: UserFilter;
 
   filter = debounce(() => {
+    const maxItems = this.userFilters.no_keywords ? this.userFilters.items : '1000000';
+    this.fetchUsers(maxItems, this.userFilters.site).then(() => {
     this.filteredEntities = this.users.filter((user: UserOverview) => {
         const { zdp, name, beginning, ending, active, role } = this.userFilters;
         switch (true) {
@@ -71,7 +74,7 @@ export class UserStore extends DomainStore<User, UserOverview> {
         }
         return moment(leftUser.beginning).isBefore(rightUser.beginning) ? 1 : -1;
       });
-  }, 100);
+  }); }, 100);
 
   protected entityURL = '/users/';
   protected entitiesURL = '/users/';
@@ -91,6 +94,10 @@ export class UserStore extends DomainStore<User, UserOverview> {
         .format('Y-MM-DD'),
       active: false,
       role: '',
+      items: '200',
+      no_keywords: true,
+      site: '1',
+      button_deactive: false,
     });
 
     reaction(
@@ -101,6 +108,10 @@ export class UserStore extends DomainStore<User, UserOverview> {
         this.userFilters.ending,
         this.userFilters.active,
         this.userFilters.role,
+        this.userFilters.items,
+        this.userFilters.no_keywords,
+        this.userFilters.site,
+        this.userFilters.button_deactive,
       ],
       this.filter,
     );
@@ -109,5 +120,33 @@ export class UserStore extends DomainStore<User, UserOverview> {
   @action
   updateFilters(updates: Partial<UserFilter>) {
     this.userFilters = { ...this.userFilters, ...updates };
+  }
+  @action
+  async fetchUsers(nrItems: string, currentSite: string) {
+    try {
+      const res = await this.mainStore.api.get<UserOverview[]>('/users', { params: { items: nrItems, site: currentSite } });
+      if (res.data.length === parseInt(nrItems, 10)) {
+          this.userFilters.button_deactive = true;
+      }
+      if (res.data.length === (parseInt(nrItems, 10) + 1)) {
+          this.userFilters.button_deactive = false;
+          res.data.splice(-1, 1);
+      }
+      if (res.data.length < parseInt(nrItems, 10)) {
+          this.userFilters.button_deactive = true;
+      }
+      this.users = res.data;
+      } catch (e) {
+        this.mainStore.displayError(
+          this.mainStore.intl.formatMessage(
+            {
+              id: 'store.domainStore.not_loaded.other',
+              defaultMessage: '{entityNamePlural} konnten nicht geladen werden.',
+            },
+            { entityNamePlural: this.entityName.plural },
+          ));
+        console.error(e);
+        throw e;
+      }
   }
 }

@@ -182,6 +182,10 @@ export interface UserFilter {
   ending: string;
   active: boolean;
   role: string;
+  items: string;
+  no_keywords: boolean;
+  site: string;
+  button_deactive: boolean;
 }
 
 export interface Service {

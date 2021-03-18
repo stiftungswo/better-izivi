@@ -14,6 +14,8 @@ module V1
 
     def index
       @users = User.all.includes(:services)
+                   .limit(Integer(filter_param) + 1)
+                   .offset((Integer(site_param) - 1) * Integer(site_param))
     end
 
     def show
@@ -59,6 +61,14 @@ module V1
       bank_iban = params[:bank_iban]
       params[:bank_iban] = User.strip_iban(bank_iban) if bank_iban.present?
       params
+    end
+
+    def filter_param
+      params[:items].nil? ? 10_000_000 : params[:items]
+    end
+
+    def site_param
+      params[:site].nil? ? 1 : params[:site]
     end
   end
 end

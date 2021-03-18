@@ -112,6 +112,7 @@
   "store.expenseSheetStore.expense_hints_not_loaded": "Spesenvorschläge konnten nicht geladen werden",
   "store.expenseSheetStore.expense_sheet.one": "Das Spesenblatt",
   "store.expenseSheetStore.expense_sheet.other": "Die Spesenblätter",
+  "store.expenseSheetStore.expense_sheet_per_site": "Spesenblätter pro Seite:",
   "store.expenseSheetStore.state_changed": "{entityNameSingular} wurde auf {state} geändert.",
   "store.holidayStore.holiday.one": "Der Feiertag",
   "store.holidayStore.holiday.other": "Die Feiertage",
@@ -342,5 +343,9 @@
   "views.users.userOverview.name": "Name",
   "views.users.userOverview.until": "Bis",
   "views.users.userOverview.zdp": "ZDP",
+  "views.users.userOverview.site": "Seite: ",
+  "views.users.userOverview.employeespersite": "Mitarbeiter pro Seite: ",
+  "views.users.userOverview.next_page": "Nächste Seite",
+  "views.users.userOverview.previous_page": "Vorherige Seite",
   "views.users.userUpdate.profile_is_loading": "Profil wird geladen"
 }
