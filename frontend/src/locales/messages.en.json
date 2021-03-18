@@ -278,6 +278,7 @@
   "views.users.serviceModal.saved_successfully": "Saving successful",
   "views.users.serviceModalForm.first_service": "First mission",
   "views.users.serviceModalForm.is_first_service": "First SWO mission?",
+  "views.users.serviceModalForm.starts_on_saturday": "Does it start on a saturday?",
   "views.users.serviceModalForm.is_long_service": "Long time?",
   "views.users.serviceModalForm.is_trail_service": "Trial run?",
   "views.users.serviceModalForm.last_service": "Last bet",

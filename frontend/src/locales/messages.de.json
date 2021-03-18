@@ -278,6 +278,7 @@
   "views.users.serviceModal.saved_successfully": "Speichern erfolgreich",
   "views.users.serviceModalForm.first_service": "Erster Einsatz",
   "views.users.serviceModalForm.is_first_service": "Erster SWO Einsatz?",
+  "views.users.serviceModalForm.starts_on_saturday": "Zwischeneinsatz?",
   "views.users.serviceModalForm.is_long_service": "Langer Einsatz?",
   "views.users.serviceModalForm.is_trail_service": "Probe-einsatz?",
   "views.users.serviceModalForm.last_service": "Letzter Einsatz",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_142618) do
+ActiveRecord::Schema.define(version: 2021_03_17_012501) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "beginning", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_142618) do
     t.boolean "feedback_mail_sent", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "starts_on_saturday", default: false, null: false
     t.index ["service_specification_id"], name: "index_services_on_service_specification_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end

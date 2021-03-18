@@ -36,4 +36,5 @@ export const serviceSchema = yup.object({
   feedback_done: yup.boolean(),
   feedback_mail_sent: yup.boolean(),
   user_id: yup.number().required(),
+  starts_on_saturday: yup.boolean(),
 });

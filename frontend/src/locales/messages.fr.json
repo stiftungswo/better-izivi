@@ -277,6 +277,7 @@
   "views.users.serviceModal.save_data": "Stocker des données",
   "views.users.serviceModal.saved_successfully": "Sauvegarder avec succès",
   "views.users.serviceModalForm.first_service": "Première mission",
+  "views.users.serviceModalForm.starts_on_saturday": "Service intermediaire?",
   "views.users.serviceModalForm.is_first_service": "Première mission SWO ?",
   "views.users.serviceModalForm.is_long_service": "Depuis longtemps ?",
   "views.users.serviceModalForm.is_trail_service": "Un procès ?",

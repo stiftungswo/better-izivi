@@ -9,7 +9,7 @@ module V1
     PERMITTED_SERVICE_PARAMS = %i[
       user_id beginning ending confirmation_date service_type
       first_swo_service long_service probation_service
-      feedback_mail_sent service_specification_id
+      feedback_mail_sent service_specification_id starts_on_saturday
     ].freeze
 
     before_action :authenticate_user!, unless: -> { request.format.pdf? }

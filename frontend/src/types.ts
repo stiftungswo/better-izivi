@@ -196,6 +196,7 @@ export interface Service {
   eligible_paid_vacation_days: number;
   ending: Date | null;
   first_swo_service: boolean;
+  starts_on_saturday: boolean;
   long_service: boolean;
   service_type: string | null;
   probation_period: boolean;

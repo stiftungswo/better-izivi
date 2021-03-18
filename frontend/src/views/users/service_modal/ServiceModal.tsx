@@ -51,6 +51,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
       ending: null,
       service_days: 0,
       first_swo_service: false,
+      starts_on_saturday: false,
       long_service: false,
       probation_period: false,
       confirmation_date: null,
