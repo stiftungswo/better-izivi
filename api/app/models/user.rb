@@ -103,7 +103,7 @@ class User < ApplicationRecord
     body = { "email": email, "can_login": false, "first_name": first_name,
              "last_name": last_name, "password": password, "employee_group_id": 1,
              "password_repeat": password }.to_json
-    uri = URI('http://localhost:38001/v2/employees')
+    uri = URI('https://dime-apir.stiftungswo.ch/v2/employees')
     req = Net::HTTP::Post.new(uri, 'Authorization' => token, 'Content-Type' => 'application/json')
     http = Net::HTTP.new(uri.host, uri.port)
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
