@@ -4,6 +4,7 @@ require 'iban-tools'
 
 class User < ApplicationRecord
   include Devise::JWT::RevocationStrategies::Whitelist
+  include Concerns::LegacyPasswordAuthenticatable
 
   belongs_to :regional_center
 
@@ -35,9 +36,9 @@ class User < ApplicationRecord
   validates :bank_iban, format: { with: /\ACH\d{2}(\w{4}){4,7}\w{0,2}\z/ }, unless: :only_password_changed?
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, unless: :only_password_changed?
   validates :legacy_password, presence: true, if: -> { encrypted_password.blank? }
+  validate :make_user_dime, on: :create
 
   validate :validate_iban, unless: :only_password_changed?
-  validate :make_user_dime, on: :create
 
   def self.validate_given_params(user_params)
     errors = User.new(user_params).tap(&:validate).errors
@@ -84,6 +85,17 @@ class User < ApplicationRecord
 
   def next_service
     services.select(&:in_future?).min_by(&:beginning)
+  end
+
+  # TODO: Remove this
+  # This is a workaround in order to enable users to log in using their password they used in the old iZivi
+  # Which was previously unsalted. If they logged in again, we rewrite the password using devises methods.
+  # REMOVE THIS METHOD AS MOST USERS HAVE NEW PASSWORD HASHES
+  # Rather let some old users reset their password than keep this method
+  def valid_password?(plain_password)
+    return super if legacy_password.blank?
+
+    valid_legacy_password? plain_password
   end
 
   def only_password_changed?
