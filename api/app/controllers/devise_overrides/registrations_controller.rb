@@ -43,6 +43,7 @@ module DeviseOverrides
       params.require(:user).permit(:community_password)[:community_password]
     end
 
+    # :reek:FeatureEnvy
     def make_user_dime
       user_params = params['user']
       body = { "email": user_params['email'], "can_login": false, "first_name": user_params['first_name'],

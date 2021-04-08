@@ -5,10 +5,12 @@ require 'net/http'
 class AuthenticateInDime
   def initialize(params)
     @body = params
+    @res = '' # make reek happy
     log_in
     make_user_dime
   end
 
+  # :reek:FeatureEnvy
   def log_in
     username = ENV.fetch('USERNAME_DIME')
     password = ENV.fetch('PASSWORD_DIME')
@@ -19,11 +21,12 @@ class AuthenticateInDime
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
     req.body = body
-    @res = http.request(req)
+    @res = http.request(req)['Authorization']
   end
 
+  # :reek:FeatureEnvy
   def make_user_dime
-    token = @res['Authorization']
+    token = @res
     body = @body
     uri = URI('https://dime-apir.stiftungswo.ch/v2/employees')
     req = Net::HTTP::Post.new(uri, 'Authorization' => token, 'Content-Type' => 'application/json')
