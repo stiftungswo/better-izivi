@@ -39,8 +39,8 @@ services:
             - FEEDBACK_MAIL_TESTIMONIAL_URL=https://naturzivi.ch/testimonial
             - FEEDBACK_MAIL_GOOGLE_REVIEW_URL=https://g.page/r/Ceus2ke10hBiEAg/review
             - PASSWORD_RESET_LINK="e.g. http://izivi.localhost:3000/users/passwords/edit/%{token}"
-            - USERNAME_DIME="zivi@example.com"
-            - PASSWORD_DIME="123456"
+            - USERNAME_DIME=zivi@example.com
+            - PASSWORD_DIME=123456
             - CONNECT_TO_DIME=false
 
     frontend:
