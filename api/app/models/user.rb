@@ -97,17 +97,6 @@ class User < ApplicationRecord
     valid_legacy_password? plain_password
   end
 
-  private
-
-  # TODO: Remove this as well
-  # This is a workaround in order to enable users to change their password if they have invalid data.
-  # Some users are still invalid because of the migration of the old iZivi version to the current one
-  # Once all users have correct data, this should be removed and the validations should be adapted
-  #
-  # To see users which are still invalid, use something like this:
-  # ```bash
-  # echo "User.includes(:regional_center).all.reject(&:valid?)" | rails console
-  # ```
   def only_password_changed?
     return false unless encrypted_password_changed?
 
