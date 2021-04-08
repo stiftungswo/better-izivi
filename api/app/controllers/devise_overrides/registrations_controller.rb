@@ -17,6 +17,7 @@ module DeviseOverrides
       raise validation_error unless validation_error.empty?
 
       subscribe_to_newsletter
+      make_user_dime if ENV.fetch('CONNECT_TO_DIME') == 'true'
       head :no_content
     end
 
