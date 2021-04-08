@@ -36,7 +36,6 @@ class User < ApplicationRecord
   validates :bank_iban, format: { with: /\ACH\d{2}(\w{4}){4,7}\w{0,2}\z/ }, unless: :only_password_changed?
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, unless: :only_password_changed?
   validates :legacy_password, presence: true, if: -> { encrypted_password.blank? }
-  validate :make_user_dime, on: :create
 
   validate :validate_iban, unless: :only_password_changed?
 
@@ -108,18 +107,5 @@ class User < ApplicationRecord
     IBANTools::IBAN.new(bank_iban).validation_errors.each do |error|
       errors.add(:bank_iban, error)
     end
-  end
-
-  def make_user_dime
-    token = AuthenticateInDime.log_in
-    body = { "email": email, "can_login": false, "first_name": first_name,
-             "last_name": last_name, "password": password, "employee_group_id": 1,
-             "password_repeat": password }.to_json
-    uri = URI('https://dime-apir.stiftungswo.ch/v2/employees')
-    req = Net::HTTP::Post.new(uri, 'Authorization' => token, 'Content-Type' => 'application/json')
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-    req.body = body
-    http.request(req)
   end
 end
