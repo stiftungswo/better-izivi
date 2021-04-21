@@ -13,7 +13,7 @@ RSpec.describe V1::UsersController, type: :request do
         .except(
           :created_at, :encrypted_password, :legacy_password,
           :reset_password_sent_at, :reset_password_token,
-          :updated_at
+          :updated_at, :dime_id
         ).merge(
           services: [],
           bank_iban: requested_user.prettified_bank_iban

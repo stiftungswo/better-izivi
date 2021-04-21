@@ -1,7 +1,7 @@
 // tslint:disable:no-console
 import * as _ from 'lodash';
 import { action, computed, observable } from 'mobx';
-import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState } from '../types';
+import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState, SickDaysDime } from '../types';
 import { stateTranslation } from '../utilities/helpers';
 import { DomainStore } from './domainStore';
 import { MainStore } from './mainStore';
@@ -54,6 +54,9 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   totalSum: string;
 
   hints?: ExpenseSheetHints;
+
+  @observable
+  sickDays?: SickDaysDime;
 
   protected entityURL = '/expense_sheets/';
   protected entitiesURL = '/expense_sheets/';
@@ -135,6 +138,23 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
           {
             id: 'store.expenseSheetStore.expense_hints_not_loaded',
             defaultMessage: 'Spesenvorschläge konnten nicht geladen werden',
+          },
+        ));
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async fetchSickDaysDime(expenseSheetId: number) {
+    try {
+      const response = await this.mainStore.api.get<SickDaysDime>(`/expenses_sheet_sick_days_dime?id=${expenseSheetId}`);
+      this.sickDays = response.data;
+    } catch (e) {
+      this.mainStore.displayError(
+        this.mainStore.intl.formatMessage(
+          {
+            id: 'store.expenseSheetStore.expense_hints_not_loaded',
+            defaultMessage: 'Krankheitstage konnten nicht geladen werden',
           },
         ));
       console.error(e);

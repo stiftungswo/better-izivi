@@ -82,6 +82,10 @@ export interface ExpenseSheetHints {
   };
 }
 
+export interface SickDaysDime {
+  sick_days: string;
+}
+
 export enum ExpenseSheetState {
   open = 'open',
   ready_for_payment = 'ready_for_payment',

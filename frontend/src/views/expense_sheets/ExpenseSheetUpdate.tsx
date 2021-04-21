@@ -8,7 +8,7 @@ import { MainStore } from '../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../stores/serviceStore';
 import { UserStore } from '../../stores/userStore';
-import { ExpenseSheet, FormValues } from '../../types';
+import { ExpenseSheet, FormValues, SickDaysDime } from '../../types';
 import { ExpenseSheetForm } from './expense_sheet_form/ExpenseSheetForm';
 
 interface ExpenseSheetDetailRouterProps {
@@ -25,11 +25,18 @@ interface Props extends RouteComponentProps<ExpenseSheetDetailRouterProps> {
 
 @inject('expenseSheetStore', 'userStore', 'serviceStore', 'serviceSpecificationStore', 'mainStore')
 @observer
-export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolean }> {
+export class ExpenseSheetUpdate extends React.Component<Props,
+{ loading: boolean, sick_days_loaded: boolean, sick_days: SickDaysDime, button_deactive: boolean }> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { loading: true };
+    this.state = { loading: true,
+                   sick_days_loaded: false,
+                   button_deactive: true,
+                   sick_days: { sick_days: this.props.mainStore!.intl.formatMessage({
+                                           id: 'views.phoneList.load',
+                                           defaultMessage: 'Laden',
+                                           }) } };
 
     const expenseSheetId = Number(props.match.params.id);
 
@@ -47,6 +54,22 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
       });
     });
   }
+
+  componentDidMount() {
+    this.props.expenseSheetStore!.fetchSickDaysDime(Number(this.props.match.params.id)).then(() => {
+    if (this.props.expenseSheetStore!.sickDays!.sick_days === '-1') {
+      this.setState({ sick_days: {sick_days: this.props.mainStore!.intl.formatMessage({
+                                             id: 'store.expenseSheetStore.expense_sheet.no_user_dime',
+                                             defaultMessage: 'Kein Benutzer konnte im Dime gefunden werden',
+                                             })},
+                      button_deactive: true});
+    } else {
+      this.setState({ sick_days: this.props.expenseSheetStore!.sickDays! });
+      if (this.props.expenseSheetStore!.sickDays!.sick_days !== '0') {
+        this.setState({ button_deactive: false });
+        }
+    }});
+   }
 
   handleSubmit = (expenseSheet: ExpenseSheet) => {
     return this.props.expenseSheetStore!.put(expenseSheet).then(() => window.location.reload());
@@ -78,6 +101,8 @@ export class ExpenseSheetUpdate extends React.Component<Props, { loading: boolea
         hints={this.props.expenseSheetStore!.hints!}
         service={this.props.serviceStore!.entity!}
         serviceSpecification={this.props.serviceSpecificationStore!.entity!}
+        sickDays={this.state.sick_days}
+        buttonDeactive={this.state.button_deactive}
         title={
           expenseSheet
             ? this.user
