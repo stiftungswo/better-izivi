@@ -34,18 +34,22 @@ class AuthenticateInDime
     post(body, uri)
   end
 
-  def get_dime_id_with_search(email) # rubocop:disable Metrics/AbcSize
+  # :reek:FeatureEnvy
+  def get_dime_id_with_search(email)
     uri = URI(['https://dime-apir-develop.stiftungswo.ch/v2/employees?showArchived=false&filterSearch=',
                email,
                '&page=1&pageSize=10&orderByTag=id&orderByDir=desc'].join)
     body = 'get'
     response = JSON.parse(post(body, uri).body)
 
-    return -1 if response['data'].nil? # no user was found in dime if true
-    return -1 if response['data'][0].nil?
-    return -1 if response['data'][0]['id'].nil?
+    data = response['data']
+    data_first = data[0]
 
-    save_dime_id(response['data'][0]['id'])
+    return -1 if data.nil? # no user was found in dime if true
+    return -1 if data_first.nil?
+    return -1 if data_first['id'].nil?
+
+    save_dime_id(data_first['id'])
   end
 
   def save_dime_id(id)

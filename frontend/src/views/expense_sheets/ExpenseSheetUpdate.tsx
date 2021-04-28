@@ -66,7 +66,8 @@ export class ExpenseSheetUpdate extends React.Component<Props,
                       button_deactive: true});
     } else {
       this.setState({ sick_days: this.props.expenseSheetStore!.sickDays! });
-      if (this.props.expenseSheetStore!.sickDays!.sick_days !== '0') {
+      // tslint:disable-next-line:triple-equals
+      if (this.props.expenseSheetStore!.sickDays!.sick_days != '0') {
         this.setState({ button_deactive: false });
         }
     }});
