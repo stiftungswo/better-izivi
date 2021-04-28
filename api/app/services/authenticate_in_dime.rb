@@ -34,7 +34,7 @@ class AuthenticateInDime
     post(body, uri)
   end
 
-  def get_dime_id_with_search(email)
+  def get_dime_id_with_search(email) # rubocop:disable Metrics/AbcSize
     uri = URI(['https://dime-apir-develop.stiftungswo.ch/v2/employees?showArchived=false&filterSearch=',
                email,
                '&page=1&pageSize=10&orderByTag=id&orderByDir=desc'].join)
