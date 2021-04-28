@@ -4,6 +4,7 @@ require 'net/http'
 
 class AuthenticateInDime
   def initialize
+    @api_uri = ENV.fetch('API_URI_DIME')
     @token = log_in
   end
 
@@ -24,19 +25,20 @@ class AuthenticateInDime
 
   def log_in
     body = { employee: { email: ENV.fetch('USERNAME_DIME'), password: ENV.fetch('PASSWORD_DIME') } }.to_json
-    uri = URI('https://dime-apir-develop.stiftungswo.ch/v2/employees/sign_in')
+    uri = URI(@api_uri + '/v2/employees/sign_in')
     response = post(body, uri)
     response['Authorization']
   end
 
   def make_user_dime(body)
-    uri = URI('https://dime-apir-develop.stiftungswo.ch/v2/employees')
+    uri = URI(@api_uri + '/v2/employees')
     post(body, uri)
   end
 
   # :reek:FeatureEnvy
   def get_dime_id_with_search(email)
-    uri = URI(['https://dime-apir-develop.stiftungswo.ch/v2/employees?showArchived=false&filterSearch=',
+    uri = URI([@api_uri,
+               '/v2/employees?showArchived=false&filterSearch=',
                email,
                '&page=1&pageSize=10&orderByTag=id&orderByDir=desc'].join)
     body = 'get'
@@ -71,7 +73,7 @@ class AuthenticateInDime
     dime_id = get_dime_id(user_izivi_id)
     return dime_id if dime_id == -1
 
-    uri = URI(['https://dime-apir-develop.stiftungswo.ch/v2/project_efforts?start=',
+    uri = URI([@api_uri, '/v2/project_efforts?start=',
                date_start.to_s,
                '&end=',
                date_end.to_s,
