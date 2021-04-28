@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module V1
+  # :reek:TooManyInstanceVariables
   class ExpenseSheetsController < ApplicationController
     include V1::Concerns::AdminAuthorizable
     include V1::Concerns::ParamsAuthenticatable
@@ -46,6 +47,13 @@ module V1
 
     def sum
       @expense_sheets_sum = filtered_expense_sheets
+    end
+
+    # :reek:FeatureEnvy
+    def check_for_sick_days
+      expense_sheet = ExpenseSheet.find(params[:id])
+      req = AuthenticateInDime.new
+      @sick_days = req.check_for_sick_days(expense_sheet.user.id, expense_sheet.beginning, expense_sheet.ending)
     end
 
     def create

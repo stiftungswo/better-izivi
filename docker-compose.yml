@@ -42,6 +42,7 @@ services:
             - USERNAME_DIME=zivi@example.com
             - PASSWORD_DIME=123456
             - CONNECT_TO_DIME=false
+            - API_URI_DIME=https://dime-apir-develop.stiftungswo.ch
 
     frontend:
         image: node:10

@@ -6,7 +6,7 @@ import Form from 'reactstrap/lib/Form';
 import { FormView, FormViewProps } from '../../../form/FormView';
 import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
-import { ExpenseSheet, ExpenseSheetHints, FormValues, Service, ServiceSpecification } from '../../../types';
+import { ExpenseSheet, ExpenseSheetHints, FormValues, Service, ServiceSpecification, SickDaysDime } from '../../../types';
 import { empty } from '../../../utilities/helpers';
 import { expenseSheetSchema } from '../expenseSheetSchema';
 import { ExpenseSheetFormButtons } from './ExpenseSheetFormButtons';
@@ -17,6 +17,8 @@ type Props = {
   mainStore?: MainStore;
   expenseSheet: ExpenseSheet;
   hints: ExpenseSheetHints;
+  sickDays: SickDaysDime;
+  buttonDeactive: boolean;
   service: Service;
   expenseSheetStore?: ExpenseSheetStore;
   serviceSpecification: ServiceSpecification;
@@ -39,7 +41,8 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
   }
 
   render() {
-    const { loading, mainStore, onSubmit, expenseSheet, service, serviceSpecification, hints, title, expenseSheetStore } = this.props;
+    const { loading, mainStore, onSubmit, expenseSheet, service, serviceSpecification, hints, title, expenseSheetStore,
+            sickDays, buttonDeactive } = this.props;
 
     const template = {
       safe_override: false,
@@ -63,7 +66,14 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
             />
 
             <FormSegments.GeneralSegment service={service} mainStore={mainStore!}/>
-            <FormSegments.AbsolvedDaysBreakdownSegment hints={hints} mainStore={mainStore!}/>
+            <FormSegments.AbsolvedDaysBreakdownSegment
+              hints={hints}
+              mainStore={mainStore!}
+              sickDays={sickDays}
+              buttonDeactive={buttonDeactive}
+              onSaveSickDays={
+              (value) => this.saveSickDaysFromDime(formikProps, value)}
+            />
             <FormSegments.CompanyHolidaysSegment hints={hints} mainStore={mainStore!}/>
             <FormSegments.PaidVacationSegment mainStore={mainStore!}/>
             <FormSegments.UnpaidVacationSegment mainStore={mainStore!}/>
@@ -103,6 +113,12 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
   private onSaveButtonClicked(formikProps: FormikProps<{}>) {
     formikProps.submitForm();
     this.setState({ safeOverride: !formikProps.isValid });
+  }
+
+  private saveSickDaysFromDime(formikProps: FormikProps<{}>, value: string) {
+    const workDays = this.props.hints.suggestions.work_days - parseInt(value, 10);
+    formikProps.setFieldValue('work_days', workDays);
+    formikProps.setFieldValue('sick_days', parseInt(value, 10));
   }
 }
 

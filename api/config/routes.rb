@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'
     get 'expenses_overview', to: 'expenses_overview#show', as: 'expenses_overview_export'
     get 'expenses_sheet_sum', to: 'expense_sheets#sum'
+    get 'expenses_sheet_sick_days_dime', to: 'expense_sheets#check_for_sick_days'
 
     put 'payments/:payment_timestamp/confirm', to: 'payments#confirm', as: 'payment_confirm'
   end
