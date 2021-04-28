@@ -57,7 +57,8 @@ export class ExpenseSheetUpdate extends React.Component<Props,
 
   componentDidMount() {
     this.props.expenseSheetStore!.fetchSickDaysDime(Number(this.props.match.params.id)).then(() => {
-    if (this.props.expenseSheetStore!.sickDays!.sick_days === '-1') {
+    // tslint:disable-next-line:triple-equals
+    if (this.props.expenseSheetStore!.sickDays!.sick_days == '-1') {
       this.setState({ sick_days: {sick_days: this.props.mainStore!.intl.formatMessage({
                                              id: 'store.expenseSheetStore.expense_sheet.no_user_dime',
                                              defaultMessage: 'Kein Benutzer konnte im Dime gefunden werden',

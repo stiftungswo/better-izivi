@@ -74,17 +74,17 @@ export const AbsolvedDaysBreakdownSegment = expenseSheetFormSegment(
               defaultMessage: 'Anzahl Krankheitstage eingetragen im Dime',
             })}
         />
-          <Button
-            key={'submitButton'}
-            color={'success'}
-            disabled={buttonDeactive}
-            onClick={() => onSaveSickDays(sickDays.sick_days)}
-          >
-            <FormattedMessage
-              id="views.expense_sheets.expenseSheetFormButtons.save_dime_sick_days"
-              defaultMessage="Krankheitstage aus Dime übernehmen"
-            />
-          </Button>
+        <Button
+          key={'submitButton'}
+          color={'success'}
+          disabled={buttonDeactive}
+          onClick={() => onSaveSickDays(sickDays.sick_days)}
+        >
+          <FormattedMessage
+            id="views.expense_sheets.expenseSheetFormButtons.save_dime_sick_days"
+            defaultMessage="Krankheitstage aus Dime übernehmen"
+          />
+        </Button>
       </>
     ),
 );

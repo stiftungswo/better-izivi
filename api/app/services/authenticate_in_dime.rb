@@ -40,7 +40,10 @@ class AuthenticateInDime
                '&page=1&pageSize=10&orderByTag=id&orderByDir=desc'].join)
     body = 'get'
     response = JSON.parse(post(body, uri).body)
+
     return -1 if response['data'].nil? # no user was found in dime if true
+    return -1 if response['data'][0].nil?
+    return -1 if response['data'][0]['id'].nil?
 
     save_dime_id(response['data'][0]['id'])
   end
