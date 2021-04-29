@@ -45,9 +45,10 @@ class AuthenticateInDime
     response = JSON.parse(post(body, uri).body)
 
     data = response['data']
+    return -1 if data.nil? # no user was found in dime if true
+
     data_first = data[0]
 
-    return -1 if data.nil? # no user was found in dime if true
     return -1 if data_first.nil?
     return -1 if data_first['id'].nil?
 
@@ -79,7 +80,7 @@ class AuthenticateInDime
                date_end.to_s,
                '&employee_ids=',
                dime_id.to_s,
-               '&project_ids=1&service_ids=1&combine_times=false'].join)
+               '&project_ids=14&service_ids=1&combine_times=false'].join) # project id 14 is declared as sick day
     body = 'get'
     response = JSON.parse(post(body, uri).body)
     response.length
