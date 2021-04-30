@@ -53,9 +53,10 @@ export class ExpenseSheetUpdate extends React.Component<Props,
         );
       });
     });
+    this.loadSickDaysDime();
   }
 
-  componentDidMount() {
+  loadSickDaysDime() {
     this.props.expenseSheetStore!.fetchSickDaysDime(Number(this.props.match.params.id)).then(() => {
     // tslint:disable-next-line:triple-equals
     if (this.props.expenseSheetStore!.sickDays!.sick_days == '-1') {
