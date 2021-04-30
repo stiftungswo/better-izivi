@@ -36,26 +36,26 @@ class AuthenticateInDime
   end
 
   # :reek:FeatureEnvy
-  def get_dime_id_with_search(email)
-    uri = URI([@api_uri,
-               '/v2/employees?showArchived=false&filterSearch=',
-               email,
+  def get_dime_id_with_search(user)
+    uri = URI([@api_uri, '/v2/employees?showArchived=false&filterSearch=',
+               user.email,
                '&page=1&pageSize=10&orderByTag=id&orderByDir=desc'].join)
     body = 'get'
     response = JSON.parse(post(body, uri).body)
-
     data = response['data']
     return -1 if data.nil? # no user was found in dime if true
 
     data_first = data[0]
 
     return -1 if data_first.nil?
-    return -1 if data_first['id'].nil?
 
-    save_dime_id(data_first['id'])
+    data_firs_id = data_first['id']
+    return -1 if data_firs_id.nil?
+
+    save_dime_id(data_firs_id, user)
   end
 
-  def save_dime_id(id)
+  def save_dime_id(id, user)
     user.dime_id = id
     user.save
     user.dime_id
@@ -65,7 +65,7 @@ class AuthenticateInDime
   def get_dime_id(user_id)
     user = User.find_by(id: user_id)
 
-    return get_dime_id_with_search(user.email) if user.dime_id.zero?
+    return get_dime_id_with_search(user) if user.dime_id.zero?
 
     user.dime_id
   end
