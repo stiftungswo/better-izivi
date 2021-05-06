@@ -110,6 +110,17 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
         <WiredField
           horizontal
           component={CheckboxField}
+          name={'starts_on_saturday'}
+          label={
+            intl.formatMessage({
+              id: 'views.users.serviceModalForm.starts_on_saturday',
+              defaultMessage: 'Zwischeneinsatz?',
+            })
+          }
+        />
+        <WiredField
+          horizontal
+          component={CheckboxField}
           name={'long_service'}
           label={
             intl.formatMessage({

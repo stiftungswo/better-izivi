@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { useIntl } from 'react-intl';
-import { NumberField } from '../../../../form/common';
+import { FormattedMessage, useIntl } from 'react-intl';
+import Button from 'reactstrap/lib/Button';
+import { NumberField, TextField } from '../../../../form/common';
 import { WiredField } from '../../../../form/formik';
+import { ExpenseSheetStore } from '../../../../stores/expenseSheetStore';
 import { MainStore } from '../../../../stores/mainStore';
-import { ExpenseSheetHints } from '../../../../types';
+import { ExpenseSheetHints, SickDaysDime } from '../../../../types';
 import { expenseSheetFormSegment } from './expenseSheetFormSegment';
 
+type func = (value: string) => void;
+
 export const AbsolvedDaysBreakdownSegment = expenseSheetFormSegment(
-  ({ hints, mainStore }: { hints: ExpenseSheetHints, mainStore: MainStore }) => (
+  ({ hints, sickDays, mainStore, onSaveSickDays, buttonDeactive }:
+   { hints: ExpenseSheetHints, sickDays: SickDaysDime, mainStore: MainStore, buttonDeactive: boolean, onSaveSickDays: func }) => (
       <>
         <WiredField
           horizontal
@@ -57,6 +62,29 @@ export const AbsolvedDaysBreakdownSegment = expenseSheetFormSegment(
               defaultMessage: 'Krank',
             })}
         />
+        <WiredField
+          disabled
+          horizontal
+          component={TextField}
+          name={'sick_days_dime'}
+          value={sickDays.sick_days}
+          label={
+            mainStore.intl.formatMessage({
+              id: 'views.expense_sheets.absolvedDaysBreakdownSegment.sick_days_dime',
+              defaultMessage: 'Anzahl Krankheitstage eingetragen im Dime',
+            })}
+        />
+        <Button
+          key={'submitButton'}
+          color={'success'}
+          disabled={buttonDeactive}
+          onClick={() => onSaveSickDays(sickDays.sick_days)}
+        >
+          <FormattedMessage
+            id="views.expense_sheets.expenseSheetFormButtons.save_dime_sick_days"
+            defaultMessage="Krankheitstage aus Dime übernehmen"
+          />
+        </Button>
       </>
     ),
 );

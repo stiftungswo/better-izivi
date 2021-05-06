@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Table from 'reactstrap/lib/Table';
-import { Column } from '../types';
+import { Column, ExpenseSheetListing } from '../types';
 import { SafeClickableTableRow } from '../utilities/SafeClickableTableRow';
 
 // tslint:disable:no-any ; this is adapted from the docs. It should be typed eventually.
@@ -16,10 +16,6 @@ function format<T>(def: Column<T>, row: T): React.ReactNode {
   }
 }
 
-function calcsum(arr: any[]): number {
-  return _.sumBy(arr, object => object.total) / 100;
-}
-
 // tslint:enable:no-any
 
 interface TableProps<T> {
@@ -28,6 +24,8 @@ interface TableProps<T> {
   data: T[];
   onClickRow?: (e: T, index: number) => void;
   firstRow?: React.ReactNode;
+  lastRow?: React.ReactNode;
+  total?: Promise<string>;
 }
 
 @observer
@@ -66,22 +64,7 @@ export class OverviewTable<T> extends React.Component<TableProps<T>> {
             </SafeClickableTableRow>
           ))}
         </tbody>
-        {calcsum(data).toFixed(2) !== 'NaN' &&
-        <tfoot>
-          <tr>
-            <td>
-              <b>
-                <FormattedMessage
-                  id="layout.overviewTable.total_amount"
-                  defaultMessage="Betrag Total: {amount}"
-                  values={{
-                    amount: calcsum(data).toFixed(2) + ' CHF',
-                  }}
-                />
-              </b>
-            </td>
-          </tr>
-        </tfoot>}
+        {this.props.lastRow}
       </Table>
     );
   }

@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
+# :reek:TooManyMethods
 class Service < ApplicationRecord
   FRIDAY_WEEKDAY = Date::DAYNAMES.index('Friday').freeze
   MONDAY_WEEKDAY = Date::DAYNAMES.index('Monday').freeze
+  SATURDAY_WEEKDAY = Date::DAYNAMES.index('Saturday').freeze
   MIN_NORMAL_SERVICE_LENGTH = 26
 
   include Concerns::PositiveTimeSpanValidatable
@@ -24,7 +28,8 @@ class Service < ApplicationRecord
             presence: true
 
   validate :ending_is_friday, unless: :last_civil_service?
-  validate :beginning_is_monday
+  validate :beginning_is_monday, unless: :starts_on_saturday
+  validate :beginning_is_saturday, if: :starts_on_saturday
   validate :check_if_service_can_be_shorten?, on: :update
   validate :no_overlapping_service
   validate :length_is_valid
@@ -118,6 +123,10 @@ class Service < ApplicationRecord
     errors.add(:beginning, :not_a_monday) unless beginning.present? && beginning.wday == MONDAY_WEEKDAY
   end
 
+  def beginning_is_saturday
+    errors.add(:beginning, :not_a_saturday) unless beginning.present? && beginning.wday == SATURDAY_WEEKDAY
+  end
+
   def ending_is_friday
     errors.add(:ending, :not_a_friday) unless ending.present? && ending.wday == FRIDAY_WEEKDAY
   end
@@ -134,3 +143,4 @@ class Service < ApplicationRecord
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

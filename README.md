@@ -119,6 +119,15 @@ E: The payments contains the expenses in a payment-schedule. An XML can be gener
 
 ### Vorbereitung
 
+#### Docker (geht am schnellsten und am einfachsten)
+
+Wenn Docker noch nicht installiert: z.B [hier](https://www.docker.com/products/docker-desktop) herunterladen. Wichtig: Auf Linux muss docker-compose noch separat installiert werden.
+
+1. Repo clonen und im neuen Verzeichnis wechseln
+2. Dort `docker-compose up` ausführen
+3. Die CLI des API-containers starten und dort `rails db:create`, `rails db:migrate` und `rails db:seed` ausführen (Zwei neue Datenbanken werden erschaffen und mit Daten gespiesen.)
+4. Jetzt ist die Anmeldung mit [diesen](https://github.com/stiftungswo/better-izivi/tree/develop/api#seed-data) Zugangsdaten im Frontend möglich.
+
 #### Homebrew für Mac
 
 Fast jede Linux-Distribution wird mit einem Paketmanager ausgeliefert. Diese ermöglichen dir, bequem neue Programme zu installieren, ohne dazu eine aufwendige Installation durchführen zu müssen. Unter Mac hat die Community homebrew entwickelt, um einen solchen Paketmanager auf Mac bereitzustellen.
@@ -135,10 +144,6 @@ Ruby wird einfacherweise mit [rbenv](https://github.com/rbenv/rbenv) installiert
 4. `cd better-izivi/api/`
 5. `rbenv install`
 6. `gem install bundler`
-
-#### Docker
-
-Installation gemäss der Installationsanleitung auf der [Website](https://docs.docker.com/install/) durchführen. Wichtig: Für manche Betriebssysteme muss docker-compose noch separat installiert werden.
 
 ### Backend
 

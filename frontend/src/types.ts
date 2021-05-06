@@ -82,6 +82,10 @@ export interface ExpenseSheetHints {
   };
 }
 
+export interface SickDaysDime {
+  sick_days: string;
+}
+
 export enum ExpenseSheetState {
   open = 'open',
   ready_for_payment = 'ready_for_payment',
@@ -182,6 +186,10 @@ export interface UserFilter {
   ending: string;
   active: boolean;
   role: string;
+  items: string;
+  no_keywords: boolean;
+  site: string;
+  button_deactive: boolean;
 }
 
 export interface Service {
@@ -192,6 +200,7 @@ export interface Service {
   eligible_paid_vacation_days: number;
   ending: Date | null;
   first_swo_service: boolean;
+  starts_on_saturday: boolean;
   long_service: boolean;
   service_type: string | null;
   probation_period: boolean;

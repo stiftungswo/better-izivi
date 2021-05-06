@@ -2,6 +2,7 @@
 
 module Pdfs
   module ServiceAgreement
+    # :reek:TooManyConstants { max_constants: 7 }
     module FormFields
       USER_FORM_FIELDS = {
         fr: {
@@ -36,6 +37,28 @@ module Pdfs
         de: {
           beginning: 25,
           ending: 24
+        }
+      }.freeze
+
+      REGIONAL_CENTER = {
+        fr: {
+          name: 'regional_center'
+        },
+        de: {
+          name: 'regional_center'
+        }
+      }.freeze
+
+      REGIONAL_CENTER_ADDRESS = {
+        fr: {
+          second: 'tfRZ',
+          third: 'tfStrasse',
+          fourth: 'tfPLZ'
+        },
+        de: {
+          second: 'tfRZ',
+          third: 'tfStrasse',
+          fourth: 'tfPLZ'
         }
       }.freeze
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_142618) do
+ActiveRecord::Schema.define(version: 2021_04_12_132705) do
 
   create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "beginning", null: false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_142618) do
     t.boolean "feedback_mail_sent", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "starts_on_saturday", default: false, null: false
     t.index ["service_specification_id"], name: "index_services_on_service_specification_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
@@ -120,6 +121,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_142618) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.string "legacy_password"
+    t.integer "dime_id", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

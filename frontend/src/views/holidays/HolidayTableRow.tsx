@@ -39,7 +39,11 @@ export const HolidayTableRow = (params: { buttons: React.ReactElement[], mainSto
         />
       </td>
       <td>
-        <WiredField component={TextField} name={'description'} />
+        <WiredField
+          style={{ display: 'inline' }}
+          component={TextField}
+          name={'description'}
+        />
       </td>
 
       {buttons.map((button, index) => <td key={`button-${index}`}>{button}</td>)}
