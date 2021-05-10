@@ -179,12 +179,10 @@ Um das iZivi in verschiedenen Sprachen zu übersetzen, wurden alle Strings der A
   - API: Ordner api: `rails s`
   - Frontend: Ordner frontend, `yarn start` (Meldung zu Portänderung bejahen)
 
-#### Testing
+### Testing
 - Linter ausführen im jeweiligen Ordner: `rubocop -a` (korrigiert auch direkt Fehler)
 - Rspec einzelnes File: `bundle exec rspec ./spec/services/pdfs/expenses_overview_service_spec.rb`
 - Rspec alle Tests: `bundle exec rspec`
-- bundle exec rake == rubocop
-- bundle exec reek == rspec
 
 ## Entwicklung
 
