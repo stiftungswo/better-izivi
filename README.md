@@ -125,8 +125,9 @@ Wenn Docker noch nicht installiert: z.B [hier](https://www.docker.com/products/d
 
 1. Repo clonen und im neuen Verzeichnis wechseln
 2. Dort `docker-compose up` ausführen
-3. Die CLI des API-containers starten und dort `rails db:create`, `rails db:migrate` und `rails db:seed` ausführen (Zwei neue Datenbanken werden erschaffen und mit Daten gespiesen.)
-4. Jetzt ist die Anmeldung mit [diesen](https://github.com/stiftungswo/better-izivi/tree/develop/api#seed-data) Zugangsdaten im Frontend möglich.
+3. Das Terminal des API-containers starten mit `docker exec -it better_izivi_api bash` in ein neues CLI-Fenster oder über die UI.
+4. Dort `rails db:create`, `rails db:migrate` und `rails db:seed` ausführen (Zwei neue Datenbanken werden erschaffen und mit Daten gespiesen.)
+5. Jetzt ist die Anmeldung mit [diesen](https://github.com/stiftungswo/better-izivi/tree/develop/api#seed-data) Zugangsdaten im Frontend möglich.
 
 #### Homebrew für Mac
 
