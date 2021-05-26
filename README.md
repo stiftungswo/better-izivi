@@ -125,8 +125,9 @@ Wenn Docker noch nicht installiert: z.B [hier](https://www.docker.com/products/d
 
 1. Repo clonen und im neuen Verzeichnis wechseln
 2. Dort `docker-compose up` ausführen
-3. Die CLI des API-containers starten und dort `rails db:create`, `rails db:migrate` und `rails db:seed` ausführen (Zwei neue Datenbanken werden erschaffen und mit Daten gespiesen.)
-4. Jetzt ist die Anmeldung mit [diesen](https://github.com/stiftungswo/better-izivi/tree/develop/api#seed-data) Zugangsdaten im Frontend möglich.
+3. Das Terminal des API-containers starten mit `docker exec -it better_izivi_api bash` in ein neues CLI-Fenster oder über die UI.
+4. Dort `rails db:create`, `rails db:migrate` und `rails db:seed` ausführen (Zwei neue Datenbanken werden erschaffen und mit Daten gespiesen.)
+5. Jetzt ist die Anmeldung mit [diesen](https://github.com/stiftungswo/better-izivi/tree/develop/api#seed-data) Zugangsdaten im Frontend möglich.
 
 #### Homebrew für Mac
 
@@ -179,12 +180,10 @@ Um das iZivi in verschiedenen Sprachen zu übersetzen, wurden alle Strings der A
   - API: Ordner api: `rails s`
   - Frontend: Ordner frontend, `yarn start` (Meldung zu Portänderung bejahen)
 
-#### Testing
+### Testing
 - Linter ausführen im jeweiligen Ordner: `rubocop -a` (korrigiert auch direkt Fehler)
 - Rspec einzelnes File: `bundle exec rspec ./spec/services/pdfs/expenses_overview_service_spec.rb`
 - Rspec alle Tests: `bundle exec rspec`
-- bundle exec rake == rubocop
-- bundle exec reek == rspec
 
 ## Entwicklung
 
@@ -205,8 +204,8 @@ Das Backend und Frontend sollen immer sauber formatiert sein (wird von der CI ü
 
 Vor dem Commiten sollten immer die Formatier-Tools ausgeführt werden.
 
-* Backend: `docker-compose exec api rubocop -a` oder `bundle exec rubocop -a`, falls nativ entwicklet wird
-* Frontend: `docker-compose exec frontend yarn format`, bzw. nur `yarn run format`
+* Backend: `docker exec better_izivi_api rubocop -a` oder `bundle exec rubocop -a`, falls nativ entwicklet wird
+* Frontend: `docker exec better_izivi_frontend yarn format`, bzw. nur `yarn run format`
 
 Für das Backend kommt [rubocop](https://github.com/rubocop-hq/rubocop) zum Einsatz und für das Frontend übernimmt [TSLint](https://palantir.github.io/tslint/) den Job.
 
