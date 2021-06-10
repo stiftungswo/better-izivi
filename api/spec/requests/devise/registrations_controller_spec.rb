@@ -6,7 +6,7 @@ RSpec.describe Devise::RegistrationsController, type: :request do
   let(:actual_community_password) { 'my cool community password' }
 
   before do
-    allow(ENV).to receive(:[]).with('COMMUNITY_PASSWORD').and_return actual_community_password
+    stub_const 'ENV', ENV.to_h.merge('COMMUNITY_PASSWORD' => actual_community_password)
     I18n.locale = :de
   end
 

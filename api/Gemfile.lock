@@ -200,10 +200,10 @@ GEM
     mysql2 (0.5.3)
     mysql2 (0.5.3-x64-mingw32)
     nio4r (2.5.7)
-    nokogiri (1.11.3)
+    nokogiri (1.11.5)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
-    nokogiri (1.11.3-x64-mingw32)
+    nokogiri (1.11.5-x64-mingw32)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     parallel (1.20.1)
@@ -236,7 +236,8 @@ GEM
       pry (>= 0.10.4)
     psych (3.3.1)
     public_suffix (4.0.6)
-    puma (3.12.6)
+    puma (4.3.8)
+      nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
     rack-cors (1.1.1)
@@ -407,7 +408,7 @@ DEPENDENCIES
   prawn-table
   pry-byebug
   pry-rails
-  puma (~> 3.12)
+  puma (~> 4.3)
   rack-cors
   rails (~> 6.0.0)
   rails-i18n
