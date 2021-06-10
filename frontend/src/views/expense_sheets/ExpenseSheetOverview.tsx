@@ -75,7 +75,6 @@ export class ExpenseSheetOverview extends React.Component<Props, State> {
       users_per_page: '200',
       current_site: 1,
     };
-    this.props.expenseSheetStore!.doFetchTotal({ filter: this.state.expenseSheetStateFilter });
   }
 
   componentDidMount(): void {

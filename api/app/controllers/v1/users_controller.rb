@@ -13,9 +13,9 @@ module V1
     before_action :protect_self_deletion!, only: :destroy
 
     def index
-      @users = User.all.includes(:services)
-                   .limit(Integer(filter_param) + 1)
-                   .offset((Integer(site_param) - 1) * Integer(site_param))
+      @users = User.all.limit(Integer(filter_param) + 1)
+                   .offset((Integer(site_param) - 1) * Integer(filter_param))
+                   .includes(:services)
     end
 
     def show

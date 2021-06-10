@@ -20,7 +20,6 @@ interface Props {
 
 interface State {
   users_per_page: string;
-  current_site: number;
 }
 
 @inject('mainStore', 'userStore')
@@ -34,7 +33,6 @@ export class UserOverview extends React.Component<Props, State> {
     this.intl = this.props.mainStore!.intl;
     this.state = {
       users_per_page: '200',
-      current_site: 1,
     };
     this.columns = [
       {
@@ -120,14 +118,11 @@ export class UserOverview extends React.Component<Props, State> {
               <td>
                 <Button
                   color={'danger'}
-                  disabled={(this.state.current_site === 1) ? true : false}
+                  disabled={(this.props.userStore!.userFilters.site === '1') ? true : false}
                   onClick={() => {
-                    const site = this.state.current_site - 1;
-                    this.setState(prevState => ({
-                    ...prevState,
-                    current_site: site,
-                    }));
+                    const site = parseInt(this.props.userStore!.userFilters.site, 10) - 1;
                     this.props.userStore!.updateFilters({ site: String(site), no_keywords: true });
+                    window.scrollTo(0, 0);
                   }}
                 >
                   {
@@ -145,19 +140,16 @@ export class UserOverview extends React.Component<Props, State> {
                     defaultMessage: 'Seite:',
                     })
                 }
-                {this.state.current_site}
+                {this.props.userStore!.userFilters.site}
               </td>
               <td>
                 <Button
                   color={'danger'}
                   disabled={this.props.userStore!.userFilters.button_deactive}
                   onClick={() => {
-                    const site = this.state.current_site + 1;
-                    this.setState(prevState => ({
-                      ...prevState,
-                      current_site: site,
-                      }));
+                    const site = parseInt(this.props.userStore!.userFilters.site, 10) + 1;
                     this.props.userStore!.updateFilters({ site: String(site), no_keywords: true });
+                    window.scrollTo(0, 0);
                   }}
                 >
                   {
@@ -183,10 +175,6 @@ export class UserOverview extends React.Component<Props, State> {
                     target: { value },
                   }: React.ChangeEvent<HTMLInputElement>) => {
                     this.props.userStore!.updateFilters({ items: value, no_keywords: true, site: '1' });
-                    this.setState(prevState => ({
-                      ...prevState,
-                      current_site: 1,
-                           }));
                     }
                   }
                   value={this.props.userStore!.userFilters.items}
