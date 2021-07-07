@@ -15,9 +15,11 @@ RSpec.describe FeedbackMailer, type: :mailer do
       }
     end
 
-    before { I18n.locale = :de }
-
-    after { I18n.locale = I18n.default_locale }
+    around do |spec|
+      I18n.with_locale(:de) do
+        spec.run
+      end
+    end
 
     describe 'header' do
       it 'renders the headers' do

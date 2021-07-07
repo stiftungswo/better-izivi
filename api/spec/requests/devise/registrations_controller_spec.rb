@@ -7,10 +7,13 @@ RSpec.describe Devise::RegistrationsController, type: :request do
 
   before do
     stub_const 'ENV', ENV.to_h.merge('COMMUNITY_PASSWORD' => actual_community_password)
-    I18n.locale = :de
   end
 
-  after { I18n.locale = I18n.default_locale }
+  around do |spec|
+    I18n.with_locale(:de) do
+      spec.run
+    end
+  end
 
   describe '#create' do
     let(:regional_center) { create :regional_center }
