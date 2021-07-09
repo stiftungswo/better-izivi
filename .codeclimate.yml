@@ -6,7 +6,7 @@ plugins:
   rubocop:
     enabled: true
     config: api/.rubocop_base.yml
-    channel: rubocop-0-67
+    channel: rubocop-1-18
 exclude_patterns:
   - "api/db/seed_data/"
   - "api/db/seeds.rb"

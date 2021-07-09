@@ -33,8 +33,8 @@ module Api
     config.api_only = true
 
     config.action_mailer.default_url_options = {
-      host: ENV.fetch('APP_HOST') { 'localhost' },
-      port: ENV.fetch('APP_POST') { 3000 }
+      host: ENV.fetch('APP_HOST', 'localhost'),
+      port: ENV.fetch('APP_POST', 3000)
     }
 
     config.i18n.default_locale = :de

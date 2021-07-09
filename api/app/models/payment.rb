@@ -96,7 +96,9 @@ class Payment
   def validate_expense_sheets
     return if @expense_sheets.all?(&:valid?)
 
-    expense_sheets_errors.each(&method(:add_error))
+    expense_sheets_errors.each do |error|
+      add_error(error)
+    end
   end
 
   def expense_sheets_errors

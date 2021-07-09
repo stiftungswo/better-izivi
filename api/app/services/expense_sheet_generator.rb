@@ -34,7 +34,7 @@ class ExpenseSheetGenerator
   private
 
   def group_days_by_month(days)
-    days.slice_when { |date| date == date.at_end_of_month }
+    days.slice_when { |date, _other_date| date == date.at_end_of_month }
   end
 
   def create_expense_sheet(beginning, ending)

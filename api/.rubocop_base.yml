@@ -8,7 +8,7 @@ Rails/SkipsModelValidations:
   Exclude:
     - 'spec/**/*.rb'
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
 
 Style/Documentation:
@@ -49,7 +49,12 @@ Rails/Output:
   Exclude:
     - 'lib/v1/data_migrator.rb'
 
+Naming/InclusiveLanguage:
+  Enabled: false
+
 AllCops:
+  NewCops: enable
+  SuggestExtensions: false
   Exclude:
     - 'bin/**/*'
     - 'log/**/*'

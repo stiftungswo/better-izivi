@@ -212,7 +212,7 @@ RSpec.describe Payment, type: :model do
     let(:found_payments) { described_class.all }
 
     context 'with existing payments' do
-      subject(:returned_payments) { found_payments.map(&method(:hash_of_payment)) }
+      subject(:returned_payments) { found_payments.map { |pay| hash_of_payment(pay) } }
 
       let(:user) { create :user }
       let(:services) do
@@ -222,7 +222,7 @@ RSpec.describe Payment, type: :model do
         ]
       end
 
-      let(:expected_return_value) { expected_payments.map(&method(:hash_of_payment)) }
+      let(:expected_return_value) { expected_payments.map { |pay| hash_of_payment(pay) } }
       let(:expected_payments) { payments }
       let(:payment_in_progress_payments) do
         (1..3).to_a.reverse.map do |iota|
@@ -283,9 +283,7 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'adds all validation errors to errors' do
-        expect(payment.tap(&:validate).errors.messages).to include(
-          state: be_an_instance_of(Array)
-        )
+        expect(payment.tap(&:validate).errors.messages[:state]).not_to be_empty
       end
     end
 

@@ -31,7 +31,7 @@ module V1
 
     def create_migration_db
       puts 'Creating migration database'
-      execute_sql <<-SQL.chomp
+      execute_sql <<-SQL.squish.chomp
         CREATE DATABASE #{MIGRATION_DATABASE_NAME};
       SQL
     end
@@ -43,7 +43,7 @@ module V1
 
     def migrate_old_data
       puts 'Migrating old data to new format'
-      system! "#{mysql_command(MIGRATION_DATABASE_NAME)} < #{Rails.root.join('migration', 'v1.sql')}"
+      system! "#{mysql_command(MIGRATION_DATABASE_NAME)} < #{Rails.root.join('migration/v1.sql')}"
     end
 
     def prepare_new_database
@@ -71,7 +71,7 @@ module V1
 
     def remove_migration_database
       puts 'Removing migration databse'
-      execute_sql <<-SQL.chomp
+      execute_sql <<-SQL.squish.chomp
         DROP DATABASE #{MIGRATION_DATABASE_NAME};
       SQL
     end

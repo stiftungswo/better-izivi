@@ -1,4 +1,4 @@
-FROM ruby:2.6.5
+FROM ruby:2.7.3
 
 ENV BUNDLER_VERSION=2.1.4
 #ENV RAILS_ENV=development test

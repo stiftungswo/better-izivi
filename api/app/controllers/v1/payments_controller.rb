@@ -18,7 +18,7 @@ module V1
           send_data generate_pain,
                     disposition: 'attachment',
                     filename: I18n.t('payment.pain_filename',
-                                     from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y')) + '.xml'
+                                     from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y'))
         end
       end
     end

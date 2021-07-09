@@ -7,10 +7,6 @@ require 'rails_helper'
 RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
   describe '#render' do
     context 'when locale is german' do
-      before { I18n.locale = :de }
-
-      after { I18n.locale = I18n.default_locale }
-
       let(:pdf) { described_class.new(expense_sheet).render }
       let(:expense_sheet) { create :expense_sheet, expense_sheet_data }
       let(:service) { create :service, service_data }
@@ -64,7 +60,11 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
         ]
       end
 
-      let(:ZDP) { expense_sheet_data.user.ZDP }
+      around do |spec|
+        I18n.with_locale(:de) do
+          spec.run
+        end
+      end
 
       it 'renders one page' do
         expect(pdf_page_inspector.pages.size).to eq 1
@@ -76,16 +76,10 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
 
       context 'when work_clothing_expenses is more than threshold' do
         let(:service_specification) do
-          create(
-            :service_specification, identification_number: 82_846, work_clothing_expenses: 1000
-          )
+          create(:service_specification, identification_number: 82_846, work_clothing_expenses: 1000)
         end
 
-        let(:expected_texts) do
-          [
-            'CHF 10.00/Tag für 27 anrechenbare Tage', '32.00'
-          ]
-        end
+        let(:expected_texts) { ['CHF 10.00/Tag für 27 anrechenbare Tage', '32.00'] }
 
         it 'renders correct text' do
           expect(pdf_text_inspector.strings[-8..-7]).to eq expected_texts
@@ -113,9 +107,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
             user: service.user
           )
         end
-        let(:expected_texts) do
-          %w[+ Ausserordentliche\ Spesen MyString 150.00]
-        end
+        let(:expected_texts) { %w[+ Ausserordentliche\ Spesen MyString 150.00] }
 
         it 'renders correct text' do
           expect(pdf_text_inspector.strings[-10..-7]).to eq expected_texts

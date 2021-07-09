@@ -5,9 +5,11 @@ require 'rails_helper'
 RSpec.describe Pdfs::ServiceAgreement::FirstPage, type: :service do
   describe '#render' do
     context 'when locale is german' do
-      before { I18n.locale = :de }
-
-      after { I18n.locale = I18n.default_locale }
+      around do |spec|
+        I18n.with_locale(:de) do
+          spec.run
+        end
+      end
 
       let(:pdf) { described_class.new(service).render }
       let(:service) { create :service }
@@ -22,7 +24,7 @@ RSpec.describe Pdfs::ServiceAgreement::FirstPage, type: :service do
           'Lieber Zivi',
           'Bitte sende die unterzeichnete Einsatzvereinbarung an obige Adresse. Wenn du ein Fenstercouvert mit Fenster',
           'links oder rechts verwendest, kannst du dieses Deckblatt falten ' \
-           'und in das Couvert stecken. Die Adresse ist richtig',
+          'und in das Couvert stecken. Die Adresse ist richtig',
           'platziert. Die Adresse unten rechts wird von uns benutzt um die Einsatzvereinbarung an die Regionalstelle',
           'weiterzuleiten. Ganz am Ende findest du ein Informationsblatt, ' \
           'das dir Auskunft über den Ablauf deines Einsatzes',

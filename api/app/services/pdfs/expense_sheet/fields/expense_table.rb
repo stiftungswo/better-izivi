@@ -15,6 +15,7 @@ module Pdfs
           I18n.t('pdfs.expense_sheet.expense_table.headers.full_amount')
         ].freeze
 
+        # rubocop:disable Lint/LambdaWithoutLiteralBlock
         DAY_ROWS = [
           {
             count: ->(expense_sheet) { expense_sheet.at_service_beginning? ? 1 : 0 },
@@ -52,6 +53,7 @@ module Pdfs
             calculation_method: :calculate_unpaid_vacation_days
           }
         ].freeze
+        # rubocop:enable Lint/LambdaWithoutLiteralBlock
 
         COLUMNS = %i[pocket_money accommodation breakfast lunch dinner total].freeze
 
