@@ -5,7 +5,7 @@ export default class AppMode {
 
   constructor() {
     const url = window.location.href;
-    this.mode = url.includes('localhost') || url.includes('test') ? 'dev' : 'prod';
+    this.mode = url.includes('localhost') || url.includes('test') || url.includes('develop') ? 'dev' : 'prod';
   }
 
   get isProd() {
