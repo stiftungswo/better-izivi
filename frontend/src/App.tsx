@@ -6,6 +6,7 @@ import 'react-widgets/dist/css/react-widgets.css';
 import { Route, Switch } from 'react-router-dom';
 import { IziviLayout } from './layout/IziviLayout';
 
+import AppMode from './utilities/AppMode';
 import { Icons } from './utilities/Icon';
 import { ProtectedRoute } from './utilities/ProtectedRoute';
 import { ChangeForgottenPassword } from './views/ChangeForgottenPassword';
@@ -36,9 +37,10 @@ const feedbacksUrl = 'FEEDBACKS_URL';
 class App extends React.Component {
   render() {
     const feedbacksUrlValid = feedbacksUrl.startsWith('https');
+    const appMode = new AppMode();
 
     return (
-      <IziviLayout>
+      <IziviLayout appMode={appMode}>
         <Switch>
           <Route component={Home} exact path={'/'} />
           <Route component={Login} exact path={'/login'} />
