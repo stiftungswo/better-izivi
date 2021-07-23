@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_132705) do
+ActiveRecord::Schema.define(version: 2021_07_23_062907) do
 
   create_table "expense_sheets", charset: "utf8mb3", force: :cascade do |t|
     t.date "beginning", null: false
@@ -120,7 +120,6 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.string "legacy_password"
     t.integer "dime_id", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
