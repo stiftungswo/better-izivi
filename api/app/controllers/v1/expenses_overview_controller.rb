@@ -17,7 +17,7 @@ module V1
 
           send_data pdf.render,
                     filename:
-                      I18n.t('pdfs.expenses_overview.filename', today: I18n.l(Time.zone.today)) + '.pdf',
+                      "#{I18n.t('pdfs.expenses_overview.filename', today: I18n.l(Time.zone.today))}.pdf",
                     type: 'application/pdf',
                     disposition: 'inline'
         end

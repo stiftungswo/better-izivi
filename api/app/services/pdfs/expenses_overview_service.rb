@@ -5,7 +5,7 @@ require 'prawn'
 # require_relative 'expenses_overview/expenses_overview_additions'
 
 module Pdfs
-  # rubocop:disable ClassLength
+  # rubocop:disable Metrics/ClassLength
   class ExpensesOverviewService
     include Prawn::View
     include Pdfs::PrawnHelper
@@ -43,24 +43,28 @@ module Pdfs
       end
     end
 
-    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def content_table
       total_days = 0
       total_expenses = 0.0
       font_size 9
-      @service_specifications.values.each do |expense_sheet|
-        # rubocop:disable Metrics/LineLength
-        table(table_data(expense_sheet), cell_style: { borders: [], padding: [0, 5, 0, 5] }, width: bounds.width, column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS)
-        # rubocop:enable Metrics/LineLength
+      @service_specifications.each_value do |expense_sheet|
+        table(
+          table_data(expense_sheet),
+          cell_style: { borders: [], padding: [0, 5, 0, 5] },
+          width: bounds.width,
+          column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS
+        )
         sum_table(expense_sheet)
         total_days += (expense_sheet.sum(&:work_days) + expense_sheet.sum(&:workfree_days) +
-        expense_sheet.sum(&:paid_vacation_days) + expense_sheet.sum(&:sick_days))
+          expense_sheet.sum(&:paid_vacation_days) + expense_sheet.sum(&:sick_days))
         total_expenses += expense_sheet.sum(&:calculate_full_expenses)
       end
       total_sum_table(total_days, total_expenses)
     end
 
-    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
     # :reek:FeatureEnvy
     def sum_table(expense_sheets)
       table([[{ content: 'Gesamt: ', align: :left },
@@ -74,13 +78,25 @@ module Pdfs
       end
     end
 
+    # rubocop:disable Metrics/MethodLength
     def total_sum_table(total_days, total_expenses)
-      table([[{ content: 'Total Tage: ' + total_days.to_s + ', Total Betrag: ' +
-        Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s), align: :right }]],
-            cell_style: { borders: [] }, header: false, position: :right) do
+      head = [
+        [
+          {
+            content: "Total Tage: #{total_days}, Total Betrag: #{Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s)}",
+            align: :right
+          }
+        ]
+      ]
+
+      table(
+        head, cell_style: { borders: [] }, header: false, position: :right
+      ) do
         row(0).font_style = :italic
       end
     end
+
+    # rubocop:enable Metrics/MethodLength
 
     def pre_table(name)
       move_down 25
@@ -95,16 +111,22 @@ module Pdfs
     def first_part(expense_sheet)
       exps_user = expense_sheet.user
       [{ content: exps_user.zdp.to_s, align: :right },
-       { content: (exps_user.last_name + ' ' + exps_user.first_name) },
-       { content: (I18n.l(expense_sheet.beginning, format: :short) + ' - ' +
-         I18n.l(expense_sheet.ending, format: :short)).to_s, align: :center }]
+       { content: "#{exps_user.last_name} #{exps_user.first_name}" },
+       {
+         content: "#{I18n.l(expense_sheet.beginning,
+                            format: :short)} - #{I18n.l(expense_sheet.ending, format: :short)}".to_s, align: :center
+       }]
     end
 
     def second_part(expense_sheet)
-      # rubocop:disable Metrics/LineLength
-      [{ content: expense_sheet.work_days.to_s, align: :right }, { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days[:total] + expense_sheet.calculate_first_day[:total] + expense_sheet.calculate_last_day[:total]), align: :right },
-       # rubocop:enable Metrics/LineLength
-       { content: expense_sheet.workfree_days.to_s, align: :right }]
+      content = Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.calculate_work_days[:total] +
+                                                    expense_sheet.calculate_first_day[:total] +
+                                                    expense_sheet.calculate_last_day[:total])
+      [
+        { content: expense_sheet.work_days.to_s, align: :right },
+        { content: content, align: :right },
+        { content: expense_sheet.workfree_days.to_s, align: :right }
+      ]
     end
 
     def third_part(expense_sheet)
@@ -125,7 +147,7 @@ module Pdfs
          align: :right },
        { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheet.driving_expenses), align: :right },
        { content: (expense_sheet.work_days + expense_sheet.workfree_days +
-        expense_sheet.paid_vacation_days + expense_sheet.sick_days).to_s, align: :right }]
+         expense_sheet.paid_vacation_days + expense_sheet.sick_days).to_s, align: :right }]
     end
 
     def fifth_part(expense_sheet)
@@ -146,11 +168,15 @@ module Pdfs
     def table_content(expense_sheets)
       expense_sheets.map do |expense_sheet|
         expense_sheet.slice.values
-        # rubocop:disable Metrics/LineLength
-        first_part(expense_sheet) + second_part(expense_sheet) + third_part(expense_sheet) + fourth_part(expense_sheet) + fifth_part(expense_sheet) + sixt_part(expense_sheet)
-        # rubocop:enable Metrics/LineLength
+        first_part(expense_sheet) +
+          second_part(expense_sheet) +
+          third_part(expense_sheet) +
+          fourth_part(expense_sheet) +
+          fifth_part(expense_sheet) +
+          sixt_part(expense_sheet)
       end
     end
   end
-  # rubocop:enable ClassLength
+
+  # rubocop:enable Metrics/ClassLength
 end

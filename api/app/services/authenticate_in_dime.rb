@@ -25,13 +25,13 @@ class AuthenticateInDime
 
   def log_in
     body = { employee: { email: ENV.fetch('USERNAME_DIME'), password: ENV.fetch('PASSWORD_DIME') } }.to_json
-    uri = URI(@api_uri + '/v2/employees/sign_in')
+    uri = URI("#{@api_uri}/v2/employees/sign_in")
     response = post(body, uri)
     response['Authorization']
   end
 
   def make_user_dime(body)
-    uri = URI(@api_uri + '/v2/employees')
+    uri = URI("#{@api_uri}/v2/employees")
     post(body, uri)
   end
 

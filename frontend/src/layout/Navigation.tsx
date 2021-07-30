@@ -6,13 +6,14 @@ import { DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from
 import Collapse from 'reactstrap/lib/Collapse';
 import Nav from 'reactstrap/lib/Nav';
 import Navbar from 'reactstrap/lib/Navbar';
-import NavbarBrand from 'reactstrap/lib/NavbarBrand';
 import NavbarToggler from 'reactstrap/lib/NavbarToggler';
 import NavItem from 'reactstrap/lib/NavItem';
 import NavLink from 'reactstrap/lib/NavLink';
 import { ApiStore } from '../stores/apiStore';
 import { defaultLocale, languages, MainStore, messages } from '../stores/mainStore';
 import { Locale } from '../types';
+import AppMode from '../utilities/AppMode';
+import { NavbarBrand } from './NavbarBrand';
 
 interface NavEntryProps {
   to: string;
@@ -37,6 +38,7 @@ const NavEntry = ({ to, children, exact }: NavEntryProps) => (
 interface NavProps {
   mainStore?: MainStore;
   apiStore?: ApiStore;
+  appMode: AppMode;
 }
 
 const feedbacksUrl = 'FEEDBACKS_URL';
@@ -52,11 +54,12 @@ export class Navigation extends React.Component<NavProps> {
   render() {
     const mainStore = this.props.mainStore!;
     const apiStore = this.props.apiStore!;
+    const appMode = this.props.appMode;
     const feedbacksUrlValid = feedbacksUrl.startsWith('https');
 
     return (
-      <Navbar color={'light'} light expand={'md'}>
-        <NavbarBrand href={'/'}>iZivi</NavbarBrand>
+      <Navbar color={appMode.isProd ? 'light' : 'success'} light expand={'md'}>
+        <NavbarBrand appMode={this.props.appMode}/>
         <NavbarToggler onClick={() => (mainStore.navOpen = !mainStore.navOpen)} />
         <Collapse isOpen={mainStore.navOpen} navbar>
           <Nav className={'ml-auto'} navbar>

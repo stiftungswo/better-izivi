@@ -8,6 +8,7 @@ module V1
     before_action :authenticate_from_params!, if: -> { request.format.xml? }
     before_action :authenticate_user!, unless: -> { request.format.xml? }
     before_action :authorize_admin!
+    before_action :set_payment, only: %i[confirm destroy]
 
     def show
       @payment = Payment.find(payment_timestamp_param)
@@ -18,7 +19,7 @@ module V1
           send_data generate_pain,
                     disposition: 'attachment',
                     filename: I18n.t('payment.pain_filename',
-                                     from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y')) + '.xml'
+                                     from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y'))
         end
       end
     end
@@ -37,16 +38,12 @@ module V1
     end
 
     def destroy
-      @payment = Payment.find(payment_timestamp_param)
-
       raise ValidationError, @payment.errors unless @payment.cancel
 
       render :show
     end
 
     def confirm
-      @payment = Payment.find(payment_timestamp_param)
-
       raise ValidationError, @payment.errors unless @payment.confirm
 
       render :show
@@ -63,6 +60,10 @@ module V1
     end
 
     private
+
+    def set_payment
+      @payment = Payment.find(payment_timestamp_param)
+    end
 
     def payments_list_filter
       return if filter_param.blank?

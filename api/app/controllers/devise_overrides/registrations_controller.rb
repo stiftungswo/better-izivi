@@ -46,9 +46,9 @@ module DeviseOverrides
     # :reek:FeatureEnvy
     def make_user_dime
       user_params = params['user']
-      body = { "email": user_params['email'], "can_login": false, "first_name": user_params['first_name'],
-               "last_name": user_params['last_name'], "password": user_params['password'], "employee_group_id": 2,
-               "password_repeat": user_params['password'] }.to_json
+      body = { email: user_params['email'], can_login: false, first_name: user_params['first_name'],
+               last_name: user_params['last_name'], password: user_params['password'], employee_group_id: 2,
+               password_repeat: user_params['password'] }.to_json
       req = AuthenticateInDime.new
       req.make_user_dime(body)
     end

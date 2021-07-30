@@ -23,7 +23,7 @@ module Pdfs
     private
 
     def font_file_path(filename)
-      Rails.root.join('app', 'assets', 'fonts', filename)
+      Rails.root.join('app/assets/fonts', filename)
     end
   end
 end

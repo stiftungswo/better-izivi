@@ -2,17 +2,17 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_132705) do
+ActiveRecord::Schema.define(version: 2021_07_23_062907) do
 
-  create_table "expense_sheets", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "expense_sheets", charset: "utf8mb3", force: :cascade do |t|
     t.date "beginning", null: false
     t.date "ending", null: false
     t.bigint "user_id", null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 
-  create_table "holidays", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "holidays", charset: "utf8mb3", force: :cascade do |t|
     t.date "beginning", null: false
     t.date "ending", null: false
     t.integer "holiday_type", default: 1, null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "regional_centers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "regional_centers", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
     t.string "short_name", null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "service_specifications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "service_specifications", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "short_name", null: false
     t.integer "work_clothing_expenses", null: false
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.index ["identification_number"], name: "index_service_specifications_on_identification_number", unique: true
   end
 
-  create_table "services", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "services", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "service_specification_id", null: false
     t.date "beginning", null: false
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "email", null: false
     t.integer "zdp", null: false
     t.string "first_name", null: false
@@ -120,7 +120,6 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.string "legacy_password"
     t.integer "dime_id", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
@@ -128,7 +127,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_132705) do
     t.index ["zdp"], name: "index_users_on_zdp", unique: true
   end
 
-  create_table "whitelisted_jwts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "whitelisted_jwts", charset: "utf8mb3", force: :cascade do |t|
     t.string "jti", null: false
     t.string "aud"
     t.datetime "exp", null: false

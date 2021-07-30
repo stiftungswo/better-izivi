@@ -5,9 +5,11 @@ require 'rails_helper'
 RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
   describe '#render' do
     context 'when locale is german' do
-      before { I18n.locale = :de }
-
-      after { I18n.locale = I18n.default_locale }
+      around do |spec|
+        I18n.with_locale(:de) do
+          spec.run
+        end
+      end
 
       let(:pdf) { described_class.new(service).render }
       let(:service) { create :service, service_data }
@@ -64,7 +66,7 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
       it 'renders pages in correct order', :aggregate_failures do
         page_text_check_indices.each_with_index do |indices, index|
           expect(
-            pdf_strings[indices].is_a?(Array) ? pdf_strings[indices].join('') : pdf_strings[indices]
+            pdf_strings[indices].is_a?(Array) ? pdf_strings[indices].join : pdf_strings[indices]
           ).to eq page_text_check_texts[index]
         end
       end

@@ -20,7 +20,9 @@ module Pdfs
       end
 
       def draw_table_footer_rows
-        Fields::ExpenseTable::FOOTER[:content].each(&method(:draw_table_footer_row))
+        Fields::ExpenseTable::FOOTER[:content].each do |row|
+          draw_table_footer_row(row)
+        end
       end
 
       def draw_table_footer_row(row)
@@ -52,7 +54,9 @@ module Pdfs
       end
 
       def map_lines(rows)
-        rows.each(&method(:draw_line))
+        rows.each do |row|
+          draw_line(row)
+        end
       end
 
       def draw_line(row)

@@ -36,4 +36,6 @@ Rails.application.routes.draw do
 
     put 'payments/:payment_timestamp/confirm', to: 'payments#confirm', as: 'payment_confirm'
   end
+
+  mount Sidekiq::Web => '/sidekiq' if defined? Sidekiq::Web
 end

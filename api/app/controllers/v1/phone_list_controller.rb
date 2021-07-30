@@ -10,17 +10,21 @@ module V1
     def show
       respond_to do |format|
         format.pdf do
-          pdf = Pdfs::PhoneListService.new(@specifications, sanitized_filters)
-
-          send_data pdf.render,
-                    filename: I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today)) + '.pdf',
-                    type: 'application/pdf',
-                    disposition: 'inline'
+          send_pdf
         end
       end
     end
 
     private
+
+    def send_pdf
+      pdf = Pdfs::PhoneListService.new(@specifications, sanitized_filters)
+
+      send_data pdf.render,
+                filename: "#{I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today))}.pdf",
+                type: 'application/pdf',
+                disposition: 'inline'
+    end
 
     def load_specifications
       @specifications = Service.overlapping_date_range(sanitized_filters.beginning, sanitized_filters.ending)

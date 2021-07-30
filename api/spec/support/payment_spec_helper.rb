@@ -12,7 +12,9 @@ def hash_of_payment(payment)
   {
     state: payment.state,
     payment_timestamp: payment.payment_timestamp,
-    expense_sheets: payment.expense_sheets.map(&method(:extract_to_json))
+    expense_sheets: payment.expense_sheets.map do |sheet|
+      extract_to_json(sheet)
+    end
   }
 end
 
