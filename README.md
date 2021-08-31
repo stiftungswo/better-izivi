@@ -257,6 +257,9 @@ Seit React 16.5 gibt es einen Profiler, mit welchem die Ladezeiten der einzelnen
 
 Anschliessend kann die Seite neu geladen werden und der Record-Button erneut gedrückt werden, um die Aufzeichnung zu beenden. nun hat man eine detaillierte Ansicht aller Ladezeiten der Komponenten.
 
+## CORS
+Ein Servercrash führt vielleicht zu fehlerhaften Dockerstarts. Dies kann vielleicht durch einen Push auf den Master gefixt werden.
+
 ## License
 
 iZivi is licensed under the GNU Lesser General Public License v3.0 (LGPLv3). [LICENSE](LICENSE)
