@@ -45,13 +45,6 @@ module Pdfs
 
     # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def content_table
-      total_days = 0
-      total_expenses = 0.0
-
-      total_work_days = 0
-      total_work_days_chf = 0.0
-      total_workfree_days = 0
-
       font_size 9
       @service_specifications.each_value do |expense_sheet|
         table(
@@ -61,12 +54,9 @@ module Pdfs
           column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS
         )
         sum_table(expense_sheet)
-        total_days += (expense_sheet.sum(&:work_days) + expense_sheet.sum(&:workfree_days) +
-          expense_sheet.sum(&:paid_vacation_days) + expense_sheet.sum(&:sick_days))
-        total_expenses += expense_sheet.sum(&:calculate_full_expenses)
       end
 
-      total_sum_table(total_days, total_expenses)
+      total_sum_table
     end
 
     # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
@@ -79,22 +69,13 @@ module Pdfs
                 align: :right },
               { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(expense_sheets.sum(&:calculate_full_expenses).to_s),
                 align: :right }]], cell_style: { borders: [], padding: [1, 5, 1, 5] },
-            header: false, position: :right, column_widths: [40, 30, 45]) do
+                                   header: false, position: :right, column_widths: [40, 30, 45]) do
         row(0).font_style = :bold
       end
     end
 
     # rubocop:disable Metrics/MethodLength
-    def total_sum_table(total_days, total_expenses)
-      head = [
-        [
-          {
-            content: "Total Tage: #{total_days}, Total Betrag: #{Pdfs::ExpenseSheet::FormatHelper.to_chf(total_expenses.to_s)}",
-            align: :right
-          }
-        ]
-      ]
-
+    def total_sum_table()
       sum = [
         [
           { content: '', align: :right },
@@ -170,9 +151,9 @@ module Pdfs
 
       table(
         sum, cell_style: { borders: [:top], padding: [1, 5, 1, 5] },
-        header: false,
-        column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS,
-        width: bounds.width,
+             header: false,
+             column_widths: Pdfs::ExpensesOverview::ExpensesOverviewAdditions::COLUMN_WIDTHS,
+             width: bounds.width
       ) do
         row(0).font_style = :bold
       end
