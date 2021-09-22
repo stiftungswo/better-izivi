@@ -10,10 +10,11 @@ module Pdfs
     include Prawn::View
     include Pdfs::PrawnHelper
 
-    def initialize(service_specifications, dates)
-      @beginning = dates.beginning
-      @ending = dates.ending
+    def initialize(service_specifications, sanitized_filters)
+      @beginning = sanitized_filters.beginning
+      @ending = sanitized_filters.ending
       @service_specifications = service_specifications
+      @only_done_sheets = sanitized_filters.only_done_sheets
       update_font_families
       headline
       header
@@ -28,7 +29,9 @@ module Pdfs
 
     def headline
       text I18n.t('pdfs.expenses_overview.swo', date: I18n.l(Time.zone.today)), align: :right, size: 8
-      text I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today)), align: :right, size: 8
+      if @only_done_sheets == 'true'
+        text I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today)), align: :right, size: 8
+      end
       text(I18n.t('pdfs.expenses_overview.title', beginning: I18n.l(@beginning), ending: I18n.l(@ending)),
            align: :left, style: :bold, size: 15)
     end

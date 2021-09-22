@@ -202,7 +202,7 @@ de:
     expenses_overview:
       basedon: Statistik basiert auf allen erledigten Meldeblättern
       filename: Übersicht_Spesenstatistik_%{today}
-      swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Verfügung vom %{date}
+      swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Stand vom %{date}
       title: Zivi-Spesen Detailübersicht (Zeitperiode %{beginning} - %{ending})
     phone_list:
       filename: Telefonliste_%{today}
