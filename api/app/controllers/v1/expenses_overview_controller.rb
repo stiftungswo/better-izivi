@@ -29,7 +29,7 @@ module V1
     def load_specifications
       @specifications = ExpenseSheet.overlapping_date_range(sanitized_filters.beginning, sanitized_filters.ending)
                                     .includes(:user)
-                                    .state(if sanitized_filters.only_done_sheets
+                                    .state(if sanitized_filters.only_done_sheets == 'true'
                                              3
                                            else
                                              0
