@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import moment from 'moment';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -11,7 +12,6 @@ import { SelectField } from '../../form/common';
 import { DatePickerField } from '../../form/DatePickerField';
 import { WiredField } from '../../form/formik';
 import { MainStore } from '../../stores/mainStore';
-import {FormikProps} from "formik/dist/types";
 
 const yearOptions = () => {
   const listOfYears = [];
@@ -33,8 +33,8 @@ interface Props {
 
 export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
 
-  getBeginning(formikProps: FormikProps<any>){
-    switch(formikProps.values.time_type) {
+  getBeginning(formikProps: FormikProps<any>) {
+    switch (formikProps.values.time_type) {
       case '2':
         return moment().startOf('month').format('Y-MM-DD');
       case '3':

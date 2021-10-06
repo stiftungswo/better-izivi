@@ -46,7 +46,6 @@ module Pdfs
       end
     end
 
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     def content_table
       font_size 9
       @service_specifications.each_value do |expense_sheet|
@@ -62,8 +61,6 @@ module Pdfs
       total_sum_table
     end
 
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
     # :reek:FeatureEnvy
     def sum_table(expense_sheets)
       table([[{ content: 'Gesamt: ', align: :left },
@@ -77,8 +74,8 @@ module Pdfs
       end
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def total_sum_table()
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def total_sum_table
       sum = [
         [
           { content: '', align: :right },
@@ -162,7 +159,7 @@ module Pdfs
       end
     end
 
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
     def pre_table(name)
       move_down 25
