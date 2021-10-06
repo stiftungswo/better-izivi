@@ -145,7 +145,7 @@ module Pdfs
           end.to_s, align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum(&:calculate_full_expenses)
-          end).to_s, align: :right },
+          end).to_s, align: :right }
         ]
       ]
 
