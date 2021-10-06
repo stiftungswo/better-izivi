@@ -77,6 +77,7 @@ module Pdfs
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     # :reek:DuplicateMethodCall
     # :reek:NestedIterators
+    # :reek:TooManyStatements
     def total_sum_table
       sum = [
         [
