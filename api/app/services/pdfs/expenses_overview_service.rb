@@ -75,6 +75,8 @@ module Pdfs
     end
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # :reek:DuplicateMethodCall
+    # :reek:NestedIterators
     def total_sum_table
       sum = [
         [
@@ -82,7 +84,7 @@ module Pdfs
           { content: '', align: :right },
           { content: 'Total', align: :right },
 
-          { content: @service_specifications.sum { |e| e.last.sum(&:work_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:work_days) }.to_s, align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_work_days[:total] +
@@ -91,28 +93,28 @@ module Pdfs
             end
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum { |e| e.last.sum(&:workfree_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:workfree_days) }.to_s, align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_workfree_days[:total]
             end
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum { |e| e.last.sum(&:sick_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:sick_days) }.to_s, align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_sick_days[:total]
             end
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum { |e| e.last.sum(&:paid_vacation_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:paid_vacation_days) }.to_s, align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_paid_vacation_days[:total]
             end
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum { |e| e.last.sum(&:unpaid_vacation_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:unpaid_vacation_days) }.to_s, align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_unpaid_vacation_days[:total]
@@ -123,8 +125,8 @@ module Pdfs
             expense_sheets.last.sum(&:driving_expenses)
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum do |e|
-            e.last.sum do |expense_sheet|
+          { content: @service_specifications.sum do |element|
+            element.last.sum do |expense_sheet|
               expense_sheet.work_days + expense_sheet.workfree_days +
                 expense_sheet.paid_vacation_days + expense_sheet.sick_days
             end
@@ -137,8 +139,8 @@ module Pdfs
             expense_sheets.last.sum(&:extraordinary_expenses)
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum do |e|
-            e.last.sum do |expense_sheet|
+          { content: @service_specifications.sum do |element|
+            element.last.sum do |expense_sheet|
               expense_sheet.work_days + expense_sheet.workfree_days +
                 expense_sheet.paid_vacation_days + expense_sheet.sick_days
             end
