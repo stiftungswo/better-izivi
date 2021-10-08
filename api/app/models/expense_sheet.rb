@@ -40,6 +40,7 @@ class ExpenseSheet < ApplicationRecord
   scope :payment_issued, -> { includes(:user).where.not(payment_timestamp: [nil]) }
   scope :before_date, ->(date) { where(arel_table[:ending].lt(date)) }
   scope :filtered_by, ->(filters) { filters.reduce(self) { |query, filter| query.where(filter) } if filters.present? }
+  scope :state, ->(min_state) { where(arel_table[:state].gteq(min_state)) }
 
   # ExpenseSheets which can be used in calculations
   scope :relevant_for_calculations, -> { where.not(state: :open) }

@@ -29,6 +29,11 @@ module V1
     def load_specifications
       @specifications = ExpenseSheet.overlapping_date_range(sanitized_filters.beginning, sanitized_filters.ending)
                                     .includes(:user)
+                                    .state(if sanitized_filters.only_done_sheets == 'true'
+                                             3
+                                           else
+                                             0
+                                           end)
                                     .order('users.last_name')
                                     .group_by { |expense_sheet, _user| expense_sheet.user_id }
     end
@@ -44,7 +49,9 @@ module V1
     def sanitized_filters
       @sanitized_filters ||= OpenStruct.new(
         beginning: Date.parse(filter_params[:beginning]),
-        ending: Date.parse(filter_params[:ending])
+        ending: Date.parse(filter_params[:ending]),
+        detail_view: params[:detail_view],
+        only_done_sheets: params[:only_done_sheets]
       )
     end
   end

@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import moment from 'moment';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
@@ -31,6 +32,18 @@ interface Props {
 }
 
 export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
+
+  getBeginning(formikProps: FormikProps<any>) {
+    switch (formikProps.values.time_type) {
+      case '2':
+        return moment().startOf('month').format('Y-MM-DD');
+      case '3':
+        return moment().startOf('month').subtract(1, 'month').format('Y-MM-DD');
+      default:
+        return moment(formikProps.values.beginning).format('Y-MM-DD');
+    }
+  }
+
   render() {
     const { isOpen, mainStore, toggle } = this.props;
 
@@ -86,6 +99,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                       name: moment()
                         .subtract(1, 'month')
                         .format('MMMM YYYY'),
+
                     },
                   ]}
                   label={
@@ -165,7 +179,7 @@ export class ExpenseSheetStatisticFormDialog extends React.Component<Props> {
                 {/* tslint:disable-next-line:max-line-length */}
                 <Button
                   color={'success'}
-                  href={mainStore.apiURL('expenses_overview.pdf?expenses_overview[beginning]=' + formikProps.values.beginning + '&expenses_overview[ending]=' + formikProps.values.ending + '&detail_view=' + formikProps.values.detail_view + '&only_done_sheets=' + formikProps.values.only_done_sheets + '&time_type=' + formikProps.values.time_type + '&year=' + formikProps.values.year)}
+                  href={mainStore.apiURL('expenses_overview.pdf?expenses_overview[beginning]=' + this.getBeginning(formikProps) + '&expenses_overview[ending]=' + moment(formikProps.values.ending).format('Y-MM-DD') + '&detail_view=' + formikProps.values.detail_view + '&only_done_sheets=' + formikProps.values.only_done_sheets + '&time_type=' + formikProps.values.time_type + '&year=' + formikProps.values.year)}
                   tag={'a'}
                   target={'_blank'}
                 >
