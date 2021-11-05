@@ -11,16 +11,18 @@ module Pdfs
       ZDP
       Name
       IBAN
-      Bettrag
+      Betrag
     ].freeze
+
+    COLUMN_WIDTHS = [55, 180, 170, 90].freeze
 
     def initialize(pending_expenses)
       @pending_expenses = pending_expenses
-      puts total()
 
       update_font_families
       header
       content_table
+      total
     end
 
     def document
@@ -30,28 +32,55 @@ module Pdfs
     private
 
     def header
-      text I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today)), align: :right
+
+      date = I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today))
+      text "Zahlungen (" + date + ")", align: :left, size: 18, leading: 12
     end
 
     def total
       amount = @pending_expenses.map(&:total).inject(0, &:+)
 
-      ["", "", "Total", to_chf(amount)]
-    end
+      row = [["", "", "", to_chf(amount)]]
 
-    def content_table
-      font_size 10
-      table(table_data(@pending_expenses),
-            cell_style: { borders: %i[] },
-            header: true,
-            column_widths: [40, 120, 120, 100]) do
-        row(0).font_style = :bold
+      font_size 14
+  
+      table(
+        row,
+        header: true,
+        column_widths: COLUMN_WIDTHS,
+        cell_style: {  border_width: 0, border_color: "aaaaaa", vertical_padding: 30 }
+      ) do
+        cells.padding = [12, 5, 12, 5]
       end
     end
 
+    def content_table
+      font_size 14
+
+      t = table_data(@pending_expenses)
+  
+      table(t,
+            cell_style: {  border_width: 0, border_color: "000000" },
+            header: true,
+            column_widths: COLUMN_WIDTHS) do
+        row(0).font_style = :bold
+        row(0).borders = [:bottom]
+        row(0).border_width = 2
+        row(t.length() - 1).borders = [:bottom]
+        row(t.length() - 1).border_width = 2
+
+        cells.padding = [8, 5, 8, 5]
+
+        cells.style do |c|
+          c.background_color = (c.row % 2).zero? ? 'ffffff' : 'eeeeee'
+        end
+      end
+    end
+
+      
 
     def table_data(expenses)
-      [TABLE_HEADER].push(*table_content(expenses)).push(total)
+      [TABLE_HEADER].push(*table_content(expenses))
     end
 
     def table_content(expenses)
