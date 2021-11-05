@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     end
 
     get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
+    get 'payments_list', to: 'payments_list#show', as: 'payments_list_export'
     get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'
     get 'expenses_overview', to: 'expenses_overview#show', as: 'expenses_overview_export'
     get 'expenses_sheet_sum', to: 'expense_sheets#sum'
