@@ -30,7 +30,6 @@
     "react-jss": "^8.6.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.8",
     "react-tabs": "^3.0.0",
     "react-widgets": "^4.4.8",
     "react-widgets-moment": "^4.0.24",
@@ -50,6 +49,7 @@
     "extract-messages": "NODE_ENV=production babel ./src  --out-file /dev/null"
   },
   "devDependencies": {
+    "react-scripts": "^2.1.8",
     "@types/classnames": "^2.2.7",
     "@types/jest": "^23.3.11",
     "@types/jwt-decode": "^2.2.1",
