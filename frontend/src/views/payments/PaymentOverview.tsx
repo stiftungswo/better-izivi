@@ -8,11 +8,17 @@ import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
 import { ExpenseSheetsReadyForPaymentTable } from './tables/ExpenseSheetsReadyForPaymentTable';
 import { PaymentsTable } from './tables/PaymentsTable';
+import Col from 'reactstrap/lib/Col';
+import Row from 'reactstrap/lib/Row';
+import { ApiStore, baseUrl } from '../../stores/apiStore';
+
+
 
 interface Props {
   mainStore?: MainStore;
   paymentStore?: PaymentStore;
   expenseSheetStore?: ExpenseSheetStore;
+  apiStore?: ApiStore
 }
 
 interface State {
@@ -22,7 +28,7 @@ interface State {
   isLoadingMoreArchivedPayments: boolean;
 }
 
-@inject('mainStore', 'paymentStore', 'expenseSheetStore')
+@inject('mainStore', 'paymentStore', 'expenseSheetStore', 'apiStore')
 @observer
 export class PaymentOverview extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -40,6 +46,20 @@ export class PaymentOverview extends React.Component<Props, State> {
     this.loadContents();
   }
 
+  handleSubmit = async (
+  ) => {
+    let url = `${baseUrl}/payments_list.pdf`;
+    const rawToken = this.props.apiStore!.rawToken;
+
+    url += `?token=${rawToken}`;
+
+    const win = window.open(url, '_blank');
+    if (win) {
+      // actions.setSubmitting(false);
+      win.focus();
+    }
+  }
+
   render() {
     return (
       <IziviContent card loading={this.state.loading}>
@@ -49,6 +69,21 @@ export class PaymentOverview extends React.Component<Props, State> {
             defaultMessage="Pendente Spesenblätter für Auszahlung"
           />
         </h1>
+
+        <Row>
+          <Col xs={{ size: 2, offset: 10 }}>
+            <Button
+              color={'success'}
+              onClick={this.handleSubmit}
+              style={{ width: '100%' }}
+            >
+              <FormattedMessage
+                id="views.service_overview.serviceOverview.print"
+                defaultMessage="Drucken"
+              />
+            </Button>
+          </Col>
+        </Row>
         <ExpenseSheetsReadyForPaymentTable
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
           paymentStore={this.props.paymentStore!}
