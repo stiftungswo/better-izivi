@@ -16,6 +16,7 @@ module Pdfs
 
     def initialize(pending_expenses)
       @pending_expenses = pending_expenses
+      puts total()
 
       update_font_families
       header
@@ -32,6 +33,12 @@ module Pdfs
       text I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today)), align: :right
     end
 
+    def total
+      amount = @pending_expenses.map(&:total).inject(0, &:+)
+
+      ["", "", "Total", to_chf(amount)]
+    end
+
     def content_table
       font_size 10
       table(table_data(@pending_expenses),
@@ -42,8 +49,9 @@ module Pdfs
       end
     end
 
+
     def table_data(expenses)
-      [TABLE_HEADER].push(*table_content(expenses))
+      [TABLE_HEADER].push(*table_content(expenses)).push(total)
     end
 
     def table_content(expenses)
@@ -52,15 +60,20 @@ module Pdfs
           expense.user.zdp,
           expense.user.full_name,
           expense.user.bank_iban,
-          ActionController::Base.helpers.number_to_currency(
-            expense.total / 100,
-            unit: 'CHF',
-            format: '%u %n',
-            separator: '.',
-            delimiter: ''
-          )
+          to_chf(expense.total)
         ]
       end
     end
+
+    def to_chf(amount)
+      ActionController::Base.helpers.number_to_currency(
+        amount / 100,
+        unit: 'CHF',
+        format: '%u %n',
+        separator: '.',
+        delimiter: ''
+      )
+    end
+
   end
 end
