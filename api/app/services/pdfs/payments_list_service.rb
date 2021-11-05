@@ -1,5 +1,7 @@
 require 'prawn'
 
+# TODO: internatinalizaion
+
 module Pdfs
   class PaymentsListService
     include Prawn::View
@@ -40,18 +42,18 @@ module Pdfs
       end
     end
 
-    def table_data(services)
-      [TABLE_HEADER].push(*table_content(services))
+    def table_data(expenses)
+      [TABLE_HEADER].push(*table_content(expenses))
     end
 
-    def table_content(services)
-      services.map do |service|
+    def table_content(expenses)
+      expenses.map do |expense|
         [
-          service.user.zdp,
-          service.user.full_name,
-          service.user.bank_iban,
+          expense.user.zdp,
+          expense.user.full_name,
+          expense.user.bank_iban,
           ActionController::Base.helpers.number_to_currency(
-            service.total / 100,
+            expense.total / 100,
             unit: 'CHF',
             format: '%u %n',
             separator: '.',
