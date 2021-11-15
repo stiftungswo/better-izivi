@@ -2,23 +2,21 @@ import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
+import Col from 'reactstrap/lib/Col';
+import Row from 'reactstrap/lib/Row';
 import IziviContent from '../../layout/IziviContent';
+import { ApiStore, baseUrl } from '../../stores/apiStore';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
 import { ExpenseSheetsReadyForPaymentTable } from './tables/ExpenseSheetsReadyForPaymentTable';
 import { PaymentsTable } from './tables/PaymentsTable';
-import Col from 'reactstrap/lib/Col';
-import Row from 'reactstrap/lib/Row';
-import { ApiStore, baseUrl } from '../../stores/apiStore';
-
-
 
 interface Props {
   mainStore?: MainStore;
   paymentStore?: PaymentStore;
   expenseSheetStore?: ExpenseSheetStore;
-  apiStore?: ApiStore
+  apiStore?: ApiStore;
 }
 
 interface State {
@@ -56,7 +54,6 @@ export class PaymentOverview extends React.Component<Props, State> {
           />
         </h1>
 
-         
         <ExpenseSheetsReadyForPaymentTable
           apiStore={this.props.apiStore}
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
@@ -79,7 +76,6 @@ export class PaymentOverview extends React.Component<Props, State> {
           })}
           mainStore={this.props.mainStore!}
         />
-
 
         <h1 className="mb-4 mt-5">
           <FormattedMessage

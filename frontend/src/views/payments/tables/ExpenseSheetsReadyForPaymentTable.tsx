@@ -4,13 +4,13 @@ import { FormattedMessage, IntlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { OverviewTable } from '../../../layout/OverviewTable';
+import { ApiStore, baseUrl } from '../../../stores/apiStore';
 import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { PaymentStore } from '../../../stores/paymentStore';
-import { ApiStore, baseUrl } from '../../../stores/apiStore';
 import { ExpenseSheetListing } from '../../../types';
-import { ExpenseSheetPaymentWarnings } from './ExpenseSheetPaymentWarnings';
 import { Formatter } from '../../../utilities/formatter';
+import { ExpenseSheetPaymentWarnings } from './ExpenseSheetPaymentWarnings';
 
 function getColumns(intl: IntlShape) {
   return [
@@ -65,7 +65,7 @@ interface ExpenseSheetsReadyForPaymentTableProps {
   apiStore?: ApiStore;
 }
 
-function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]) : ExpenseSheetListing[] {
+function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]): ExpenseSheetListing[] {
   // don't want to edit the original data
   const copy = JSON.parse(JSON.stringify(expenseSheets)) as ExpenseSheetListing[];
 
@@ -116,7 +116,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
 
         <Button
           color={'secondary'}
-          onClick={()=> {handleGeneratePdf(props.apiStore!.rawToken)}}
+          onClick={() => {handleGeneratePdf(props.apiStore!.rawToken); }}
           style={{ marginLeft: '12px' }}
         >
           <FormattedMessage
