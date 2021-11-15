@@ -8,8 +8,8 @@ import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { PaymentStore } from '../../../stores/paymentStore';
 import { ExpenseSheetListing } from '../../../types';
-import { Formatter } from '../../../utilities/formatter';
 import { ExpenseSheetPaymentWarnings } from './ExpenseSheetPaymentWarnings';
+import { Formatter } from '../../../utilities/formatter';
 
 function getColumns(intl: IntlShape) {
   return [
@@ -63,15 +63,13 @@ interface ExpenseSheetsReadyForPaymentTableProps {
   mainStore: MainStore;
 }
 
-
 function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]) : ExpenseSheetListing[] {
-  
   // don't want to edit the original data
   const copy = JSON.parse(JSON.stringify(expenseSheets)) as ExpenseSheetListing[];
 
   copy.forEach(e => {
-    e.user.bank_iban = e.user.bank_iban.match(/.{1,4}/g)!.join(" ")
-  })
+    e.user.bank_iban = e.user.bank_iban.match(/.{1,4}/g)!.join(' ');
+  });
 
   return copy;
 }
