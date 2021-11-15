@@ -46,20 +46,6 @@ export class PaymentOverview extends React.Component<Props, State> {
     this.loadContents();
   }
 
-  handleSubmit = async (
-  ) => {
-    let url = `${baseUrl}/payments_list.pdf`;
-    const rawToken = this.props.apiStore!.rawToken;
-
-    url += `?token=${rawToken}`;
-
-    const win = window.open(url, '_blank');
-    if (win) {
-      // actions.setSubmitting(false);
-      win.focus();
-    }
-  }
-
   render() {
     return (
       <IziviContent card loading={this.state.loading}>
@@ -70,21 +56,9 @@ export class PaymentOverview extends React.Component<Props, State> {
           />
         </h1>
 
-        <Row>
-          <Col xs={{ size: 2, offset: 10 }}>
-            <Button
-              color={'success'}
-              onClick={this.handleSubmit}
-              style={{ width: '100%' }}
-            >
-              <FormattedMessage
-                id="views.service_overview.serviceOverview.print"
-                defaultMessage="Drucken"
-              />
-            </Button>
-          </Col>
-        </Row>
+         
         <ExpenseSheetsReadyForPaymentTable
+          apiStore={this.props.apiStore}
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
           paymentStore={this.props.paymentStore!}
           expenseSheetStore={this.props.expenseSheetStore!}
@@ -105,6 +79,7 @@ export class PaymentOverview extends React.Component<Props, State> {
           })}
           mainStore={this.props.mainStore!}
         />
+
 
         <h1 className="mb-4 mt-5">
           <FormattedMessage

@@ -7,6 +7,7 @@ import { OverviewTable } from '../../../layout/OverviewTable';
 import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { PaymentStore } from '../../../stores/paymentStore';
+import { ApiStore, baseUrl } from '../../../stores/apiStore';
 import { ExpenseSheetListing } from '../../../types';
 import { ExpenseSheetPaymentWarnings } from './ExpenseSheetPaymentWarnings';
 import { Formatter } from '../../../utilities/formatter';
@@ -61,6 +62,7 @@ interface ExpenseSheetsReadyForPaymentTableProps {
   paymentStore: PaymentStore;
   expenseSheetStore: ExpenseSheetStore;
   mainStore: MainStore;
+  apiStore?: ApiStore;
 }
 
 function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]) : ExpenseSheetListing[] {
@@ -72,6 +74,18 @@ function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]) : ExpenseShee
   });
 
   return copy;
+}
+
+function handleGeneratePdf(rawToken: string) {
+  let url = `${baseUrl}/payments_list.pdf`;
+
+  url += `?token=${rawToken}`;
+
+  const win = window.open(url, '_blank');
+  if (win) {
+    // actions.setSubmitting(false);
+    win.focus();
+  }
 }
 
 export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPaymentTableProps) => {
@@ -97,6 +111,16 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
           <FormattedMessage
             id="payments.expenseSheetsReadyForPaymentTable.start_payment"
             defaultMessage="Zahlung starten"
+          />
+        </Button>
+
+        <Button
+          color={'success'}
+          onClick={()=> {handleGeneratePdf(props.apiStore!.rawToken)}}
+          style={{ marginLeft: '12px' }}
+        >
+          <FormattedMessage
+            id="payments.expenseSheetsReadyForPaymentTable.pdf"
           />
         </Button>
       </>
