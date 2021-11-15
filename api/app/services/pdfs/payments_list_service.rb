@@ -58,22 +58,25 @@ module Pdfs
     def content_table
       font_size 14
 
-      t = table_data(@pending_expenses)
+      data = table_data(@pending_expenses)
 
-      table(t,
-            cell_style: { border_width: 0, border_color: '000000' },
-            header: true,
-            column_widths: COLUMN_WIDTHS) do
+      table(
+        data,
+        cell_style: { border_width: 0, border_color: '000000' },
+        header: true,
+        column_widths: COLUMN_WIDTHS
+      )
+      do
         row(0).font_style = :bold
         row(0).borders = [:bottom]
         row(0).border_width = 2
-        row(t.length - 1).borders = [:bottom]
-        row(t.length - 1).border_width = 2
+        row(data.length - 1).borders = [:bottom]
+        row(data.length - 1).border_width = 2
 
         cells.padding = [8, 5, 8, 5]
 
-        cells.style do |c|
-          c.background_color = (c.row % 2).zero? ? 'ffffff' : 'eeeeee'
+        cells.style do |cell|
+          cell.background_color = (cell.row % 2).zero? ? 'ffffff' : 'eeeeee'
         end
       end
     end
