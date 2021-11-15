@@ -14,7 +14,7 @@ module Pdfs
       Betrag
     ].freeze
 
-    COLUMN_WIDTHS = [55, 180, 170, 90].freeze
+    COLUMN_WIDTHS = [55, 180, 185, 90].freeze
 
     def initialize(pending_expenses)
       @pending_expenses = pending_expenses
@@ -88,10 +88,15 @@ module Pdfs
         [
           expense.user.zdp,
           expense.user.full_name,
-          expense.user.bank_iban,
+          format_iban(expense.user.bank_iban),
           to_chf(expense.total)
         ]
       end
+    end
+
+    # changes 'CH9300121234123412347' to 'CH93 0012 1234 1234 1234 7'
+    def format_iban(iban)
+      iban.gsub(/(.{4})(?=.)/, '\1 \2')
     end
 
     def to_chf(amount)
