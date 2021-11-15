@@ -83,6 +83,7 @@ module Pdfs
         cell.background_color = (cell.row % 2).zero? ? 'ffffff' : 'eeeeee'
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def table_data(expenses)
       [TABLE_HEADER].push(*table_content(expenses))
