@@ -11,7 +11,7 @@ import { ExpenseSheetListing } from '../../../types';
 import { Formatter } from '../../../utilities/formatter';
 import { ExpenseSheetPaymentWarnings } from './ExpenseSheetPaymentWarnings';
 
-function getClomuns(intl: IntlShape) {
+function getColumns(intl: IntlShape) {
   return [
     {
       id: 'zdp',
@@ -81,7 +81,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
     return (
       <>
         <OverviewTable
-          columns={getClomuns(props.mainStore.intl)}
+          columns={getColumns(props.mainStore.intl)}
           data={formatExpenseSheets(props.toBePaidExpenseSheets)}
           renderActions={({ id }: ExpenseSheetListing) => <Link to={'/expense_sheets/' + id}>
             <FormattedMessage
