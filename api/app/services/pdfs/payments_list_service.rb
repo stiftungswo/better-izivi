@@ -71,12 +71,12 @@ module Pdfs
 
     # rubocop:disable Metrics/AbcSize
     def style_table(table, length)
-      table.row(0).font_style = :bold
-      table.row(0).borders = [:bottom]
-      table.row(0).border_width = 2
+      first_row = table.row(0) 
+      first_row.font_style = :bold
+      first_row.borders = [:bottom]
+      first_row.border_width = 2
       table.row(length - 1).borders = [:bottom]
       table.row(length - 1).border_width = 2
-
       table.cells.padding = [8, 5, 8, 5]
 
       table.cells.style do |cell|
@@ -88,14 +88,16 @@ module Pdfs
     def table_data(expenses)
       [TABLE_HEADER].push(*table_content(expenses))
     end
-
+    
+    # :reek:FeatureEnvy
     def table_content(expenses)
-      expenses.map do |expense|
+      expenses.map do |exp|
+        user = exp.user
         [
-          expense.user.zdp,
-          expense.user.full_name,
-          expense.user.prettified_bank_iban,
-          to_chf(expense.total)
+          user.zdp,
+          user.full_,
+          user.prettified_bank_,
+          to_chf(exp.total)
         ]
       end
     end
