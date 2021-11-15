@@ -71,7 +71,7 @@ module Pdfs
 
     # rubocop:disable Metrics/AbcSize
     def style_table(table, length)
-      first_row = table.row(0) 
+      first_row = table.row(0)
       first_row.font_style = :bold
       first_row.borders = [:bottom]
       first_row.border_width = 2
@@ -88,7 +88,7 @@ module Pdfs
     def table_data(expenses)
       [TABLE_HEADER].push(*table_content(expenses))
     end
-    
+
     # :reek:FeatureEnvy
     def table_content(expenses)
       expenses.map do |exp|
