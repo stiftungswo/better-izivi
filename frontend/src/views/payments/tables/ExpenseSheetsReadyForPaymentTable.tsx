@@ -115,7 +115,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
         </Button>
 
         <Button
-          color={'success'}
+          color={'secondary'}
           onClick={()=> {handleGeneratePdf(props.apiStore!.rawToken)}}
           style={{ marginLeft: '12px' }}
         >
