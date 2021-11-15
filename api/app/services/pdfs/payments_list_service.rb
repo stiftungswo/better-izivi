@@ -80,7 +80,7 @@ module Pdfs
       end
     end
 
-    
+
     def table_data(expenses)
       [TABLE_HEADER].push(*table_content(expenses))
     end
@@ -90,15 +90,10 @@ module Pdfs
         [
           expense.user.zdp,
           expense.user.full_name,
-          format_iban(expense.user.bank_iban),
+          expense.user.prettified_bank_iban,
           to_chf(expense.total)
         ]
       end
-    end
-
-    # changes 'CH9300121234123412347' to 'CH93 0012 1234 1234 1234 7'
-    def format_iban(iban)
-      iban.gsub(/(.{4})(?=.)/, '\1 \2')
     end
 
     def to_chf(amount)
