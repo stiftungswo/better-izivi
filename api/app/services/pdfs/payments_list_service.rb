@@ -65,8 +65,7 @@ module Pdfs
         cell_style: { border_width: 0, border_color: '000000' },
         header: true,
         column_widths: COLUMN_WIDTHS
-      )
-      do
+      ) do
         row(0).font_style = :bold
         row(0).borders = [:bottom]
         row(0).border_width = 2
@@ -81,6 +80,7 @@ module Pdfs
       end
     end
 
+    
     def table_data(expenses)
       [TABLE_HEADER].push(*table_content(expenses))
     end
