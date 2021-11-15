@@ -64,25 +64,25 @@ module Pdfs
         cell_style: { border_width: 0, border_color: '000000' },
         header: true,
         column_widths: COLUMN_WIDTHS
-      ) do |table| 
+      ) do |table|
         style_table(table, data.length)
       end
     end
 
-    def style_table(t, length)
-      t.row(0).font_style = :bold
-      t.row(0).borders = [:bottom]
-      t.row(0).border_width = 2
-      t.row(length - 1).borders = [:bottom]
-      t.row(length - 1).border_width = 2
+    # rubocop:disable Metrics/AbcSize
+    def style_table(table, length)
+      table.row(0).font_style = :bold
+      table.row(0).borders = [:bottom]
+      table.row(0).border_width = 2
+      table.row(length - 1).borders = [:bottom]
+      table.row(length - 1).border_width = 2
 
-      t.cells.padding = [8, 5, 8, 5]
+      table.cells.padding = [8, 5, 8, 5]
 
-      t.cells.style do |cell|
+      table.cells.style do |cell|
         cell.background_color = (cell.row % 2).zero? ? 'ffffff' : 'eeeeee'
       end
     end
-    
 
     def table_data(expenses)
       [TABLE_HEADER].push(*table_content(expenses))
