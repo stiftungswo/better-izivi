@@ -21,7 +21,7 @@ module V1
       pdf = Pdfs::PaymentsListService.new(ExpenseSheet.ready_for_payment)
 
       send_data pdf.render,
-                filename: "#{I18n.t('pdfs.phone_list.filename', today: I18n.l(Time.zone.today))}.pdf",
+                filename: "#{I18n.t('pdfs.payments.filename', today: I18n.l(Time.zone.today))}.pdf",
                 type: 'application/pdf',
                 disposition: 'inline'
     end
