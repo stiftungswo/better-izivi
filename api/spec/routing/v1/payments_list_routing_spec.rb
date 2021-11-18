@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe V1::PaymentsController, type: :routing do
+RSpec.describe V1::PaymentsListController, type: :routing do
   describe 'routing' do
     it 'routes to #show' do
-      expect(get: '/v1/payments_list.pdf').to route_to('/v1/payments_list#show', format: 'pdf')
+      expect(get: '/v1/payments_list.pdf').to route_to('v1/payments_list#show', format: 'pdf')
     end
 
     it 'returns 400 if the token parameter is missing' do
