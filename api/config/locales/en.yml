@@ -167,7 +167,6 @@ en:
     pain_filename: Expenses_from_%{from_date}.xml
   pdfs:
     expense_sheet:
-      amount: Amount
       expense_table:
         footer:
           total: Total
@@ -199,15 +198,18 @@ en:
             value:
               one: "%{beginning} to %{ending} (%{duration} day)"
               other: "%{beginning} to %{ending} (%{duration} days)"
-      name: Name
-      payments: Payments
       title: Expense_report_of_%{full_name}
-      zdp: ZDP
     expenses_overview:
       basedon: Statistic bases on all finished reports
       filename: Overview_expense_statistics_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (deployment operation No. 423) - Provision vom %{date}
       title: Zivi-Expenses Detail-Overview (Timeperiod %{beginning} - %{ending})
+    payments:
+      amount: Amount
+      filename: Payments_%{today}
+      name: Name
+      payments: Payments
+      zdp: ZDP
     phone_list:
       filename: Phonelist_%{today}
       header: Generated on %{date}

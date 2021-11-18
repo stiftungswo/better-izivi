@@ -167,7 +167,6 @@ fr:
     pain_filename: Frais_du_%{from_date}.xml
   pdfs:
     expense_sheet:
-      amount: Montant
       expense_table:
         footer:
           total: Total
@@ -199,15 +198,18 @@ fr:
             value:
               one: "<b>%{beginning} à %{ending} (%{duration} jour)</b>"
               other: "<b>%{beginning} à %{ending} (%{duration} jours)</b>"
-      name: Nom
-      payments: Paiements
       title: Rapport_de_dépenses_de_%{full_name}
-      zdp: N°
     expenses_overview:
       basedon: Statistiques basées sur toutes les feuilles de rapport remplies
       filename: Presentation_statistiques_charges_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (opération d'utilisation No. 423) - Disponible à partir de %{date}
       title: Zivi aperçu des dépenses (period %{beginning} - %{ending})
+    payments:
+      amount: Montant
+      filename: Paiements_%{today}
+      name: Nom
+      payments: Paiements
+      zdp: N°
     phone_list:
       filename: Liste_téléphonique_%{today}
       header: Généré sur %{date}

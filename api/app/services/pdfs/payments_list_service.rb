@@ -11,10 +11,10 @@ module Pdfs
 
     def header_array
       [
-        I18n.t('pdfs.expense_sheet.zdp'),
-        I18n.t('pdfs.expense_sheet.name'),
+        I18n.t('pdfs.payments.zdp'),
+        I18n.t('pdfs.payments.name'),
         I18n.t('activerecord.attributes.user.bank_iban'),
-        I18n.t('pdfs.expense_sheet.amount')
+        I18n.t('pdfs.payments.amount')
       ]
     end
 
@@ -37,7 +37,7 @@ module Pdfs
 
     def header
       date = I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today))
-      payments = I18n.t('pdfs.expense_sheet.payments')
+      payments = I18n.t('pdfs.payments.payments')
       text "#{payments} (#{date})", align: :left, size: 18, leading: 12
     end
 
