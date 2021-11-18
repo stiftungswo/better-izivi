@@ -6,10 +6,12 @@ RSpec.describe V1::PaymentsController, type: :routing do
       expect(get: '/v1/payments_list.pdf').to route_to('/v1/payments_list#show', format: 'pdf')
     end
 
-    it 'returns 422 if the token parameter is missing' do
+    it 'returns 400 if the token parameter is missing' do
+      expect(get: '/v1/payments_list.pdf?locale=de').to have_status(200)
     end
 
-    it 'returns 401 if the token is incorrects' do
+    it 'returns 401 if the token is incorrect' do
+      expect(get: '/v1/payments_list.pdf?locale=de&token=meow').to have_status(401)
     end
   end
 end
