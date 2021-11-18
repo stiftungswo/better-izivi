@@ -167,6 +167,8 @@ fr:
     pain_filename: Frais_du_%{from_date}.xml
   pdfs:
     expense_sheet:
+      amount: Montant
+      payments: Paiements
       expense_table:
         footer:
           total: Total
@@ -183,7 +185,7 @@ fr:
             one: CHF %{amount} p. jour pour %{count} jour facturable
             other: CHF %{amount} p. jour pour %{count} jours facturables
       filename: Portrait_des_dépenses_%{today}
-      header: 'Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
+      header: "Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach "
       info_block:
         footer:
           bank_account_number: N° de compte

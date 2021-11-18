@@ -9,12 +9,15 @@ module Pdfs
     include Prawn::View
     include Pdfs::PrawnHelper
 
-    TABLE_HEADER = %w[
-      ZDP
-      Name
-      IBAN
-      Betrag
-    ].freeze
+
+    def header_array
+      [
+        I18n.t('activerecord.attributes.user.zdp'),
+        I18n.t('activerecord.attributes.user.first_name') + ' ' + I18n.t('activerecord.attributes.user.last_name'),
+        I18n.t('activerecord.attributes.user.bank_iban'),
+        I18n.t('pdfs.expense_sheet.amount'),
+      ]
+    end
 
     COLUMN_WIDTHS = [55, 180, 185, 90].freeze
 
@@ -35,7 +38,8 @@ module Pdfs
 
     def header
       date = I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today))
-      text "Zahlungen (#{date})", align: :left, size: 18, leading: 12
+      payments = I18n.t('pdfs.expense_sheet.payments')
+      text "#{payments} (#{date})", align: :left, size: 18, leading: 12
     end
 
     def total
@@ -86,7 +90,7 @@ module Pdfs
     # rubocop:enable Metrics/AbcSize
 
     def table_data(expenses)
-      [TABLE_HEADER].push(*table_content(expenses))
+      [header_array].push(*table_content(expenses))
     end
 
     # :reek:FeatureEnvy
