@@ -76,10 +76,10 @@ function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]): ExpenseSheet
   return copy;
 }
 
-function handleGeneratePdf(rawToken: string) {
+function handleGeneratePdf(rawToken: string, locale: string) {
   let url = `${baseUrl}/payments_list.pdf`;
 
-  url += `?token=${rawToken}`;
+  url += `?locale=${locale}&token=${rawToken}`;
 
   const win = window.open(url, '_blank');
   if (win) {
@@ -116,7 +116,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
 
         <Button
           color={'secondary'}
-          onClick={() => {handleGeneratePdf(props.apiStore!.rawToken); }}
+          onClick={() => {handleGeneratePdf(props.apiStore!.rawToken, props.mainStore.locale); }}
           style={{ marginLeft: '12px' }}
         >
           <FormattedMessage
