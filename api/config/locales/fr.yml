@@ -167,6 +167,8 @@ fr:
     pain_filename: Frais_du_%{from_date}.xml
   pdfs:
     expense_sheet:
+      name: Nom
+      zdp: N°
       amount: Montant
       payments: Paiements
       expense_table:

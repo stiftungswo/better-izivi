@@ -12,8 +12,8 @@ module Pdfs
 
     def header_array
       [
-        I18n.t('activerecord.attributes.user.zdp'),
-        I18n.t('activerecord.attributes.user.first_name') + ' ' + I18n.t('activerecord.attributes.user.last_name'),
+        I18n.t('pdfs.expense_sheet.zdp'),
+        I18n.t('pdfs.expense_sheet.name'),
         I18n.t('activerecord.attributes.user.bank_iban'),
         I18n.t('pdfs.expense_sheet.amount'),
       ]

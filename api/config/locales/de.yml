@@ -167,6 +167,8 @@ de:
     pain_filename: Spesen_vom_%{from_date}.xml
   pdfs:
     expense_sheet:
+      name: Name
+      zdp: ZDP-Nr.
       amount: Betrag
       payments: Zahlungen
       expense_table:
