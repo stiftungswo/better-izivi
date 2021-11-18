@@ -167,10 +167,7 @@ en:
     pain_filename: Expenses_from_%{from_date}.xml
   pdfs:
     expense_sheet:
-      name: Name
-      zdp: ZDP
       amount: Amount
-      payments: Payments
       expense_table:
         footer:
           total: Total
@@ -190,7 +187,7 @@ en:
       header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach
       info_block:
         footer:
-          bank_account_number: "Account-No:"
+          bank_account_number: 'Account-No:'
         header:
           complete_service:
             label: Full service
@@ -202,7 +199,10 @@ en:
             value:
               one: "%{beginning} to %{ending} (%{duration} day)"
               other: "%{beginning} to %{ending} (%{duration} days)"
+      name: Name
+      payments: Payments
       title: Expense_report_of_%{full_name}
+      zdp: ZDP
     expenses_overview:
       basedon: Statistic bases on all finished reports
       filename: Overview_expense_statistics_%{today}

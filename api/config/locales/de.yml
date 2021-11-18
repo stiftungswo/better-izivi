@@ -167,10 +167,7 @@ de:
     pain_filename: Spesen_vom_%{from_date}.xml
   pdfs:
     expense_sheet:
-      name: Name
-      zdp: ZDP-Nr.
       amount: Betrag
-      payments: Zahlungen
       expense_table:
         footer:
           total: Gesamt
@@ -187,10 +184,10 @@ de:
             one: CHF %{amount}/Tag für %{count} anrechenbarer Tag
             other: CHF %{amount}/Tag für %{count} anrechenbare Tage
       filename: Spesenrapport_%{today}
-      header: "Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach "
+      header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
       info_block:
         footer:
-          bank_account_number: "Konto-Nr.:"
+          bank_account_number: 'Konto-Nr.:'
         header:
           complete_service:
             label: Gesamteinsatz
@@ -202,7 +199,10 @@ de:
             value:
               one: "<b>%{beginning} bis %{ending} (%{duration} Tag)</b>"
               other: "<b>%{beginning} bis %{ending} (%{duration} Tage)</b>"
+      name: Name
+      payments: Zahlungen
       title: Spesenrapport_von_%{full_name}
+      zdp: ZDP-Nr.
     expenses_overview:
       basedon: Statistik basiert auf allen erledigten Meldeblättern
       filename: Übersicht_Spesenstatistik_%{today}
