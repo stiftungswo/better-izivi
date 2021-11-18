@@ -95,8 +95,8 @@ module Pdfs
         user = exp.user
         [
           user.zdp,
-          user.full_,
-          user.prettified_bank_,
+          user.full_name,
+          user.prettified_bank_iban,
           to_chf(exp.total)
         ]
       end
