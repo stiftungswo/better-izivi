@@ -9,13 +9,12 @@ module Pdfs
     include Prawn::View
     include Pdfs::PrawnHelper
 
-
     def header_array
       [
         I18n.t('pdfs.expense_sheet.zdp'),
         I18n.t('pdfs.expense_sheet.name'),
         I18n.t('activerecord.attributes.user.bank_iban'),
-        I18n.t('pdfs.expense_sheet.amount'),
+        I18n.t('pdfs.expense_sheet.amount')
       ]
     end
 
