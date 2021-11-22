@@ -7,7 +7,7 @@ RSpec.describe V1::PaymentsListController, type: :request do
     context 'when user is an admin' do
       let(:user) { create :user, :admin }
       let(:token) { generate_jwt_token_for_user(user) }
-      let(:request) { get "/v1/payments_list.pdf", params: { token: token, locale: "de" }}
+      let(:request) { get '/v1/payments_list.pdf', params: { token: token, locale: 'de' } }
 
       it 'returns a content type pdf' do
         request
@@ -16,28 +16,28 @@ RSpec.describe V1::PaymentsListController, type: :request do
 
       it 'returns status code 200' do
         request
-        expect(response).to have_http_status(200)
+        expect(response).to have_http_status(:ok)
       end
     end
 
     context 'when user is a civil servant' do
       let(:user) { create :user }
       let(:token) { generate_jwt_token_for_user(user) }
-      let(:request) { get "/v1/payments_list.pdf", params: { token: token, locale: "de" }}
-      
+      let(:request) { get '/v1/payments_list.pdf', params: { token: token, locale: 'de' } }
+
       it 'returns status code 401' do
         request
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
 
     context 'when no user is logged in' do
       let(:request) { get get_pdf_path(user) }
-      let(:request) { get "/v1/payments_list.pdf", params: { token: "meow"}}
+      let(:request) { get '/v1/payments_list.pdf', params: { token: 'meow' } }
 
       it 'returns status code 401' do
         request
-        expect(response).to have_http_status(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end
