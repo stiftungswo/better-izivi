@@ -2,9 +2,9 @@
 
 module V1
   class PaymentsListController < FileController
-    # include V1::Concerns::AdminAuthorizable
+    include V1::Concerns::AdminAuthorizable
 
-    # before_action :authorize_admin!
+    before_action :authorize_admin!
     # before_action :load_specifications, only: :show
 
     def show
