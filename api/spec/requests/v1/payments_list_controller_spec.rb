@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe V1::PaymentsListController, type: :request do
+  # rubocop:disable RSpec/OverwritingSetup
   describe '#index' do
     context 'when user is an admin' do
       let(:user) { create :user, :admin }
@@ -41,4 +42,5 @@ RSpec.describe V1::PaymentsListController, type: :request do
       end
     end
   end
+  # rubocop:enable RSpec/OverwritingSetup
 end
