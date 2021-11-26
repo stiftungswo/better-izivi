@@ -76,18 +76,6 @@ function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]): ExpenseSheet
   return copy;
 }
 
-function handleGeneratePdf(rawToken: string, locale: string) {
-  let url = `${baseUrl}/payments_list.pdf`;
-
-  url += `?locale=${locale}&token=${rawToken}`;
-
-  const win = window.open(url, '_blank');
-  if (win) {
-    // actions.setSubmitting(false);
-    win.focus();
-  }
-}
-
 export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPaymentTableProps) => {
   if (props.toBePaidExpenseSheets.length > 0) {
     return (
@@ -113,16 +101,16 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
             defaultMessage="Zahlung starten"
           />
         </Button>
-
-        <Button
-          color={'secondary'}
-          onClick={() => {handleGeneratePdf(props.apiStore!.rawToken, props.mainStore.locale); }}
-          style={{ marginLeft: '12px' }}
-        >
-          <FormattedMessage
-            id="payments.expenseSheetsReadyForPaymentTable.pdf"
-          />
-        </Button>
+        <a href={props.mainStore!.apiURL('payments_list.pdf', { locale: props.mainStore.locale })} target={'_blank'}>
+          <Button
+            color={'secondary'}
+            style={{ marginLeft: '12px' }}
+          >
+            <FormattedMessage
+              id="payments.expenseSheetsReadyForPaymentTable.pdf"
+            />
+          </Button>
+        </a>
       </>
     );
   } else {
