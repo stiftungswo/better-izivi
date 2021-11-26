@@ -77,7 +77,6 @@ const formatExpenseSheets = (expenseSheets: ExpenseSheetListing[]) => expenseShe
     },
   }
 });
- 
 
 export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPaymentTableProps) => {
   if (props.toBePaidExpenseSheets.length > 0) {
