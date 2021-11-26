@@ -65,12 +65,15 @@ interface ExpenseSheetsReadyForPaymentTableProps {
   apiStore?: ApiStore;
 }
 
+// changes 'CH9312341234123412347' into 'CH93 1234 1234 1234 1234 7'
+const formatIban = (iban: string): string => iban.match(/.{1,4}/g)!.join(' ');
+
 const formatExpenseSheets = (expenseSheets: ExpenseSheetListing[]) => expenseSheets.map(e => {
   return {
     ...e,
     user: {
       ...e.user,
-      bank_iban: e.user.bank_iban.match(/.{1,4}/g)!.join(' ')
+      bank_iban: formatIban(e.user.bank_iban)
     },
   }
 });
