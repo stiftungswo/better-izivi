@@ -130,8 +130,13 @@ export class MainStore {
     params: object = {},
     includeAuth: boolean = true
   ): string {
-    params['locale'] = this.currentLocale;
-    return this.apiURL(path, params, includeAuth);
+
+    const paramsWithLocale = {
+      ...params,
+      locale: this.currentLocale
+    };
+
+    return this.apiURL(path, paramsWithLocale, includeAuth);
   }
 
   isAdmin() {
