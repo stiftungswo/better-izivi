@@ -128,12 +128,12 @@ export class MainStore {
   apiLocalizedURL(
     path: string,
     params: object = {},
-    includeAuth: boolean = true
+    includeAuth: boolean = true,
   ): string {
 
     const paramsWithLocale = {
       ...params,
-      locale: this.currentLocale
+      locale: this.currentLocale,
     };
 
     return this.apiURL(path, paramsWithLocale, includeAuth);

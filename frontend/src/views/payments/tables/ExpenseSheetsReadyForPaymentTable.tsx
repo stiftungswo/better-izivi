@@ -73,9 +73,9 @@ const formatExpenseSheets = (expenseSheets: ExpenseSheetListing[]) => expenseShe
     ...e,
     user: {
       ...e.user,
-      bank_iban: formatIban(e.user.bank_iban)
+      bank_iban: formatIban(e.user.bank_iban),
     },
-  }
+  };
 });
 
 export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPaymentTableProps) => {
