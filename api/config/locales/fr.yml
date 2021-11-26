@@ -204,6 +204,12 @@ fr:
       filename: Presentation_statistiques_charges_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (opération d'utilisation No. 423) - Disponible à partir de %{date}
       title: Zivi aperçu des dépenses (period %{beginning} - %{ending})
+    payments:
+      amount: Montant
+      filename: Paiements_%{today}
+      name: Nom
+      payments: Paiements
+      zdp: N°
     phone_list:
       filename: Liste_téléphonique_%{today}
       header: Généré sur %{date}

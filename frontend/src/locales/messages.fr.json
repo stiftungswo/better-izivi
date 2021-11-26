@@ -28,6 +28,7 @@
   "payments.expenseSheetsReadyForPaymentTable.name": "Nom",
   "payments.expenseSheetsReadyForPaymentTable.no_expenses_ready_for_payment": "Pas de dépenses prêtes à être payées.",
   "payments.expenseSheetsReadyForPaymentTable.start_payment": "Commencer le paiement",
+  "payments.expenseSheetsReadyForPaymentTable.pdf": "Exporter en PDF",
   "payments.expenseSheetsReadyForPaymentTable.zdp": "ZDP",
   "payments.paymentDetail.amount": "Montant",
   "payments.paymentDetail.cancel_payment": "{icon} Annuler le paiement",

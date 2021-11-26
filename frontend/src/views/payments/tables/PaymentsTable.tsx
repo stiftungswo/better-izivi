@@ -7,7 +7,7 @@ import { PaymentStore } from '../../../stores/paymentStore';
 import { Payment } from '../../../types';
 import { Formatter } from '../../../utilities/formatter';
 
-function getClomuns(intl: IntlShape) {
+function getColumns(intl: IntlShape) {
   return [
     {
       id: 'created_at',
@@ -34,7 +34,7 @@ export const PaymentsTable = ({ payments, emptyNotice, mainStore }: { payments: 
   } else {
     return (
       <OverviewTable
-        columns={getClomuns(mainStore.intl)}
+        columns={getColumns(mainStore.intl)}
         data={payments}
         renderActions={({ payment_timestamp }: Payment) => <Link to={'/payments/' + payment_timestamp}>
           <FormattedMessage

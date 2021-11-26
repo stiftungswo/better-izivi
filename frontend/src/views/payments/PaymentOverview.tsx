@@ -2,7 +2,10 @@ import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
+import Col from 'reactstrap/lib/Col';
+import Row from 'reactstrap/lib/Row';
 import IziviContent from '../../layout/IziviContent';
+import { ApiStore, baseUrl } from '../../stores/apiStore';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';
@@ -13,6 +16,7 @@ interface Props {
   mainStore?: MainStore;
   paymentStore?: PaymentStore;
   expenseSheetStore?: ExpenseSheetStore;
+  apiStore?: ApiStore;
 }
 
 interface State {
@@ -22,7 +26,7 @@ interface State {
   isLoadingMoreArchivedPayments: boolean;
 }
 
-@inject('mainStore', 'paymentStore', 'expenseSheetStore')
+@inject('mainStore', 'paymentStore', 'expenseSheetStore', 'apiStore')
 @observer
 export class PaymentOverview extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -49,7 +53,9 @@ export class PaymentOverview extends React.Component<Props, State> {
             defaultMessage="Pendente Spesenblätter für Auszahlung"
           />
         </h1>
+
         <ExpenseSheetsReadyForPaymentTable
+          apiStore={this.props.apiStore}
           toBePaidExpenseSheets={this.props.expenseSheetStore!.toBePaidExpenseSheets}
           paymentStore={this.props.paymentStore!}
           expenseSheetStore={this.props.expenseSheetStore!}

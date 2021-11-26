@@ -4,6 +4,7 @@ import { FormattedMessage, IntlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { OverviewTable } from '../../../layout/OverviewTable';
+import { ApiStore, baseUrl } from '../../../stores/apiStore';
 import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { PaymentStore } from '../../../stores/paymentStore';
@@ -11,7 +12,7 @@ import { ExpenseSheetListing } from '../../../types';
 import { Formatter } from '../../../utilities/formatter';
 import { ExpenseSheetPaymentWarnings } from './ExpenseSheetPaymentWarnings';
 
-function getClomuns(intl: IntlShape) {
+function getColumns(intl: IntlShape) {
   return [
     {
       id: 'zdp',
@@ -61,15 +62,29 @@ interface ExpenseSheetsReadyForPaymentTableProps {
   paymentStore: PaymentStore;
   expenseSheetStore: ExpenseSheetStore;
   mainStore: MainStore;
+  apiStore?: ApiStore;
 }
+
+// changes 'CH9312341234123412347' into 'CH93 1234 1234 1234 1234 7'
+const formatIban = (iban: string): string => iban.match(/.{1,4}/g)!.join(' ');
+
+const formatExpenseSheets = (expenseSheets: ExpenseSheetListing[]) => expenseSheets.map(e => {
+  return {
+    ...e,
+    user: {
+      ...e.user,
+      bank_iban: formatIban(e.user.bank_iban),
+    },
+  };
+});
 
 export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPaymentTableProps) => {
   if (props.toBePaidExpenseSheets.length > 0) {
     return (
       <>
         <OverviewTable
-          columns={getClomuns(props.mainStore.intl)}
-          data={props.toBePaidExpenseSheets}
+          columns={getColumns(props.mainStore.intl)}
+          data={formatExpenseSheets(props.toBePaidExpenseSheets)}
           renderActions={({ id }: ExpenseSheetListing) => <Link to={'/expense_sheets/' + id}>
             <FormattedMessage
               id="payments.expenseSheetsReadyForPaymentTable.expense_sheet"
@@ -88,6 +103,16 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
             defaultMessage="Zahlung starten"
           />
         </Button>
+        <a href={props.mainStore!.apiLocalizedURL('payments_list.pdf')} target={'_blank'}>
+          <Button
+            color={'secondary'}
+            style={{ marginLeft: '12px' }}
+          >
+            <FormattedMessage
+              id="payments.expenseSheetsReadyForPaymentTable.pdf"
+            />
+          </Button>
+        </a>
       </>
     );
   } else {

@@ -204,6 +204,12 @@ de:
       filename: Übersicht_Spesenstatistik_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Stand vom %{date}
       title: Zivi-Spesen Detailübersicht (Zeitperiode %{beginning} - %{ending})
+    payments:
+      amount: Betrag
+      filename: Zahlungen_%{today}
+      name: Name
+      payments: Zahlungen
+      zdp: ZDP-Nr.
     phone_list:
       filename: Telefonliste_%{today}
       header: Stand vom %{date}

@@ -125,6 +125,20 @@ export class MainStore {
     });
   }
 
+  apiLocalizedURL(
+    path: string,
+    params: object = {},
+    includeAuth: boolean = true,
+  ): string {
+
+    const paramsWithLocale = {
+      ...params,
+      locale: this.currentLocale,
+    };
+
+    return this.apiURL(path, paramsWithLocale, includeAuth);
+  }
+
   isAdmin() {
     return this.apiStore.isAdmin;
   }

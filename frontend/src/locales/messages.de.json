@@ -28,6 +28,7 @@
   "payments.expenseSheetsReadyForPaymentTable.name": "Name",
   "payments.expenseSheetsReadyForPaymentTable.no_expenses_ready_for_payment": "Keine Spesen zur Auszahlung bereit.",
   "payments.expenseSheetsReadyForPaymentTable.start_payment": "Zahlung starten",
+  "payments.expenseSheetsReadyForPaymentTable.pdf": "PDF exportieren",
   "payments.expenseSheetsReadyForPaymentTable.zdp": "ZDP",
   "payments.paymentDetail.amount": "Betrag",
   "payments.paymentDetail.cancel_payment": "{icon} Zahlung abbrechen",
