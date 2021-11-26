@@ -5,7 +5,6 @@ module V1
     include V1::Concerns::AdminAuthorizable
 
     before_action :authorize_admin!
-    # before_action :load_specifications, only: :show
 
     def show
       respond_to do |format|

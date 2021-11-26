@@ -2,8 +2,6 @@
 
 require 'prawn'
 
-# TODO: internatinalizaion
-
 module Pdfs
   class PaymentsListService
     include Prawn::View
