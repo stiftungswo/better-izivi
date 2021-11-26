@@ -65,16 +65,16 @@ interface ExpenseSheetsReadyForPaymentTableProps {
   apiStore?: ApiStore;
 }
 
-function formatExpenseSheets(expenseSheets: ExpenseSheetListing[]): ExpenseSheetListing[] {
-  // don't want to edit the original data
-  const copy = JSON.parse(JSON.stringify(expenseSheets)) as ExpenseSheetListing[];
-
-  copy.forEach(e => {
-    e.user.bank_iban = e.user.bank_iban.match(/.{1,4}/g)!.join(' ');
-  });
-
-  return copy;
-}
+const formatExpenseSheets = (expenseSheets: ExpenseSheetListing[]) => expenseSheets.map(e => {
+  return {
+    ...e,
+    user: {
+      ...e.user,
+      bank_iban: e.user.bank_iban.match(/.{1,4}/g)!.join(' ')
+    },
+  }
+});
+ 
 
 export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPaymentTableProps) => {
   if (props.toBePaidExpenseSheets.length > 0) {
