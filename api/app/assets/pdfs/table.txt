@@ -1,0 +1,454 @@
+---
+FieldType: Button
+FieldName: Mit diesem Einsatz wird die j&#228;hrliche Einsatzpflicht des Jahres
+FieldNameAlt: Mit diesem Einsatz wird die j&#228;hrliche Einsatzpflicht des Jahres
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: D
+FieldNameAlt: D
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: F
+FieldNameAlt: F
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: I
+FieldNameAlt: I
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: Kommunikation und Betreuung KoBe
+FieldNameAlt: Kommunikation und Betreuung (KoBe)
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: Vertiefungskurs 1 oder Umweltund Naturschutz oder AlpPflege
+FieldNameAlt: Vertiefungskurs 1 oder Umwelt-und Naturschutz oder Alp-Pflege
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: Vertiefungskurs 2 nur f&#252;r Eins&#228;tze ab 180 Tagen
+FieldNameAlt: Vertiefungskurs 2 (nur f&#252;r Eins&#228;tze ab 180 Tagen)
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Text
+FieldName: Gew&#252;nschtes Datum
+FieldNameAlt: Gew&#252;nschtes Datum
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Umgang mit der Motors&#228;ge
+FieldNameAlt: Umgang mit der Motors&#228;ge
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: Sicherheit im Auslandeinsatz
+FieldNameAlt: Sicherheit im Auslandeinsatz
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: Der Zivi ben&#246;tigt Spezialbillette f&#252;r eine kostenlose Hinund R&#252;ckfahrt an arbeitsfreien Tagen
+FieldNameAlt: Der Zivi ben&#246;tigt Spezialbillette f&#252;r eine kostenlose Hin-und R&#252;ckfahrt an arbeitsfreien Tagen
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Text
+FieldName: ZDP-Nr
+FieldNameAlt: ZDP-Nr.
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Name
+FieldNameAlt: Name
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Vorname
+FieldNameAlt: Vorname
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Telefon
+FieldNameAlt: Telefon
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Geb.datum
+FieldNameAlt: Geb.datum
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: E-Mail
+FieldNameAlt: E-Mail
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: IBAN
+FieldNameAlt: IBAN
+FieldFlags: 0
+FieldJustification: Left
+FieldMaxLength: 26
+---
+FieldType: Text
+FieldName: Ausbildung / Beruf
+FieldNameAlt: Ausbildung / Beruf
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Strasse / Nr
+FieldNameAlt: Strasse / Nr.
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Krankenkasse (Name und Ort)
+FieldNameAlt: Krankenkasse (Name und Ort)
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: EiB-Nr
+FieldNameAlt: EiB-Nr.
+FieldFlags: 0
+FieldValue: 423
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: WBP Telefon
+FieldNameAlt: Telefon
+FieldFlags: 0
+FieldValue: 077 438 57 61
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: WBP E-Mail
+FieldNameAlt: E-Mail
+FieldFlags: 0
+FieldValue: zivildienst@stiftungswo.ch
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Funktion
+FieldNameAlt: Funktion
+FieldFlags: 0
+FieldValue: Einsatzleiter
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Arbeitsort
+FieldNameAlt: Arbeitsort
+FieldFlags: 0
+FieldValue: 8603 Schwerzenbach
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: EiB-Name
+FieldNameAlt: EiB-Name
+FieldFlags: 0
+FieldValue: SWO Artenschutz
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Pflichtenheft
+FieldNameAlt: Pflichtenheft Nr. und Bezeichnung
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Weisungsberechtigte Person
+FieldNameAlt: Name, Vorname
+FieldFlags: 0
+FieldValue: Pfeuti, Marc
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Einsatzende
+FieldNameAlt: Einsatzende
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Check Box Betriebsferien
+FieldNameAlt: Betriebsferien
+FieldFlags: 0
+FieldJustification: Left
+FieldStateOption: Ja
+FieldStateOption: Off
+---
+FieldType: Text
+FieldName: vor- bzw nachgeholt
+FieldNameAlt: vor-bzw. nachgeholt
+FieldFlags: 0
+FieldJustification: Center
+---
+FieldType: Text
+FieldName: Vertiefungskurs 1
+FieldNameAlt: W&#228;hrend den ersten 4 Einsatzwochen (Vertiefungskurs 1 aber nicht unmittelbar nach KoBe)
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Vertiefungskurs 2
+FieldNameAlt: Fr&#252;hestens 4 Wochen nach Vertiefungskurs 1, sp&#228;testens 2 Monate vor Einsatzende
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Motors&#228;ge / Sicherheit im Auslandeinsatz
+FieldNameAlt: Motors&#228;ge / Sicherheit im Auslandeinsatz
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: 6.1 Unterkunft
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
+---
+FieldType: 
+FieldName: 6
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Einsatztyp
+FieldFlags: 49152
+FieldValue: Auswahl4
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: 2
+FieldStateOption: Auswahl3
+FieldStateOption: Auswahl5
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Unterkunft
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Wegkosten
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: Auswahl3
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Verpflegung
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: Auswahl4
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Morgenessen Arbeitstag
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Morgenessen arbeitsfreier Tag
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl3
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Mittagessen Arbeitstag
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Mittagessen arbeitsfreier Tag
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl3
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Abendessen Arbeitstag
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Abendessen arbeitsfreier Tag
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl3
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Arbeitskleider und -Schuhe
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: 2
+FieldStateOption: Auswahl 1
+FieldStateOption: Off
+---
+FieldType: Text
+FieldName: Bemerkungen
+FieldNameAlt: Bemerkungen
+FieldFlags: 4096
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Einsatzbeginn
+FieldNameAlt: Einsatzbeginn
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Erkl&#228;rung zu Aufgebotsfrist
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: Auswahl1
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Der Zivi hat eine enge Beziehung zum Einsatzbetrieb (z.&#8202;B. infolge ehrenamtlicher T&#228;tigkeit) oder ihm nahestehende Personen k&#246;nnen Einfluss auf den Einsatz nehmen
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
+---
+FieldType: 
+FieldName: Der Zivi hat eine enge Beziehung zum Einsatzbetrieb (z.&#8202;B
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: 
+FieldName: Der Zivi hat eine enge Beziehung zum Einsatzbetrieb (z
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Der Einsatz wird ausschliesslich zugunsten von Angeh&#246;rigen des Zivi geleistet oder dient prim&#228;r privaten Zwecken des Zivi (insb. Aus- oder Weiterbildung)
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: Auswahl3
+FieldStateOption: Off
+---
+FieldType: 
+FieldName: Der Einsatz wird ausschliesslich zugunsten von Angeh&#246;rigen des Zivi geleistet oder dient prim&#228;r privaten Zwecken des Zivi (insb
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: In den 12 Monaten vor Einsatzbeginn sowie w&#228;hrend des Einsatzes trifft Folgendes zu: Der Zivi ist beim Einsatzbetrieb gegen Entgelt t&#228;tig oder in Aus- oder Weiterbildung
+FieldFlags: 49152
+FieldJustification: Left
+FieldStateOption: 0
+FieldStateOption: 1
+FieldStateOption: Auswahl1
+FieldStateOption: Off
+---
+FieldType: Text
+FieldName: Ort, Datum Zivi
+FieldNameAlt: Ort, Datum Zivi
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Ort, Datum EiB
+FieldNameAlt: Ort, Datum EiB
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Strasse / Nr (EIB)
+FieldNameAlt: Strasse / Nr (EIB)
+FieldFlags: 0
+FieldValue: Bahnstrasse 18b
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: PLZ / Ort
+FieldNameAlt: PLZ / Ort
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: PLZ / Ort (EIB)
+FieldNameAlt: PLZ / Ort (EIB)
+FieldFlags: 0
+FieldValue: 8603 Schwerzenbach
+FieldJustification: Left
+---
+FieldType: Signature
+FieldName: Unterschrift Zivi
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Signature
+FieldName: Unterschrift EiB
+FieldFlags: 0
+FieldJustification: Left

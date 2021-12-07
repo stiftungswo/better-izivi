@@ -23,7 +23,7 @@ module Pdfs
           zip_with_city: 'PLZ / Ort',
           address: 'Strasse / Nr',
           phone: 'Telefon',
-          bank_iban: 'IBAN',
+          prettified_bank_iban: 'IBAN',
           email: 'E-Mail',
           health_insurance: 'Krankenkasse (Name und Ort)',
           birthday: 'Geb.datum',
@@ -81,7 +81,7 @@ module Pdfs
           title: 'Cahier des charges'
         },
         de: {
-          title: 26
+          title: 'Pflichtenheft'
         }
       }.freeze
 

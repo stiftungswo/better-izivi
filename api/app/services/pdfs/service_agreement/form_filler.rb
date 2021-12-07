@@ -25,22 +25,8 @@ module Pdfs
 
       def fill_form
         I18n.locale = valais? ? :fr : :de
-
         file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
-
-        lol2 = @pdftk.get_field_names FRENCH_FILE_PATH
-        puts("*******************")
-
-        puts(lol2)
-        puts("==========================")
         
-        lol = @pdftk.get_field_names file_path
-        puts(lol)
-
-        puts("________________")
-
-        # lol*" // "
-
         @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
       end
 
@@ -60,7 +46,21 @@ module Pdfs
       end
 
       def custom_data
-        {"Ausbildung / Beruf" => "Ehrenmann"}
+        type = 2
+
+        if @service.long_service
+          type = 1
+        elsif @service.probation_service
+          type = 0
+        end
+
+        {
+          # 0: Probeeinsatz
+          # 1: obligatorischer langer Einsatz oder Teil davon
+          # 2: Einsatz
+          "Einsatztyp" => type,
+          "Pflichtenheft" => @service.service_specification.title,
+        }
       end
 
       def load_user_fields
