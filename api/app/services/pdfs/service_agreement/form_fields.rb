@@ -17,15 +17,16 @@ module Pdfs
           health_insurance: 'Caisse-maladie'
         },
         de: {
-          zdp: 1,
-          first_name: 2,
-          last_name: 7,
-          zip_with_city: 3,
-          address: 8,
-          phone: 4,
-          bank_iban: 10,
-          email: 5,
-          health_insurance: 11
+          zdp: 'ZDP-Nr',
+          first_name: 'Vorname',
+          last_name: 'Name',
+          zip_with_city: 'PLZ / Ort',
+          address: 'Strasse / Nr',
+          phone: 'Telefon',
+          bank_iban: 'IBAN',
+          email: 'E-Mail',
+          health_insurance: 'Krankenkasse (Name und Ort)',
+          birthday: 'Geb.datum',
         }
       }.freeze
 
@@ -35,8 +36,8 @@ module Pdfs
           ending: 'Date de fin'
         },
         de: {
-          beginning: 25,
-          ending: 24
+          beginning: 'Einsatzbeginn',
+          ending: 'Einsatzende'
         }
       }.freeze
 

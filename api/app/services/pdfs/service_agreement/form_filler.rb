@@ -5,8 +5,8 @@ require 'pdf_forms'
 module Pdfs
   module ServiceAgreement
     class FormFiller
-      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/french_service_agreement_form.pdf').freeze
-      GERMAN_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form.pdf').freeze
+      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form.pdf').freeze
+      GERMAN_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form_new.pdf').freeze
 
       def initialize(service)
         @service = service
@@ -28,6 +28,19 @@ module Pdfs
 
         file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
 
+        lol2 = @pdftk.get_field_names FRENCH_FILE_PATH
+        puts("*******************")
+
+        puts(lol2)
+        puts("==========================")
+        
+        lol = @pdftk.get_field_names file_path
+        puts(lol)
+
+        puts("________________")
+
+        # lol*" // "
+
         @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
       end
 
@@ -43,6 +56,11 @@ module Pdfs
           .merge(load_company_holiday_fields)
           .merge(load_regional_center)
           .merge(load_regional_center_address)
+          .merge(custom_data)
+      end
+
+      def custom_data
+        {"Ausbildung / Beruf" => "Ehrenmann"}
       end
 
       def load_user_fields
