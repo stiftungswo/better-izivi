@@ -5,7 +5,7 @@ require 'pdf_forms'
 module Pdfs
   module ServiceAgreement
     class FormFiller
-      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form.pdf').freeze
+      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/french_service_agreement_form.pdf').freeze
       GERMAN_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form_new.pdf').freeze
 
       def initialize(service)
@@ -26,7 +26,7 @@ module Pdfs
       def fill_form
         I18n.locale = valais? ? :fr : :de
         file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
-        
+
         @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
       end
 
