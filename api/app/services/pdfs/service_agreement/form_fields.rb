@@ -25,14 +25,14 @@ module Pdfs
           phone: 'Telefon',
           prettified_bank_iban: 'IBAN',
           email: 'E-Mail',
-          health_insurance: 'Krankenkasse (Name und Ort)',
+          health_insurance: 'Krankenkasse (Name und Ort)'
         }
       }.freeze
 
       SERVICE_DATE_FORM_FIELDS = {
         fr: {
           beginning: 'debut',
-          ending: "fin"
+          ending: 'fin'
         },
         de: {
           beginning: 'Einsatzbeginn',

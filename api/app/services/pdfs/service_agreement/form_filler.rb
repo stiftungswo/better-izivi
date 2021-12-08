@@ -9,7 +9,7 @@ module Pdfs
       FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/french_service_agreement_form.pdf').freeze
       GERMAN_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form.pdf').freeze
 
-      def initialize(service) 
+      def initialize(service)
         @service = service
         @pdftk = PdfForms.new(ENV.fetch('PDFTK_BIN_PATH', 'pdftk'))
       end
@@ -48,42 +48,42 @@ module Pdfs
       end
 
       def custom_data
-        type = valais? ? "Auswahl15" : 2
+        type = valais? ? 'Auswahl15' : 2
 
         if @service.long_service
-          type = valais? ? "Auswahl14" : 1
+          type = valais? ? 'Auswahl14' : 1
         elsif @service.probation_service
-          type = valais? ? "Auswahl13" : 0
+          type = valais? ? 'Auswahl13' : 0
         end
 
-        holidays = get_holidays()
-        if (!holidays.nil?)
-          beginning = holidays.beginning.strftime("%d. %m. %Y")
-          ending = holidays.ending.strftime("%d. %m. %Y")
-          if (valais?) 
-            notes = "Fermeture annuelle du " + beginning + " au " + ending      
-          else
-            notes = "Betriebsferien von " + beginning + " bis " + ending      
-          end
+        holidays = get_holidays
+        if holidays
+          beginning = holidays.beginning.strftime('%d. %m. %Y')
+          ending = holidays.ending.strftime('%d. %m. %Y')
+          notes = if valais?
+                    'Fermeture annuelle du ' + beginning + ' au ' + ending
+                  else
+                    'Betriebsferien von ' + beginning + ' bis ' + ending
+                  end
         else
-          notes = ""
-        end 
+          notes = ''
+        end
 
-        birthdaykey = valais? ? "Date de naissance" : "Geb.datum"
-        titlekey = valais? ? "Cahier des charges" : "Pflichtenheft"
-        typekey = valais? ? "Type" : "Einsatztyp"
-        noteskey = valais? ? "Remarques" : "Bemerkungen"
-        holidayskey = valais? ? "Fermeture" : "Check Box Betriebsferien"
+        birthdaykey = valais? ? 'Date de naissance' : 'Geb.datum'
+        titlekey = valais? ? 'Cahier des charges' : 'Pflichtenheft'
+        typekey = valais? ? 'Type' : 'Einsatztyp'
+        noteskey = valais? ? 'Remarques' : 'Bemerkungen'
+        holidayskey = valais? ? 'Fermeture' : 'Check Box Betriebsferien'
 
         {
-          holidayskey => holidays.nil? ? "Off" : "Ja",
+          holidayskey => holidays.nil? ? 'Off' : 'Ja',
           noteskey => notes,
           # 0: Probeeinsatz
           # 1: obligatorischer langer Einsatz oder Teil davon
           # 2: Einsatz
           typekey => type,
           titlekey => @service.service_specification.title,
-          birthdaykey => @service.user.birthday.strftime("%d. %m. %Y")
+          birthdaykey => @service.user.birthday.strftime('%d. %m. %Y')
         }
       end
 
@@ -92,7 +92,6 @@ module Pdfs
           [value, @service.user.public_send(key)]
         end
       end
-
 
       def load_service_date_fields
         convert_to_form_fields_hash(FormFields::SERVICE_DATE_FORM_FIELDS) do |key, value|
