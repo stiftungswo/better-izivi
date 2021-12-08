@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'pdf_forms'
+require 'date'
 
 module Pdfs
   module ServiceAgreement
@@ -45,6 +46,11 @@ module Pdfs
           .merge(custom_data)
       end
 
+      def get_holidays
+        company_holiday = Holiday.overlapping_date_range(@service.beginning, @service.ending)
+                                 .find(&:company_holiday?)
+      end
+
       def custom_data
         type = 2
 
@@ -54,12 +60,24 @@ module Pdfs
           type = 0
         end
 
+        holidays = get_holidays()
+        if (!holidays.nil?)
+          beginning = holidays.beginning.strftime("%d. %m. %Y")
+          ending = holidays.ending.strftime("%d. %m. %Y")
+          notes = "Betriebsferien von " + beginning + " bis " + ending      
+        else
+          notes = ""
+        end 
+
         {
+          "Check Box Betriebsferien" => holidays.nil? ? "Off" : "Ja",
+          "Bemerkungen" => notes,
           # 0: Probeeinsatz
           # 1: obligatorischer langer Einsatz oder Teil davon
           # 2: Einsatz
           "Einsatztyp" => type,
           "Pflichtenheft" => @service.service_specification.title,
+          'Geb.datum' => @service.user.birthday.strftime("%d. %m. %Y")
         }
       end
 
