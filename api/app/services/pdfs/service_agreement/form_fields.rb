@@ -32,7 +32,7 @@ module Pdfs
       SERVICE_DATE_FORM_FIELDS = {
         fr: {
           beginning: 'debut',
-          ending: "Date de fin de l’ affectation"
+          ending: "fin"
         },
         de: {
           beginning: 'Einsatzbeginn',

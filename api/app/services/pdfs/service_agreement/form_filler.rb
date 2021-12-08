@@ -65,7 +65,7 @@ module Pdfs
           beginning = holidays.beginning.strftime("%d. %m. %Y")
           ending = holidays.ending.strftime("%d. %m. %Y")
           if (valais?) 
-            notes = "Fermeture annuelle de l’EA du " + beginning + " au " + ending      
+            notes = "Fermeture annuelle du " + beginning + " au " + ending      
           else
             notes = "Betriebsferien von " + beginning + " bis " + ending      
           end
@@ -75,9 +75,9 @@ module Pdfs
 
         birthdaykey = valais? ? "Date de naissance" : "Geb.datum"
         titlekey = valais? ? "Cahier des charges" : "Pflichtenheft"
-        typekey = valais? ? "Type d’affectation" : "Einsatztyp"
+        typekey = valais? ? "Type" : "Einsatztyp"
         noteskey = valais? ? "Remarques" : "Bemerkungen"
-        holidayskey = valais? ? "Fermeture annuelle de l’EA " : "Check Box Betriebsferien"
+        holidayskey = valais? ? "Fermeture" : "Check Box Betriebsferien"
 
 
         {
