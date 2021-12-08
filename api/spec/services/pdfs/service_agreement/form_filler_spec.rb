@@ -38,7 +38,7 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         user.address,
         user.zip_with_city,
         user.phone,
-        user.bank_iban,
+        user.prettified_bank_iban,
         user.email,
         user.health_insurance,
         I18n.l(service.beginning),
