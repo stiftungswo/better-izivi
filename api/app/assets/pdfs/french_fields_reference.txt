@@ -24,6 +24,24 @@ FieldFlags: 0
 FieldJustification: Left
 ---
 FieldType: Text
+FieldName: NPA / Lieu
+FieldNameAlt: NPA / Lieu
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: T&#233;l&#233;phone
+FieldNameAlt: T&#233;l&#233;phone
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Courriel
+FieldNameAlt: Courriel
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
 FieldName: Date de naissance
 FieldNameAlt: Date de naissance
 FieldFlags: 0
@@ -63,9 +81,17 @@ FieldValue: SWO Artenschutz
 FieldJustification: Left
 ---
 FieldType: Text
-FieldName: NPA / Lieu
-FieldNameAlt: NPA / Lieu
+FieldName: Rue /n&#176; (EA)
+FieldNameAlt: Rue / n&#176; (EA)
 FieldFlags: 0
+FieldValue: Bahnstrasse 18b
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: NPA / Lieu (EA)
+FieldNameAlt: NPA / Lieu (EA)
+FieldFlags: 0
+FieldValue: 8603 Schwerzenbach
 FieldJustification: Left
 ---
 FieldType: Text
@@ -83,15 +109,17 @@ FieldValue: Einsatzleiter
 FieldJustification: Left
 ---
 FieldType: Text
-FieldName: T&#233;l&#233;phone
-FieldNameAlt: T&#233;l&#233;phone
+FieldName: T&#233;l&#233;phone (EA)
+FieldNameAlt: T&#233;l&#233;phone (EA)
 FieldFlags: 0
+FieldValue: 077 438 57 61
 FieldJustification: Left
 ---
 FieldType: Text
-FieldName: Courriel
-FieldNameAlt: Courriel
+FieldName: Courriel (EA)
+FieldNameAlt: Courriel (EA)
 FieldFlags: 0
+FieldValue: zivildienst@stiftungswo.ch
 FieldJustification: Left
 ---
 FieldType: Text
@@ -108,83 +136,16 @@ FieldFlags: 0
 FieldJustification: Left
 ---
 FieldType: Text
-FieldName: Date de d&#233;but de l&#8217;affectation
-FieldNameAlt: Date de d&#233;but de l&#8217;affectation
-FieldFlags: 0
-FieldJustification: Left
----
-FieldType: Text
 FieldName: Date de fin de l&#8217; affectation
 FieldNameAlt: Date de fin de l&#8217; affectation
 FieldFlags: 0
 FieldJustification: Left
 ---
 FieldType: Button
-FieldName: D
-FieldNameAlt: D
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
-FieldName: F
-FieldNameAlt: F
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
-FieldName: I
-FieldNameAlt: I
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Text
-FieldName: Date souhait&#233;e
-FieldNameAlt: Date souhait&#233;e
-FieldFlags: 0
-FieldJustification: Left
----
-FieldType: Button
-FieldName: Maniement de la tron&#231;onneuse
-FieldNameAlt: Maniement de la tron&#231;onneuse
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
-FieldName: Communication et accompagnement
-FieldNameAlt: Communication et accompagnement
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
-FieldName: Approfondissement 1 ou Protection de la nature et de l&#8217;environnement ou Entretien des alpages
-FieldNameAlt: Approfondissement 1 ou Protection de la nature et de l&#8217;environnement ou Entretien des alpages
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
-FieldName: Approfondissement 2 (&#224; partir de 180 jours d&#8217;affectation)
-FieldNameAlt: Approfondissement 2 (&#224; partir de 180 jours d&#8217;affectation)
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
 FieldName: Fermeture annuelle de l&#8217;EA
 FieldNameAlt: Fermeture annuelle de l&#8217;EA
 FieldFlags: 0
+FieldValue: Off
 FieldJustification: Left
 FieldStateOption: Ja
 FieldStateOption: Off
@@ -202,6 +163,7 @@ FieldType: Button
 FieldName: R&#233;partition des p&#233;riodes d'affectation
 FieldNameAlt: R&#233;partition des p&#233;riodes d'affectation
 FieldFlags: 0
+FieldValue: Off
 FieldJustification: Left
 FieldStateOption: Off
 FieldStateOption: On
@@ -211,6 +173,111 @@ FieldName: Cette affectation sert &#224; anticiper ou rattraper l&#8217;obligati
 FieldNameAlt: Cette affectation sert &#224; anticiper ou rattraper l&#8217;obligation annuelle de l&#8217;ann&#233;e
 FieldFlags: 0
 FieldJustification: Center
+---
+FieldType: Button
+FieldName: D
+FieldNameAlt: D
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: F
+FieldNameAlt: F
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: I
+FieldNameAlt: I
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: Communication et accompagnement
+FieldNameAlt: Communication et accompagnement
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Text
+FieldName: Date souhait&#233;e
+FieldNameAlt: Date souhait&#233;e
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Approfondissement 1 ou Protection de la nature et de l&#8217;environnement ou Entretien des alpages
+FieldNameAlt: Approfondissement 1 ou Protection de la nature et de l&#8217;environnement ou Entretien des alpages
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Text
+FieldName: Approfondissement 1
+FieldNameAlt: Approfondissement 1
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Approfondissement 2 (&#224; partir de 180 jours d&#8217;affectation)
+FieldNameAlt: Approfondissement 2 (&#224; partir de 180 jours d&#8217;affectation)
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Text
+FieldName: Approfondissement 2
+FieldNameAlt: Approfondissement 2
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Maniement de la tron&#231;onneuse
+FieldNameAlt: Maniement de la tron&#231;onneuse
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Button
+FieldName: S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
+FieldNameAlt: S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
+FieldFlags: 0
+FieldValue: Off
+FieldJustification: Left
+FieldStateOption: Off
+FieldStateOption: On
+---
+FieldType: Text
+FieldName: Maniement de la tron&#231;onneuse / S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
+FieldNameAlt: Maniement de la tron&#231;onneuse / S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Logement
+FieldFlags: 49152
+FieldValue: Auswahl2
+FieldJustification: Left
+FieldStateOption: Auswahl1
+FieldStateOption: Auswahl2
+FieldStateOption: Off
 ---
 FieldType: Button
 FieldName: 6.1 Logement
@@ -226,13 +293,13 @@ FieldFlags: 0
 FieldJustification: Left
 ---
 FieldType: Button
-FieldName: Logement
-FieldFlags: 49152
-FieldValue: Auswahl2
+FieldName: Le civiliste aura besoin de billets sp&#233;ciaux pour un trajet hebdomadaire gratuit de son lieu de travail &#224; son lieu de domicile et retour lors des jours ch&#244;m&#233;s
+FieldNameAlt: Le civiliste aura besoin de billets sp&#233;ciaux pour un trajet hebdomadaire gratuit de son lieu de travail &#224; son lieu de domicile et retour lors des jours ch&#244;m&#233;s.
+FieldFlags: 0
+FieldValue: Off
 FieldJustification: Left
-FieldStateOption: Auswahl1
-FieldStateOption: Auswahl2
 FieldStateOption: Off
+FieldStateOption: On
 ---
 FieldType: Button
 FieldName: Frais de transport
@@ -319,24 +386,6 @@ FieldStateOption: 2
 FieldStateOption: Auswahl 1
 FieldStateOption: Off
 ---
-FieldType: Text
-FieldName: Remarques
-FieldNameAlt: Remarques
-FieldFlags: 4096
-FieldJustification: Left
----
-FieldType: Text
-FieldName: Lieu, date - Signature du civiliste
-FieldNameAlt: Lieu, date - Signature du civiliste
-FieldFlags: 0
-FieldJustification: Left
----
-FieldType: Text
-FieldName: Lieu, date - Signature de l'EA
-FieldNameAlt: Lieu, date - Signature de l'EA
-FieldFlags: 0
-FieldJustification: Left
----
 FieldType: Button
 FieldName: D&#233;claration concernant le d&#233;lai de conv ocation
 FieldFlags: 49152
@@ -376,65 +425,21 @@ FieldStateOption: 1
 FieldStateOption: Auswahl3
 FieldStateOption: Off
 ---
-FieldType: Button
-FieldName: Le civiliste aura besoin de billets sp&#233;ciaux pour un trajet hebdomadaire gratuit de son lieu de travail &#224; son lieu de domicile et retour lors des jours ch&#244;m&#233;s
-FieldNameAlt: Le civiliste aura besoin de billets sp&#233;ciaux pour un trajet hebdomadaire gratuit de son lieu de travail &#224; son lieu de domicile et retour lors des jours ch&#244;m&#233;s.
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
-FieldType: Button
-FieldName: S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
-FieldNameAlt: S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
-FieldFlags: 0
-FieldJustification: Left
-FieldStateOption: Off
-FieldStateOption: On
----
 FieldType: Text
-FieldName: Rue /n&#176; (EA)
-FieldNameAlt: Rue / n&#176; (EA)
-FieldFlags: 0
-FieldValue: Bahnstrasse 18b
+FieldName: Remarques
+FieldNameAlt: Remarques
+FieldFlags: 4096
 FieldJustification: Left
 ---
 FieldType: Text
-FieldName: NPA / Lieu (EA)
-FieldNameAlt: NPA / Lieu (EA)
-FieldFlags: 0
-FieldValue: 8603 Schwerzenbach
-FieldJustification: Left
----
-FieldType: Text
-FieldName: Courriel (EA)
-FieldNameAlt: Courriel (EA)
-FieldFlags: 0
-FieldValue: zivildienst@stiftungswo.ch
-FieldJustification: Left
----
-FieldType: Text
-FieldName: T&#233;l&#233;phone (EA)
-FieldNameAlt: T&#233;l&#233;phone (EA)
-FieldFlags: 0
-FieldValue: 077 438 57 61
-FieldJustification: Left
----
-FieldType: Text
-FieldName: Approfondissement 1
-FieldNameAlt: Approfondissement 1
+FieldName: Lieu, date - Signature du civiliste
+FieldNameAlt: Lieu, date - Signature du civiliste
 FieldFlags: 0
 FieldJustification: Left
 ---
 FieldType: Text
-FieldName: Approfondissement 2
-FieldNameAlt: Approfondissement 2
-FieldFlags: 0
-FieldJustification: Left
----
-FieldType: Text
-FieldName: Maniement de la tron&#231;onneuse / S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
-FieldNameAlt: Maniement de la tron&#231;onneuse / S&#233;curit&#233; lors d'affectations &#224; l'&#233;tranger
+FieldName: Lieu, date - Signature de l'EA
+FieldNameAlt: Lieu, date - Signature de l'EA
 FieldFlags: 0
 FieldJustification: Left
 ---
@@ -445,5 +450,11 @@ FieldJustification: Left
 ---
 FieldType: Signature
 FieldName: Signature de l'EA
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: debut
+FieldNameAlt: Date de d&#233;but de l&#8217;affectation
 FieldFlags: 0
 FieldJustification: Left

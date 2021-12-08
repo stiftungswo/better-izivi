@@ -40,58 +40,12 @@ module Pdfs
         }
       }.freeze
 
-      REGIONAL_CENTER = {
-        fr: {
-          name: 'regional_center'
-        },
-        de: {
-          name: 'regional_center'
-        }
-      }.freeze
-
-      REGIONAL_CENTER_ADDRESS = {
-        fr: {
-          second: 'tfRZ',
-          third: 'tfStrasse',
-          fourth: 'tfPLZ'
-        },
-        de: {
-          second: 'tfRZ',
-          third: 'tfStrasse',
-          fourth: 'tfPLZ'
-        }
-      }.freeze
-
-      SERVICE_CHECKBOX_FIELDS = {
-        fr: {
-          conventional_service: 'affectation',
-          probation_service: 'affectation à lessai',
-          long_service: 'affectation longue obligatoire ou partie de celleci'
-        },
-        de: {
-          conventional_service: 'Einsatz',
-          probation_service: 'Probeeinsatz',
-          long_service: 'obligatorischer Langer Einsatz oder Teil davon'
-        }
-      }.freeze
-
       SERVICE_SPECIFICATION_FORM_FIELDS = {
         fr: {
           title: 'Cahier des charges'
         },
         de: {
           title: 'Pflichtenheft'
-        }
-      }.freeze
-
-      COMPANY_HOLIDAY_FORM_FIELDS = {
-        fr: {
-          beginning: 'Fermeture1',
-          ending: 'Fermeture2'
-        },
-        de: {
-          beginning: 27,
-          ending: 28
         }
       }.freeze
     end
