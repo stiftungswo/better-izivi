@@ -29,7 +29,7 @@ module Pdfs
         file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
 
         @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
-      en
+      end
 
       def pdf_file
         @pdf_file ||= Tempfile.new('service_agreement_form')
