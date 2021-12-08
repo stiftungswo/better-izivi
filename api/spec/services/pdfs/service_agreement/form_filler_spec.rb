@@ -65,11 +65,11 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         it_behaves_like 'pdf renders correct texts'
       end
 
-      context 'when the service is a probational' do
-        let(:service_data) { { probation_service: true } }
+      # context 'when the service is a probational' do
+      #   let(:service_data) { { probation_service: true } }
 
-        it_behaves_like 'pdf renders correct texts'
-      end
+      #   it_behaves_like 'pdf renders correct texts'
+      # end
 
       context 'when there is no company_holiday during the service' do
         let(:company_holiday) { nil }
@@ -93,11 +93,11 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         it_behaves_like 'pdf renders correct texts'
       end
 
-      context 'when the service is a probational' do
-        let(:service_data) { { probation_service: true } }
+      # context 'when the service is a probational' do
+      #   let(:service_data) { { probation_service: true } }
 
-        it_behaves_like 'pdf renders correct texts'
-      end
+      #   it_behaves_like 'pdf renders correct texts'
+      # end
 
       context 'when there is no company_holiday during the service' do
         let(:company_holiday) { nil }
