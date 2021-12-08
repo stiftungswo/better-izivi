@@ -58,8 +58,8 @@ module Pdfs
 
         holidays = get_holidays
         if holidays
-          beginning = holidays.beginning.strftime('%d.%m.%Y')
-          ending = holidays.ending.strftime('%d.%m.%Y')
+          beginning = I18n.l(holidays.beginning)
+          ending = I18n.l(holidays.ending)
           notes = if valais?
                     'Fermeture annuelle du ' + beginning + ' au ' + ending
                   else
@@ -83,7 +83,7 @@ module Pdfs
           # 2: Einsatz
           typekey => type,
           titlekey => @service.service_specification.title,
-          birthdaykey => @service.user.birthday.strftime('%d.%m.%Y')
+          birthdaykey => I18n.l(@service.user.birthday)
         }
       end
 
