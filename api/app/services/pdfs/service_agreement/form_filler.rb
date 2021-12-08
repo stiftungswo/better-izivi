@@ -29,7 +29,7 @@ module Pdfs
         file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
 
         @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
-      end
+      en
 
       def pdf_file
         @pdf_file ||= Tempfile.new('service_agreement_form')
@@ -58,8 +58,8 @@ module Pdfs
 
         holidays = get_holidays
         if holidays
-          beginning = holidays.beginning.strftime('%d. %m. %Y')
-          ending = holidays.ending.strftime('%d. %m. %Y')
+          beginning = holidays.beginning.strftime('%d.%m.%Y')
+          ending = holidays.ending.strftime('%d.%m.%Y')
           notes = if valais?
                     'Fermeture annuelle du ' + beginning + ' au ' + ending
                   else
@@ -83,7 +83,7 @@ module Pdfs
           # 2: Einsatz
           typekey => type,
           titlekey => @service.service_specification.title,
-          birthdaykey => @service.user.birthday.strftime('%d. %m. %Y')
+          birthdaykey => @service.user.birthday.strftime('%d.%m.%Y')
         }
       end
 
