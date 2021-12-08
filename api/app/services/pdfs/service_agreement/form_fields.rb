@@ -6,15 +6,15 @@ module Pdfs
     module FormFields
       USER_FORM_FIELDS = {
         fr: {
-          zdp: 'N',
+          zdp: 'N° de civiliste',
           first_name: 'Prénom',
           last_name: 'Nom',
           zip_with_city: 'NPA / Lieu',
-          address: 'Rue n',
-          phone: 'Mobile',
+          address: 'Rue / n°',
+          phone: 'Téléphone',
           bank_iban: 'IBAN',
           email: 'Courriel',
-          health_insurance: 'Caisse-maladie'
+          health_insurance: 'Caisse-maladie (Nom et lieu)'
         },
         de: {
           zdp: 'ZDP-Nr',
@@ -26,14 +26,13 @@ module Pdfs
           prettified_bank_iban: 'IBAN',
           email: 'E-Mail',
           health_insurance: 'Krankenkasse (Name und Ort)',
-          birthday: 'Geb.datum',
         }
       }.freeze
 
       SERVICE_DATE_FORM_FIELDS = {
         fr: {
-          beginning: 'Date de début',
-          ending: 'Date de fin'
+          beginning: 'debut',
+          ending: "Date de fin de l’ affectation"
         },
         de: {
           beginning: 'Einsatzbeginn',

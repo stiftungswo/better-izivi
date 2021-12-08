@@ -6,7 +6,7 @@ require 'date'
 module Pdfs
   module ServiceAgreement
     class FormFiller
-      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/french_service_agreement_form.pdf').freeze
+      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/french_service_agreement_form_new.pdf').freeze
       GERMAN_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_form_new.pdf').freeze
 
       def initialize(service)
@@ -52,32 +52,43 @@ module Pdfs
       end
 
       def custom_data
-        type = 2
+        type = valais? ? "Auswahl15" : 2
 
         if @service.long_service
-          type = 1
+          type = valais? ? "Auswahl14" : 1
         elsif @service.probation_service
-          type = 0
+          type = valais? ? "Auswahl13" : 0
         end
 
         holidays = get_holidays()
         if (!holidays.nil?)
           beginning = holidays.beginning.strftime("%d. %m. %Y")
           ending = holidays.ending.strftime("%d. %m. %Y")
-          notes = "Betriebsferien von " + beginning + " bis " + ending      
+          if (valais?) 
+            notes = "Fermeture annuelle de l’EA du " + beginning + " au " + ending      
+          else
+            notes = "Betriebsferien von " + beginning + " bis " + ending      
+          end
         else
           notes = ""
         end 
 
+        birthdaykey = valais? ? "Date de naissance" : "Geb.datum"
+        titlekey = valais? ? "Cahier des charges" : "Pflichtenheft"
+        typekey = valais? ? "Type d’affectation" : "Einsatztyp"
+        noteskey = valais? ? "Remarques" : "Bemerkungen"
+        holidayskey = valais? ? "Fermeture annuelle de l’EA " : "Check Box Betriebsferien"
+
+
         {
-          "Check Box Betriebsferien" => holidays.nil? ? "Off" : "Ja",
-          "Bemerkungen" => notes,
+          holidayskey => holidays.nil? ? "Off" : "Ja",
+          noteskey => notes,
           # 0: Probeeinsatz
           # 1: obligatorischer langer Einsatz oder Teil davon
           # 2: Einsatz
-          "Einsatztyp" => type,
-          "Pflichtenheft" => @service.service_specification.title,
-          'Geb.datum' => @service.user.birthday.strftime("%d. %m. %Y")
+          typekey => type,
+          titlekey => @service.service_specification.title,
+          birthdaykey => @service.user.birthday.strftime("%d. %m. %Y")
         }
       end
 
