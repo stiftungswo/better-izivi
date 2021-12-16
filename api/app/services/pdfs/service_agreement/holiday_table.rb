@@ -1,3 +1,4 @@
+require 'date'
 
 module Pdfs
   module ServiceAgreement
@@ -22,17 +23,22 @@ module Pdfs
       private
       
       def table_body
+        holiday_beginning_unix = @holidays.beginning.to_time.to_i;
+        holiday_ending_unix = @holidays.ending.to_time.to_i;
         
-        row = [
-          ['Mo, 10.05.2021', 'Ferientag, anrechenbar'],
-          ['Di, 11.05.2021', 'Ferientag, anrechenbar'],
-          ['Mi, 12.05.2021', 'Ferientag, anrechenbar'],
-          ['Do, 13.05.2021', 'Arbeitsfreier Tag, anrechenbar'],
-          ['Fr, 14.05.2021', 'Ferientag, anrechenbar'],
-          ['Sa, 15.05.2021', 'Arbeitsfreier Tag, anrechenbar'],
-          ['So, 16.05.2021', 'Arbeitsfreier Tag, anrechenbar'],
-        ]
+        current_unix = holiday_beginning_unix
 
+        row = []
+        while current_unix <= holiday_ending_unix
+          date = I18n.l(Time.at(current_unix).to_date);
+          weekday = Time.at(current_unix).to_date.strftime('%a')
+          day = weekday + ", " + date
+
+          row.push([day, "haha lol"]);
+
+          current_unix += 60 * 60 * 24
+        end
+        
         font_size 12
 
         table(
