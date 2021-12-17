@@ -11,7 +11,9 @@ module Pdfs
       def initialize(service)
         @service = service
         @holidays = calculate_holidays
+        @company_holidays = calculate_company_holidays
 
+        title
         table_top
         table_body
       end
@@ -23,52 +25,90 @@ module Pdfs
       private
       
       def table_body
-        holiday_beginning_unix = @holidays.beginning.to_time.to_i;
-        holiday_ending_unix = @holidays.ending.to_time.to_i;
-        
-        current_unix = holiday_beginning_unix
-
         row = []
-        while current_unix <= holiday_ending_unix
-          date = I18n.l(Time.at(current_unix).to_date);
-          weekday = Time.at(current_unix).to_date.strftime('%a')
-          day = weekday + ", " + date
+        @holidays.each do | holiday|
 
-          row.push([day, "haha lol"]);
+          holiday_beginning_unix = holiday.beginning.to_time.to_i;
+          holiday_ending_unix = holiday.ending.to_time.to_i;
+          current_unix = holiday_beginning_unix
+          
+          while current_unix <= holiday_ending_unix
+            date = I18n.l(Time.at(current_unix).to_date);
+            weekday = Time.at(current_unix).to_date.strftime('%a')
+            day = weekday + ", " + date
+            
+            holiday_type = holiday.company_holiday? ? "Ferientag" : "Arbeitsfreier Tag"
 
-          current_unix += 60 * 60 * 24
+            day_appendum = holiday.public_holiday? ? " (" + holiday.description +  ")"  : ""
+
+            row.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, current_unix)]);
+            
+            current_unix += 60 * 60 * 24
+          end
         end
         
-        font_size 12
+        font_size 10
 
         table(
           row,
           header: true,
-          column_widths: COLUMN_WIDTHS,
-          cell_style: {  border_width: 1, border_color: '555555', vertical_padding: 30 }
-        ) do
-          cells.padding = [12, 5, 12, 5]
+          cell_style: {  border_width: 0.5, border_color: '666666', vertical_padding: 30 }
+        ) do | table |
+          style_table(table, row.length)
+        end
+      end
+
+      def style_table(table, length)
+        table.cells.padding = [6, 10, 6, 6]
+
+        table.cells.style do |cell|
+          cell.background_color = (cell.row % 2).zero? ? 'ffffff' : 'eeeeee'
+        end
+      end
+
+      def title
+        text "Anhang: Aufstellung Ferien-, Urlaubs- und Feiertage", align: :left, size: 14, leading: 12
+      end
+
+      def top_text
+        if @service.long_service?
+          return "Der Zivi hat Anspruch auf Ferien."
+        else
+          return "Der Zivi hat keinen Anspruch auf Ferien."
+        end
+      end
+
+      def is_paid_holiday_text(holiday, unix)
+        date = Time.at(unix).to_date
+        if @service.long_service? or holiday.public_holiday? or date.saturday? or date.sunday? 
+          return " (anrechenbar)"
+        else
+          return " (nicht anrechenbar)"
         end
       end
 
       def table_top
         
-        row = [[get_holiday_text], ["Der Zivi hat Anspruch auf Ferien."]]
+        row = [[top_text()]]
 
-        font_size 12
+        font_size 10
 
         table(
           row,
           header: true,
-          cell_style: {  border_width: 1, border_color: '555555' }
-        ) do
-          cells.padding = [0, 5, 0, 5]
+          cell_style: { border_width: 0 }
+        ) do | table |
+          table.cells.padding = [0, 0, 12, 0]
         end
       end
 
       def calculate_holidays
         Holiday.overlapping_date_range(@service.beginning, @service.ending)
-                                 .find(&:company_holiday?)
+      end
+
+      
+      def calculate_company_holidays
+        Holiday.overlapping_date_range(@service.beginning, @service.ending).find(&:company_holiday?)
       end
 
       def get_holiday_text
