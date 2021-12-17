@@ -166,6 +166,15 @@ de:
     expenses_from: Spesen vom %{from_date}
     pain_filename: Spesen_vom_%{from_date}.xml
   pdfs:
+    holiday_table:
+      day_off: Arbeitsfreier Tag
+      taken_into_account: anrechenbar
+      not_taken_into_account: nicht anrechenbar
+      holiday_taken_into_account: Ferientag
+      holiday_not_taken_into_account: Urlaubstag
+      title: "Anhang: Aufstellung Ferien-, Urlaubs- und Feiertage"
+      has_time_off: Der Zivi hat Anspruch auf Ferien.
+      no_time_off: Der Zivi hat keinen Anspruch auf Ferien.
     expense_sheet:
       expense_table:
         footer:
@@ -183,10 +192,10 @@ de:
             one: CHF %{amount}/Tag für %{count} anrechenbarer Tag
             other: CHF %{amount}/Tag für %{count} anrechenbare Tage
       filename: Spesenrapport_%{today}
-      header: 'Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
+      header: "Spesenrapport des Einsatzbetriebes 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach "
       info_block:
         footer:
-          bank_account_number: 'Konto-Nr.:'
+          bank_account_number: "Konto-Nr.:"
         header:
           complete_service:
             label: Gesamteinsatz

@@ -24,6 +24,7 @@ module Pdfs
 
       private
       
+      # TODO: only show public holidays that overlap with company holidays
       def table_body
         row = []
         @holidays.each do | holiday|
@@ -37,9 +38,15 @@ module Pdfs
             weekday = Time.at(current_unix).to_date.strftime('%a')
             day = weekday + ", " + date
             
-            holiday_type = "Arbeitsfreier Tag"
+            holiday_type = I18n.t('pdfs.holiday_table.day_off')
             if holiday.company_holiday?
-              holiday_type = is_paid_holiday(holiday, current_unix) ? "Ferientag" : "Urlaubstag"
+
+              holiday_type = if is_paid_holiday(holiday, current_unix)
+                I18n.t('pdfs.holiday_table.holiday_taken_into_account')
+              else
+                I18n.t('pdfs.holiday_table.holiday_not_taken_into_account')
+              end
+
             end
 
             day_appendum = holiday.public_holiday? ? " (" + holiday.description +  ")"  : ""
@@ -70,22 +77,22 @@ module Pdfs
       end
 
       def title
-        text "Anhang: Aufstellung Ferien-, Urlaubs- und Feiertage", align: :left, size: 14, leading: 12
+        text I18n.t('pdfs.holiday_table.title'), align: :left, size: 14, leading: 12
       end
 
       def top_text
         if @service.long_service?
-          return "Der Zivi hat Anspruch auf Ferien."
+          return I18n.t('pdfs.holiday_table.has_time_off')
         else
-          return "Der Zivi hat keinen Anspruch auf Ferien."
+          return I18n.t('pdfs.holiday_table.no_time_off')
         end
       end
 
       def is_paid_holiday_text(holiday, unix)
         if is_paid_holiday(holiday, unix) 
-          return " (anrechenbar)"
+          return " (" + I18n.t('pdfs.holiday_table.taken_into_account') + ")"
         else
-          return " (nicht anrechenbar)"
+          return " (" + I18n.t('pdfs.holiday_table.not_taken_into_account') + ")"
         end
       end
 
@@ -114,25 +121,8 @@ module Pdfs
         Holiday.overlapping_date_range(@service.beginning, @service.ending)
       end
 
-      
       def calculate_company_holidays
         Holiday.overlapping_date_range(@service.beginning, @service.ending).find(&:company_holiday?)
-      end
-
-      def get_holiday_text
-        if @holidays
-          beginning = I18n.l(@holidays.beginning)
-          ending = I18n.l(@holidays.ending)
-          notes = if valais?
-                    'Fermeture annuelle du ' + beginning + ' au ' + ending
-                  else
-                    'Betriebsferien vom ' + beginning + ' bis ' + ending
-                  end
-        else
-          notes = 'Keine Ferien während dem Einsatz, dieser Text sollte nie gesehen werden.'
-        end
-
-        notes
       end
 
       def valais?
