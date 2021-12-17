@@ -37,7 +37,10 @@ module Pdfs
             weekday = Time.at(current_unix).to_date.strftime('%a')
             day = weekday + ", " + date
             
-            holiday_type = holiday.company_holiday? ? "Ferientag" : "Arbeitsfreier Tag"
+            holiday_type = "Arbeitsfreier Tag"
+            if holiday.company_holiday?
+              holiday_type = is_paid_holiday(holiday, current_unix) ? "Ferientag" : "Urlaubstag"
+            end
 
             day_appendum = holiday.public_holiday? ? " (" + holiday.description +  ")"  : ""
 
@@ -79,12 +82,17 @@ module Pdfs
       end
 
       def is_paid_holiday_text(holiday, unix)
-        date = Time.at(unix).to_date
-        if @service.long_service? or holiday.public_holiday? or date.saturday? or date.sunday? 
+        if is_paid_holiday(holiday, unix) 
           return " (anrechenbar)"
         else
           return " (nicht anrechenbar)"
         end
+      end
+
+      def is_paid_holiday(holiday, unix)
+        date = Time.at(unix).to_date
+        
+        @service.long_service? or holiday.public_holiday? or date.saturday? or date.sunday?
       end
 
       def table_top
