@@ -42,15 +42,6 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
         }
       end
 
-      let(:page_text_check_indices) do
-        [
-          0..2,
-          17..19,
-          235..239,
-          607..607,
-          719..719
-        ]
-      end
       let(:page_text_check_texts) do
         [
           'Einsatzvereinbarung',
