@@ -204,6 +204,15 @@ en:
       filename: Overview_expense_statistics_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (deployment operation No. 423) - Provision vom %{date}
       title: Zivi-Expenses Detail-Overview (Timeperiod %{beginning} - %{ending})
+    holiday_table:
+      day_off: Paid day off
+      has_time_off: The person is entitled to a vacation..
+      holiday_not_taken_into_account: Day off
+      holiday_taken_into_account: Day off
+      no_time_off: The person is not entitled to a vacation..
+      not_taken_into_account: not creditable
+      taken_into_account: creditable
+      title: Vacation
     payments:
       amount: Amount
       filename: Payments_%{today}
