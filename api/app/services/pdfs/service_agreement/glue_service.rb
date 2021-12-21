@@ -15,10 +15,10 @@ module Pdfs
       end
 
       def render
-        # fill_and_load_form
+        fill_and_load_form
         load_holiday_table
         load_info_text
-        # generate_and_load_first_page
+        generate_and_load_first_page
 
         pdf_io = StringIO.new
         @combined.write(pdf_io)
