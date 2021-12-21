@@ -25,34 +25,54 @@ module Pdfs
 
       private
       
-      # TODO: only show public holidays that overlap with company holidays
       def table_body
-        row = []
-
-        # { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
+        
+        # will look like this { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
         holidays_for_table = {}
-
+        
         beginning_unix = @company_holidays.beginning.to_time.to_i
         ending_unix = @company_holidays.ending.to_time.to_i
-
+        
         @holidays.each do | holiday|
-
+          
           holiday_beginning_unix = holiday.beginning.to_time.to_i;
           holiday_ending_unix = holiday.ending.to_time.to_i;
           current_unix = holiday_beginning_unix
-
+          
           # skip holiday if it doesn't overlap with company holidays
           next unless holiday_beginning_unix.between?(beginning_unix, ending_unix) or holiday_ending_unix.between?(beginning_unix, ending_unix)
           
+          # replace company holiday if it happens on the same date as a public holiday
           while current_unix <= holiday_ending_unix
-            date = I18n.l(Time.at(current_unix).to_date);
-            weekday = Time.at(current_unix).to_date.strftime('%a')
-            day = weekday + ", " + date
+            if holidays_for_table.has_key?(current_unix)
+              if not holidays_for_table[current_unix][:public_holiday]
+                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
+              end
+            else
+              holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
+            end
             
-            holiday_type = I18n.t('pdfs.holiday_table.day_off')
-            if holiday.company_holiday?
+            current_unix += 60 * 60 * 24 # one day in unix
+          end
+        end
+        
+        
+        # create rows for the table
+        row = []
+        holidays_for_table.sort.each do | h |
 
-              holiday_type = if is_paid_holiday(holiday, current_unix)
+          unix = h[0]
+          holiday = OpenStruct.new(h[1])
+          puts(holiday)
+
+          date = I18n.l(Time.at(unix).to_date);
+          weekday = Time.at(unix).to_date.strftime('%a')
+          day = weekday + ", " + date
+
+          holiday_type = I18n.t('pdfs.holiday_table.day_off')
+            unless holiday[:public_holiday]
+
+              holiday_type = if is_paid_holiday(holiday, unix)
                 I18n.t('pdfs.holiday_table.holiday_taken_into_account')
               else
                 I18n.t('pdfs.holiday_table.holiday_not_taken_into_account')
@@ -60,23 +80,11 @@ module Pdfs
 
             end
 
-            day_appendum = holiday.public_holiday? ? " (" + holiday.description +  ")"  : ""
+            day_appendum = holiday.public_holiday ? " (" + holiday.name +  ")"  : ""
 
-            row.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, current_unix)]);
+            row.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, unix)]);
 
-            if holidays_for_table.has_key?(current_unix)
-              if not holidays_for_table[current_unix][:public_holiday]
-                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
-              end
-            else
-                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
-            end
-            
-            current_unix += 60 * 60 * 24
-          end
         end
-
-        pp holidays_for_table
         
         font_size 10
 
@@ -120,7 +128,7 @@ module Pdfs
       def is_paid_holiday(holiday, unix)
         date = Time.at(unix).to_date
         
-        @service.long_service? or holiday.public_holiday? or date.saturday? or date.sunday?
+        @service.long_service? or holiday.public_holiday or date.saturday? or date.sunday?
       end
 
       def table_top
