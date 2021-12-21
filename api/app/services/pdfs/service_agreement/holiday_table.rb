@@ -29,6 +29,9 @@ module Pdfs
       def table_body
         row = []
 
+        # { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
+        holidays_for_table = {}
+
         beginning_unix = @company_holidays.beginning.to_time.to_i
         ending_unix = @company_holidays.ending.to_time.to_i
 
@@ -38,7 +41,7 @@ module Pdfs
           holiday_ending_unix = holiday.ending.to_time.to_i;
           current_unix = holiday_beginning_unix
 
-          # skip holiday if it doesn't overlaps with company holidays
+          # skip holiday if it doesn't overlap with company holidays
           next unless holiday_beginning_unix.between?(beginning_unix, ending_unix) or holiday_ending_unix.between?(beginning_unix, ending_unix)
           
           while current_unix <= holiday_ending_unix
@@ -60,10 +63,20 @@ module Pdfs
             day_appendum = holiday.public_holiday? ? " (" + holiday.description +  ")"  : ""
 
             row.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, current_unix)]);
+
+            if holidays_for_table.has_key?(current_unix)
+              if not holidays_for_table[current_unix][:public_holiday]
+                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
+              end
+            else
+                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
+            end
             
             current_unix += 60 * 60 * 24
           end
         end
+
+        pp holidays_for_table
         
         font_size 10
 
