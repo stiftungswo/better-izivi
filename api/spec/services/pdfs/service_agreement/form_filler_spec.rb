@@ -28,9 +28,6 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
     end
 
     let(:expected_strings) do
-      company_holiday.nil? ? expected_strings_default : expected_strings_default.push(*expected_strings_holiday)
-    end
-    let(:expected_strings_default) do
       [
         user.zdp,
         user.last_name,
@@ -47,12 +44,6 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
         # service.conventional_service? ? checkbox_checked : '',
         # service.probation_service? ? checkbox_checked : '',
         # service.long_service ? checkbox_checked : ''
-      ]
-    end
-    let(:expected_strings_holiday) do
-      [
-        I18n.l(company_holiday.beginning),
-        I18n.l(company_holiday.ending)
       ]
     end
 
