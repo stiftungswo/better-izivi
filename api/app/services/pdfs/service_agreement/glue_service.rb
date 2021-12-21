@@ -17,10 +17,8 @@ module Pdfs
 
       def render
         fill_and_load_form
-        
-        if not @company_holidays.nil?
-          load_holiday_table
-        end
+
+        load_holiday_table if @company_holidays
 
         load_info_text
         generate_and_load_first_page

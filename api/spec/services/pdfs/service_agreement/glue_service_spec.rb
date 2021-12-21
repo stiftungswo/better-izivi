@@ -58,12 +58,10 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
 
       it 'renders pages in correct order', :aggregate_failures do
         pdf_page_inspector.pages.each_with_index do |item, index|
-          joined = item[:strings].join(" ")
+          joined = item[:strings].join(' ')
           expected_string = page_text_check_texts[index]
 
-          if !joined.include? expected_string
-            raise "page at index #{index} should include '#{expected_string}'"
-          end
+          raise "page at index #{index} should include '#{expected_string}'" unless joined.include? expected_string
         end
       end
     end
