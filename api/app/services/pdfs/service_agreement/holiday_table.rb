@@ -1,4 +1,5 @@
 require 'date'
+require 'pp'
 
 module Pdfs
   module ServiceAgreement
@@ -27,11 +28,18 @@ module Pdfs
       # TODO: only show public holidays that overlap with company holidays
       def table_body
         row = []
+
+        beginning_unix = @company_holidays.beginning.to_time.to_i
+        ending_unix = @company_holidays.ending.to_time.to_i
+
         @holidays.each do | holiday|
 
           holiday_beginning_unix = holiday.beginning.to_time.to_i;
           holiday_ending_unix = holiday.ending.to_time.to_i;
           current_unix = holiday_beginning_unix
+
+          # skip holiday if it doesn't overlaps with company holidays
+          next unless holiday_beginning_unix.between?(beginning_unix, ending_unix) or holiday_ending_unix.between?(beginning_unix, ending_unix)
           
           while current_unix <= holiday_ending_unix
             date = I18n.l(Time.at(current_unix).to_date);
