@@ -12,7 +12,7 @@ module Pdfs
           zip_with_city: 'NPA / Lieu',
           address: 'Rue / n°',
           phone: 'Téléphone',
-          bank_iban: 'IBAN',
+          prettified_bank_iban: 'IBAN',
           email: 'Courriel',
           health_insurance: 'Caisse-maladie (Nom et lieu)'
         },
