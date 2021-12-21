@@ -44,7 +44,6 @@ module Pdfs
 
           unix = h[0]
           holiday = OpenStruct.new(h[1])
-          puts(holiday)
 
           date = I18n.l(Time.at(unix).to_date);
           weekday = Time.at(unix).to_date.strftime('%a')
@@ -82,19 +81,14 @@ module Pdfs
           holiday_ending_unix = holiday.ending.to_time.to_i;
           current_unix = holiday_beginning_unix
           
-          # only continue if holiday if it overlaps with company holidays
+          # only continue if holiday overlaps with company holidays
           next unless holiday_beginning_unix.between?(beginning_unix, ending_unix) or holiday_ending_unix.between?(beginning_unix, ending_unix)
           
           # replace company holiday if it's on the same day as a public holiday
           while current_unix <= holiday_ending_unix
-            if holidays_for_table.has_key?(current_unix)
-              if not holidays_for_table[current_unix][:public_holiday]
-                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
-              end
-            else
+            unless holidays_for_table.has_key?(current_unix) && holidays_for_table[current_unix][:public_holiday] 
               holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
             end
-            
             current_unix += 60 * 60 * 24 # one day in unix
           end
         end
