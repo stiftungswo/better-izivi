@@ -133,13 +133,13 @@ export default (params: OverviewTableParams) => {
   ];
 
   function printButton(service: Service) {
-    const url_params = {
-      locale: params.user.regional_center_id == 2 ? "fr" : "de",
+    const urlParams = {
+      locale: params.user.regional_center_id === 2 ? 'fr' : 'de',
     };
     return (
       <a
         className={'btn btn-link'}
-        href={mainStore!.apiURL('services/' + service.id + '.pdf', url_params, true)}
+        href={mainStore!.apiURL('services/' + service.id + '.pdf', urlParams, true)}
         target={'_blank'}
       >
         <FormattedMessage
