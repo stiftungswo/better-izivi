@@ -166,15 +166,6 @@ fr:
     expenses_from: Frais du %{from_date}
     pain_filename: Frais_du_%{from_date}.xml
   pdfs:
-    holiday_table:
-      day_off: jour chômé
-      taken_into_account: pris en compte
-      not_taken_into_account: non pris en compte
-      holiday_taken_into_account: jour de vacances
-      holiday_not_taken_into_account: jour de congé
-      title: "Annexe: Jours de vacances, de congé ou de travail"
-      has_time_off: Le civiliste a droit à des vacances.
-      no_time_off: Le civiliste n’a pas droit à des vacances
     expense_sheet:
       expense_table:
         footer:
@@ -192,7 +183,7 @@ fr:
             one: CHF %{amount} p. jour pour %{count} jour facturable
             other: CHF %{amount} p. jour pour %{count} jours facturables
       filename: Portrait_des_dépenses_%{today}
-      header: "Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach "
+      header: 'Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
       info_block:
         footer:
           bank_account_number: N° de compte
@@ -213,6 +204,15 @@ fr:
       filename: Presentation_statistiques_charges_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (opération d'utilisation No. 423) - Disponible à partir de %{date}
       title: Zivi aperçu des dépenses (period %{beginning} - %{ending})
+    holiday_table:
+      day_off: jour chômé
+      has_time_off: Le civiliste a droit à des vacances.
+      holiday_not_taken_into_account: jour de congé
+      holiday_taken_into_account: jour de vacances
+      no_time_off: Le civiliste n’a pas droit à des vacances
+      not_taken_into_account: non pris en compte
+      taken_into_account: pris en compte
+      title: 'Annexe: Jours de vacances, de congé ou de travail'
     payments:
       amount: Montant
       filename: Paiements_%{today}
