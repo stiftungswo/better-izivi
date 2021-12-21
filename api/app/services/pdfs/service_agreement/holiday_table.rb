@@ -27,39 +27,20 @@ module Pdfs
       
       def table_body
         
-        # will look like this { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
-        holidays_for_table = {}
-        
-        beginning_unix = @company_holidays.beginning.to_time.to_i
-        ending_unix = @company_holidays.ending.to_time.to_i
-        
-        @holidays.each do | holiday|
-          
-          holiday_beginning_unix = holiday.beginning.to_time.to_i;
-          holiday_ending_unix = holiday.ending.to_time.to_i;
-          current_unix = holiday_beginning_unix
-          
-          # skip holiday if it doesn't overlap with company holidays
-          next unless holiday_beginning_unix.between?(beginning_unix, ending_unix) or holiday_ending_unix.between?(beginning_unix, ending_unix)
-          
-          # replace company holiday if it happens on the same date as a public holiday
-          while current_unix <= holiday_ending_unix
-            if holidays_for_table.has_key?(current_unix)
-              if not holidays_for_table[current_unix][:public_holiday]
-                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
-              end
-            else
-              holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
-            end
-            
-            current_unix += 60 * 60 * 24 # one day in unix
-          end
+        font_size 10
+
+        table(
+          rows,
+          header: true,
+          cell_style: {  border_width: 0.5, border_color: '666666', vertical_padding: 30 }
+        ) do | table |
+          style_table(table, rows.length)
         end
-        
-        
-        # create rows for the table
-        row = []
-        holidays_for_table.sort.each do | h |
+      end
+
+      def rows
+        data = []
+        filtered_holiday_list.sort.each do | h |
 
           unix = h[0]
           holiday = OpenStruct.new(h[1])
@@ -82,19 +63,43 @@ module Pdfs
 
             day_appendum = holiday.public_holiday ? " (" + holiday.name +  ")"  : ""
 
-            row.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, unix)]);
-
+            data.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, unix)]);
         end
+
+        data
+      end
+
+      def filtered_holiday_list
+        # will look like this { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
+        holidays_for_table = {}
         
-        font_size 10
-
-        table(
-          row,
-          header: true,
-          cell_style: {  border_width: 0.5, border_color: '666666', vertical_padding: 30 }
-        ) do | table |
-          style_table(table, row.length)
+        beginning_unix = @company_holidays.beginning.to_time.to_i
+        ending_unix = @company_holidays.ending.to_time.to_i
+        
+        @holidays.each do | holiday|
+          
+          holiday_beginning_unix = holiday.beginning.to_time.to_i;
+          holiday_ending_unix = holiday.ending.to_time.to_i;
+          current_unix = holiday_beginning_unix
+          
+          # only continue if holiday if it overlaps with company holidays
+          next unless holiday_beginning_unix.between?(beginning_unix, ending_unix) or holiday_ending_unix.between?(beginning_unix, ending_unix)
+          
+          # replace company holiday if it's on the same day as a public holiday
+          while current_unix <= holiday_ending_unix
+            if holidays_for_table.has_key?(current_unix)
+              if not holidays_for_table[current_unix][:public_holiday]
+                holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
+              end
+            else
+              holidays_for_table[current_unix] = { :public_holiday => holiday.public_holiday?, :name => holiday.description }
+            end
+            
+            current_unix += 60 * 60 * 24 # one day in unix
+          end
         end
+
+        holidays_for_table
       end
 
       def style_table(table, length)
