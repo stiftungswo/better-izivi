@@ -1,6 +1,8 @@
-require 'date'
-require 'pp'
+# frozen_string_literal: true
 
+require 'date'
+
+# rubocop:disable Metrics/ClassLength
 module Pdfs
   module ServiceAgreement
     class HolidayTable
@@ -14,11 +16,13 @@ module Pdfs
         @holidays = calculate_holidays
         @company_holidays = calculate_company_holidays
 
-        return text 'you should never see this page' if @company_holidays.nil?
-
-        title
-        table_top
-        table_body
+        if @company_holidays.nil?
+          text 'you should never see this page'
+        else
+          title
+          table_top
+          table_body
+        end
       end
 
       def document
@@ -39,6 +43,7 @@ module Pdfs
         end
       end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def rows
         data = []
         filtered_holiday_list.sort.each do |h|
@@ -67,7 +72,9 @@ module Pdfs
 
         data
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def filtered_holiday_list
         # will look like this { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
         holidays_for_table = {}
@@ -86,7 +93,7 @@ module Pdfs
 
           # replace company holiday if it's on the same day as a public holiday
           while current_unix <= holiday_ending_unix
-            unless holidays_for_table.has_key?(current_unix) && holidays_for_table[current_unix][:public_holiday]
+            unless holidays_for_table.key?(current_unix) && holidays_for_table[current_unix][:public_holiday]
               holidays_for_table[current_unix] = { public_holiday: holiday.public_holiday?, name: holiday.description }
             end
             current_unix += 60 * 60 * 24 # one day in unix
@@ -95,6 +102,7 @@ module Pdfs
 
         holidays_for_table
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def style_table(table)
         table.cells.padding = [6, 10, 6, 6]

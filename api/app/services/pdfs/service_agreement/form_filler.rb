@@ -42,11 +42,11 @@ module Pdfs
           .merge(custom_data)
       end
 
-      def get_holidays
-        company_holiday = Holiday.overlapping_date_range(@service.beginning, @service.ending)
-                                 .find(&:company_holiday?)
+      def find_holidays
+        Holiday.overlapping_date_range(@service.beginning, @service.ending).find(&:company_holiday?)
       end
 
+      # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       def custom_data
         type = valais? ? 'Auswahl15' : 2
 
@@ -56,6 +56,7 @@ module Pdfs
           type = valais? ? 'Auswahl13' : 0
         end
 
+        # TODO: use I18n.l instead of text
         holidays = get_holidays
         if holidays
           beginning = I18n.l(holidays.beginning)
@@ -86,6 +87,7 @@ module Pdfs
           birthdaykey => I18n.l(@service.user.birthday)
         }
       end
+      # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
 
       def load_user_fields
         convert_to_form_fields_hash(FormFields::USER_FORM_FIELDS) do |key, value|
