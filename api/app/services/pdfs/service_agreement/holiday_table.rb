@@ -14,6 +14,10 @@ module Pdfs
         @holidays = calculate_holidays
         @company_holidays = calculate_company_holidays
 
+        if @company_holidays.nil?
+          return text "you should never see this page"
+        end
+
         title
         table_top
         table_body
@@ -71,6 +75,7 @@ module Pdfs
       def filtered_holiday_list
         # will look like this { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }
         holidays_for_table = {}
+
         
         beginning_unix = @company_holidays.beginning.to_time.to_i
         ending_unix = @company_holidays.ending.to_time.to_i
