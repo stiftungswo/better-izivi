@@ -2,14 +2,13 @@
 
 require 'rails_helper'
 
+# rubocop disable RSpec/LetSetup
 RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
   describe '#render' do
     let(:pdf) { described_class.new(service).render }
     let(:service) { create :service, service_data.merge(service_data_defaults) }
     let(:user) { service.user }
-    # rubocop disable RSpec/LetSetup
     let!(:company_holiday) { create :holiday, beginning: '2018-12-07', ending: '2019-01-02' }
-    # rubocop enable RSpec/LetSetup
 
     let(:service_data) { {} }
     let(:service_data_defaults) { { beginning: '2018-12-10', ending: '2019-01-18' } }
@@ -104,3 +103,4 @@ RSpec.describe Pdfs::ServiceAgreement::FormFiller, type: :service do
     end
   end
 end
+# rubocop enable RSpec/LetSetup

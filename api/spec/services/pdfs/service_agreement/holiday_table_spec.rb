@@ -2,12 +2,13 @@
 
 require 'rails_helper'
 
+# rubocop disable RSpec/LetSetup
 RSpec.describe Pdfs::ServiceAgreement::HolidayTable, type: :service do
   describe '#render' do
     let(:pdf) { described_class.new(service).render }
     let(:service) { create :service, service_data.merge(service_data_defaults) }
     let(:user) { service.user }
-    let(:company_holiday) { create :holiday, beginning: '2021-12-27', ending: '2021-12-31' }
+    let!(:company_holiday) { create :holiday, beginning: '2021-12-27', ending: '2021-12-31' }
 
     let(:service_data) { {} }
     let(:service_data_defaults) { { beginning: '2021-10-18', ending: '2022-10-14' } }
@@ -73,3 +74,4 @@ RSpec.describe Pdfs::ServiceAgreement::HolidayTable, type: :service do
     end
   end
 end
+# rubocop enable RSpec/LetSetup
