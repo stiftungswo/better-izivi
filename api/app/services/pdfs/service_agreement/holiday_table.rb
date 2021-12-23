@@ -2,6 +2,7 @@
 
 require 'date'
 
+# :reek:FeatureEnvy
 # rubocop:disable Metrics/ClassLength
 module Pdfs
   module ServiceAgreement
@@ -43,7 +44,9 @@ module Pdfs
         end
       end
 
+      # :reek:TooManyStatements
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # :reek:UncommunicativeVariableName
       def rows
         data = []
         filtered_holiday_list.sort.each do |h|
@@ -77,6 +80,7 @@ module Pdfs
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+      # :reek:TooManyStatements
       # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def filtered_holiday_list
         # will look like this { 1640077316805 => { :public_holiday => true, :name => "Weihnachten" } }

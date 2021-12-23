@@ -3,6 +3,7 @@
 require 'pdf_forms'
 require 'date'
 
+# :reek:RepeatedConditional
 module Pdfs
   module ServiceAgreement
     class FormFiller
@@ -47,6 +48,8 @@ module Pdfs
       end
 
       # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+      # :reek:FeatureEnvy
+      # :reek:TooManyStatements
       def custom_data
         type = valais? ? 'Auswahl15' : 2
 
