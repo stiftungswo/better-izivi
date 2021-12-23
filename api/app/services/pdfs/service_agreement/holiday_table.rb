@@ -50,9 +50,12 @@ module Pdfs
           unix = h[0]
           holiday = OpenStruct.new(h[1])
 
-          date = I18n.l(Time.at.utc(unix).to_date)
-          weekday = Time.at.utc(unix).to_date.strftime('%a')
-          day = '#{weekday}, #{date}'
+          # rubocop:disable Rails/TimeZone
+          date = I18n.l(Time.at(unix).to_date)
+          weekday = Time.at(unix).to_date.strftime('%a')
+          # rubocop:enable Rails/TimeZone
+          
+          day = "#{weekday}, #{date}"
 
           holiday_type = I18n.t('pdfs.holiday_table.day_off')
           unless holiday[:public_holiday]
