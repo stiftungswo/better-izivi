@@ -57,7 +57,7 @@ module Pdfs
         end
 
         # TODO: use I18n.l instead of text
-        holidays = get_holidays
+        holidays = find_holidays
         if holidays
           beginning = I18n.l(holidays.beginning)
           ending = I18n.l(holidays.ending)
