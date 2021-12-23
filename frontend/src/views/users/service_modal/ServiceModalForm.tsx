@@ -118,6 +118,12 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
             })
           }
         />
+         <Alert color="info">
+          <FormattedMessage
+            id="views.users.serviceModalForm.starts_on_saturday_explanation"
+            defaultMessage="Bitte nur ankreuzen, wenn du diesen Einsatz direkt nach einem anderen Zivildiensteinsatz leisten wirst. (Einsatz beginnt dann an einem Samstag.)"
+          />
+        </Alert>
         <WiredField
           horizontal
           component={CheckboxField}

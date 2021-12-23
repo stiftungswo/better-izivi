@@ -133,17 +133,20 @@ export default (params: OverviewTableParams) => {
   ];
 
   function printButton(service: Service) {
+    const urlParams = {
+      locale: params.user.regional_center_id === 2 ? 'fr' : 'de',
+    };
     return (
       <a
         className={'btn btn-link'}
-        href={mainStore!.apiURL('services/' + service.id + '.pdf', {}, true)}
+        href={mainStore!.apiURL('services/' + service.id + '.pdf', urlParams, true)}
         target={'_blank'}
       >
-          <FormattedMessage
-            id="views.users.serviceOverviewTable.print"
-            defaultMessage="{icon} Drucken"
-            values={{ icon: <FontAwesomeIcon icon={PrintSolidIcon} /> }}
-          />
+        <FormattedMessage
+          id="views.users.serviceOverviewTable.print"
+          defaultMessage="{icon} Drucken"
+          values={{ icon: <FontAwesomeIcon icon={PrintSolidIcon} /> }}
+        />
       </a>
     );
   }

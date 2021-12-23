@@ -283,6 +283,7 @@
   "views.users.serviceModal.saved_successfully": "Sauvegarder avec succès",
   "views.users.serviceModalForm.first_service": "Première mission",
   "views.users.serviceModalForm.starts_on_saturday": "Service intermediaire?",
+  "views.users.serviceModalForm.starts_on_saturday_explanation": "Ne coches la case 'Service intermediaire' que si tu commences ton affectation directement après une autre affectation de service civil. (L'affectation va alors commencer un samedi).",
   "views.users.serviceModalForm.is_first_service": "Première mission SWO ?",
   "views.users.serviceModalForm.is_long_service": "Depuis longtemps ?",
   "views.users.serviceModalForm.is_trail_service": "Un procès ?",

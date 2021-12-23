@@ -6,72 +6,37 @@ module Pdfs
     module FormFields
       USER_FORM_FIELDS = {
         fr: {
-          zdp: 'N',
+          zdp: 'N° de civiliste',
           first_name: 'Prénom',
           last_name: 'Nom',
           zip_with_city: 'NPA / Lieu',
-          address: 'Rue n',
-          phone: 'Mobile',
-          bank_iban: 'IBAN',
+          address: 'Rue / n°',
+          phone: 'Téléphone',
+          prettified_bank_iban: 'IBAN',
           email: 'Courriel',
-          health_insurance: 'Caisse-maladie'
+          health_insurance: 'Caisse-maladie (Nom et lieu)'
         },
         de: {
-          zdp: 1,
-          first_name: 2,
-          last_name: 7,
-          zip_with_city: 3,
-          address: 8,
-          phone: 4,
-          bank_iban: 10,
-          email: 5,
-          health_insurance: 11
+          zdp: 'ZDP-Nr',
+          first_name: 'Vorname',
+          last_name: 'Name',
+          zip_with_city: 'PLZ / Ort',
+          address: 'Strasse / Nr',
+          phone: 'Telefon',
+          prettified_bank_iban: 'IBAN',
+          email: 'E-Mail',
+          health_insurance: 'Krankenkasse (Name und Ort)'
         }
       }.freeze
 
       SERVICE_DATE_FORM_FIELDS = {
         fr: {
-          beginning: 'Date de début',
-          ending: 'Date de fin'
+          beginning: 'debut',
+          ending: 'fin'
         },
         de: {
-          beginning: 25,
-          ending: 24
-        }
-      }.freeze
-
-      REGIONAL_CENTER = {
-        fr: {
-          name: 'regional_center'
-        },
-        de: {
-          name: 'regional_center'
-        }
-      }.freeze
-
-      REGIONAL_CENTER_ADDRESS = {
-        fr: {
-          second: 'tfRZ',
-          third: 'tfStrasse',
-          fourth: 'tfPLZ'
-        },
-        de: {
-          second: 'tfRZ',
-          third: 'tfStrasse',
-          fourth: 'tfPLZ'
-        }
-      }.freeze
-
-      SERVICE_CHECKBOX_FIELDS = {
-        fr: {
-          conventional_service: 'affectation',
-          probation_service: 'affectation à lessai',
-          long_service: 'affectation longue obligatoire ou partie de celleci'
-        },
-        de: {
-          conventional_service: 'Einsatz',
-          probation_service: 'Probeeinsatz',
-          long_service: 'obligatorischer Langer Einsatz oder Teil davon'
+          beginning: 'Einsatzbeginn',
+          ending: 'Einsatzende'
         }
       }.freeze
 
@@ -80,18 +45,7 @@ module Pdfs
           title: 'Cahier des charges'
         },
         de: {
-          title: 26
-        }
-      }.freeze
-
-      COMPANY_HOLIDAY_FORM_FIELDS = {
-        fr: {
-          beginning: 'Fermeture1',
-          ending: 'Fermeture2'
-        },
-        de: {
-          beginning: 27,
-          ending: 28
+          title: 'Pflichtenheft'
         }
       }.freeze
     end

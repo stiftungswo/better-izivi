@@ -204,6 +204,15 @@ fr:
       filename: Presentation_statistiques_charges_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (opération d'utilisation No. 423) - Disponible à partir de %{date}
       title: Zivi aperçu des dépenses (period %{beginning} - %{ending})
+    holiday_table:
+      day_off: jour chômé
+      has_time_off: Le civiliste a droit à des vacances.
+      holiday_not_taken_into_account: jour de congé
+      holiday_taken_into_account: jour de vacances
+      no_time_off: Le civiliste n’a pas droit à des vacances
+      not_taken_into_account: non pris en compte
+      taken_into_account: pris en compte
+      title: 'Annexe: Jours de vacances, de congé ou de travail'
     payments:
       amount: Montant
       filename: Paiements_%{today}

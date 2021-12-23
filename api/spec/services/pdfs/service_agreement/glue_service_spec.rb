@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+require 'pp'
+
 RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
   describe '#render' do
     context 'when locale is german' do
@@ -40,22 +42,13 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
         }
       end
 
-      let(:page_text_check_indices) do
-        [
-          0..2,
-          17..19,
-          235..239,
-          607..607,
-          719..719
-        ]
-      end
       let(:page_text_check_texts) do
         [
-          'Einsatzvereinbarung ',
-          'Bundesamt für Zivildienst ',
-          'Die Unterkunft wird durchgehend angeboten (7 Tage/Woche)   ',
-          '07:50 Uhr',
-          ' Morgen zwischen 07:15 Uhr und 07:45 Uhr beim Einsatzleiter '
+          'Einsatzvereinbarung',
+          'Taschengeld',
+          'Anstellungsbedingungen der SWO',
+          'Zeckenschutzimpfung ',
+          'Lieber Zivi'
         ]
       end
 
@@ -64,10 +57,11 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
       end
 
       it 'renders pages in correct order', :aggregate_failures do
-        page_text_check_indices.each_with_index do |indices, index|
-          expect(
-            pdf_strings[indices].is_a?(Array) ? pdf_strings[indices].join : pdf_strings[indices]
-          ).to eq page_text_check_texts[index]
+        pdf_page_inspector.pages.each_with_index do |item, index|
+          joined = item[:strings].join(' ')
+          expected_string = page_text_check_texts[index]
+
+          raise "page at index #{index} should include '#{expected_string}'" unless joined.include? expected_string
         end
       end
     end

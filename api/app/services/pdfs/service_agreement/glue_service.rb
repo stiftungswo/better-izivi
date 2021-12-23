@@ -12,10 +12,14 @@ module Pdfs
       def initialize(service)
         @service = service
         @combined = HexaPDF::Document.new
+        @company_holidays = calculate_company_holidays
       end
 
       def render
         fill_and_load_form
+
+        load_holiday_table if @company_holidays
+
         load_info_text
         generate_and_load_first_page
 
@@ -25,6 +29,10 @@ module Pdfs
       end
 
       private
+
+      def load_holiday_table
+        ioify_and_combine(HolidayTable.new(@service))
+      end
 
       def generate_and_load_first_page
         ioify_and_combine(FirstPage.new(@service))
@@ -48,6 +56,10 @@ module Pdfs
 
       def valais?
         @service.service_specification.location_valais?
+      end
+
+      def calculate_company_holidays
+        Holiday.overlapping_date_range(@service.beginning, @service.ending).find(&:company_holiday?)
       end
     end
   end
