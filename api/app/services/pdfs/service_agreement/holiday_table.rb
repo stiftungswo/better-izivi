@@ -54,7 +54,7 @@ module Pdfs
           date = I18n.l(Time.at(unix).to_date)
           weekday = Time.at(unix).to_date.strftime('%a')
           # rubocop:enable Rails/TimeZone
-          
+
           day = "#{weekday}, #{date}"
 
           holiday_type = I18n.t('pdfs.holiday_table.day_off')
@@ -68,7 +68,7 @@ module Pdfs
 
           end
 
-          day_appendum = holiday.public_holiday ? ' (' + holiday.name + ')' : ''
+          day_appendum = holiday.public_holiday ? " (#{holiday.name})" : ''
 
           data.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, unix)])
         end
@@ -129,14 +129,14 @@ module Pdfs
 
       def is_paid_holiday_text(holiday, unix)
         if is_paid_holiday(holiday, unix)
-          ' (' + I18n.t('pdfs.holiday_table.taken_into_account') + ')'
+          " (#{I18n.t('pdfs.holiday_table.taken_into_account')})"
         else
-          ' (' + I18n.t('pdfs.holiday_table.not_taken_into_account') + ')'
+          " (#{I18n.t('pdfs.holiday_table.not_taken_into_account')})"
         end
       end
 
       def is_paid_holiday(holiday, unix)
-        date = Time.at(unix).to_date
+        date = Time.zone.at(unix).to_date
 
         @service.long_service? or holiday.public_holiday or date.saturday? or date.sunday?
       end

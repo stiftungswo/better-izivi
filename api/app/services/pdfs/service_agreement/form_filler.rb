@@ -62,9 +62,9 @@ module Pdfs
           beginning = I18n.l(holidays.beginning)
           ending = I18n.l(holidays.ending)
           notes = if valais?
-                    'Fermeture annuelle du ' + beginning + ' au ' + ending
+                    "Fermeture annuelle du #{beginning} au #{ending}"
                   else
-                    'Betriebsferien von ' + beginning + ' bis ' + ending
+                    "Betriebsferien von #{beginning} bis #{ending}"
                   end
         else
           notes = ''
