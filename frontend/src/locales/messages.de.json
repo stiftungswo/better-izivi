@@ -284,7 +284,7 @@
   "views.users.serviceModalForm.first_service": "Erster Einsatz",
   "views.users.serviceModalForm.is_first_service": "Erster SWO Einsatz?",
   "views.users.serviceModalForm.starts_on_saturday": "Zwischeneinsatz?",
-  "views.users.serviceModalForm.starts_on_saturday_explanation": "'Langer Einsatz' nur ankreuzen, wenn du diesen Einsatz direkt nach einem anderen Zivildiensteinsatz leisten wirst. (Einsatz beginnt dann an einem Samstag.)",
+  "views.users.serviceModalForm.starts_on_saturday_explanation": "'Zwischeneinsatz' nur ankreuzen, wenn du diesen Einsatz direkt nach einem anderen Zivildiensteinsatz leisten wirst. (Einsatz beginnt dann an einem Samstag.)",
   "views.users.serviceModalForm.is_long_service": "Langer Einsatz?",
   "views.users.serviceModalForm.is_trail_service": "Probe-einsatz?",
   "views.users.serviceModalForm.last_service": "Letzter Einsatz",
