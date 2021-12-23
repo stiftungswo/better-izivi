@@ -60,7 +60,7 @@ module Pdfs
           holiday_type = I18n.t('pdfs.holiday_table.day_off')
           unless holiday[:public_holiday]
 
-            holiday_type = if is_paid_holiday(holiday, unix)
+            holiday_type = if paid_holiday?(holiday, unix)
                              I18n.t('pdfs.holiday_table.holiday_taken_into_account')
                            else
                              I18n.t('pdfs.holiday_table.holiday_not_taken_into_account')
@@ -70,7 +70,7 @@ module Pdfs
 
           day_appendum = holiday.public_holiday ? " (#{holiday.name})" : ''
 
-          data.push([day + day_appendum, holiday_type + is_paid_holiday_text(holiday, unix)])
+          data.push([day + day_appendum, holiday_type + holiday_text(holiday, unix)])
         end
 
         data
@@ -127,15 +127,15 @@ module Pdfs
         end
       end
 
-      def is_paid_holiday_text(holiday, unix)
-        if is_paid_holiday(holiday, unix)
+      def holiday_text(holiday, unix)
+        if paid_holiday?(holiday, unix)
           " (#{I18n.t('pdfs.holiday_table.taken_into_account')})"
         else
           " (#{I18n.t('pdfs.holiday_table.not_taken_into_account')})"
         end
       end
 
-      def is_paid_holiday(holiday, unix)
+      def paid_holiday?(holiday, unix)
         date = Time.zone.at(unix).to_date
 
         @service.long_service? or holiday.public_holiday or date.saturday? or date.sunday?
