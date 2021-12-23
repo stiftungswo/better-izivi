@@ -16,12 +16,12 @@ module Pdfs
       end
 
       def render
-        fill_and_load_form
+        # fill_and_load_form
 
         load_holiday_table if @company_holidays
 
-        load_info_text
-        generate_and_load_first_page
+        # load_info_text
+        # generate_and_load_first_page
 
         pdf_io = StringIO.new
         @combined.write(pdf_io)

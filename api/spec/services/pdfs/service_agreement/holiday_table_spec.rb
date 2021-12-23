@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'pp'
 
 RSpec.describe Pdfs::ServiceAgreement::HolidayTable, type: :service do
   describe '#render' do
@@ -66,8 +65,8 @@ RSpec.describe Pdfs::ServiceAgreement::HolidayTable, type: :service do
         context 'when there is no company_holiday during the service' do
           let(:company_holiday) { nil }
           
-          it "contains warning text" do
-            expect(pdf_as_string).to include "you should never see this page"
+          it 'contains warning text' do
+            expect(pdf_as_string).to include 'you should never see this page'
           end
         end
         
