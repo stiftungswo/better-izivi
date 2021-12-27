@@ -71,9 +71,7 @@ module Pdfs
 
       def draw_address_lines(address_data, leading = 7)
         address_data.map do |address_line|
-          unless address_line.nil?
-            text address_line.dup.force_encoding('utf-8')
-          end
+          text address_line.dup.force_encoding('utf-8') if address_line
           move_down leading
         end
       end
