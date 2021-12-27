@@ -85,26 +85,26 @@ RSpec.describe V1::ExpensesOverviewController, type: :request do
           end
         end
 
-        context 'with pending filter' do
-          let(:request) { get v1_expense_sheets_path(filter: 'pending') }
-          let(:expense_sheets) do
-            create_list(:expense_sheet, 3, user: user, beginning: service_beginning, ending: service_ending)
-              .append(
-                *create_list(:expense_sheet, 2, :ready_for_payment,
-                             user: user, beginning: service_beginning, ending: service_ending)
-              )
-          end
+        # context 'with pending filter' do
+        #   let(:request) { get v1_expense_sheets_path(filter: 'pending') }
+        #   let(:expense_sheets) do
+        #     create_list(:expense_sheet, 3, user: user, beginning: service_beginning, ending: service_ending)
+        #       .append(
+        #         *create_list(:expense_sheet, 2, :ready_for_payment,
+        #                      user: user, beginning: service_beginning, ending: service_ending)
+        #       )
+        #   end
 
-          before do
-            create :expense_sheet, :payment_in_progress
-            create :expense_sheet, :paid
-          end
+        #   before do
+        #     create :expense_sheet, :payment_in_progress
+        #     create :expense_sheet, :paid
+        #   end
 
-          # it 'returns only the filtered expense_sheets' do
-          #   request
-          #   expect(parse_response_json(response)).to eq(json_expense_sheets)
-          # end
-        end
+        #   # it 'returns only the filtered expense_sheets' do
+        #   #   request
+        #   #   expect(parse_response_json(response)).to eq(json_expense_sheets)
+        #   # end
+        # end
 
         context 'with ready_for_payment filter' do
           let(:request) { get v1_expense_sheets_path(filter: 'ready_for_payment') }
