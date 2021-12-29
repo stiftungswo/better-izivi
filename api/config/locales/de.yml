@@ -204,7 +204,7 @@ de:
       filename: Übersicht_Spesenstatistik_%{today}
       swo: Stiftung für Wirtschaft und Ökologie (Einsatzbetrieb Nr. 423) - Stand vom %{date}
       title: Zivi-Spesen Detailübersicht (Zeitperiode %{beginning} - %{ending})
-    holiday_table:  
+    holiday_table:
       day_off: Arbeitsfreier Tag
       has_time_off: Der Zivi hat Anspruch auf Ferien.
       holiday_not_taken_into_account: Urlaubstag
