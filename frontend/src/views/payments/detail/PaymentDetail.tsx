@@ -65,7 +65,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
           }
         >
           <Badge pill className="mb-2">
-            {payment ? stateTranslation(payment!.state) : ""}
+            {payment ? stateTranslation(payment!.state) : ''}
           </Badge>
           <h1 className="mb-4">{this.getTitle(payment)}</h1>
           {payment && (
@@ -109,8 +109,8 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
             </>
           )}
 
-          <a href={this.props.mainStore!.apiLocalizedURL('payments_list.pdf', {payment: this.props.match.params.timestamp})} target={"_blank"}>
-            <Button color={"secondary"} style={{ marginLeft: "12px" }}>
+          <a href={this.props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: this.props.match.params.timestamp })} target={'_blank'}>
+            <Button color={'secondary'} style={{ marginLeft: '12px' }}>
               <FormattedMessage id="payments.expenseSheetsReadyForPaymentTable.pdf" />
             </Button>
           </a>
