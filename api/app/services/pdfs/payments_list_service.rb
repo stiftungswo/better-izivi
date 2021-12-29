@@ -20,7 +20,7 @@ module Pdfs
 
     def initialize(pending_expenses, pending, date)
       @pending_expenses = pending_expenses
-      @pending = pending;
+      @pending = pending
       @date = date
 
       update_font_families
