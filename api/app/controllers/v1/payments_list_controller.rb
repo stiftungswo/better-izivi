@@ -17,12 +17,23 @@ module V1
     private
 
     def send_pdf
-      pdf = Pdfs::PaymentsListService.new(ExpenseSheet.ready_for_payment)
+
+      if (params[:payment] == "pending")
+        expense_sheets = ExpenseSheet.ready_for_payment
+      else
+        expense_sheets = Payment.find(payment_timestamp_param).expense_sheets;
+      end
+      
+      pdf = Pdfs::PaymentsListService.new(expense_sheets)
 
       send_data pdf.render,
                 filename: "#{I18n.t('pdfs.payments.filename', today: I18n.l(Time.zone.today))}.pdf",
                 type: 'application/pdf',
                 disposition: 'inline'
+    end
+
+    def payment_timestamp_param
+      Time.zone.at(params[:payment].to_i)
     end
   end
 end
