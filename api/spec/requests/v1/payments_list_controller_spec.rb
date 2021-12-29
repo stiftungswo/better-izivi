@@ -8,7 +8,7 @@ RSpec.describe V1::PaymentsListController, type: :request do
     context 'when user is an admin' do
       let(:user) { create :user, :admin }
       let(:token) { generate_jwt_token_for_user(user) }
-      let(:request) { get '/v1/payments_list.pdf', params: { token: token, locale: 'de' } }
+      let(:request) { get '/v1/payments_list.pdf', params: { token: token, locale: 'de', payment: 'pending' } }
 
       it 'returns a content type pdf' do
         request
