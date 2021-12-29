@@ -16,6 +16,7 @@ module V1
 
     private
 
+    # rubocop:disable Metrics/AbcSize
     def send_pdf
       if params[:payment] == 'pending'
         expense_sheets = ExpenseSheet.ready_for_payment
@@ -32,6 +33,7 @@ module V1
                 type: 'application/pdf',
                 disposition: 'inline'
     end
+    # rubocop:enable Metrics/AbcSize
 
     def payment_timestamp_param
       Time.zone.at(params[:payment].to_i)
