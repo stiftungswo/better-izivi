@@ -18,8 +18,10 @@ module Pdfs
 
     COLUMN_WIDTHS = [55, 180, 185, 90].freeze
 
-    def initialize(pending_expenses)
+    def initialize(pending_expenses, pending, date)
       @pending_expenses = pending_expenses
+      @pending = pending;
+      @date = date
 
       update_font_families
       header
@@ -34,8 +36,9 @@ module Pdfs
     private
 
     def header
-      date = I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today))
-      payments = I18n.t('pdfs.payments.payments')
+      # date = I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today))
+      date = I18n.l(@date)
+      payments = I18n.t(@pending ? 'pdfs.payments.pending_payments' : 'pdfs.payments.payment')
       text "#{payments} (#{date})", align: :left, size: 18, leading: 12
     end
 
