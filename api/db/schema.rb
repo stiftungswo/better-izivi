@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_062907) do
+ActiveRecord::Schema.define(version: 2021_12_30_112913) do
 
   create_table "expense_sheets", charset: "utf8mb3", force: :cascade do |t|
     t.date "beginning", null: false
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 2021_07_23_062907) do
     t.datetime "payment_timestamp"
     t.boolean "ignore_first_day", default: false, null: false
     t.boolean "ignore_last_day", default: false, null: false
+    t.integer "included_in_download_at"
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 

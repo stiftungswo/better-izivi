@@ -3,7 +3,7 @@
 class Payment
   include ActiveModel::Model
 
-  attr_accessor :expense_sheets, :payment_timestamp, :state
+  attr_accessor :expense_sheets, :payment_timestamp, :state, :time_downloaded
 
   validate :validate_expense_sheets
 
@@ -42,6 +42,7 @@ class Payment
     @expense_sheets = expense_sheets
     @payment_timestamp = Payment.floor_time payment_timestamp
     @state = state.to_sym
+    @downloaded_at = 0
   end
 
   def save
@@ -56,6 +57,11 @@ class Payment
 
   def confirm
     @state = :paid
+    save
+  end
+
+  def save_download_time
+    @downloaded_at = Time.zone.now.to_i
     save
   end
 
@@ -89,6 +95,7 @@ class Payment
   def update_expense_sheets
     @expense_sheets.each do |expense_sheet|
       expense_sheet.state = @state
+      expense_sheet.included_in_download_at = @downloaded_at
       expense_sheet.payment_timestamp = @payment_timestamp
     end
   end
