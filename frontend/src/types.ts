@@ -25,6 +25,7 @@ export interface Payment {
 
 export interface PaymentExpenseSheet {
   id?: number;
+  included_in_download_at: number;
   total: number;
   user: {
     id: number;

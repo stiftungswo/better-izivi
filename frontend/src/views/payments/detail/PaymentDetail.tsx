@@ -71,28 +71,7 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
           {payment && (
             <>
               {payment.state === PaymentState.payment_in_progress &&
-                !this.state.canceled && (
-                  <Button
-                    color="primary"
-                    href={this.getPainURL(payment!)}
-                    tag="a"
-                    className="mb-4"
-                    target="_blank"
-                  >
-                    <FormattedMessage
-                      id="payments.paymentDetail.download_payment_file"
-                      defaultMessage="{icon} Zahlungsdatei herunterladen"
-                      values={{
-                        icon: (
-                          <FontAwesomeIcon
-                            className="mr-1"
-                            icon={DownloadIcon}
-                          />
-                        ),
-                      }}
-                    />
-                  </Button>
-                )}
+                !this.state.canceled && this.downloadButton(payment)}
               <div className="float-right">{this.actionButton()}</div>
               <OverviewTable
                 columns={this.columns()}
@@ -117,6 +96,34 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
         </div>
       </IziviContent>
     );
+  }
+
+   private downloadButton(payment: Payment) {
+    let unix = payment.expense_sheets[0].included_in_download_at;
+
+    const date = new Date(unix * 1000);
+    const dateString = date.toLocaleString('de-CH')
+    if (unix > 0) {
+      return <div>Zuletzt gedownloaded am {dateString}</div>;
+    } else {
+      return (
+        <Button
+          color="primary"
+          href={this.getPainURL(payment!)}
+          tag="a"
+          className="mb-4"
+          target="_blank"
+        >
+          <FormattedMessage
+            id="payments.paymentDetail.download_payment_file"
+            defaultMessage="{icon} Zahlungsdatei herunterladen"
+            values={{
+              icon: <FontAwesomeIcon className="mr-1" icon={DownloadIcon} />,
+            }}
+          />
+        </Button>
+      );
+    }
   }
 
   private actionButton() {
