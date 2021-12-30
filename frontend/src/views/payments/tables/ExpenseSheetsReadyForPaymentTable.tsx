@@ -103,7 +103,7 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
             defaultMessage="Zahlung starten"
           />
         </Button>
-        <a href={props.mainStore!.apiLocalizedURL('payments_list.pdf')} target={'_blank'}>
+        <a href={props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: 'pending' })} target={'_blank'}>
           <Button
             color={'secondary'}
             style={{ marginLeft: '12px' }}

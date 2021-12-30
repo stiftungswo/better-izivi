@@ -217,7 +217,8 @@ fr:
       amount: Montant
       filename: Paiements_%{today}
       name: Nom
-      payments: Paiements
+      payment: Paiement
+      pending_payments: En attente de paiement
       zdp: N°
     phone_list:
       filename: Liste_téléphonique_%{today}

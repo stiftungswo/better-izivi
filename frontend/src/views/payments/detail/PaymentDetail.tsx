@@ -49,35 +49,71 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
   render() {
     const payment = this.props.paymentStore!.payment;
     return (
-      <IziviContent card loading={this.state.loading} backButtonPath="/payments">
-        {this.state.canceled && <div className={this.props.classes.cancelBadge}>Abgebrochen</div>}
-        <div className={this.state.canceled ? this.props.classes.canceledDetailCard : undefined}>
-          <Badge pill className="mb-2">{payment ? stateTranslation(payment!.state) : ''}</Badge>
+      <IziviContent
+        card
+        loading={this.state.loading}
+        backButtonPath="/payments"
+      >
+        {this.state.canceled && (
+          <div className={this.props.classes.cancelBadge}>Abgebrochen</div>
+        )}
+        <div
+          className={
+            this.state.canceled
+              ? this.props.classes.canceledDetailCard
+              : undefined
+          }
+        >
+          <Badge pill className="mb-2">
+            {payment ? stateTranslation(payment!.state) : ''}
+          </Badge>
           <h1 className="mb-4">{this.getTitle(payment)}</h1>
           {payment && (
             <>
-              {payment.state === PaymentState.payment_in_progress && !this.state.canceled && (
-                <Button color="primary" href={this.getPainURL(payment!)} tag="a" className="mb-4" target="_blank">
-                  <FormattedMessage
-                    id="payments.paymentDetail.download_payment_file"
-                    defaultMessage="{icon} Zahlungsdatei herunterladen"
-                    values={{ icon: <FontAwesomeIcon className="mr-1" icon={DownloadIcon} /> }}
-                  />
-                </Button>
-              )}
+              {payment.state === PaymentState.payment_in_progress &&
+                !this.state.canceled && (
+                  <Button
+                    color="primary"
+                    href={this.getPainURL(payment!)}
+                    tag="a"
+                    className="mb-4"
+                    target="_blank"
+                  >
+                    <FormattedMessage
+                      id="payments.paymentDetail.download_payment_file"
+                      defaultMessage="{icon} Zahlungsdatei herunterladen"
+                      values={{
+                        icon: (
+                          <FontAwesomeIcon
+                            className="mr-1"
+                            icon={DownloadIcon}
+                          />
+                        ),
+                      }}
+                    />
+                  </Button>
+                )}
               <div className="float-right">{this.actionButton()}</div>
               <OverviewTable
                 columns={this.columns()}
                 data={this.props.paymentStore!.payment!.expense_sheets}
-                renderActions={(expenseSheet: PaymentExpenseSheet) => <Link to={`/expense_sheets/${expenseSheet.id!}`}>
-                  <FormattedMessage
-                    id="payments.paymentDetail.expense_sheet"
-                    defaultMessage="Spesenblatt"
-                  />
-                </Link>}
+                renderActions={(expenseSheet: PaymentExpenseSheet) => (
+                  <Link to={`/expense_sheets/${expenseSheet.id!}`}>
+                    <FormattedMessage
+                      id="payments.paymentDetail.expense_sheet"
+                      defaultMessage="Spesenblatt"
+                    />
+                  </Link>
+                )}
               />
             </>
           )}
+
+          <a href={this.props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: this.props.match.params.timestamp })} target={'_blank'}>
+            <Button color={'secondary'} style={{ marginLeft: '12px' }}>
+              <FormattedMessage id="payments.expenseSheetsReadyForPaymentTable.pdf" />
+            </Button>
+          </a>
         </div>
       </IziviContent>
     );
