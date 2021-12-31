@@ -33,6 +33,8 @@
   "payments.paymentDetail.amount": "Betrag",
   "payments.paymentDetail.cancel_payment": "{icon} Zahlung abbrechen",
   "payments.paymentDetail.confirm_payment": "{icon} Zahlung bestätigen",
+  "payments.paymentDetail.download_anyway": "Trotzdem herunterladen",
+  "payments.paymentDetail.already_downloaded": "Zahlungsdatei bereits heruntergeladen am",
   "payments.paymentDetail.download_payment_file": "{icon} Zahlungsdatei herunterladen",
   "payments.paymentDetail.expense_sheet": "Spesenblatt",
   "payments.paymentDetail.iban": "IBAN",

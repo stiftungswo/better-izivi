@@ -6,7 +6,7 @@ json.extract! expense_sheet,
               :duration, :ending, :extraordinary_expenses, :extraordinary_expenses_comment, :paid_company_holiday_days,
               :paid_vacation_comment, :paid_vacation_days, :payment_timestamp, :sick_comment, :sick_days, :state,
               :total, :unpaid_company_holiday_days, :unpaid_vacation_comment, :unpaid_vacation_days, :user_id,
-              :work_days, :workfree_days, :ignore_first_day, :ignore_last_day
+              :work_days, :workfree_days, :ignore_first_day, :ignore_last_day, :included_in_download_at
 
 json.deletable @expense_sheet.deletable?
 json.modifiable @expense_sheet.modifiable?

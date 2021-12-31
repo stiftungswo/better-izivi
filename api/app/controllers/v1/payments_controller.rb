@@ -16,6 +16,8 @@ module V1
       respond_to do |format|
         format.json
         format.xml do
+          raise ValidationError, @payment.errors unless @payment.save_download_time
+
           send_data generate_pain,
                     disposition: 'attachment',
                     filename: I18n.t('payment.pain_filename',
