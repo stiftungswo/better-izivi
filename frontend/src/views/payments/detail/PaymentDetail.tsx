@@ -98,14 +98,14 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
     );
   }
 
-   private downloadButton(payment: Payment) {
-    let unix = payment.expense_sheets[0].included_in_download_at;
+  private downloadButton(payment: Payment) {
+    const unix = payment.expense_sheets[0].included_in_download_at;
 
     const date = new Date(unix * 1000);
-    const dateString = date.toLocaleString('de-CH')
+    const dateString = date.toLocaleString('de-CH');
     if (unix > 0) {
       return (
-        <span style={{ display: "inline-block", marginTop: "8px" }}>
+        <span style={{ display: 'inline-block', marginTop: '8px' }}>
           <span>
           <FormattedMessage id="payments.paymentDetail.already_downloaded" />
           <strong> {dateString}</strong>. </span>
