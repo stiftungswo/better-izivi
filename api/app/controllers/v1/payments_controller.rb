@@ -12,16 +12,12 @@ module V1
 
     def show
       @payment = Payment.find(payment_timestamp_param)
-      puts "************************************"
-      puts "downloaded at"
-      puts @payment.expense_sheets[0].included_in_download_at
-      puts "************************************"
 
       respond_to do |format|
         format.json
         format.xml do
           raise ValidationError, @payment.errors unless @payment.save_download_time
-          
+
           send_data generate_pain,
                     disposition: 'attachment',
                     filename: I18n.t('payment.pain_filename',
