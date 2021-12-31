@@ -33,6 +33,8 @@
   "payments.paymentDetail.amount": "Amount",
   "payments.paymentDetail.cancel_payment": "{icon} Cancel payment",
   "payments.paymentDetail.confirm_payment": "{icon} Confirm payment",
+  "payments.paymentDetail.download_anyway": "Download anyway",
+  "payments.paymentDetail.already_downloaded": "Payment file already downloaded on",
   "payments.paymentDetail.download_payment_file": "{icon} Download payment file",
   "payments.paymentDetail.expense_sheet": "expense sheet",
   "payments.paymentDetail.iban": "IBAN",

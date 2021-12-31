@@ -104,7 +104,14 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
     const date = new Date(unix * 1000);
     const dateString = date.toLocaleString('de-CH')
     if (unix > 0) {
-      return <div>Zuletzt gedownloaded am {dateString}</div>;
+      return (
+        <span style={{ display: "inline-block", marginTop: "8px" }}>
+          <span>
+          <FormattedMessage id="payments.paymentDetail.already_downloaded" />
+          <strong> {dateString}</strong>. </span>
+          <a href={this.getPainURL(payment!)}><FormattedMessage id="payments.paymentDetail.download_anyway" /></a>
+        .</span>
+      );
     } else {
       return (
         <Button
