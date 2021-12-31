@@ -95,7 +95,7 @@ RSpec.describe V1::PaymentsController, type: :request do
               state: 'payment_in_progress',
               total: payment.total,
               expense_sheets: payment.expense_sheets.map do |expense_sheet|
-                extract_to_json(expense_sheet, :id)
+                extract_to_json(expense_sheet, :id, :included_in_download_at)
                   .merge(total: expense_sheet.total)
                   .merge(user: expected_user_response)
               end
@@ -171,7 +171,7 @@ RSpec.describe V1::PaymentsController, type: :request do
             state: 'ready_for_payment',
             total: payment.total,
             expense_sheets: payment.expense_sheets.map do |expense_sheet|
-              extract_to_json(expense_sheet, :id)
+              extract_to_json(expense_sheet, :id, :included_in_download_at)
                 .merge(total: expense_sheet.total)
                 .merge(user: expected_user_response)
             end
@@ -269,7 +269,7 @@ RSpec.describe V1::PaymentsController, type: :request do
             state: 'paid',
             total: payment.total,
             expense_sheets: payment.expense_sheets.map do |expense_sheet|
-              extract_to_json(expense_sheet, :id)
+              extract_to_json(expense_sheet, :id, :included_in_download_at)
                 .merge(total: expense_sheet.total)
                 .merge(user: expected_user_response)
             end
@@ -359,7 +359,7 @@ RSpec.describe V1::PaymentsController, type: :request do
             state: 'payment_in_progress',
             total: expense_sheets.sum(&:calculate_full_expenses),
             expense_sheets: expense_sheets.map do |expense_sheet|
-              extract_to_json(expense_sheet, :id)
+              extract_to_json(expense_sheet, :id, :included_in_download_at)
                 .merge(total: expense_sheet.total)
                 .merge(user: expected_user_response)
             end
