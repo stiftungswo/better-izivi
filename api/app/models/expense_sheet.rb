@@ -55,6 +55,7 @@ class ExpenseSheet < ApplicationRecord
            :calculate_work_clothing_expenses,
            :calculate_work_days,
            :calculate_workfree_days,
+           :combine_vacation_and_company_holidays_paid,
            to: :values_calculator
 
   alias total calculate_full_expenses

@@ -38,6 +38,12 @@ module ExpenseSheetCalculators
       calculate_default_days(@expense_sheet.paid_company_holiday_days)
     end
 
+    def combine_vacation_and_company_holidays_paid
+      calculate_paid_company_holidays.merge(calculate_paid_vacation_days) do |_key, a, b|
+        a + b
+      end
+    end
+
     def calculate_unpaid_vacation_days
       {
         pocket_money: 0,
