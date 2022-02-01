@@ -39,8 +39,8 @@ module ExpenseSheetCalculators
     end
 
     def combine_vacation_and_company_holidays_paid
-      calculate_paid_company_holidays.merge(calculate_paid_vacation_days) do |_key, a, b|
-        a + b
+      calculate_paid_company_holidays.merge(calculate_paid_vacation_days) do |_key, holiday_value, vacation_value|
+        holiday_value + vacation_value
       end
     end
 
