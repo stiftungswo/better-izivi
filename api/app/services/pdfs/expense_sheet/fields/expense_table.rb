@@ -45,7 +45,7 @@ module Pdfs
           {
             count: ->(expense_sheet) { expense_sheet.paid_vacation_days + expense_sheet.paid_company_holiday_days },
             header_title_key: 'activerecord.attributes.expense_sheet.paid_vacation_days',
-            calculation_method: :combine_vacation_and_company_holidays_paid
+            calculation_method: :combine_vacation_and_company_holidays_paid_total
           },
           {
             count: ->(expense_sheet) { expense_sheet.unpaid_vacation_days + expense_sheet.unpaid_company_holiday_days },

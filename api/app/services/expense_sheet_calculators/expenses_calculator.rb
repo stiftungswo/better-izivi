@@ -38,10 +38,10 @@ module ExpenseSheetCalculators
       calculate_default_days(@expense_sheet.paid_company_holiday_days)
     end
 
-    def combine_vacation_and_company_holidays_paid
-      calculate_paid_company_holidays.merge(calculate_paid_vacation_days) do |_key, holiday_value, vacation_value|
-        holiday_value + vacation_value
-      end
+    def combine_vacation_and_company_holidays_paid_total
+      combined = calculate_paid_company_holidays
+      combined[:total] += calculate_paid_vacation_days[:total]
+      combined
     end
 
     def calculate_unpaid_vacation_days
