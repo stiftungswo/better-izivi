@@ -34,6 +34,16 @@ module ExpenseSheetCalculators
       calculate_default_days(@expense_sheet.paid_vacation_days)
     end
 
+    def calculate_paid_company_holidays
+      calculate_default_days(@expense_sheet.paid_company_holiday_days)
+    end
+
+    def combine_vacation_and_company_holidays_paid_total
+      combined = calculate_paid_company_holidays
+      combined[:total] += calculate_paid_vacation_days[:total]
+      combined
+    end
+
     def calculate_unpaid_vacation_days
       {
         pocket_money: 0,
@@ -53,7 +63,8 @@ module ExpenseSheetCalculators
         calculate_workfree_days,
         calculate_sick_days,
         calculate_paid_vacation_days,
-        calculate_unpaid_vacation_days
+        calculate_unpaid_vacation_days,
+        calculate_paid_company_holidays
       ].sum { |values| values[:total] }
 
       day_sum + calculate_static_expenses

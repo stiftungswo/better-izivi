@@ -43,12 +43,12 @@ module Pdfs
             calculation_method: :calculate_sick_days
           },
           {
-            count: lambda(&:paid_vacation_days),
+            count: ->(expense_sheet) { expense_sheet.paid_vacation_days + expense_sheet.paid_company_holiday_days },
             header_title_key: 'activerecord.attributes.expense_sheet.paid_vacation_days',
-            calculation_method: :calculate_paid_vacation_days
+            calculation_method: :combine_vacation_and_company_holidays_paid_total
           },
           {
-            count: lambda(&:unpaid_vacation_days),
+            count: ->(expense_sheet) { expense_sheet.unpaid_vacation_days + expense_sheet.unpaid_company_holiday_days },
             header_title_key: 'activerecord.attributes.expense_sheet.unpaid_vacation_days',
             calculation_method: :calculate_unpaid_vacation_days
           }
