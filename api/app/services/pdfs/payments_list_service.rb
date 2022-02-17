@@ -107,13 +107,7 @@ module Pdfs
     end
 
     def to_chf(amount)
-      ActionController::Base.helpers.number_to_currency(
-        amount / 100,
-        unit: 'CHF',
-        format: '%u %n',
-        separator: '.',
-        delimiter: ''
-      )
+      amount.to_s[0..-3] + "." + amount.to_s[-2..-1] + " CHF"
     end
   end
 end
