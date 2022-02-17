@@ -107,7 +107,7 @@ module Pdfs
     end
 
     def to_chf(amount)
-      amount.to_s[0..-3] + "." + amount.to_s[-2..-1] + " CHF"
+      "#{amount.to_s[0..-3]}.#{amount.to_s[-2..]} CHF"
     end
   end
 end
