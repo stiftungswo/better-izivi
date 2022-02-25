@@ -187,6 +187,11 @@ Um das iZivi in verschiedenen Sprachen zu übersetzen, wurden alle Strings der A
 
 ## Entwicklung
 
+### Merging
+Wenn man vom vom 'develop' Branch in dem 'master' Branch mergen will, empfiehlt es sich, `git merge --ff-only develop` zu benutzen. So entsteht kein Merge-Commit. Wenn man das nicht macht, erscheint folgende Nachricht auf github.com beim 'master' Branch.
+
+![The San Juan Mountains are beautiful!](/readme_images/ahead-of-develop.png)
+
 ### RubyMine
 
 RubyMine ist eine IDE für Ruby von Jetbrains. Will man mit RubyMine im Docker entwickeln und testen, muss jedoch noch einiges konfiguriert werden:
