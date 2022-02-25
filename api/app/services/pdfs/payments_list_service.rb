@@ -39,8 +39,7 @@ module Pdfs
       # date = I18n.t('pdfs.phone_list.header', date: I18n.l(Time.zone.today))
       date = I18n.l(@date)
       payments = I18n.t(@pending ? 'pdfs.payments.pending_payments' : 'pdfs.payments.payment')
-      hahaha = ENV.fetch('SMTP_HOST', ':(((')
-      text "#{hahaha} #{payments} (#{date})", align: :left, size: 18, leading: 12
+      text "#{payments} (#{date})", align: :left, size: 18, leading: 12
     end
 
     def total
