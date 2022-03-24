@@ -19,20 +19,20 @@ export const HolidayTableRow = (params: { buttons: React.ReactElement[], mainSto
       <td>
         <WiredField
           component={SelectField}
-          name={'holiday_type_id'}
+          name={'holiday_type'}
           options={[
-            {
-              id: 'company_holiday',
-              name: mainStore.intl.formatMessage({
-                id: 'views.holidays.holidayTableRow.company_holiday',
-                defaultMessage: 'Betriebsferien',
-              }),
-            },
             {
               id: 'public_holiday',
               name: mainStore.intl.formatMessage({
                 id: 'views.holidays.holidayTableRow.public_holiday',
                 defaultMessage: 'Feiertag',
+              }),
+            },
+            {
+              id: 'company_holiday',
+              name: mainStore.intl.formatMessage({
+                id: 'views.holidays.holidayTableRow.company_holiday',
+                defaultMessage: 'Betriebsferien',
               }),
             },
           ]}
