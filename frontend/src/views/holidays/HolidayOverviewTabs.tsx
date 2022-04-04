@@ -16,7 +16,7 @@ export const HolidayOverviewTabs: React.FunctionComponent<{ mainStore: MainStore
   const mainStore = props.mainStore;
   const holidayStore = props.holidayStore;
   const handleAdd = async (holiday: Holiday, actions: FormikActions<Holiday>) => {
-    await holidayStore!.put(holidaySchema.cast(holiday) as Holiday);
+    await holidayStore!.post(holidaySchema.cast(holiday) as Holiday);
   };
   const handleSubmit = async (holiday: Holiday, actions: FormikActions<Holiday>) => {
     await holidayStore!.put(holidaySchema.cast(holiday) as Holiday);
