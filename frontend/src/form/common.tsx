@@ -99,7 +99,7 @@ export const IziviInputField = ({
 }: IziviInputFieldProps & Partial<IziviFormControlProps>) => {
   return (
     <IziviFormControl label={label} required={required} horizontal={horizontal} appendedLabels={appendedLabels} errorMessage={errorMessage}>
-      <Input value={value === null ? '' : value} {...rest} type={multiline ? 'textarea' : rest.type} />
+      <Input value={value === null || value === '' ? '' : (rest.type == "number" ? Number(value) : value)} {...rest} type={multiline ? 'textarea' : rest.type} />
     </IziviFormControl>
   );
 };
