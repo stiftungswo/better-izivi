@@ -23,7 +23,7 @@
     "lodash.debounce": "^4.0.8",
     "mobx": "^5.8.0",
     "mobx-react": "^6.2.5",
-    "moment": "^2.23.0",
+    "moment": "^2.29.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-intl": "^5.7.1",
