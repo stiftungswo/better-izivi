@@ -91,6 +91,9 @@ export class Navigation extends React.Component<NavProps> {
                     <NavEntry to={'/payments'}>
                       <FormattedMessage id="layout.navigation.payments" defaultMessage="Auszahlungen" />
                     </NavEntry>
+                    <NavEntry to={'/certificate'}>
+                      <FormattedMessage id="layout.navigation.certificate" defaultMessage="Zeugnisse" />
+                    </NavEntry>
                   </>
                 )}
                 <NavEntry to="/profile">
