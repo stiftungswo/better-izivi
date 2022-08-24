@@ -2,14 +2,14 @@
 
 def generate_jwt_token_for_user(user)
   token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil)
-  whitelist_token(token, user)
+  allowlist_token(token, user)
   token.first
 end
 
-def whitelist_token(token, user)
-  WhitelistedJwt.create(
+def allowlist_token(token, user)
+  AllowlistedJwt.create(
     token.second
       .slice('jti', 'aud')
-      .merge(exp: Time.zone.at(token.second['exp']), user: user)
+      .merge(exp: Time.zone.at(token.second['exp']), user:)
   )
 end

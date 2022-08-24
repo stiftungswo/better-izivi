@@ -15,7 +15,7 @@ RSpec.describe ShortServiceCalculator, type: :service do
       let(:required_service_days) { 7 }
 
       before do
-        create :holiday, beginning: beginning, ending: beginning + 7.days
+        create :holiday, beginning:, ending: beginning + 7.days
       end
 
       it { is_expected.to eq Date.parse('2018-01-16') }
@@ -25,7 +25,7 @@ RSpec.describe ShortServiceCalculator, type: :service do
       let(:required_service_days) { 6 }
 
       before do
-        create :holiday, :public_holiday, beginning: beginning, ending: beginning + 1.day
+        create :holiday, :public_holiday, beginning:, ending: beginning + 1.day
       end
 
       it { is_expected.to eq Date.parse('2018-01-10') }
@@ -177,7 +177,7 @@ RSpec.describe ShortServiceCalculator, type: :service do
 
       before do
         create :holiday, :public_holiday, beginning: beginning, ending: beginning
-        create :holiday, beginning: ending, ending: ending
+        create :holiday, beginning: ending, ending:
       end
 
       it { is_expected.to eq 4 }

@@ -190,7 +190,7 @@ module Pdfs
                                                           expense_sheet.calculate_last_day[:total])
       [
         { content: expense_sheet.work_days.to_s, align: :right },
-        { content: content, align: :right },
+        { content:, align: :right },
         { content: expense_sheet.workfree_days.to_s, align: :right }
       ]
     end

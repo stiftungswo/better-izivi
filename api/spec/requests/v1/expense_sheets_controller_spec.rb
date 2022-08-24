@@ -16,14 +16,14 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           create :service,
                  beginning: service_beginning,
                  ending: service_ending,
-                 user: user,
+                 user:,
                  service_specification: create(:service_specification)
         end
 
         let(:user) { create :user, :admin }
         let!(:expense_sheets) do
           create_list :expense_sheet, 3,
-                      user: user, beginning: service_beginning, ending: service_ending
+                      user:, beginning: service_beginning, ending: service_ending
         end
         let(:service_beginning) { Date.parse('2019-09-02') }
         let(:service_ending) { Date.parse('2019-09-27') }
@@ -68,7 +68,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           let(:service_ending) { (excluded_ending + 1.week).at_end_of_week - 2.days }
           let(:total) { 75_200 }
           let(:expense_sheets) do
-            create_list(:expense_sheet, 3, beginning: included_beginning, ending: included_ending, user: user)
+            create_list(:expense_sheet, 3, beginning: included_beginning, ending: included_ending, user:)
           end
 
           before do
@@ -76,7 +76,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
             create :expense_sheet, :paid
             create :expense_sheet, :ready_for_payment,
                    beginning: excluded_beginning, ending: excluded_ending, user: user
-            create :expense_sheet, beginning: excluded_beginning, ending: excluded_ending, user: user
+            create :expense_sheet, beginning: excluded_beginning, ending: excluded_ending, user:
           end
 
           it 'returns only the filtered expense_sheets' do
@@ -88,10 +88,10 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         context 'with pending filter' do
           let(:request) { get v1_expense_sheets_path(filter: 'pending') }
           let(:expense_sheets) do
-            create_list(:expense_sheet, 3, user: user, beginning: service_beginning, ending: service_ending)
+            create_list(:expense_sheet, 3, user:, beginning: service_beginning, ending: service_ending)
               .append(
                 *create_list(:expense_sheet, 2, :ready_for_payment,
-                             user: user, beginning: service_beginning, ending: service_ending)
+                             user:, beginning: service_beginning, ending: service_ending)
               )
           end
 
@@ -110,14 +110,14 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           let(:request) { get v1_expense_sheets_path(filter: 'ready_for_payment') }
           let(:expense_sheets) do
             create_list(:expense_sheet, 2, :ready_for_payment,
-                        user: user, beginning: service_beginning, ending: service_ending)
+                        user:, beginning: service_beginning, ending: service_ending)
           end
 
           before do
             create :expense_sheet, :payment_in_progress,
                    user: user, beginning: service_beginning, ending: service_ending
             create :expense_sheet, :paid, user: user, beginning: service_beginning, ending: service_ending
-            create :expense_sheet, user: user, beginning: service_beginning, ending: service_ending
+            create :expense_sheet, user:, beginning: service_beginning, ending: service_ending
           end
 
           it 'returns only the filtered expense_sheets' do
@@ -207,7 +207,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           let(:post_request) { post v1_expense_sheets_path }
 
           it 'does not create a new expense sheet' do
-            expect { post_request }.to change(ExpenseSheet, :count).by(0)
+            expect { post_request }.not_to change(ExpenseSheet, :count)
           end
         end
       end
@@ -316,7 +316,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         end
 
         context 'when the expense_sheet is already paid' do
-          let(:expense_sheet) { create :expense_sheet, :paid, user: user }
+          let(:expense_sheet) { create :expense_sheet, :paid, user: }
 
           it_behaves_like 'renders a validation error response' do
             let(:request) { delete_request }
@@ -425,15 +425,15 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
   end
 
   describe '#show' do
-    let(:request) { get v1_expense_sheet_path(format: :pdf, id: expense_sheet.id), params: { token: token } }
+    let(:request) { get v1_expense_sheet_path(format: :pdf, id: expense_sheet.id), params: { token: } }
     let(:user) { create :user }
     let!(:service) do
       create :service,
-             beginning: beginning,
-             ending: ending,
-             user: user
+             beginning:,
+             ending:,
+             user:
     end
-    let(:expense_sheet) { create :expense_sheet, user: user, beginning: beginning, ending: ending }
+    let(:expense_sheet) { create :expense_sheet, user:, beginning:, ending: }
 
     let(:beginning) { (Time.zone.today - 3.months).beginning_of_week }
     let(:ending) { (Time.zone.today - 1.week).end_of_week - 2.days }

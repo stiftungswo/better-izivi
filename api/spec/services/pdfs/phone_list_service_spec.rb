@@ -29,7 +29,7 @@ RSpec.describe Pdfs::PhoneListService, type: :service do
         {
           beginning: Date.parse('2018-01-01'),
           ending: Date.parse('2018-02-23'),
-          user: user
+          user:
         }
       end
 

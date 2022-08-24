@@ -42,8 +42,8 @@ class ExpenseSheetGenerator
       user: @service.user,
       ignore_first_day: false,
       ignore_last_day: false,
-      beginning: beginning,
-      ending: ending,
+      beginning:,
+      ending:,
       work_days: DayCalculator.new(beginning, ending).calculate_work_days,
       workfree_days: DayCalculator.new(beginning, ending).calculate_workfree_days,
       # TODO: Where to get bank_account_number from?

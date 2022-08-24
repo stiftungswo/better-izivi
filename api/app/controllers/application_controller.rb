@@ -2,8 +2,8 @@
 
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
-  include Concerns::ErrorHandler
-  include Concerns::DeviseUserParamsRegistrable
+  include ErrorHandler
+  include DeviseUserParamsRegistrable
 
   before_action :set_locale
 

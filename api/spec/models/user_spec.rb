@@ -88,7 +88,7 @@ RSpec.describe User, type: :model do
 
         it 'is invalid' do
           update_user
-          expect(user.valid?).to eq false
+          expect(user.valid?).to be false
         end
       end
 
@@ -101,7 +101,7 @@ RSpec.describe User, type: :model do
 
         it 'is invalid' do
           update_user
-          expect(user.valid?).to eq false
+          expect(user.valid?).to be false
         end
       end
     end
@@ -139,30 +139,30 @@ RSpec.describe User, type: :model do
 
     let(:user) { build(:user, services: [service]) }
     let(:ending) { (beginning + 4.weeks).at_end_of_week - 2.days }
-    let(:service) { build :service, beginning: beginning, ending: ending }
+    let(:service) { build :service, beginning:, ending: }
 
     context 'when the user\'s currently doing civil service' do
       let(:beginning) { Time.zone.today.at_beginning_of_week }
 
-      it { is_expected.to eq true }
+      it { is_expected.to be true }
     end
 
     context 'when the user is not doing civil service' do
       let(:beginning) { Time.zone.today.at_beginning_of_week + 1.week }
 
-      it { is_expected.to eq false }
+      it { is_expected.to be false }
     end
 
     context 'when the civil service he\'s currently doing ends today' do
       let(:beginning) { Time.zone.today.at_beginning_of_week - 1.week }
-      let(:service) { build :service, :last, beginning: beginning, ending: Time.zone.today }
+      let(:service) { build :service, :last, beginning:, ending: Time.zone.today }
 
-      it { is_expected.to eq true }
+      it { is_expected.to be true }
     end
   end
 
   describe '#active_service' do
-    subject(:user) { build(:user, services: services) }
+    subject(:user) { build(:user, services:) }
 
     let(:services) { [past_service, future_service, current_service] }
     let(:now) { Time.zone.today }
@@ -176,7 +176,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '#next_service' do
-    subject(:user) { build(:user, services: services) }
+    subject(:user) { build(:user, services:) }
 
     let(:services) { [second_future_service, future_service, current_service] }
     let(:now) { Time.zone.today }
@@ -215,8 +215,8 @@ RSpec.describe User, type: :model do
     let(:params) { { bank_iban: '' } }
 
     it 'validates only the given fields', :aggregate_failures do
-      expect(errors.added?(:bank_iban, :blank)).to eq true
-      expect(errors.added?(:bank_iban, :too_short)).to eq true
+      expect(errors.added?(:bank_iban, :blank)).to be true
+      expect(errors.added?(:bank_iban, :too_short)).to be true
       expect(errors.to_h.keys).to eq [:bank_iban]
     end
   end

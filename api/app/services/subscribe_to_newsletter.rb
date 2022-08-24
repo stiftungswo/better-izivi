@@ -15,7 +15,7 @@ class SubscribeToNewsletter
   def make_post
     uri = URI('https://www.stiftungswo.ch/wp-json/newsletter/v2/subscribers')
     req = Net::HTTP::Post.new(uri, 'Content-Type' => 'application/json')
-    req.basic_auth ENV['NEWSLETTER_API_CLIENT_KEY'], ENV['NEWSLETTER_API_CLIENT_SECRET']
+    req.basic_auth ENV.fetch('NEWSLETTER_API_CLIENT_KEY', nil), ENV.fetch('NEWSLETTER_API_CLIENT_SECRET', nil)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER

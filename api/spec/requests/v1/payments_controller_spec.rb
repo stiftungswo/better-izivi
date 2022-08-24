@@ -13,7 +13,7 @@ RSpec.describe V1::PaymentsController, type: :request do
   describe '#show' do
     context 'with token authentication' do
       let(:request) do
-        get v1_payment_path(format: :xml, payment_timestamp: payment_timestamp.to_i), params: { token: token }
+        get v1_payment_path(format: :xml, payment_timestamp: payment_timestamp.to_i), params: { token: }
       end
       let(:token) { generate_jwt_token_for_user(user) }
 
@@ -23,7 +23,7 @@ RSpec.describe V1::PaymentsController, type: :request do
                beginning: beginning,
                ending: ending,
                payment_timestamp: payment_timestamp
-        create :service, user: user, beginning: beginning, ending: ending
+        create :service, user:, beginning:, ending:
       end
 
       context 'when user is an admin' do
@@ -66,22 +66,22 @@ RSpec.describe V1::PaymentsController, type: :request do
 
         context 'when there is a payment' do
           before do
-            create :service, user: user, beginning: beginning, ending: ending
+            create :service, user:, beginning:, ending:
           end
 
           let!(:payment) do
-            Payment.new(expense_sheets: expense_sheets, payment_timestamp: payment_timestamp).tap(&:save)
+            Payment.new(expense_sheets:, payment_timestamp:).tap(&:save)
           end
           let(:expense_sheets) do
             [
               create(:expense_sheet, :payment_in_progress,
-                     user: user,
-                     beginning: beginning,
+                     user:,
+                     beginning:,
                      ending: beginning.at_end_of_month),
               create(:expense_sheet, :payment_in_progress,
-                     user: user,
+                     user:,
                      beginning: ending.at_beginning_of_month,
-                     ending: ending)
+                     ending:)
             ]
           end
 
@@ -142,22 +142,22 @@ RSpec.describe V1::PaymentsController, type: :request do
 
       context 'when there is a payment' do
         before do
-          create :service, user: user, beginning: beginning, ending: ending
+          create :service, user:, beginning:, ending:
         end
 
         let!(:payment) do
-          Payment.new(expense_sheets: expense_sheets, payment_timestamp: payment_timestamp).tap(&:save)
+          Payment.new(expense_sheets:, payment_timestamp:).tap(&:save)
         end
         let(:expense_sheets) do
           [
             create(:expense_sheet, :payment_in_progress,
-                   user: user,
-                   beginning: beginning,
+                   user:,
+                   beginning:,
                    ending: beginning.at_end_of_month),
             create(:expense_sheet, :payment_in_progress,
-                   user: user,
+                   user:,
                    beginning: ending.at_beginning_of_month,
-                   ending: ending)
+                   ending:)
           ]
         end
 
@@ -240,22 +240,22 @@ RSpec.describe V1::PaymentsController, type: :request do
 
       context 'when there is a payment' do
         before do
-          create :service, user: user, beginning: beginning, ending: ending
+          create :service, user:, beginning:, ending:
         end
 
         let!(:payment) do
-          Payment.new(expense_sheets: expense_sheets, payment_timestamp: payment_timestamp).tap(&:save)
+          Payment.new(expense_sheets:, payment_timestamp:).tap(&:save)
         end
         let(:expense_sheets) do
           [
             create(:expense_sheet, :payment_in_progress,
-                   user: user,
-                   beginning: beginning,
+                   user:,
+                   beginning:,
                    ending: beginning.at_end_of_month),
             create(:expense_sheet, :payment_in_progress,
-                   user: user,
+                   user:,
                    beginning: ending.at_beginning_of_month,
-                   ending: ending)
+                   ending:)
           ]
         end
 
@@ -339,13 +339,13 @@ RSpec.describe V1::PaymentsController, type: :request do
         let!(:expense_sheets) do
           [
             create(:expense_sheet, :ready_for_payment,
-                   user: user,
-                   beginning: beginning,
+                   user:,
+                   beginning:,
                    ending: beginning.at_end_of_month),
             create(:expense_sheet, :ready_for_payment,
-                   user: user,
+                   user:,
                    beginning: ending.at_beginning_of_month,
-                   ending: ending)
+                   ending:)
           ]
         end
 
@@ -413,8 +413,8 @@ RSpec.describe V1::PaymentsController, type: :request do
       before { sign_in user }
 
       context 'when there are payments' do
-        let(:last_year_timestamp) { Time.zone.now - 1.year - 3.months }
-        let(:current_year_timestamp) { Time.zone.now - 3.months }
+        let(:last_year_timestamp) { 1.year.ago - 3.months }
+        let(:current_year_timestamp) { 3.months.ago }
         let(:last_year_payments) do
           (1..3).to_a.reverse.map do |iota|
             create_payment state: :payment_in_progress, payment_timestamp: last_year_timestamp + iota.hours
