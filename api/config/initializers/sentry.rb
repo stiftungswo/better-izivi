@@ -5,6 +5,6 @@ if Rails.env.production?
 
   Raven.configure do |config|
     config.environments = [ENV.fetch('SENTRY_ENVIRONMENT', 'production')]
-    config.dsn = ENV.fetch('SENTRY_DSN', nil)
+    config.dsn = ENV['SENTRY_DSN']
   end
 end

@@ -9,8 +9,8 @@ class Service < ApplicationRecord
   SATURDAY_WEEKDAY = Date::DAYNAMES.index('Saturday').freeze
   MIN_NORMAL_SERVICE_LENGTH = 26
 
-  include PositiveTimeSpanValidatable
-  include DateRangeFilterable
+  include Concerns::PositiveTimeSpanValidatable
+  include Concerns::DateRangeFilterable
 
   belongs_to :user
   belongs_to :service_specification
@@ -23,7 +23,8 @@ class Service < ApplicationRecord
     last: 2
   }, _suffix: 'civil_service'
 
-  validates :ending, :beginning, :service_type,
+  validates :ending, :beginning, :user,
+            :service_specification, :service_type,
             presence: true
 
   validate :ending_is_friday, unless: :last_civil_service?
@@ -113,7 +114,7 @@ class Service < ApplicationRecord
   end
 
   def no_overlapping_service
-    overlaps_other_service = Service.where(user:).where.not(id:).overlapping_date_range(beginning, ending).any?
+    overlaps_other_service = Service.where(user: user).where.not(id: id).overlapping_date_range(beginning, ending).any?
 
     errors.add(:beginning, :overlaps_service) if overlaps_other_service
   end

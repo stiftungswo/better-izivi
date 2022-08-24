@@ -20,7 +20,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     {
       beginning: Date.parse('2018-01-01'),
       ending: Date.parse('2018-08-03'),
-      service_specification:
+      service_specification: service_specification
     }
   end
 

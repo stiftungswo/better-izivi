@@ -10,11 +10,11 @@ RSpec.describe Holiday, type: :model do
   end
 
   it_behaves_like 'validates that the ending is after beginning' do
-    let(:model) { build(:holiday, beginning:, ending:) }
+    let(:model) { build(:holiday, beginning: beginning, ending: ending) }
   end
 
   describe '#range' do
-    subject(:holiday) { build(:holiday, beginning:, ending:) }
+    subject(:holiday) { build(:holiday, beginning: beginning, ending: ending) }
 
     let(:beginning) { Date.parse('2019-04-10') }
     let(:ending) { Date.parse('2019-04-20') }

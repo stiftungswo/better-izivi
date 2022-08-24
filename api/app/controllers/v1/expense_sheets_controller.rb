@@ -42,7 +42,7 @@ module V1
       suggestions = ExpenseSheetCalculators::SuggestionsCalculator.new(@expense_sheet).suggestions
       remaining_days = ExpenseSheetCalculators::RemainingDaysCalculator.new(@expense_sheet.service).remaining_days
 
-      render :hints, locals: { suggestions:, remaining_days: }
+      render :hints, locals: { suggestions: suggestions, remaining_days: remaining_days }
     end
 
     def sum

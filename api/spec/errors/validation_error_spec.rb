@@ -51,21 +51,21 @@ RSpec.describe ValidationError do
       let(:errors) { { first_name: 'is blank' } }
       let(:full_messages) { ['First name is blank'] }
 
-      it { is_expected.to be false }
+      it { is_expected.to eq false }
     end
 
     context 'when there are no errors' do
       let(:errors) { {} }
       let(:full_messages) { [] }
 
-      it { is_expected.to be true }
+      it { is_expected.to eq true }
     end
 
     context 'when there are errors but no description' do
       let(:errors) { { first_name: 'is blank' } }
       let(:full_messages) { [] }
 
-      it { is_expected.to be false }
+      it { is_expected.to eq false }
     end
   end
 end

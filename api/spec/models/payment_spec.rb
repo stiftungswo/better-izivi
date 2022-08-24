@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Payment, type: :model do
   let(:beginning) { Date.parse('2018-01-01') }
   let(:ending) { Date.parse('2018-06-29') }
-  let!(:service) { create :service, :long, beginning:, ending: }
+  let!(:service) { create :service, :long, beginning: beginning, ending: ending }
   let!(:initial_expense_sheets) do
     expense_sheets_array = ExpenseSheetGenerator.new(service).create_expense_sheets
     ExpenseSheet.where(id: expense_sheets_array.map(&:id)).all.tap do |relation|
@@ -16,7 +16,7 @@ RSpec.describe Payment, type: :model do
   let(:initial_expense_sheet_state) { :ready_for_payment }
 
   let(:payment_timestamp) { Time.zone.local(2019) }
-  let(:initial_payment_timestamp) { { payment_timestamp: } }
+  let(:initial_payment_timestamp) { { payment_timestamp: payment_timestamp } }
   let(:initial_payment_state) { initial_expense_sheet_state == :paid ? { state: initial_expense_sheet_state } : {} }
 
   let(:created_payment) { payment.tap(&:save) }
@@ -33,7 +33,7 @@ RSpec.describe Payment, type: :model do
     let(:expected_states) { [:ready_for_payment] }
 
     it 'creates a new payment', :aggregate_failures do
-      expect(payment.payment_timestamp.present?).to be true
+      expect(payment.payment_timestamp.present?).to eq true
       expect(payment.state).to eq :payment_in_progress
     end
 
@@ -147,7 +147,7 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'sets payment_timestamp to nil' do
-        expect(created_payment.payment_timestamp).to be_nil
+        expect(created_payment.payment_timestamp).to eq nil
       end
 
       it 'updates expense sheets state' do
@@ -217,8 +217,8 @@ RSpec.describe Payment, type: :model do
       let(:user) { create :user }
       let(:services) do
         [
-          create(:service, :long, beginning: Date.parse('2018-01-01'), ending: Date.parse('2018-06-29'), user:),
-          create(:service, :long, beginning: Date.parse('2019-01-07'), ending: Date.parse('2019-02-01'), user:)
+          create(:service, :long, beginning: Date.parse('2018-01-01'), ending: Date.parse('2018-06-29'), user: user),
+          create(:service, :long, beginning: Date.parse('2019-01-07'), ending: Date.parse('2019-02-01'), user: user)
         ]
       end
 
@@ -279,7 +279,7 @@ RSpec.describe Payment, type: :model do
       let(:new_state) { :payment_in_progress }
 
       it 'validates that all expense sheets are invalid' do
-        expect(payment.valid?).to be false
+        expect(payment.valid?).to eq false
       end
 
       it 'adds all validation errors to errors' do
@@ -292,7 +292,7 @@ RSpec.describe Payment, type: :model do
       let(:new_state) { :paid }
 
       it 'validates that all expense sheets are valid' do
-        expect(payment.valid?).to be true
+        expect(payment.valid?).to eq true
       end
 
       it %(doesn't add anything to errors) do

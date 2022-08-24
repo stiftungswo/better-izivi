@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class ExpenseSheet < ApplicationRecord
-  include PositiveTimeSpanValidatable
-  include DateRangeFilterable
-  include ExpenseSheetStateMachine
+  include Concerns::PositiveTimeSpanValidatable
+  include Concerns::DateRangeFilterable
+  include Concerns::ExpenseSheet::StateMachine
 
   belongs_to :user
 
-  validates :beginning, :ending, :work_days, :bank_account_number, :state,
+  validates :beginning, :ending, :user,
+            :work_days, :bank_account_number, :state,
             presence: true
 
   validates :work_days,
@@ -35,7 +36,7 @@ class ExpenseSheet < ApplicationRecord
     paid: 3
   }
 
-  scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp:) }
+  scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp: payment_timestamp) }
   scope :payment_issued, -> { includes(:user).where.not(payment_timestamp: [nil]) }
   scope :before_date, ->(date) { where(arel_table[:ending].lt(date)) }
   scope :filtered_by, ->(filters) { filters.reduce(self) { |query, filter| query.where(filter) } if filters.present? }

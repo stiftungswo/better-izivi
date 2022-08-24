@@ -78,7 +78,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
           end
 
           it 'does not create a new ServiceSpecification' do
-            expect { post_request }.not_to change(ServiceSpecification, :count)
+            expect { post_request }.to change(ServiceSpecification, :count).by(0)
           end
 
           it_behaves_like 'renders a validation error response' do

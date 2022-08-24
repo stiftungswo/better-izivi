@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Holiday < ApplicationRecord
-  include PositiveTimeSpanValidatable
-  include DateRangeFilterable
+  include Concerns::PositiveTimeSpanValidatable
+  include Concerns::DateRangeFilterable
 
   validates :beginning, :ending, timeliness: { type: :date }
   validates :beginning, :ending, :description, :holiday_type, presence: true

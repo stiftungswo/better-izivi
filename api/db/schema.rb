@@ -10,19 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_23_100557) do
-  create_table "allowlisted_jwts", charset: "utf8mb3", force: :cascade do |t|
-    t.string "jti", null: false
-    t.string "aud"
-    t.datetime "exp", precision: nil, null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
-    t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
-  end
+ActiveRecord::Schema.define(version: 2021_12_30_112913) do
 
-  create_table "expense_sheets", charset: "utf8mb3", force: :cascade do |t|
+  create_table "expense_sheets", charset: "utf8", force: :cascade do |t|
     t.date "beginning", null: false
     t.date "ending", null: false
     t.bigint "user_id", null: false
@@ -45,33 +35,33 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_100557) do
     t.string "clothing_expenses_comment"
     t.string "bank_account_number", null: false
     t.integer "state", default: 0, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-    t.datetime "payment_timestamp", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "payment_timestamp"
     t.boolean "ignore_first_day", default: false, null: false
     t.boolean "ignore_last_day", default: false, null: false
     t.integer "included_in_download_at"
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 
-  create_table "holidays", charset: "utf8mb3", force: :cascade do |t|
+  create_table "holidays", charset: "utf8", force: :cascade do |t|
     t.date "beginning", null: false
     t.date "ending", null: false
     t.integer "holiday_type", default: 1, null: false
     t.string "description", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "regional_centers", charset: "utf8mb3", force: :cascade do |t|
+  create_table "regional_centers", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
     t.string "short_name", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "service_specifications", charset: "utf8mb3", force: :cascade do |t|
+  create_table "service_specifications", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "short_name", null: false
     t.integer "work_clothing_expenses", null: false
@@ -82,13 +72,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_100557) do
     t.text "last_day_expenses", null: false
     t.string "location", default: "zh"
     t.boolean "active", default: true
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "identification_number", null: false
     t.index ["identification_number"], name: "index_service_specifications_on_identification_number", unique: true
   end
 
-  create_table "services", charset: "utf8mb3", force: :cascade do |t|
+  create_table "services", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "service_specification_id", null: false
     t.date "beginning", null: false
@@ -99,14 +89,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_100557) do
     t.boolean "long_service", default: false, null: false
     t.boolean "probation_service", default: false, null: false
     t.boolean "feedback_mail_sent", default: false, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "starts_on_saturday", default: false, null: false
     t.index ["service_specification_id"], name: "index_services_on_service_specification_id"
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+  create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "email", null: false
     t.integer "zdp", null: false
     t.string "first_name", null: false
@@ -126,11 +116,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_100557) do
     t.bigint "regional_center_id", null: false
     t.text "internal_note"
     t.boolean "chainsaw_workshop", default: false, null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "reset_password_sent_at"
     t.integer "dime_id", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["regional_center_id"], name: "index_users_on_regional_center_id"
@@ -138,9 +128,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_23_100557) do
     t.index ["zdp"], name: "index_users_on_zdp", unique: true
   end
 
-  add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
+  create_table "whitelisted_jwts", charset: "utf8", force: :cascade do |t|
+    t.string "jti", null: false
+    t.string "aud"
+    t.datetime "exp", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jti"], name: "index_whitelisted_jwts_on_jti", unique: true
+    t.index ["user_id"], name: "index_whitelisted_jwts_on_user_id"
+  end
+
   add_foreign_key "expense_sheets", "users"
   add_foreign_key "services", "service_specifications"
   add_foreign_key "services", "users"
   add_foreign_key "users", "regional_centers"
+  add_foreign_key "whitelisted_jwts", "users", on_delete: :cascade
 end

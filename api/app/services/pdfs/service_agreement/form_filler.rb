@@ -110,8 +110,8 @@ module Pdfs
         end
       end
 
-      def convert_to_form_fields_hash(mapping, &)
-        mapping[I18n.locale].map(&).to_h
+      def convert_to_form_fields_hash(mapping, &block)
+        mapping[I18n.locale].map(&block).to_h
       end
 
       def valais?

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module V1
-  class UsersController < ApiController
+  class UsersController < APIController
     ADDITIONAL_PERMITTED_USER_PARAMS = [:email].freeze
     ADMIN_RESTRICTED_USER_PARAMS = %i[internal_note role].freeze
 

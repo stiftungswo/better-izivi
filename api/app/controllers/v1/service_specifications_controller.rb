@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module V1
-  class ServiceSpecificationsController < ApiController
+  class ServiceSpecificationsController < APIController
     include V1::Concerns::AdminAuthorizable
 
     before_action :authorize_admin!, except: %i[index show]
@@ -53,12 +53,12 @@ module V1
                          .permit(*PERMITTED_SERVICE_SPECIFICATION_KEYS, PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS)
                          .to_h
 
-      sanitized_params.to_h do |key, value|
+      sanitized_params.map do |key, value|
         is_json_key = PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS.key? key.to_sym
         value = is_json_key ? json_string_to_integer(value) : value
 
         [key, value]
-      end
+      end.to_h
     end
 
     # :reek:UtilityFunction

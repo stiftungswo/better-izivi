@@ -26,7 +26,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
         {
           beginning: Date.parse('2018-01-01'),
           ending: Date.parse('2018-02-23'),
-          service_specification:
+          service_specification: service_specification
         }
       end
 
@@ -107,7 +107,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
             user: service.user
           )
         end
-        let(:expected_texts) { ['+', 'Ausserordentliche Spesen', 'MyString', '150.00'] }
+        let(:expected_texts) { %w[+ Ausserordentliche\ Spesen MyString 150.00] }
 
         it 'renders correct text' do
           expect(pdf_text_inspector.strings[-10..-7]).to eq expected_texts

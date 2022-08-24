@@ -43,7 +43,7 @@ module Pdfs
                        I18n.t('pdfs.expense_sheet.info_block.header.expense_sheet_time_duration.value',
                               beginning: I18n.l(expense_sheet.beginning),
                               ending: I18n.l(expense_sheet.ending),
-                              duration:,
+                              duration: duration,
                               count: duration)
                      end
           }

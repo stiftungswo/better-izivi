@@ -24,7 +24,7 @@ module Pdfs
       def draw_expense_table_row
         Fields::ExpenseTable::DAY_ROWS.each do |row|
           count = row[:count].call(@expense_sheet)
-          title = I18n.t(row[:header_title_key], count:)
+          title = I18n.t(row[:header_title_key], count: count)
 
           draw_row_head([count.to_s, title])
           draw_row_content(row[:calculation_method])

@@ -70,7 +70,7 @@ RSpec.describe V1::HolidaysController, type: :request do
         let(:params) { { description: '', ending: 'I am invalid' } }
 
         it 'does not create a holiday' do
-          expect { post_request }.not_to change(Holiday, :count)
+          expect { post_request }.to change(Holiday, :count).by(0)
         end
 
         it_behaves_like 'renders a validation error response' do

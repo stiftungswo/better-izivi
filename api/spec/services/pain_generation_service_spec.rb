@@ -16,7 +16,7 @@ RSpec.describe PainGenerationService, type: :service do
 
     let(:user) { create :user }
     let(:expense_sheet) do
-      create :expense_sheet, :ready_for_payment, user:
+      create :expense_sheet, :ready_for_payment, user: user
     end
 
     context 'when there is one expense sheet' do
