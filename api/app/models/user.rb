@@ -3,7 +3,7 @@
 require 'iban-tools'
 
 class User < ApplicationRecord
-  include Devise::JWT::RevocationStrategies::Whitelist
+  include Devise::JWT::RevocationStrategies::Allowlist
 
   belongs_to :regional_center
 
