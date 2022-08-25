@@ -96,7 +96,8 @@ module Pdfs
 
           # only continue if holiday overlaps with company holidays
           next unless holiday_beginning_unix.between?(beginning_unix,
-                                                      ending_unix) || holiday_ending_unix.between?(beginning_unix, ending_unix)
+                                                      ending_unix) || holiday_ending_unix.between?(beginning_unix,
+                                                                                                   ending_unix)
 
           # replace company holiday if it's on the same day as a public holiday
           while current_unix <= holiday_ending_unix

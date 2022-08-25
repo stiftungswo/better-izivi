@@ -121,19 +121,19 @@ RSpec.describe ExpenseSheet, type: :model do
       context 'when new state is ready_for_payment' do
         let(:state) { :ready_for_payment }
 
-        it { is_expected.to eq true }
+        it { is_expected.to be true }
       end
 
       context 'when new state is payment_in_progress' do
         let(:state) { :payment_in_progress }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
 
       context 'when new state is paid' do
         let(:state) { :paid }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
     end
 
@@ -143,19 +143,19 @@ RSpec.describe ExpenseSheet, type: :model do
       context 'when new state is open' do
         let(:state) { :open }
 
-        it { is_expected.to eq true }
+        it { is_expected.to be true }
       end
 
       context 'when new state is payment_in_progress' do
         let(:state) { :payment_in_progress }
 
-        it { is_expected.to eq true }
+        it { is_expected.to be true }
       end
 
       context 'when new state is paid' do
         let(:state) { :paid }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
     end
 
@@ -165,19 +165,19 @@ RSpec.describe ExpenseSheet, type: :model do
       context 'when new state is open' do
         let(:state) { :open }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
 
       context 'when new state is ready_for_payment' do
         let(:state) { :ready_for_payment }
 
-        it { is_expected.to eq true }
+        it { is_expected.to be true }
       end
 
       context 'when new state is paid' do
         let(:state) { :paid }
 
-        it { is_expected.to eq true }
+        it { is_expected.to be true }
       end
     end
 
@@ -187,19 +187,19 @@ RSpec.describe ExpenseSheet, type: :model do
       context 'when new state is open' do
         let(:state) { :open }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
 
       context 'when new state is ready_for_payment' do
         let(:state) { :ready_for_payment }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
 
       context 'when new state is payment_in_progress' do
         let(:state) { :payment_in_progress }
 
-        it { is_expected.to eq false }
+        it { is_expected.to be false }
       end
     end
   end
@@ -246,7 +246,7 @@ RSpec.describe ExpenseSheet, type: :model do
       end
 
       it 'returns true' do
-        expect(expense_sheet.at_service_beginning?).to eq true
+        expect(expense_sheet.at_service_beginning?).to be true
       end
     end
 
@@ -261,7 +261,7 @@ RSpec.describe ExpenseSheet, type: :model do
       end
 
       it 'returns false' do
-        expect(expense_sheet.at_service_beginning?).to eq false
+        expect(expense_sheet.at_service_beginning?).to be false
       end
     end
   end
@@ -288,7 +288,7 @@ RSpec.describe ExpenseSheet, type: :model do
       end
 
       it 'returns true' do
-        expect(expense_sheet.at_service_ending?).to eq true
+        expect(expense_sheet.at_service_ending?).to be true
       end
     end
 
@@ -303,7 +303,7 @@ RSpec.describe ExpenseSheet, type: :model do
       end
 
       it 'returns false' do
-        expect(expense_sheet.at_service_ending?).to eq false
+        expect(expense_sheet.at_service_ending?).to be false
       end
     end
   end

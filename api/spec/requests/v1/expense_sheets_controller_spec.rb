@@ -207,7 +207,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
           let(:post_request) { post v1_expense_sheets_path }
 
           it 'does not create a new expense sheet' do
-            expect { post_request }.to change(ExpenseSheet, :count).by(0)
+            expect { post_request }.not_to change(ExpenseSheet, :count)
           end
         end
       end

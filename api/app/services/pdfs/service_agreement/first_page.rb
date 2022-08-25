@@ -42,9 +42,9 @@ module Pdfs
 
       def header_sender_info
         [
-          ENV['SERVICE_AGREEMENT_LETTER_SENDER_NAME'],
-          ENV['SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS'],
-          ENV['SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY']
+          ENV.fetch('SERVICE_AGREEMENT_LETTER_SENDER_NAME', nil),
+          ENV.fetch('SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS', nil),
+          ENV.fetch('SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY', nil)
         ]
       end
 
