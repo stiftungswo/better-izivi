@@ -7,8 +7,7 @@ class ExpenseSheet < ApplicationRecord
 
   belongs_to :user
 
-  validates :beginning, :ending, :user,
-            :work_days, :bank_account_number, :state,
+  validates :beginning, :ending, :work_days, :bank_account_number, :state,
             presence: true
 
   validates :work_days,

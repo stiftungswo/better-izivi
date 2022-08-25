@@ -413,10 +413,10 @@ DEPENDENCIES
   reek
   rspec-collection_matchers
   rspec-rails (~> 5.0.1)
-  rubocop (~> 1.18)
+  rubocop (~> 1.35)
   rubocop-performance
-  rubocop-rails (~> 2.11)
-  rubocop-rspec (~> 2.4)
+  rubocop-rails (~> 2.15)
+  rubocop-rspec (~> 2.12)
   ruby-debug-ide
   sentry-raven
   sepa_king

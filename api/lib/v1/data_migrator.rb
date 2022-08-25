@@ -77,7 +77,7 @@ module V1
     end
 
     def safe_env_fetch(key)
-      value = ENV[key]
+      value = ENV.fetch(key, nil)
       abort "Environment variable #{key} could not be found but is required" if value.nil?
 
       value

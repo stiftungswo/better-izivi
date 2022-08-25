@@ -33,7 +33,7 @@ RSpec.describe Payment, type: :model do
     let(:expected_states) { [:ready_for_payment] }
 
     it 'creates a new payment', :aggregate_failures do
-      expect(payment.payment_timestamp.present?).to eq true
+      expect(payment.payment_timestamp.present?).to be true
       expect(payment.state).to eq :payment_in_progress
     end
 
@@ -147,7 +147,7 @@ RSpec.describe Payment, type: :model do
       end
 
       it 'sets payment_timestamp to nil' do
-        expect(created_payment.payment_timestamp).to eq nil
+        expect(created_payment.payment_timestamp).to be_nil
       end
 
       it 'updates expense sheets state' do
@@ -279,7 +279,7 @@ RSpec.describe Payment, type: :model do
       let(:new_state) { :payment_in_progress }
 
       it 'validates that all expense sheets are invalid' do
-        expect(payment.valid?).to eq false
+        expect(payment.valid?).to be false
       end
 
       it 'adds all validation errors to errors' do
@@ -292,7 +292,7 @@ RSpec.describe Payment, type: :model do
       let(:new_state) { :paid }
 
       it 'validates that all expense sheets are valid' do
-        expect(payment.valid?).to eq true
+        expect(payment.valid?).to be true
       end
 
       it %(doesn't add anything to errors) do

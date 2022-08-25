@@ -107,7 +107,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
             user: service.user
           )
         end
-        let(:expected_texts) { %w[+ Ausserordentliche\ Spesen MyString 150.00] }
+        let(:expected_texts) { ['+', 'Ausserordentliche Spesen', 'MyString', '150.00'] }
 
         it 'renders correct text' do
           expect(pdf_text_inspector.strings[-10..-7]).to eq expected_texts
