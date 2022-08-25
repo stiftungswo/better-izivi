@@ -70,6 +70,14 @@ GEM
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
+    better_html (1.0.16)
+      actionview (>= 4.0)
+      activesupport (>= 4.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      html_tokenizer (~> 0.0.6)
+      parser (>= 2.4)
+      smart_properties
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     bootsnap (1.13.0)
@@ -137,11 +145,13 @@ GEM
       cmdparse (~> 3.0, >= 3.0.3)
       geom2d (~> 0.3)
     highline (2.0.3)
+    html_tokenizer (0.0.7)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    i18n-tasks (0.9.37)
+    i18n-tasks (1.0.11)
       activesupport (>= 4.0.2)
       ast (>= 2.1.0)
+      better_html (~> 1.0)
       erubi
       highline (>= 2.0.0)
       i18n
@@ -336,6 +346,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
+    smart_properties (1.17.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -392,7 +403,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   hexapdf
-  i18n-tasks (~> 0.9.29)
+  i18n-tasks (~> 1.0.11)
   iban-tools
   jbuilder
   letter_opener
