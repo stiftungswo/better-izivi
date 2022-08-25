@@ -217,7 +217,7 @@ RSpec.describe User, type: :model do
     it 'validates only the given fields', :aggregate_failures do
       expect(errors.added?(:bank_iban, :blank)).to be true
       expect(errors.added?(:bank_iban, :too_short)).to be true
-      expect(errors.to_h.keys).to eq [:bank_iban]
+      expect(errors.attribute_names).to eq [:bank_iban]
     end
   end
 
