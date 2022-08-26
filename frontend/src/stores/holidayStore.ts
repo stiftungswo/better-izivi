@@ -2,7 +2,6 @@ import { action, computed, observable } from 'mobx';
 import moment from 'moment';
 import { Holiday } from '../types';
 import { DomainStore } from './domainStore';
-import { MainStore } from './mainStore';
 
 export class HolidayStore extends DomainStore<Holiday> {
   protected get entityName() {
@@ -66,10 +65,6 @@ export class HolidayStore extends DomainStore<Holiday> {
 
   protected entityURL = '/holidays/';
   protected entitiesURL = '/holidays/';
-
-  constructor(mainStore: MainStore) {
-    super(mainStore);
-  }
 
   @action
   protected async doPost(holiday: Holiday) {

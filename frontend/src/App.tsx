@@ -26,7 +26,6 @@ import { ServiceOverview } from './views/service_overview/ServiceOverview';
 import { ServiceSpecificationsOverview } from './views/service_specification/ServiceSpecificationsOverview';
 import { UserFeedbackOverview } from './views/user_feedback_overview/UserFeedbackOverview';
 import { ProfileOverview } from './views/users/ProfileOverview';
-import { ServiceFeedback } from './views/users/service_feedback/ServiceFeedback';
 import { UserOverview } from './views/users/UserOverview';
 import { UserUpdate } from './views/users/UserUpdate';
 

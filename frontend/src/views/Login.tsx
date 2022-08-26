@@ -1,5 +1,4 @@
 import { Formik, FormikActions } from 'formik';
-import { LocationState } from 'history';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { FormattedMessage } from 'react-intl';

@@ -3,7 +3,7 @@ import * as H from 'history';
 import { clamp, curryRight } from 'lodash';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
-import { FormattedMessage, IntlShape, useIntl } from 'react-intl';
+import { FormattedMessage, IntlShape} from 'react-intl';
 import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import Form from 'reactstrap/lib/Form';
