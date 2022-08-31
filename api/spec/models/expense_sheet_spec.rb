@@ -10,7 +10,7 @@ RSpec.describe ExpenseSheet, type: :model do
     let(:expense_sheet) { build :expense_sheet, user: user }
 
     let(:present_fields) do
-      %i[beginning ending user work_days bank_account_number state]
+      %i[beginning ending work_days bank_account_number state]
     end
 
     let(:only_integer_fields) do
@@ -39,6 +39,8 @@ RSpec.describe ExpenseSheet, type: :model do
         expect(expense_sheet).to validate_numericality_of(field).only_integer
       end
     end
+
+    it { is_expected.to belong_to :user }
 
     describe '#included_in_service_date_range' do
       let(:beginning) { Date.parse('2019-09-02') }
