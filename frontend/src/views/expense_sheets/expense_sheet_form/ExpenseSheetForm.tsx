@@ -42,7 +42,7 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
 
   render() {
     const {
-      mainStore, onSubmit, expenseSheet, service, serviceSpecification, hints, title, expenseSheetStore, sickDays, buttonDeactive
+      mainStore, onSubmit, expenseSheet, service, serviceSpecification, hints, title, expenseSheetStore, sickDays, buttonDeactive,
     } = this.props;
 
     const template = {

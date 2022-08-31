@@ -1,9 +1,9 @@
 import { History } from 'history';
-import { action, autorun, computed, observable} from 'mobx';
+import { action, autorun, computed, observable } from 'mobx';
 import moment from 'moment';
 import 'moment/locale/de';
 import 'moment/locale/fr';
-import { createIntl, createIntlCache} from 'react-intl';
+import { createIntl, createIntlCache } from 'react-intl';
 import messagesDe from '../locales/messages.de.json';
 import messagesFr from '../locales/messages.fr.json';
 import { Locale } from '../types';

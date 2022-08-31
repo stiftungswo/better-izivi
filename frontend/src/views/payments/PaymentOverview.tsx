@@ -3,7 +3,7 @@ import * as React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
 import IziviContent from '../../layout/IziviContent';
-import { ApiStore} from '../../stores/apiStore';
+import { ApiStore } from '../../stores/apiStore';
 import { ExpenseSheetStore } from '../../stores/expenseSheetStore';
 import { MainStore } from '../../stores/mainStore';
 import { PaymentStore } from '../../stores/paymentStore';

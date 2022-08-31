@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import Table from 'reactstrap/lib/Table';
-import { Column} from '../types';
+import { Column } from '../types';
 import { SafeClickableTableRow } from '../utilities/SafeClickableTableRow';
 
 // tslint:disable:no-any ; this is adapted from the docs. It should be typed eventually.

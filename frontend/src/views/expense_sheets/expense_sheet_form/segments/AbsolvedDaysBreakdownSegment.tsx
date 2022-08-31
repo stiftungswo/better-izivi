@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
 import { NumberField, TextField } from '../../../../form/common';
 import { WiredField } from '../../../../form/formik';
