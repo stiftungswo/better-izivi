@@ -12,7 +12,7 @@ interface Props<ListingType> {
   title?: string;
   children?: React.ReactNode;
   renderActions?: (e: ListingType) => React.ReactNode;
-  columns?: Array<Column<ListingType>>;
+  columns?: Column<ListingType>[];
   onClickRow?: ((e: ListingType) => void) | string;
   firstRow?: React.ReactNode;
   lastRow?: React.ReactNode;

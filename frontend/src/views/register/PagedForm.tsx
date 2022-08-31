@@ -14,7 +14,7 @@ import { ValidatablePageRefType, WithPageValidationsProps } from './ValidatableP
 
 interface PagedFormProps {
   formikProps: FormikProps<RegisterFormValues>;
-  pages: Array<React.RefForwardingComponent<ValidatablePageRefType, WithPageValidationsProps>>;
+  pages: React.RefForwardingComponent<ValidatablePageRefType, WithPageValidationsProps>[];
   currentPage: number;
   history: H.History;
   mainStore?: MainStore;

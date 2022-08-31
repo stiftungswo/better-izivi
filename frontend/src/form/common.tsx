@@ -29,10 +29,10 @@ export interface IziviFieldProps extends SharedProps {
 }
 
 export type SelectFieldProps = {
-  options: Array<{
+  options: {
     id: string;
     name: string;
-  }>;
+  }[];
 } & IziviInputFieldProps;
 
 export interface IziviInputFieldProps<T = string> extends IziviFieldProps {

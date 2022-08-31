@@ -17,7 +17,7 @@ function format<T>(def: Column<T>, row: T): React.ReactNode {
 // tslint:enable:no-any
 
 interface TableProps<T> {
-  columns: Array<Column<T>>;
+  columns: Column<T>[];
   renderActions?: (e: T) => React.ReactNode;
   data: T[];
   onClickRow?: (e: T, index: number) => void;

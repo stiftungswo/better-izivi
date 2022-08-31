@@ -24,7 +24,7 @@ interface State {
 @inject('mainStore', 'userStore')
 @observer
 export class UserOverview extends React.Component<Props, State> {
-  columns: Array<Column<UserOverviewType>>;
+  columns: Column<UserOverviewType>[];
   intl: IntlShape;
 
   constructor(props: Props) {
