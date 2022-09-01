@@ -7,7 +7,6 @@ import { IntlShape } from 'react-intl';
 import { ApiStore, baseUrl } from '../../stores/apiStore';
 import { DomainStore } from '../../stores/domainStore';
 import { MainStore } from '../../stores/mainStore';
-import { UserStore } from '../../stores/userStore';
 import { displayError } from '../../utilities/notification';
 
 type ValidityCallback = (valid: boolean) => void;

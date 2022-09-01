@@ -1,4 +1,4 @@
-import { FormikActions, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -41,8 +41,9 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
   }
 
   render() {
-    const { loading, mainStore, onSubmit, expenseSheet, service, serviceSpecification, hints, title, expenseSheetStore,
-            sickDays, buttonDeactive } = this.props;
+    const {
+      mainStore, onSubmit, expenseSheet, service, serviceSpecification, hints, title, expenseSheetStore, sickDays, buttonDeactive,
+    } = this.props;
 
     const template = {
       safe_override: false,

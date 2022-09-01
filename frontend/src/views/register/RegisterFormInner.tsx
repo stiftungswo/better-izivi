@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import { clamp } from 'lodash';
 import { inject } from 'mobx-react';
 import * as React from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import { IntlShape } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import Breadcrumb from 'reactstrap/lib/Breadcrumb';

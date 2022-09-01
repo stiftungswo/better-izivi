@@ -2,7 +2,6 @@ import { action, computed, observable } from 'mobx';
 import moment from 'moment';
 import { Payment, PaymentState } from '../types';
 import { DomainStore } from './domainStore';
-import { MainStore } from './mainStore';
 
 export class PaymentStore extends DomainStore<Payment> {
   protected get entityName() {
@@ -52,10 +51,6 @@ export class PaymentStore extends DomainStore<Payment> {
 
   protected entityURL = '/payments/';
   protected entitiesURL = '/payments/';
-
-  constructor(mainStore: MainStore) {
-    super(mainStore);
-  }
 
   async createPayment() {
     try {

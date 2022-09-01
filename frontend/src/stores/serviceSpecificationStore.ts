@@ -1,7 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { ServiceSpecification } from '../types';
 import { DomainStore } from './domainStore';
-import { MainStore } from './mainStore';
 
 export class ServiceSpecificationStore extends DomainStore<ServiceSpecification> {
   protected get entityName() {
@@ -43,10 +42,6 @@ export class ServiceSpecificationStore extends DomainStore<ServiceSpecification>
 
   protected entitiesURL = '/service_specifications/';
   protected entityURL = '/service_specifications/';
-
-  constructor(mainStore: MainStore) {
-    super(mainStore);
-  }
 
   @action
   protected async doPost(serviceSpecification: ServiceSpecification) {

@@ -3,7 +3,6 @@ import moment from 'moment';
 import { Service, ServiceCollection } from '../types';
 import { apiDateFormat } from './apiStore';
 import { DomainStore } from './domainStore';
-import { MainStore } from './mainStore';
 
 export class ServiceStore extends DomainStore<Service, ServiceCollection> {
   protected get entityName() {
@@ -45,10 +44,6 @@ export class ServiceStore extends DomainStore<Service, ServiceCollection> {
 
   protected entitiesURL = '/services/';
   protected entityURL = '/services/';
-
-  constructor(mainStore: MainStore) {
-    super(mainStore);
-  }
 
   @action
   async fetchByYear(year: string) {

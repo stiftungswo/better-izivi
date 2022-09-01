@@ -2,7 +2,7 @@ import { inject, observer } from 'mobx-react';
 import moment from 'moment';
 import * as React from 'react';
 
-import { autorun, computed, observable, reaction } from 'mobx';
+import { reaction } from 'mobx';
 import { FormattedMessage, IntlShape } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
@@ -329,7 +329,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
                       if (this.state.selectedServiceSpecifications[service.service_specification.identification_number]) {
                         return this.state.serviceRows.get(service.id!);
                       }
-                      return;
+                      return null;
                     })}
                   </tbody>
                 </Table>
