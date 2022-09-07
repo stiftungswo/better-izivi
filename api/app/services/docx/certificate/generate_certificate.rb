@@ -21,19 +21,17 @@ module Docx
       def fill_out_docx_template(template_path)
         doc = Docx::Document.open(template_path)
 
-        doc.paragraphs.each do |p|
-          p.each_text_run do |tr|
-            Substitution::SUBSTITUTE_VALUES.each do |key, getter|
-              substitute_string = "$#{key}$"
-              value = getter.call(@service)
-              tr.substitute(substitute_string, value)
-            end
+        doc.paragraphs.each do |paragraph|
+          paragraph.each_text_run do |tr|
+            substitute_value_in_row(tr)
           end
         end
 
         doc.save(docx_file.path)
         docx_file
       end
+
+      private
 
       def docx_file
         @docx_file ||= Tempfile.new('certificate')
@@ -46,7 +44,13 @@ module Docx
         docx_raw_string
       end
 
-      private
+      def substitute_value_in_row(tr)
+        Substitution::SUBSTITUTE_VALUES.each do |key, getter|
+          substitute_string = "$#{key}$"
+          value = getter.call(@service)
+          tr.substitute(substitute_string, value)
+        end
+      end 
 
       def fetch_template_path
         if @service.date_range.count >= 90

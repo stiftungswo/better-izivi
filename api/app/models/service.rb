@@ -99,8 +99,8 @@ class Service < ApplicationRecord
   end
 
   def work_record_available?
-    date_range.count >= 90 && service_specification.certificate_of_employment_template.present? ||
-      date_range.count < 90 && service_specification.confirmation_of_employment_template.present?
+    (date_range.count >= 90 && service_specification.certificate_of_employment_template.present?) ||
+      (date_range.count < 90 && service_specification.confirmation_of_employment_template.present?)
   end
 
   private
