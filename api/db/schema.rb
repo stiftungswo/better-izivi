@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_30_112913) do
+ActiveRecord::Schema.define(version: 2022_09_06_121541) do
 
   create_table "expense_sheets", charset: "utf8", force: :cascade do |t|
     t.date "beginning", null: false
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 2021_12_30_112913) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "identification_number", null: false
+    t.string "certificate_of_employment_template"
+    t.string "confirmation_of_employment_template"
     t.index ["identification_number"], name: "index_service_specifications_on_identification_number", unique: true
   end
 

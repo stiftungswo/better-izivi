@@ -58,6 +58,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
       deletable: true,
       eligible_paid_vacation_days: 0,
       user_id: props.user.id,
+      work_record_available: false,
       service_specification: {
         identification_number: '',
         name: undefined,

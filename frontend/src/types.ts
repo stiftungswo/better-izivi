@@ -213,6 +213,7 @@ export interface Service {
     short_name: string | undefined;
   };
   user_id: number;
+  work_record_available: boolean;
 }
 
 export interface ServiceCollection {
