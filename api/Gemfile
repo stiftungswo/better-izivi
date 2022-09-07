@@ -12,6 +12,7 @@ end
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'devise-jwt', '~> 0.9.0'
+gem 'docx'
 gem 'dotenv-rails'
 gem 'hexapdf'
 gem 'iban-tools'
