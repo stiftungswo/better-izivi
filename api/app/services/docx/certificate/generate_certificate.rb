@@ -23,7 +23,7 @@ module Docx
 
         doc.paragraphs.each do |paragraph|
           paragraph.each_text_run do |tr|
-            substitute_value_in_row(tr)
+            substitute_value_in_row(row)
           end
         end
 
@@ -44,13 +44,13 @@ module Docx
         docx_raw_string
       end
 
-      def substitute_value_in_row(tr)
+      def substitute_value_in_row(row)
         Substitution::SUBSTITUTE_VALUES.each do |key, getter|
           substitute_string = "$#{key}$"
           value = getter.call(@service)
-          tr.substitute(substitute_string, value)
+          row.substitute(substitute_string, value)
         end
-      end 
+      end
 
       def fetch_template_path
         if @service.date_range.count >= 90
