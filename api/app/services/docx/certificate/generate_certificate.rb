@@ -22,7 +22,7 @@ module Docx
         doc = Docx::Document.open(template_path)
 
         doc.paragraphs.each do |paragraph|
-          paragraph.each_text_run do |tr|
+          paragraph.each_text_run do |row|
             substitute_value_in_row(row)
           end
         end
