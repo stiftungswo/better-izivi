@@ -20,13 +20,9 @@ module Docx
 
       def fill_out_docx_template(template_path)
         doc = Docx::Document.open(template_path)
-
         doc.paragraphs.each do |paragraph|
-          paragraph.each_text_run do |row|
-            substitute_value_in_row(row)
-          end
+          paragraph_substitute_value(paragraph)
         end
-
         doc.save(docx_file.path)
         docx_file
       end
@@ -42,6 +38,12 @@ module Docx
         docx_file.close
         docx_file.unlink
         docx_raw_string
+      end
+
+      def paragraph_substitute_value(paragraph)
+        paragraph.each_text_run do |row|
+          substitute_value_in_row(row)
+        end
       end
 
       def substitute_value_in_row(row)
