@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import Button from 'reactstrap/lib/Button';
 import { NumberField, TextField } from '../../../../form/common';
 import { WiredField } from '../../../../form/formik';
-import { ExpenseSheetStore } from '../../../../stores/expenseSheetStore';
 import { MainStore } from '../../../../stores/mainStore';
 import { ExpenseSheetHints, SickDaysDime } from '../../../../types';
 import { expenseSheetFormSegment } from './expenseSheetFormSegment';

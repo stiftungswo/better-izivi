@@ -4,6 +4,6 @@ if defined? Sidekiq
   require 'sidekiq/web'
 
   Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
-    [user, password] == [ENV['SIDEKIQ_USER'], ENV['SIDEKIQ_PASSWORD']]
+    [user, password] == [ENV.fetch('SIDEKIQ_USER', nil), ENV.fetch('SIDEKIQ_PASSWORD', nil)]
   end
 end

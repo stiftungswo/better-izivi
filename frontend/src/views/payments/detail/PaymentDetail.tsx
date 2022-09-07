@@ -88,7 +88,11 @@ class PaymentDetailInner extends React.Component<Props & WithSheet<typeof paymen
             </>
           )}
 
-          <a href={this.props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: this.props.match.params.timestamp })} target={'_blank'}>
+          <a
+            href={this.props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: this.props.match.params.timestamp })}
+            target={'_blank'}
+            rel="noopener noreferrer"
+          >
             <Button color={'secondary'} style={{ marginLeft: '12px' }}>
               <FormattedMessage id="payments.expenseSheetsReadyForPaymentTable.pdf" />
             </Button>

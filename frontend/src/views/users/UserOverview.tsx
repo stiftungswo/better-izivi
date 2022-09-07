@@ -6,7 +6,6 @@ import Button from 'reactstrap/lib/Button';
 import FormGroup from 'reactstrap/lib/FormGroup';
 import Input from 'reactstrap/lib/Input';
 import { DatePickerInput } from '../../form/DatePickerField';
-import IziviContent from '../../layout/IziviContent';
 import Overview from '../../layout/Overview';
 import { MainStore } from '../../stores/mainStore';
 import { UserStore } from '../../stores/userStore';
@@ -25,7 +24,7 @@ interface State {
 @inject('mainStore', 'userStore')
 @observer
 export class UserOverview extends React.Component<Props, State> {
-  columns: Array<Column<UserOverviewType>>;
+  columns: Column<UserOverviewType>[];
   intl: IntlShape;
 
   constructor(props: Props) {

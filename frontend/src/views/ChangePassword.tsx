@@ -77,10 +77,6 @@ class ChangePassword extends React.Component<ChangePasswordProps> {
       ),
   });
 
-  constructor(props: ChangePasswordProps) {
-    super(props);
-  }
-
   changePassword = async (
     values: FormValues,
     actions: FormikActions<FormValues>,

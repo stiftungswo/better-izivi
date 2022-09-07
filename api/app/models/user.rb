@@ -3,7 +3,7 @@
 require 'iban-tools'
 
 class User < ApplicationRecord
-  include Devise::JWT::RevocationStrategies::Whitelist
+  include Devise::JWT::RevocationStrategies::Allowlist
 
   belongs_to :regional_center
 
@@ -39,9 +39,10 @@ class User < ApplicationRecord
 
   def self.validate_given_params(user_params)
     errors = User.new(user_params).tap(&:validate).errors
+    given_keys = user_params.keys.map(&:to_sym)
 
-    errors.each do |attribute, _error|
-      errors.delete attribute unless attribute.to_s.in?(user_params.keys.map(&:to_s))
+    errors.dup.each do |error|
+      errors.delete error.attribute unless error.attribute.in?(given_keys)
     end
 
     errors

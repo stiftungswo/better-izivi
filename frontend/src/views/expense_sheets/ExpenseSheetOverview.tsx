@@ -28,7 +28,7 @@ interface State {
 @inject('mainStore', 'expenseSheetStore')
 @observer
 export class ExpenseSheetOverview extends React.Component<Props, State> {
-  columns: Array<Column<ExpenseSheetListing>>;
+  columns: Column<ExpenseSheetListing>[];
   intl: IntlShape;
 
   constructor(props: Props) {

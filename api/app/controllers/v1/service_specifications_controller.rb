@@ -53,12 +53,12 @@ module V1
                          .permit(*PERMITTED_SERVICE_SPECIFICATION_KEYS, PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS)
                          .to_h
 
-      sanitized_params.map do |key, value|
+      sanitized_params.to_h do |key, value|
         is_json_key = PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS.key? key.to_sym
         value = is_json_key ? json_string_to_integer(value) : value
 
         [key, value]
-      end.to_h
+      end
     end
 
     # :reek:UtilityFunction

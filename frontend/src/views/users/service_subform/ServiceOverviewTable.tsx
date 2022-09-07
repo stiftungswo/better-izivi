@@ -12,7 +12,7 @@ import { MainStore } from '../../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../../stores/serviceStore';
 import { UserStore } from '../../../stores/userStore';
-import { ExpenseSheet, Service, ServiceSpecification, User } from '../../../types';
+import { Service, ServiceSpecification, User } from '../../../types';
 import {
   CheckSquareRegularIcon,
   EditSolidIcon,
@@ -141,6 +141,7 @@ export default (params: OverviewTableParams) => {
         className={'btn btn-link'}
         href={mainStore!.apiURL('services/' + service.id + '.pdf', urlParams, true)}
         target={'_blank'}
+        rel="noopener noreferrer"
       >
         <FormattedMessage
           id="views.users.serviceOverviewTable.print"
