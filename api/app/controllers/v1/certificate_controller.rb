@@ -4,7 +4,6 @@ module V1
   class CertificateController < ApplicationController
     include V1::Concerns::AdminAuthorizable
     include V1::Concerns::ParamsAuthenticatable
-    include V1::Concerns::JsonAndPdfRespondable
 
     before_action :authenticate_user!, unless: -> { request.format.docx? }
     before_action :authenticate_from_params!, only: :show, if: -> { request.format.docx? }
