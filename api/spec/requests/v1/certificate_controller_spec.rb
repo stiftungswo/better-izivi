@@ -12,8 +12,8 @@ RSpec.describe V1::CertificateController, type: :request do
     context 'when user is an admin' do
       it 'returns a content type docx' do
         request
-        expect(response.headers['Content-Type']).
-        to include 'vnd.openxmlformats-officedocument.wordprocessingml.document'
+        expect(response.headers['Content-Type'])
+          .to include 'vnd.openxmlformats-officedocument.wordprocessingml.document'
       end
 
       it 'returns status code 200' do
