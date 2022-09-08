@@ -110,6 +110,9 @@ GEM
       warden-jwt_auth (~> 0.6)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    docx (0.7.0)
+      nokogiri (~> 1.13, >= 1.13.0)
+      rubyzip (~> 2.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -325,6 +328,7 @@ GEM
     ruby-progressbar (1.11.0)
     ruby-rc4 (0.1.5)
     ruby2_keywords (0.0.5)
+    rubyzip (2.3.2)
     safe_shell (1.1.0)
     sentry-raven (3.1.2)
       faraday (>= 1.0)
@@ -397,6 +401,7 @@ DEPENDENCIES
   debase (~> 0.2.4.1)
   devise
   devise-jwt (~> 0.9.0)
+  docx
   dotenv-rails
   factory_bot_rails
   faker

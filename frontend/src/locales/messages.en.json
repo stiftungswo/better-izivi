@@ -13,6 +13,7 @@
   "layout.navigation.login": "Login",
   "layout.navigation.logout": "Log off",
   "layout.navigation.payments": "Payments",
+  "layout.navigation.certificate": "Certificate",
   "layout.navigation.phone_list": "Phone list",
   "layout.navigation.planning": "Planning",
   "layout.navigation.profile": "Profile",

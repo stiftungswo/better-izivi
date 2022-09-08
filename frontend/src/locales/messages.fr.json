@@ -13,6 +13,7 @@
   "layout.navigation.login": "Connexion",
   "layout.navigation.logout": "Déconnexion",
   "layout.navigation.payments": "Paiements",
+  "layout.navigation.certificate": "Certificat",
   "layout.navigation.phone_list": "Liste téléphonique",
   "layout.navigation.planning": "Planification",
   "layout.navigation.profile": "Profil",

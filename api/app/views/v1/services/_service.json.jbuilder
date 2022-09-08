@@ -6,6 +6,8 @@ json.extract! service, :id, :user_id, :beginning, :ending,
 
 json.deletable service.deletable?
 
+json.work_record_available service.work_record_available?
+
 json.service_specification do
   json.extract! service.service_specification, :identification_number, :name
 end
