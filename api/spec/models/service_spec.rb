@@ -282,7 +282,10 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#work_record_available?' do
-    subject { build(:service, beginning: beginning, ending: ending, service_specification: service_specification).work_record_available? }
+    subject do
+      build(:service, beginning: beginning, ending: ending,
+                      service_specification: service_specification).work_record_available?
+    end
 
     let(:service_specification) do
       build(:service_specification,
@@ -295,28 +298,32 @@ RSpec.describe Service, type: :model do
     let(:certificate_of_employment_template) { nil }
     let(:confirmation_of_employment_template) { nil }
 
-    it { is_expected.to eq false}
+    it { is_expected.to be false }
 
-    context 'service is a short service and confirmation template exists' do
+    context 'when service is a short service and confirmation template exists' do
       let(:confirmation_of_employment_template) { 'Template.docx' }
-      it { is_expected.to eq true}
+
+      it { is_expected.to be true }
     end
 
-    context 'service is a short service and confirmation template does not exist' do
+    context 'when service is a short service and confirmation template does not exist' do
       let(:confirmation_of_employment_template) { nil }
-      it { is_expected.to eq false}
+
+      it { is_expected.to be false }
     end
 
-    context 'service is a long service and certificate template exists' do
+    context 'when service is a long service and certificate template exists' do
       let(:ending) { Date.parse '2019-11-30' }
       let(:certificate_of_employment_template) { 'Template.docx' }
-      it { is_expected.to eq true}
+
+      it { is_expected.to be true }
     end
 
-    context 'service is a long service and certificate template does not exist' do
+    context 'when service is a long service and certificate template does not exist' do
       let(:ending) { Date.parse '2019-11-30' }
       let(:certificate_of_employment_template) { nil }
-      it { is_expected.to eq false}
+
+      it { is_expected.to be false }
     end
   end
 end
