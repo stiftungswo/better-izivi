@@ -280,4 +280,43 @@ RSpec.describe Service, type: :model do
 
     it { is_expected.to eq beginning..ending }
   end
+
+  describe '#work_record_available?' do
+    subject { build(:service, beginning: beginning, ending: ending, service_specification: service_specification).work_record_available? }
+
+    let(:service_specification) do
+      build(:service_specification,
+            certificate_of_employment_template: certificate_of_employment_template,
+            confirmation_of_employment_template: confirmation_of_employment_template)
+    end
+
+    let(:beginning) { Date.parse '2018-10-29' }
+    let(:ending) { Date.parse '2018-11-30' }
+    let(:certificate_of_employment_template) { nil }
+    let(:confirmation_of_employment_template) { nil }
+
+    it { is_expected.to eq false}
+
+    context 'service is a short service and confirmation template exists' do
+      let(:confirmation_of_employment_template) { 'Template.docx' }
+      it { is_expected.to eq true}
+    end
+
+    context 'service is a short service and confirmation template does not exist' do
+      let(:confirmation_of_employment_template) { nil }
+      it { is_expected.to eq false}
+    end
+
+    context 'service is a long service and certificate template exists' do
+      let(:ending) { Date.parse '2019-11-30' }
+      let(:certificate_of_employment_template) { 'Template.docx' }
+      it { is_expected.to eq true}
+    end
+
+    context 'service is a long service and certificate template does not exist' do
+      let(:ending) { Date.parse '2019-11-30' }
+      let(:certificate_of_employment_template) { nil }
+      it { is_expected.to eq false}
+    end
+  end
 end
