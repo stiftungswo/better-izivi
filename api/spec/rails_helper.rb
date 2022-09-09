@@ -61,6 +61,11 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   config.filter_rails_from_backtrace!
+
+  # ensure default local is (re)set after each test, lead to random failing specs
+  # rubocop:disable Rails/I18nLocaleAssignment
+  config.after { I18n.locale = :de }
+  # rubocop:enable Rails/I18nLocaleAssignment
 end
 
 Shoulda::Matchers.configure do |config|
