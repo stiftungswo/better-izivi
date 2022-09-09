@@ -29,15 +29,17 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
         let(:service_ending) { Date.parse('2019-09-27') }
         let(:total) { 74_500 }
         let(:json_expense_sheets) do
-          expense_sheets.map do |expense_sheet|
-            extract_to_json(expense_sheet, :id, :beginning, :ending, :state)
-              .merge(
-                duration: expense_sheet.duration,
-                total: expense_sheet.total,
-                user: extract_to_json(expense_sheet.user, :id, :zdp, :bank_iban, :address, :city, :zip)
-                        .merge(full_name: expense_sheet.user.full_name)
-              )
-          end
+          expense_sheets
+            .sort_by(&:id)
+            .map do |expense_sheet|
+              extract_to_json(expense_sheet, :id, :beginning, :ending, :state)
+                .merge(
+                  duration: expense_sheet.duration,
+                  total: expense_sheet.total,
+                  user: extract_to_json(expense_sheet.user, :id, :zdp, :bank_iban, :address, :city, :zip)
+                          .merge(full_name: expense_sheet.user.full_name)
+                )
+            end
         end
 
         it 'returns all expense sheets' do
@@ -122,7 +124,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
           it 'returns only the filtered expense_sheets' do
             request
-            expect(parse_response_json(response)).to eq(json_expense_sheets)
+            expect(parse_response_json(response).sort_by { |sheet| sheet[:id] }).to eq(json_expense_sheets)
           end
         end
       end

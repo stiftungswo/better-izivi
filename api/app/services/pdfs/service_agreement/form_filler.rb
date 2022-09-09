@@ -26,10 +26,12 @@ module Pdfs
       private
 
       def fill_form
+        prev_locale = I18n.locale
         I18n.locale = valais? ? :fr : :de
         file_path = valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
 
         @pdftk.fill_form file_path, pdf_file, load_fields, flatten: true
+        I18n.locale = prev_locale
       end
 
       def pdf_file
