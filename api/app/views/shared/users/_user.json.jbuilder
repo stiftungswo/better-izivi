@@ -4,7 +4,7 @@ json.extract! user,
               :id, :address, :birthday, :chainsaw_workshop,
               :city, :driving_licence_b, :driving_licence_be, :email,
               :first_name, :health_insurance, :hometown, :internal_note,
-              :last_name, :phone, :regional_center_id, :role, :work_experience, :zdp, :zip
+              :last_name, :phone, :regional_center_id, :role, :work_experience, :zdp, :zip, :photographs_accepted
 json.bank_iban IBANTools::IBAN.new(user.bank_iban).prettify
 
 json.services do
