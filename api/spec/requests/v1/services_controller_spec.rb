@@ -159,7 +159,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
           it 'ignores confirmation date' do
             post_request
-            expect(parse_response_json(response)[:confirmation_date]).to eq nil
+            expect(parse_response_json(response)[:confirmation_date]).to be_nil
           end
         end
       end
@@ -172,7 +172,7 @@ RSpec.describe V1::ServicesController, type: :request do
         end
 
         it 'does not create a new Service' do
-          expect { request }.to change(Service, :count).by(0)
+          expect { request }.not_to change(Service, :count)
         end
 
         describe 'returned error' do
@@ -222,7 +222,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
           it 'ignores confirmation date', :aggregate_failures do
             expect { put_request }.not_to(change { service.reload.confirmation_date })
-            expect(parse_response_json(response)[:confirmation_date]).to eq(nil)
+            expect(parse_response_json(response)[:confirmation_date]).to be_nil
           end
         end
 

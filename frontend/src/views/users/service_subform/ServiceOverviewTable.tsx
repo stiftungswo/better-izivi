@@ -12,7 +12,7 @@ import { MainStore } from '../../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../../stores/serviceSpecificationStore';
 import { ServiceStore } from '../../../stores/serviceStore';
 import { UserStore } from '../../../stores/userStore';
-import { ExpenseSheet, Service, ServiceSpecification, User } from '../../../types';
+import { Service, ServiceSpecification, User } from '../../../types';
 import {
   CheckSquareRegularIcon,
   EditSolidIcon,
@@ -141,6 +141,7 @@ export default (params: OverviewTableParams) => {
         className={'btn btn-link'}
         href={mainStore!.apiURL('services/' + service.id + '.pdf', urlParams, true)}
         target={'_blank'}
+        rel="noopener noreferrer"
       >
         <FormattedMessage
           id="views.users.serviceOverviewTable.print"
@@ -188,20 +189,34 @@ export default (params: OverviewTableParams) => {
         </DeleteButton>{' '}
         {
           service.confirmation_date !== null && (
-            <Button
-              onClick={() => onServiceAddExpenseSheet(service, expenseSheetStore!, userStore!)}
-              color={'success'}
-              type={'button'}
-            >
-              <FormattedMessage
-               id="views.users.serviceOverviewTable.expense_sheet"
-               defaultMessage="{icon} Spesenblatt"
-               values={{ icon: <FontAwesomeIcon icon={PlusSquareRegularIcon} /> }}
-              />
-            </Button>
+              <Button
+                onClick={() => onServiceAddExpenseSheet(service, expenseSheetStore!, userStore!)}
+                color={'success'}
+                type={'button'}
+              >
+                <FormattedMessage
+                  id="views.users.serviceOverviewTable.expense_sheet"
+                  defaultMessage="{icon} Spesenblatt"
+                  values={{ icon: <FontAwesomeIcon icon={PlusSquareRegularIcon} /> }}
+                />
+              </Button>
           )
         }
-
+        {
+        service.confirmation_date !== null && service.work_record_available &&
+          (
+            <a
+              className={'btn btn-link'}
+              href={mainStore!.apiURL('export_certificate/' + service.id + '.docx', {}, true)}
+            >
+              <FormattedMessage
+                id="views.certificate.certificateOverview.print"
+                defaultMessage="{icon} Einsatznachweis"
+                values={{ icon: <FontAwesomeIcon icon={PrintSolidIcon} /> }}
+              />
+            </a>
+          )
+        }
       </>
     );
   }

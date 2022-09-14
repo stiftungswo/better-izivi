@@ -58,6 +58,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
       deletable: true,
       eligible_paid_vacation_days: 0,
       user_id: props.user.id,
+      work_record_available: false,
       service_specification: {
         identification_number: '',
         name: undefined,
@@ -82,7 +83,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
   }
 
   render() {
-    const { onSubmit, onClose, isOpen } = this.props;
+    const { onSubmit, onClose, isOpen, service } = this.props;
     const isAdmin = this.props.mainStore!.isAdmin();
 
     if (!isOpen) {
@@ -103,7 +104,7 @@ export class ServiceModal extends React.Component<ServiceModalProps<Service>, { 
               />
             </ModalHeader>
             <ModalBody>
-              <ServiceModalForm serviceDateRangeChangeHandler={this.handleServiceDateRangeChange} />
+              <ServiceModalForm serviceDateRangeChangeHandler={this.handleServiceDateRangeChange} mode={service ? 'edit' : 'create'} />
             </ModalBody>
             <ModalFooter>
               {!isAdmin && (

@@ -59,10 +59,10 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['SMTP_HOST'],
+    address: ENV.fetch('SMTP_HOST', nil),
     port: ENV.fetch('SMTP_PORT', 25),
-    user_name: ENV['SMTP_USER_NAME'],
-    password: ENV['SMTP_PASSWORD'],
+    user_name: ENV.fetch('SMTP_USER_NAME', nil),
+    password: ENV.fetch('SMTP_PASSWORD', nil),
     authentication: :login,
     enable_starttls_auto: true
   }
@@ -101,7 +101,7 @@ Rails.application.configure do
   # CORS configuration
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins ENV['FRONTEND_URL']
+      origins ENV.fetch('FRONTEND_URL', nil)
       resource '/assets/*', headers: :any, methods: %i[get options]
     end
   end

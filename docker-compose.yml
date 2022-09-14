@@ -53,6 +53,7 @@ services:
         ports:
             - "23000:3000"
         command: bash -c "yarn install && yarn run start"
+        stdin_open: true
 
     mysql:
         image: mariadb:10.3.14

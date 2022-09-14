@@ -29,7 +29,9 @@ RSpec.describe V1::ExpensesOverviewController, type: :request do
         let(:service_ending) { Date.parse('2019-09-27') }
         let(:total) { 74_500 }
         let(:json_expense_sheets) do
-          expense_sheets.map do |expense_sheet|
+          expense_sheets
+            .sort_by(&:id)
+            .map do |expense_sheet|
             extract_to_json(expense_sheet, :id, :beginning, :ending, :state)
               .merge(
                 duration: expense_sheet.duration,
@@ -207,7 +209,7 @@ RSpec.describe V1::ExpensesOverviewController, type: :request do
           let(:post_request) { post v1_expense_sheets_path }
 
           it 'does not create a new expense sheet' do
-            expect { post_request }.to change(ExpenseSheet, :count).by(0)
+            expect { post_request }.not_to change(ExpenseSheet, :count)
           end
         end
       end

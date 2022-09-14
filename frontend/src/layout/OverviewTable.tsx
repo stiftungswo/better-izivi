@@ -1,9 +1,7 @@
-import * as _ from 'lodash';
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { FormattedMessage } from 'react-intl';
 import Table from 'reactstrap/lib/Table';
-import { Column, ExpenseSheetListing } from '../types';
+import { Column } from '../types';
 import { SafeClickableTableRow } from '../utilities/SafeClickableTableRow';
 
 // tslint:disable:no-any ; this is adapted from the docs. It should be typed eventually.
@@ -19,7 +17,7 @@ function format<T>(def: Column<T>, row: T): React.ReactNode {
 // tslint:enable:no-any
 
 interface TableProps<T> {
-  columns: Array<Column<T>>;
+  columns: Column<T>[];
   renderActions?: (e: T) => React.ReactNode;
   data: T[];
   onClickRow?: (e: T, index: number) => void;

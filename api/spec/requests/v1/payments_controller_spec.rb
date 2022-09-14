@@ -413,8 +413,8 @@ RSpec.describe V1::PaymentsController, type: :request do
       before { sign_in user }
 
       context 'when there are payments' do
-        let(:last_year_timestamp) { Time.zone.now - 1.year - 3.months }
-        let(:current_year_timestamp) { Time.zone.now - 3.months }
+        let(:last_year_timestamp) { 1.year.ago - 3.months }
+        let(:current_year_timestamp) { 3.months.ago }
         let(:last_year_payments) do
           (1..3).to_a.reverse.map do |iota|
             create_payment state: :payment_in_progress, payment_timestamp: last_year_timestamp + iota.hours

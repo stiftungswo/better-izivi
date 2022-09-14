@@ -10,8 +10,8 @@ import { WiredField } from '../../../form/formik';
 import { Service } from '../../../types';
 import Effect, { OnChange } from '../../../utilities/Effect';
 
-export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChange<Service> }) => {
-  const { serviceDateRangeChangeHandler } = props;
+export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChange<Service>, mode: 'edit' | 'create' }) => {
+  const { serviceDateRangeChangeHandler, mode } = props;
   const intl = useIntl();
 
   return (
@@ -112,9 +112,11 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           component={CheckboxField}
           name={'starts_on_saturday'}
           label={
-            intl.formatMessage({
+            intl.formatMessage(
+              {
               id: 'views.users.serviceModalForm.starts_on_saturday',
-              defaultMessage: 'Zwischeneinsatz?',
+              defaultMessage: 'Zwischen\u00ADeinsatz?',
+                // This translation contains the unicode of https://en.wikipedia.org/wiki/Soft_hyphen
             })
           }
         />
@@ -137,6 +139,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
         />
         <WiredField
           horizontal
+          disabled={mode === 'edit'}
           component={CheckboxField}
           name={'probation_period'}
           label={

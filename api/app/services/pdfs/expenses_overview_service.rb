@@ -108,14 +108,16 @@ module Pdfs
             end
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum { |element| element.last.sum(&:paid_vacation_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:paid_vacation_days) }.to_s,
+            align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_paid_vacation_days[:total]
             end
           end).to_s, align: :right },
 
-          { content: @service_specifications.sum { |element| element.last.sum(&:unpaid_vacation_days) }.to_s, align: :right },
+          { content: @service_specifications.sum { |element| element.last.sum(&:unpaid_vacation_days) }.to_s,
+            align: :right },
           { content: Pdfs::ExpenseSheet::FormatHelper.to_chf(@service_specifications.sum do |expense_sheets|
             expense_sheets.last.sum do |expense_sheet|
               expense_sheet.calculate_unpaid_vacation_days[:total]

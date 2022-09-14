@@ -13,7 +13,9 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
       let!(:service_specifications) { create_list :service_specification, 3 }
       let(:json_service_specifications) do
         service_specifications.map do |service_specification|
-          extract_to_json(service_specification).except(:created_at, :updated_at)
+          extract_to_json(service_specification).except(:created_at, :updated_at,
+                                                        :certificate_of_employment_template,
+                                                        :confirmation_of_employment_template)
                                                 .merge(pocket_money: ServiceSpecification::POCKET_MONEY)
         end
       end
@@ -78,7 +80,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
           end
 
           it 'does not create a new ServiceSpecification' do
-            expect { post_request }.to change(ServiceSpecification, :count).by(0)
+            expect { post_request }.not_to change(ServiceSpecification, :count)
           end
 
           it_behaves_like 'renders a validation error response' do

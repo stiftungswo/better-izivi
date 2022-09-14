@@ -23,8 +23,7 @@ class Service < ApplicationRecord
     last: 2
   }, _suffix: 'civil_service'
 
-  validates :ending, :beginning, :user,
-            :service_specification, :service_type,
+  validates :ending, :beginning, :service_type,
             presence: true
 
   validate :ending_is_friday, unless: :last_civil_service?
@@ -97,6 +96,11 @@ class Service < ApplicationRecord
 
   def date_range
     beginning..ending
+  end
+
+  def work_record_available?
+    (date_range.count >= 90 && service_specification.certificate_of_employment_template.present?) ||
+      (date_range.count < 90 && service_specification.confirmation_of_employment_template.present?)
   end
 
   private

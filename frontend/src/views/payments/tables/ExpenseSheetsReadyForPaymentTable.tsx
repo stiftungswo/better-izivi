@@ -4,7 +4,7 @@ import { FormattedMessage, IntlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { OverviewTable } from '../../../layout/OverviewTable';
-import { ApiStore, baseUrl } from '../../../stores/apiStore';
+import { ApiStore } from '../../../stores/apiStore';
 import { ExpenseSheetStore } from '../../../stores/expenseSheetStore';
 import { MainStore } from '../../../stores/mainStore';
 import { PaymentStore } from '../../../stores/paymentStore';
@@ -103,7 +103,11 @@ export const ExpenseSheetsReadyForPaymentTable = (props: ExpenseSheetsReadyForPa
             defaultMessage="Zahlung starten"
           />
         </Button>
-        <a href={props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: 'pending' })} target={'_blank'}>
+        <a
+          href={props.mainStore!.apiLocalizedURL('payments_list.pdf', { payment: 'pending' })}
+          target={'_blank'}
+          rel="noopener noreferrer"
+        >
           <Button
             color={'secondary'}
             style={{ marginLeft: '12px' }}

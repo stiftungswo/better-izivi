@@ -9,6 +9,7 @@ module Concerns
       address bank_iban birthday city chainsaw_workshop
       health_insurance zip hometown phone zdp
       driving_licence_b driving_licence_be work_experience
+      photographs_accepted
     ].freeze
 
     included do

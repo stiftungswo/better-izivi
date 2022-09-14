@@ -28,6 +28,8 @@ Rails.application.routes.draw do
       put 'confirm', to: 'services#confirm', as: 'service_confirm', on: :member
     end
 
+    get 'export_certificate/:id', to: 'certificate#show'
+
     get 'phone_list', to: 'phone_list#show', as: 'phone_list_export'
     get 'payments_list', to: 'payments_list#show', as: 'payments_list_export'
     get 'expense_sheet', to: 'expense_sheets#show', as: 'expense_sheet_export'

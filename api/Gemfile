@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.7.3'
+ruby '2.7.5'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -10,8 +10,9 @@ git_source(:github) do |repo_name|
 end
 
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'devise', github: 'plataformatec/devise', branch: 'master'
-gem 'devise-jwt', '~> 0.6.0'
+gem 'devise'
+gem 'devise-jwt', '~> 0.9.0'
+gem 'docx'
 gem 'dotenv-rails'
 gem 'hexapdf'
 gem 'iban-tools'
@@ -20,12 +21,12 @@ gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'pdf-forms'
 gem 'prawn'
 gem 'prawn-table'
-gem 'puma', '~> 4.3'
+gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
-gem 'rails', '= 6.1.4'
+gem 'rails', '6.1.6.1'
 gem 'rails-i18n'
-gem 'sepa_king', github: 'salesking/sepa_king', ref: '0658339'
-gem 'sidekiq', '~> 6.4'
+gem 'sepa_king'
+gem 'sidekiq', '~> 6.5'
 gem 'validates_timeliness'
 
 group :production do
@@ -41,14 +42,14 @@ group :development, :test do
   gem 'faker'
   gem 'pry-byebug'
   gem 'pry-rails'
-  gem 'rake', '12.3.3'
+  gem 'rake', '13.0.6'
   gem 'reek'
   gem 'rspec-collection_matchers'
-  gem 'rspec-rails', '~> 5.0.1'
-  gem 'rubocop', '~> 1.18', require: false
+  gem 'rspec-rails', '~> 5.1.2'
+  gem 'rubocop', '~> 1.35', require: false
   gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', '~> 2.11'
-  gem 'rubocop-rspec', '~> 2.4', require: false
+  gem 'rubocop-rails', '~> 2.15', require: false
+  gem 'rubocop-rspec', '~> 2.12', require: false
   gem 'ruby-debug-ide'
 end
 
@@ -57,14 +58,14 @@ group :development do
   gem 'binding_of_caller'
   gem 'bullet'
   gem 'letter_opener'
-  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'listen', '>= 3.0.5', '< 3.8'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
   gem 'climate_control'
-  gem 'i18n-tasks', '~> 0.9.29'
+  gem 'i18n-tasks', '~> 1.0.11'
   gem 'pdf-inspector', require: 'pdf/inspector'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
