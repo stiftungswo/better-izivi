@@ -35,6 +35,7 @@ export const CheckboxFieldContent = ({
   errorMessage,
   classes,
   className,
+  disabled,
 }: CheckboxFieldProps) => {
   const hasErrors = Boolean(errorMessage);
   return (
@@ -44,7 +45,10 @@ export const CheckboxFieldContent = ({
           {horizontal && label}
           {!horizontal && (
             <>
-              <Input id={name} checked={value} onChange={() => onChange(!value)} invalid={hasErrors} type="checkbox" /> {label}{' '}
+              <Input
+                id={name} checked={value} onChange={() => onChange(!value)}
+                     invalid={hasErrors} type="checkbox" disabled={disabled}
+              /> {label}{' '}
               {required && '*'}
             </>
           )}
@@ -54,7 +58,7 @@ export const CheckboxFieldContent = ({
         <Col md={9}>
           <FormGroup check>
             <Label className={classes.noselect} check>
-              <Input id={name} checked={value} onChange={() => onChange(!value)} invalid={hasErrors} type="checkbox" />
+              <Input id={name} checked={value} onChange={() => onChange(!value)} invalid={hasErrors} type="checkbox" disabled={disabled}  />
             </Label>
           </FormGroup>
         </Col>
@@ -67,6 +71,7 @@ export const CheckboxFieldContent = ({
           onChange={() => onChange(!value)}
           invalid={hasErrors}
           type="checkbox"
+          disabled={disabled}
         />
       )}
     </FormGroup>

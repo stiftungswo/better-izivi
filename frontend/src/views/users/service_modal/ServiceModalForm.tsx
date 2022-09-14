@@ -10,8 +10,8 @@ import { WiredField } from '../../../form/formik';
 import { Service } from '../../../types';
 import Effect, { OnChange } from '../../../utilities/Effect';
 
-export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChange<Service> }) => {
-  const { serviceDateRangeChangeHandler } = props;
+export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChange<Service>, mode: 'edit' | 'create' }) => {
+  const { serviceDateRangeChangeHandler, mode } = props;
   const intl = useIntl();
 
   return (
@@ -137,6 +137,7 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
         />
         <WiredField
           horizontal
+          disabled={mode === 'edit'}
           component={CheckboxField}
           name={'probation_period'}
           label={
