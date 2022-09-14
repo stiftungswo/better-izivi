@@ -318,6 +318,7 @@
   "views.users.userForm.contact_possibility": "Kontaktmöglichkeit",
   "views.users.userForm.driving_licence_b": "Führerausweis Kat. B",
   "views.users.userForm.driving_licence_be": "Führerausweis Kat. BE",
+  "views.users.userForm.photographs_accepted": "Weiterverwendung von Fotos erlaubt",
   "views.users.userForm.email": "E-Mail",
   "views.users.userForm.first_name": "Vorname",
   "views.users.userForm.healt_insurance": "Krankenkasse",
