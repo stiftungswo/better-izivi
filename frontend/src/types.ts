@@ -147,6 +147,7 @@ export interface User {
   city: string;
   driving_licence_b: boolean;
   driving_licence_be: boolean;
+  photographs_accepted: boolean;
   email: string;
   first_name: string;
   health_insurance: string;

@@ -23,6 +23,7 @@
       "city": "Entenhausen",
       "driving_licence_b": false,
       "driving_licence_be": false,
+      "photographs_accepted": false,
       "email": "peter.parker@example.com",
       "first_name": "Peter",
       "health_insurance": "Ziviinsurance, Zivistrasse 95",
