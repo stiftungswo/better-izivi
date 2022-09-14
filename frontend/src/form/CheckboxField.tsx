@@ -35,8 +35,22 @@ export const CheckboxFieldContent = ({
   errorMessage,
   classes,
   className,
+  disabled,
 }: CheckboxFieldProps) => {
   const hasErrors = Boolean(errorMessage);
+
+  const input = (
+    <Input
+      {...!horizontal && !label ? { className: `position-static ${className}` } : {}}
+      id={name}
+      checked={value}
+      onChange={() => onChange(!value)}
+      invalid={hasErrors}
+      type="checkbox"
+      disabled={disabled}
+    />
+  );
+
   return (
     <FormGroup check={!horizontal} row={horizontal}>
       {label && (
@@ -44,7 +58,7 @@ export const CheckboxFieldContent = ({
           {horizontal && label}
           {!horizontal && (
             <>
-              <Input id={name} checked={value} onChange={() => onChange(!value)} invalid={hasErrors} type="checkbox" /> {label}{' '}
+              {input} {label}{' '}
               {required && '*'}
             </>
           )}
@@ -54,23 +68,17 @@ export const CheckboxFieldContent = ({
         <Col md={9}>
           <FormGroup check>
             <Label className={classes.noselect} check>
-              <Input id={name} checked={value} onChange={() => onChange(!value)} invalid={hasErrors} type="checkbox" />
+              {input}
             </Label>
           </FormGroup>
         </Col>
       )}
       {!horizontal && !label && (
-        <Input
-          className={'position-static ' + className}
-          id={name}
-          checked={value}
-          onChange={() => onChange(!value)}
-          invalid={hasErrors}
-          type="checkbox"
-        />
+        input
       )}
     </FormGroup>
   );
 };
+
 
 export const CheckboxField = injectSheet(styles)(CheckboxFieldContent);
