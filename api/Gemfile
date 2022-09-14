@@ -26,7 +26,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '6.1.6.1'
 gem 'rails-i18n'
 gem 'sepa_king'
-gem 'sidekiq', '~> 6.4'
+gem 'sidekiq', '~> 6.5'
 gem 'validates_timeliness'
 
 group :production do
