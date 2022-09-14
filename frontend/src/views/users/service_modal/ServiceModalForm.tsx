@@ -112,9 +112,11 @@ export const ServiceModalForm = (props: { serviceDateRangeChangeHandler: OnChang
           component={CheckboxField}
           name={'starts_on_saturday'}
           label={
-            intl.formatMessage({
+            intl.formatMessage(
+              {
               id: 'views.users.serviceModalForm.starts_on_saturday',
-              defaultMessage: 'Zwischeneinsatz?',
+              defaultMessage: 'Zwischen\u00ADeinsatz?',
+                // This translation contains the unicode of https://en.wikipedia.org/wiki/Soft_hyphen
             })
           }
         />

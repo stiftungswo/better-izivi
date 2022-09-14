@@ -2,7 +2,7 @@ import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Col from 'reactstrap/lib/Col';
 import FormGroup from 'reactstrap/lib/FormGroup';
-import Input from 'reactstrap/lib/Input';
+import Input, {InputProps} from 'reactstrap/lib/Input';
 import Label from 'reactstrap/lib/Label';
 import createStyles from '../utilities/createStyles';
 import { IziviCustomFieldProps } from './common';
@@ -38,6 +38,19 @@ export const CheckboxFieldContent = ({
   disabled,
 }: CheckboxFieldProps) => {
   const hasErrors = Boolean(errorMessage);
+
+  const input = (
+    <Input
+      {...!horizontal && !label ? { className: `position-static ${className}` } : {}}
+      id={name}
+      checked={value}
+      onChange={() => onChange(!value)}
+      invalid={hasErrors}
+      type="checkbox"
+      disabled={disabled}
+    />
+  );
+
   return (
     <FormGroup check={!horizontal} row={horizontal}>
       {label && (
@@ -45,10 +58,7 @@ export const CheckboxFieldContent = ({
           {horizontal && label}
           {!horizontal && (
             <>
-              <Input
-                id={name} checked={value} onChange={() => onChange(!value)}
-                     invalid={hasErrors} type="checkbox" disabled={disabled}
-              /> {label}{' '}
+              {input} {label}{' '}
               {required && '*'}
             </>
           )}
@@ -58,24 +68,17 @@ export const CheckboxFieldContent = ({
         <Col md={9}>
           <FormGroup check>
             <Label className={classes.noselect} check>
-              <Input id={name} checked={value} onChange={() => onChange(!value)} invalid={hasErrors} type="checkbox" disabled={disabled}  />
+              {input}
             </Label>
           </FormGroup>
         </Col>
       )}
       {!horizontal && !label && (
-        <Input
-          className={'position-static ' + className}
-          id={name}
-          checked={value}
-          onChange={() => onChange(!value)}
-          invalid={hasErrors}
-          type="checkbox"
-          disabled={disabled}
-        />
+        input
       )}
     </FormGroup>
   );
 };
+
 
 export const CheckboxField = injectSheet(styles)(CheckboxFieldContent);
