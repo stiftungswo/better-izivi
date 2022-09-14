@@ -2,7 +2,7 @@ import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Col from 'reactstrap/lib/Col';
 import FormGroup from 'reactstrap/lib/FormGroup';
-import Input, {InputProps} from 'reactstrap/lib/Input';
+import Input from 'reactstrap/lib/Input';
 import Label from 'reactstrap/lib/Label';
 import createStyles from '../utilities/createStyles';
 import { IziviCustomFieldProps } from './common';
