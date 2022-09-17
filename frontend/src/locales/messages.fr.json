@@ -90,6 +90,7 @@
   "register.personalDetailsPage.title": "Informations personnelles",
   "register.personalDetailsPage.zdp": "Numéro de la fonction publique (ZDP)",
   "register.personalDetailsPage.zdp_placeholder": "Il s'agit de votre numéro de service communautaire, que vous trouverez sur vos bans",
+  "register.personalDetailsPage.photographs_accepted": "J'autorise la SWO à utiliser des photos de moi lors d'une intervention.",
   "register.register.error_during_registration": "Une erreur s'est produite lors de l'enregistrement",
   "register.register.register": "S'inscrire",
   "register.register.successfully_registered": "Enregistré avec succès",
