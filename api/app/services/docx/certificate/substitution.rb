@@ -7,7 +7,7 @@ module Docx
         VORNAME: ->(service) { service.user.first_name },
         NACHNAME: ->(service) { service.user.last_name },
         PLZ: ->(service) { service.user.zip.to_s },
-        ADRESSE: ->(service) { service.user.zip.to_s },
+        ADRESSE: ->(service) { service.user.address },
         ORT: ->(service) { service.user.city },
         HEIMATORT: ->(service) { service.user.hometown },
         DATUM: ->(_service) { I18n.l(Time.zone.today) },
