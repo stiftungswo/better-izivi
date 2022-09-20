@@ -36,6 +36,7 @@ const registerSchema = yup.object({
   hometown: yup.string().required(emptyMessage('Heimatort')),
   phone: yup.string().required(emptyMessage('Telefon')),
   health_insurance: yup.string().required(emptyMessage('Krankenkasse')),
+  photographs_accepted: yup.boolean().required(emptyMessage('Foto-Einverständnis')),
 });
 
 const template = {
@@ -56,6 +57,7 @@ const template = {
   password_confirm: '',
   community_password: '',
   newsletter: true,
+  photographs_accepted: false,
 };
 
 export type FormValues = typeof template;

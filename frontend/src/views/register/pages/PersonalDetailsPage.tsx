@@ -197,6 +197,17 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
              })
            }
         />
+        <WiredField
+          horizontal={true}
+          component={CheckboxField}
+          name={'photographs_accepted'}
+          label={
+             this.intl.formatMessage({
+               id: 'register.personalDetailsPage.photographs_accepted',
+               defaultMessage: 'Ich willige ein, dass die SWO Fotos von mir beim Einsatz weiterverwenden darf',
+             })
+           }
+        />
       </>
     );
   }
