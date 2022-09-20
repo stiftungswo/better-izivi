@@ -27,6 +27,10 @@ module Docx
         docx_file
       end
 
+      def service_is_longer_than_90_days
+        @service.date_range.count >= 90
+      end
+
       private
 
       def docx_file
@@ -55,7 +59,7 @@ module Docx
       end
 
       def fetch_template_path
-        if @service.date_range.count >= 90
+        if service_is_longer_than_90_days
           @service.service_specification.certificate_of_employment_template || DEFAULT_TEMPLATE_CERTIFICATE
         else
           @service.service_specification.confirmation_of_employment_template || DEFAULT_TEMPLATE_CONFIRMATION
