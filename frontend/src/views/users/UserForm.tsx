@@ -292,8 +292,18 @@ class UserFormInner extends React.Component<Props> {
                 defaultMessage: 'Weiterverwendung von Fotos erlaubt',
               })}
               options={[
-                { id: true, name: 'Ja' },
-                { id: false, name: 'Nein' }
+                {
+                  id: true, name: intl.formatMessage({
+                    id: 'register.personalDetailsPage.photographs_accepted_yes',
+                    defaultMessage: 'Ja',
+                  })
+                },
+                {
+                  id: false, name: intl.formatMessage({
+                    id: 'register.personalDetailsPage.photographs_accepted_no',
+                    defaultMessage: 'Nein',
+                  })
+                }
               ]}
             />
             <WiredField

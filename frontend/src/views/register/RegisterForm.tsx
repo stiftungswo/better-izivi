@@ -36,7 +36,7 @@ const registerSchema = yup.object({
   hometown: yup.string().required(emptyMessage('Heimatort')),
   phone: yup.string().required(emptyMessage('Telefon')),
   health_insurance: yup.string().required(emptyMessage('Krankenkasse')),
-  photographs_accepted: yup.boolean().required(emptyMessage('Foto-Einverständnis')),
+  photographs_accepted: yup.mixed().nullable().required(emptyMessage('Foto-Einverständnis')),
 });
 
 const template = {
