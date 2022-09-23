@@ -23,7 +23,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
     super(props);
 
     this.props.regionalCenterStore!.fetchAll().then(() => this.setState({ loading: false }));
-    this.state = {loading: true};
+    this.state = { loading: true };
     this.intl = this.props.mainStore!.intl;
   }
 
