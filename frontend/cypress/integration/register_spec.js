@@ -23,6 +23,7 @@ describe('Registering', function() {
     cy.get('input[name="birthday"]').type('12.08.1999');
     cy.get('input[name="password"]').type(defaultValues.password);
     cy.get('input[name="password_confirm"]').type(defaultValues.password);
+    cy.get('input[name="photographs_accepted"]').select('true');
     cy.get('.container > form > button').contains('Vorwärts').click();
 
     // Contact Information
