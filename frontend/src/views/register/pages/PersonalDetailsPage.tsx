@@ -1,13 +1,13 @@
-import {inject, observer} from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import * as React from 'react';
-import {FormattedMessage, IntlShape} from 'react-intl';
-import {CheckboxField} from '../../../form/CheckboxField';
-import {NumberField, PasswordField, SelectField, TextField} from '../../../form/common';
-import {DatePickerField} from '../../../form/DatePickerField';
-import {WiredField} from '../../../form/formik';
-import {LoadingInformation} from '../../../layout/LoadingInformation';
-import {MainStore} from '../../../stores/mainStore';
-import {RegionalCenterStore} from '../../../stores/regionalCenterStore';
+import { FormattedMessage, IntlShape } from 'react-intl';
+import { CheckboxField } from '../../../form/CheckboxField';
+import { NumberField, PasswordField, SelectField, TextField } from '../../../form/common';
+import { DatePickerField } from '../../../form/DatePickerField';
+import { WiredField } from '../../../form/formik';
+import { LoadingInformation } from '../../../layout/LoadingInformation';
+import { MainStore } from '../../../stores/mainStore';
+import { RegionalCenterStore } from '../../../stores/regionalCenterStore';
 
 interface PersonalDetailsPageProps {
   regionalCenterStore?: RegionalCenterStore;
@@ -22,7 +22,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
   constructor(props: PersonalDetailsPageProps) {
     super(props);
 
-    this.props.regionalCenterStore!.fetchAll().then(() => this.setState({loading: false}));
+    this.props.regionalCenterStore!.fetchAll().then(() => this.setState({ loading: false }));
     this.state = {loading: true};
     this.intl = this.props.mainStore!.intl;
   }
@@ -77,7 +77,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
               defaultMessage: 'Regionalzentrum',
             })
           }
-          options={this.props.regionalCenterStore!.entities.map(({id, name}) => ({id, name}))}
+          options={this.props.regionalCenterStore!.entities.map(({ id, name }) => ({ id, name }))}
         />
         <WiredField
           horizontal={true}
