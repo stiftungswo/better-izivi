@@ -199,7 +199,7 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
         />
         <WiredField
           horizontal={true}
-          component={CheckboxField}
+          component={SelectField}
           name={'photographs_accepted'}
           label={
              this.intl.formatMessage({
@@ -207,6 +207,11 @@ export class PersonalDetailsPage extends React.Component<PersonalDetailsPageProp
                defaultMessage: 'Ich willige ein, dass die SWO Fotos von mir beim Einsatz weiterverwenden darf',
              })
            }
+          options={[
+            { id: undefined, name: '' },
+            { id: true, name: 'Ja' },
+            { id: false, name: 'Nein' }
+          ]}
         />
       </>
     );

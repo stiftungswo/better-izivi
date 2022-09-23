@@ -57,7 +57,7 @@ const template = {
   password_confirm: '',
   community_password: '',
   newsletter: true,
-  photographs_accepted: false,
+  photographs_accepted: null,
 };
 
 export type FormValues = typeof template;
