@@ -90,6 +90,8 @@
   "register.personalDetailsPage.zdp": "Zivildienstnummer (ZDP)",
   "register.personalDetailsPage.zdp_placeholder": "Dies ist deine Zivildienst-Nummer, welche du auf deinem Aufgebot wiederfindest",
   "register.personalDetailsPage.photographs_accepted": "Ich willige ein, dass die SWO Fotos von mir beim Einsatz weiterverwenden darf",
+  "register.personalDetailsPage.photographs_accepted_yes": "Ja",
+  "register.personalDetailsPage.photographs_accepted_no": "Nein",
   "register.register.error_during_registration": "Ein Fehler ist bei der Registration aufgetreten",
   "register.register.register": "Registrieren",
   "register.register.successfully_registered": "Erfolgreich registriert",

@@ -123,6 +123,7 @@ class RegisterFormInnerImplementation extends React.Component<
           'password',
           'password_confirm',
           'newsletter',
+          'photographs_accepted',
         ])(PersonalDetailsPage),
       },
       {

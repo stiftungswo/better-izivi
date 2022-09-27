@@ -285,12 +285,26 @@ class UserFormInner extends React.Component<Props> {
             />
             <WiredField
               horizontal
-              component={CheckboxField}
+              component={SelectField}
               name={'photographs_accepted'}
               label={intl.formatMessage({
                 id: 'views.users.userForm.photographs_accepted',
                 defaultMessage: 'Weiterverwendung von Fotos erlaubt',
               })}
+              options={[
+                {
+                  id: true, name: intl.formatMessage({
+                    id: 'register.personalDetailsPage.photographs_accepted_yes',
+                    defaultMessage: 'Ja',
+                  })
+                },
+                {
+                  id: false, name: intl.formatMessage({
+                    id: 'register.personalDetailsPage.photographs_accepted_no',
+                    defaultMessage: 'Nein',
+                  })
+                }
+              ]}
             />
             <WiredField
               horizontal
