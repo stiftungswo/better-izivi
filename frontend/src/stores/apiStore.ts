@@ -145,6 +145,7 @@ export class ApiStore {
     hometown: string,
     phone: string,
     health_insurance: string,
+    photographs_accepted: boolean | null,
   }) {
     const trimmedIBAN = ApiStore.formatIBAN(values.bank_iban);
     const res = await this._api.post<LoginResponse>('/users', { user: { ...values, bank_iban: trimmedIBAN } });
