@@ -276,7 +276,7 @@ GEM
       kwalify (~> 0.7.0)
       parser (~> 3.1.0)
       rainbow (>= 2.0, < 4.0)
-    regexp_parser (2.5.0)
+    regexp_parser (2.6.0)
     request_store (1.5.1)
       rack (>= 1.4)
     responders (3.0.1)
@@ -321,8 +321,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
-    rubocop-rspec (2.12.1)
-      rubocop (~> 1.31)
+    rubocop-rspec (2.13.2)
+      rubocop (~> 1.33)
     ruby-debug-ide (0.7.3)
       rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
@@ -370,7 +370,7 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2022.3)
       tzinfo (>= 1.0.0)
-    unicode-display_width (2.2.0)
+    unicode-display_width (2.3.0)
     uniform_notifier (1.16.0)
     validates_timeliness (5.0.0)
       timeliness (>= 0.3.10, < 1)
@@ -430,7 +430,7 @@ DEPENDENCIES
   rubocop (~> 1.35)
   rubocop-performance
   rubocop-rails (~> 2.15)
-  rubocop-rspec (~> 2.12)
+  rubocop-rspec (~> 2.13)
   ruby-debug-ide
   sentry-raven
   sepa_king
