@@ -69,7 +69,7 @@ group :test do
   gem 'pdf-inspector', require: 'pdf/inspector'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
-  gem 'test-prof', '0.9.0'
+  gem 'test-prof', '1.1.0'
 end
 
 gem 'tzinfo-data'
