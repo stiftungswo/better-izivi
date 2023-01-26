@@ -60,32 +60,32 @@ RSpec.describe V1::ExpensesOverviewController, type: :request do
           end
         end
 
-        # context 'with current filter' do
-        #   let(:request) { get v1_expense_sheets_path(filter: 'current') }
-        #   let(:included_beginning) { Time.zone.today - 2.months }
-        #   let(:included_ending) { Time.zone.today.at_end_of_month }
-        #   let(:excluded_beginning) { Time.zone.today + 2.months }
-        #   let(:excluded_ending) { Time.zone.today + 3.months }
-        #   let(:service_beginning) { included_beginning.at_beginning_of_week }
-        #   let(:service_ending) { (excluded_ending + 1.week).at_end_of_week - 2.days }
-        #   let(:total) { 75_200 }
-        #   let(:expense_sheets) do
-        #     create_list(:expense_sheet, 3, beginning: included_beginning, ending: included_ending, user: user)
-        #   end
+        context 'with current filter' do
+          let(:request) { get v1_expense_sheets_path(filter: 'current') }
+          let(:included_beginning) { Time.zone.today - 2.months }
+          let(:included_ending) { Time.zone.today.at_end_of_month }
+          let(:excluded_beginning) { Time.zone.today + 2.months }
+          let(:excluded_ending) { Time.zone.today + 3.months }
+          let(:service_beginning) { included_beginning.at_beginning_of_week }
+          let(:service_ending) { (excluded_ending + 1.week).at_end_of_week - 2.days }
+          let(:total) { 75_200 }
+          let(:expense_sheets) do
+            create_list(:expense_sheet, 3, beginning: included_beginning, ending: included_ending, user: user)
+          end
 
-        #   before do
-        #     create :expense_sheet, :payment_in_progress
-        #     create :expense_sheet, :paid
-        #     create :expense_sheet, :ready_for_payment,
-        #            beginning: excluded_beginning, ending: excluded_ending, user: user
-        #     create :expense_sheet, beginning: excluded_beginning, ending: excluded_ending, user: user
-        #   end
+          before do
+            create :expense_sheet, :payment_in_progress
+            create :expense_sheet, :paid
+            create :expense_sheet, :ready_for_payment,
+                   beginning: excluded_beginning, ending: excluded_ending, user: user
+            create :expense_sheet, beginning: excluded_beginning, ending: excluded_ending, user: user
+          end
 
-        #   # it 'returns only the filtered expense_sheets' do
-        #   #   request
-        #   #   expect(parse_response_json(response)).to eq(json_expense_sheets)
-        #   # end
-        # end
+          it 'returns only the filtered expense_sheets' do
+            request
+            expect(parse_response_json(response)).to eq(json_expense_sheets)
+          end
+        end
 
         # context 'with pending filter' do
         #   let(:request) { get v1_expense_sheets_path(filter: 'pending') }
