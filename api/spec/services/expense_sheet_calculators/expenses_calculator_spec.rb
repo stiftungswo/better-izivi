@@ -30,8 +30,8 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
       breakfast: 400,
       dinner: 700,
       lunch: 900,
-      pocket_money: 500,
-      total: 2500
+      pocket_money: 750,
+      total: 2750
     }
   end
 
@@ -45,7 +45,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     end
 
     describe '#calculate_work_days' do
-      let(:expected_values) { default_expected_values.merge(total: 55_000) }
+      let(:expected_values) { default_expected_values.merge(total: 60_500) }
 
       it 'returns correct values' do
         expect(calculator.calculate_work_days).to eq expected_values
@@ -61,7 +61,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     end
 
     describe '#calculate_workfree_days' do
-      let(:expected_values) { default_expected_values.merge(total: 5000) }
+      let(:expected_values) { default_expected_values.merge(total: 5500) }
 
       it 'returns correct values' do
         expect(calculator.calculate_workfree_days).to eq expected_values
@@ -81,7 +81,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
         let(:expense_sheet) do
           create :expense_sheet, expense_sheet_data.merge(work_days: 20, sick_days: 2)
         end
-        let(:expected_values) { default_expected_values.merge(total: 5000) }
+        let(:expected_values) { default_expected_values.merge(total: 5500) }
 
         it 'returns correct values' do
           expect(calculator.calculate_sick_days).to eq expected_values
@@ -115,7 +115,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     end
 
     describe '#calculate_full_expenses' do
-      let(:expected_values) { 65_200 }
+      let(:expected_values) { 71_200 }
 
       it 'returns correct values' do
         expect(calculator.calculate_full_expenses).to eq expected_values
@@ -145,7 +145,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     end
 
     describe '#calculate_first_day' do
-      let(:expected_values) { default_expected_values.merge(breakfast: 0, total: 2100) }
+      let(:expected_values) { default_expected_values.merge(breakfast: 0, total: 2350) }
 
       it 'returns correct values' do
         expect(calculator.calculate_first_day).to eq expected_values
@@ -164,7 +164,7 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
     end
 
     describe '#calculate_last_day' do
-      let(:expected_values) { default_expected_values.merge(dinner: 0, total: 1800) }
+      let(:expected_values) { default_expected_values.merge(dinner: 0, total: 2050) }
 
       it 'returns correct values' do
         expect(calculator.calculate_last_day).to eq expected_values
