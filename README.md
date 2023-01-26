@@ -214,8 +214,6 @@ Vor dem Commiten sollten immer die Formatier-Tools ausgeführt werden.
 
 Für das Backend kommt [rubocop](https://github.com/rubocop-hq/rubocop) zum Einsatz und für das Frontend übernimmt [TSLint](https://palantir.github.io/tslint/) den Job.
 
-#WIP ab hier
-
 ### Deployment
 
 Semaphore kann das Projekt zu einem beliebigen remote host deployen. Für das deployment auf dem swo server wird das hauseigene [server-apps](https://github.com/stiftungswo/server-apps) verwendet.
