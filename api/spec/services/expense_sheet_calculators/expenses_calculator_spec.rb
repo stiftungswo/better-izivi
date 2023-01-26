@@ -30,8 +30,8 @@ RSpec.describe ExpenseSheetCalculators::ExpensesCalculator, type: :service do
       breakfast: 400,
       dinner: 700,
       lunch: 900,
-      pocket_money: 500,
-      total: 2500
+      pocket_money: 750,
+      total: 2750
     }
   end
 

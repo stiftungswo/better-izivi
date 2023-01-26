@@ -27,7 +27,7 @@ const INITIAL_FORM_VALUES = Object.freeze({
   last_day_expenses: INITIAL_DAILY_EXPENSES_FORM_VALUES,
   accommodation_expenses: 0,
   active: false,
-  pocket_money: 500,
+  pocket_money: 750,
 });
 
 interface ServiceSpecificationProps extends WithSheet<typeof serviceSpecificationStyles> {
