@@ -34,7 +34,7 @@
     "react-widgets": "^4.4.8",
     "react-widgets-moment": "^4.0.24",
     "reactstrap": "^7.0.2",
-    "yup": "^0.26.6"
+    "yup": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",
