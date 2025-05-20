@@ -53,8 +53,8 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
           '0', 'Urlaubstage', '0.00', '0.00', '0.00', '0.00', '0.00', '0.00',
           'inkl. MyString',
           '+', 'Fahrspesen', 'MyString', '20.00',
-          '+', 'Arbeitskleider', 'CHF 2.30/Tag für 27 anrechenbare Tage', '32.00',
-          'Gesamt:', '818.00',
+          '+', 'Arbeitskleider', 'CHF 60.00/26 Tage für 27 anrechenbare Tage', '60.00',
+          'Gesamt:', '846.00',
           'Bankverbindung:', 'CH93 0076 2011 6238 5295 7',
           'Konto-Nr.::', '4470 (200)'
         ]
@@ -76,10 +76,10 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
 
       context 'when work_clothing_expenses is more than threshold' do
         let(:service_specification) do
-          create(:service_specification, identification_number: 82_846, work_clothing_expenses: 1000)
+          create(:service_specification, identification_number: 82_846, work_clothing_expenses: 6000)
         end
 
-        let(:expected_texts) { ['CHF 10.00/Tag für 27 anrechenbare Tage', '32.00'] }
+        let(:expected_texts) { ['CHF 60.00/26 Tage für 27 anrechenbare Tage', '60.00'] }
 
         it 'renders correct text' do
           expect(pdf_text_inspector.strings[-8..-7]).to eq expected_texts

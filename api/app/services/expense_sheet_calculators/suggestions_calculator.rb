@@ -41,10 +41,15 @@ module ExpenseSheetCalculators
     end
 
     def suggested_clothing_expenses
-      per_day = @expense_sheet.service.service_specification.work_clothing_expenses
-      return 0 if per_day.zero?
+      per_twenty_six_days = @expense_sheet.service.service_specification.work_clothing_expenses
+      return 0 if per_twenty_six_days.zero?
 
-      max_possible_value = @expense_sheet.calculate_chargeable_days * per_day
+      already_paid_days = already_paid_clothing_expenses / per_twenty_six_days
+      to_pay_days = already_happened_work_days - already_paid_days + @expense_sheet.calculate_chargeable_days
+
+      return 0 if to_pay_days < 26
+
+      max_possible_value = (to_pay_days / 26).to_i * per_twenty_six_days
 
       difference_to_max = WORK_CLOTHING_MAX_PER_SERVICE - already_paid_clothing_expenses
       value = [max_possible_value, difference_to_max].min
@@ -58,6 +63,12 @@ module ExpenseSheetCalculators
       sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
 
       sheets.sum(&:clothing_expenses)
+    end
+
+    def already_happened_work_days
+      sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
+
+      sheets.sum(&:calculate_chargeable_days)
     end
 
     def day_calculator

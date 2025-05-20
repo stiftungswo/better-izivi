@@ -180,8 +180,8 @@ fr:
           driving_expenses_comment_empty: Aucune information
           unpaid_vacation_comment: incl. %{comment}
           work_clothing_expenses_comment:
-            one: CHF %{amount} p. jour pour %{count} jour facturable
-            other: CHF %{amount} p. jour pour %{count} jours facturables
+            one: CHF %{amount} pour %{count} jour facturable
+            other: CHF %{amount} pour %{count} jours facturables
       filename: Portrait_des_dépenses_%{today}
       header: 'Rapport des dépenses d’établissement d’affectation 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach '
       info_block:
