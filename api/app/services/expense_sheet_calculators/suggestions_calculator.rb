@@ -44,9 +44,6 @@ module ExpenseSheetCalculators
       per_twenty_six_days = @expense_sheet.service.service_specification.work_clothing_expenses
       return 0 if per_twenty_six_days.zero?
 
-      already_paid_days = already_paid_clothing_expenses / per_twenty_six_days
-      to_pay_days = already_happened_work_days - already_paid_days + @expense_sheet.calculate_chargeable_days
-
       return 0 if to_pay_days < 26
 
       max_possible_value = (to_pay_days / 26).to_i * per_twenty_six_days
@@ -58,6 +55,16 @@ module ExpenseSheetCalculators
     end
 
     private
+
+    def to_pay_days
+      @to_pay_days ||= calculate_to_pay_days
+    end
+
+    def calculate_to_pay_days
+      per_twenty_six_days = @expense_sheet.service.service_specification.work_clothing_expenses
+      already_paid_days = already_paid_clothing_expenses / per_twenty_six_days
+      already_happened_work_days - already_paid_days + @expense_sheet.calculate_chargeable_days
+    end
 
     def already_paid_clothing_expenses
       sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
