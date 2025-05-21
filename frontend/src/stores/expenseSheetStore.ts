@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 import * as _ from 'lodash';
-import {action, computed, observable, runInAction} from 'mobx';
+import { action, computed, observable, runInAction } from 'mobx';
 import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState, SickDaysDime } from '../types';
 import { stateTranslation } from '../utilities/helpers';
 import { DomainStore } from './domainStore';
@@ -149,7 +149,9 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   @action
   async fetchLiveHints(expenseSheet: ExpenseSheet) {
     try {
-      const response = await this.mainStore.api.post<ExpenseSheetHints>(`/expense_sheets/${expenseSheet.id}/live_hints`, { expense_sheet: expenseSheet });
+      const response = await this.mainStore.api.post<ExpenseSheetHints>(
+        `/expense_sheets/${expenseSheet.id}/live_hints`, { expense_sheet: expenseSheet }
+      );
       runInAction(() => {
         this.hints = response.data;
       });
