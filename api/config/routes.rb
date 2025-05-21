@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     resources :payments, except: :update, param: :payment_timestamp
     resources :users, except: :create
     resources :expense_sheets do
+      post 'live_hints', on: :member
       get 'hints', on: :member
     end
 

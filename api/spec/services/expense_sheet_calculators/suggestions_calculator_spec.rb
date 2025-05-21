@@ -20,6 +20,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
       {
         clothing_expenses: 6000,
         paid_company_holiday_days: 0,
+        unpaid_clothing_expenses_days: 26,
         unpaid_company_holiday_days: 0,
         work_days: 20,
         workfree_days: 6

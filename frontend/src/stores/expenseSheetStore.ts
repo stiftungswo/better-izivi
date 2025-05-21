@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 import * as _ from 'lodash';
-import { action, computed, observable } from 'mobx';
+import {action, computed, observable, runInAction} from 'mobx';
 import { ExpenseSheet, ExpenseSheetHints, ExpenseSheetListing, ExpenseSheetState, SickDaysDime } from '../types';
 import { stateTranslation } from '../utilities/helpers';
 import { DomainStore } from './domainStore';
@@ -53,6 +53,7 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
   @observable
   totalSum: string;
 
+  @observable
   hints?: ExpenseSheetHints;
 
   @observable
@@ -133,6 +134,30 @@ export class ExpenseSheetStore extends DomainStore<ExpenseSheet, ExpenseSheetLis
       const response = await this.mainStore.api.get<ExpenseSheetHints>(`/expense_sheets/${expenseSheetId}/hints`);
       this.hints = response.data;
     } catch (e) {
+      this.mainStore.displayError(
+        this.mainStore.intl.formatMessage(
+          {
+            id: 'store.expenseSheetStore.expense_hints_not_loaded',
+            defaultMessage: 'Spesenvorschläge konnten nicht geladen werden',
+          },
+        ));
+      console.error(e);
+      throw e;
+    }
+  }
+
+  @action
+  async fetchLiveHints(expenseSheet: ExpenseSheet) {
+    try {
+      const response = await this.mainStore.api.post<ExpenseSheetHints>(`/expense_sheets/${expenseSheet.id}/live_hints`, { expense_sheet: expenseSheet });
+      runInAction(() => {
+        this.hints = response.data;
+      });
+    } catch (e) {
+      if (e.error.response.status === 422) {
+        return;
+      }
+
       this.mainStore.displayError(
         this.mainStore.intl.formatMessage(
           {

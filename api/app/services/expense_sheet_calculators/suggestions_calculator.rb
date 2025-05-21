@@ -19,7 +19,8 @@ module ExpenseSheetCalculators
         workfree_days: suggested_workfree_days,
         paid_company_holiday_days: suggested_paid_company_holiday_days,
         unpaid_company_holiday_days: suggested_unpaid_company_holiday_days,
-        clothing_expenses: suggested_clothing_expenses
+        clothing_expenses: suggested_clothing_expenses,
+        unpaid_clothing_expenses_days: to_pay_days
       }
     end
 
@@ -67,6 +68,10 @@ module ExpenseSheetCalculators
     end
 
     def already_paid_clothing_expenses
+      @already_paid_clothing_expenses ||= calculate_already_paid_clothing_expenses
+    end
+
+    def calculate_already_paid_clothing_expenses
       sheets = @expense_sheet.service.expense_sheets.before_date(@expense_sheet.beginning)
 
       sheets.sum(&:clothing_expenses)

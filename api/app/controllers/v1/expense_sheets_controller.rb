@@ -9,7 +9,7 @@ module V1
 
     before_action :authenticate_user!, unless: -> { request.format.pdf? }
     before_action :authenticate_from_params!, if: -> { request.format.pdf? }
-    before_action :set_expense_sheet, only: %i[show update destroy hints]
+    before_action :set_expense_sheet, only: %i[show update destroy hints live_hints]
     before_action :set_service, only: :create
     before_action :authorize_admin!, unless: -> { request.format.pdf? }
 
@@ -36,6 +36,19 @@ module V1
         I18n.t('pdfs.expense_sheet.filename', today: @expense_sheet.user.full_name),
         @expense_sheet
       )
+    end
+
+    def live_hints
+      live_expense_sheet = @expense_sheet
+      live_expense_sheet.assign_attributes expense_sheet_params
+
+      if live_expense_sheet.valid?
+        suggestions = ExpenseSheetCalculators::SuggestionsCalculator.new(live_expense_sheet).suggestions
+        remaining_days = ExpenseSheetCalculators::RemainingDaysCalculator.new(live_expense_sheet.service).remaining_days
+        render :hints, locals: { suggestions: suggestions, remaining_days: remaining_days }
+      else
+        render json: { errors: live_expense_sheet.errors }, status: :unprocessable_entity
+      end
     end
 
     def hints
