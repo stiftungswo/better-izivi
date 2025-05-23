@@ -53,13 +53,10 @@ class ExpenseSheetGenerator
   end
 
   def calculate_days(beginning, ending)
-    work_days = DayCalculator.new(beginning, ending).calculate_work_days
-    workfree_days = DayCalculator.new(beginning, ending).calculate_workfree_days
+    day_calculator = DayCalculator.new(beginning, ending, @service)
 
-    if @service.last_civil_service?
-      work_days = ShortServiceCalculator.new(beginning).calculate_work_days(ending)
-      workfree_days = ShortServiceCalculator.new(beginning).calculate_workfree_days(ending)
-    end
+    work_days = day_calculator.work_days
+    workfree_days = day_calculator.workfree_days
 
     [work_days, workfree_days]
   end

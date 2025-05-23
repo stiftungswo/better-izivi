@@ -45,24 +45,6 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
       end
     end
 
-    context 'with a service shorter than one month' do
-      let(:service) { create :service, beginning: '2023-08-14', ending: '2023-08-29', service_type: :last }
-
-      it 'creates one new expense sheet' do
-        expect do
-          expense_sheet_generator.create_expense_sheets beginning: service.beginning, ending: service.ending
-        end.to change(ExpenseSheet, :count).by(1)
-      end
-
-      it 'creates the correct ExpenseSheet', :aggregate_failures do
-        create_expense_sheets
-        expect(ExpenseSheet.first.beginning).to eq Date.parse('2023-08-14')
-        expect(ExpenseSheet.first.ending).to eq Date.parse('2023-08-29')
-        expect(ExpenseSheet.first.work_days).to eq 12
-        expect(ExpenseSheet.first.workfree_days).to eq 3
-      end
-    end
-
     context 'when there are no holidays' do
       before { create_expense_sheets }
 
@@ -166,10 +148,9 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     end
 
     context 'when MP special case 1' do
-      let(:service) { create :service, beginning: '2024-11-25', ending: '2024-12-16', service_type: :last }
+      let(:service) { create :service, beginning: '2024-11-25', ending: '2024-12-16', service_days: 21, service_type: :last }
 
       before { create_expense_sheets }
-
 
       it 'creates the correct first ExpenseSheet', :aggregate_failures do
         expect(ExpenseSheet.first.beginning).to eq Date.parse('2024-11-25')
@@ -182,17 +163,44 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
         expect(ExpenseSheet.second.beginning).to eq Date.parse('2024-12-01')
         expect(ExpenseSheet.second.ending).to eq Date.parse('2024-12-16')
         expect(ExpenseSheet.second.work_days).to eq 12
-        expect(ExpenseSheet.second.workfree_days).to eq 3
+        expect(ExpenseSheet.second.workfree_days).to eq 4
       end
     end
 
     context 'when MP special case 2' do
-      let(:service) { create :service, beginning: '2025-01-06', ending: '2024-01-23', service_type: :last }
+      let(:service) { create :service, beginning: '2025-01-06', ending: '2025-01-23', service_days: 17, service_type: :last }
 
       before { create_expense_sheets }
 
+      it 'creates the correct only ExpenseSheet', :aggregate_failures do
+        expect(ExpenseSheet.count).to eq 1
 
+        expect(ExpenseSheet.first.beginning).to eq Date.parse('2025-01-06')
+        expect(ExpenseSheet.first.ending).to eq Date.parse('2025-01-23')
+        expect(ExpenseSheet.first.work_days).to eq 14
+        expect(ExpenseSheet.first.workfree_days).to eq 3
+      end
+    end
 
+    context 'when MP special case 3' do
+      let(:service) { create :service, beginning: '2025-04-14', ending: '2025-05-06', service_days: 17, service_type: :last }
+
+      before { create_expense_sheets }
+
+      it 'creates the correct first ExpenseSheet', :aggregate_failures do
+        expect(ExpenseSheet.first.beginning).to eq Date.parse('2025-04-14')
+        expect(ExpenseSheet.first.ending).to eq Date.parse('2025-04-30')
+        expect(ExpenseSheet.first.work_days).to eq 11
+        expect(ExpenseSheet.first.workfree_days).to eq 3
+        expect(ExpenseSheet.first.unpaid_vacation_days).to eq 3
+      end
+
+      it 'creates the correct second ExpenseSheet', :aggregate_failures do
+        expect(ExpenseSheet.second.beginning).to eq Date.parse('2025-05-01')
+        expect(ExpenseSheet.second.ending).to eq Date.parse('2025-05-06')
+        expect(ExpenseSheet.second.work_days).to eq 6
+        expect(ExpenseSheet.second.workfree_days).to eq 0
+      end
     end
   end
 

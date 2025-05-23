@@ -59,6 +59,12 @@ class Service < ApplicationRecord
     service_calculator.calculate_eligible_sick_days(service_days)
   end
 
+  def eligible_paid_workfree_days
+    return Float::INFINITY unless short_service?
+
+    ShortServiceCalculator.new(beginning).eligible_workfree_days(service_days)
+  end
+
   def conventional_service?
     !probation_service? && !long_service?
   end
@@ -101,6 +107,10 @@ class Service < ApplicationRecord
   def work_record_available?
     (date_range.count >= 90 && service_specification.certificate_of_employment_template.present?) ||
       (date_range.count < 90 && service_specification.confirmation_of_employment_template.present?)
+  end
+
+  def short_service?
+    service_days < MIN_NORMAL_SERVICE_LENGTH
   end
 
   private

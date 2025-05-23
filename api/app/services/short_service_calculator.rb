@@ -25,26 +25,25 @@ class ShortServiceCalculator
     duration = (ending_date - @beginning_date).to_i + 1
 
     max_service_days = duration - HolidayCalculator.new(@beginning_date, ending_date).calculate_company_holiday_days
-    max_eligible_workfree_days = ShortServiceCalculator.eligible_workfree_days(max_service_days)
+    max_eligible_workfree_days = eligible_workfree_days(max_service_days)
 
     days_to_compensate = [0, workfree_days_in_range(ending_date) - max_eligible_workfree_days].max
     compensated_service_days = max_service_days - days_to_compensate
 
-    compensated_service_days - (max_eligible_workfree_days - ShortServiceCalculator
-                                                               .eligible_workfree_days(compensated_service_days))
+    compensated_service_days - (max_eligible_workfree_days - eligible_workfree_days(compensated_service_days))
   end
 
   def calculate_work_days(ending_date)
     duration = (ending_date - @beginning_date).to_i
-    duration - ShortServiceCalculator.eligible_workfree_days(duration)
+    duration - eligible_workfree_days(duration)
   end
 
   def calculate_workfree_days(ending_date)
     duration = (ending_date - @beginning_date).to_i
-    ShortServiceCalculator.eligible_workfree_days(duration)
+    eligible_workfree_days(duration)
   end
 
-  def self.eligible_workfree_days(service_days)
+  def eligible_workfree_days(service_days)
     DAYS_TO_WORKFREE_DAYS.each do |days, workfree_days|
       return workfree_days if days.include? service_days
     end
