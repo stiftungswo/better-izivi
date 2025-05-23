@@ -36,12 +36,12 @@ class EndingDateLooper
   end
 
   def company_holiday_day?(day)
-    HolidayCalculator.new(day, day).calculate_company_holiday_days.positive?
+    HolidayCalculator.new(day, day).company_holiday_days.positive?
   end
 
   def workfree_day?(day)
     [
-      HolidayCalculator.new(day, day).calculate_public_holiday_days.positive?,
+      HolidayCalculator.new(day, day).public_holiday_days.positive?,
       day.on_weekend?
     ].any?
   end

@@ -62,7 +62,7 @@ class Service < ApplicationRecord
   def eligible_paid_workfree_days
     return Float::INFINITY unless short_service?
 
-    ShortServiceCalculator.new(beginning).eligible_workfree_days(service_days)
+    ShortServiceCalculator.eligible_workfree_days(service_days)
   end
 
   def conventional_service?

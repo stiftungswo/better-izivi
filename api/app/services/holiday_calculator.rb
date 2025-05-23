@@ -7,6 +7,16 @@ class HolidayCalculator
     @all_holidays = Holiday.overlapping_date_range(@beginning, @ending)
   end
 
+  def company_holiday_days
+    @company_holiday_days ||= calculate_company_holiday_days
+  end
+
+  def public_holiday_days
+    @public_holiday_days ||= calculate_public_holiday_days
+  end
+
+  private
+
   def calculate_company_holiday_days
     public_holidays = @all_holidays.select(&:public_holiday?)
     company_holidays = @all_holidays.select(&:company_holiday?)
@@ -19,8 +29,6 @@ class HolidayCalculator
     all_public_holiday_weekdays = select_work_days(public_holidays)
     total_days(all_public_holiday_weekdays)
   end
-
-  private
 
   def total_days(all_days)
     all_days.select { |day| day_in_range? day }.uniq.length

@@ -6,8 +6,8 @@ module ExpenseSheetCalculators
 
     extend Forwardable
 
-    def_delegator :day_calculator, :calculate_workfree_days, :suggested_workfree_days
-    def_delegator :day_calculator, :calculate_work_days, :suggested_work_days
+    def_delegator :day_calculator, :workfree_days, :suggested_workfree_days
+    def_delegator :day_calculator, :work_days, :suggested_work_days
 
     def initialize(expense_sheet)
       @expense_sheet = expense_sheet
@@ -25,7 +25,7 @@ module ExpenseSheetCalculators
     end
 
     def suggested_unpaid_company_holiday_days
-      company_holiday_days = day_calculator.calculate_company_holiday_days
+      company_holiday_days = day_calculator.company_holiday_days
       return 0 if company_holiday_days.zero?
 
       remaining_paid_vacation_days = @expense_sheet.service.remaining_paid_vacation_days
@@ -35,7 +35,7 @@ module ExpenseSheetCalculators
     end
 
     def suggested_paid_company_holiday_days
-      company_holiday_days = day_calculator.calculate_company_holiday_days
+      company_holiday_days = day_calculator.company_holiday_days
       return 0 if company_holiday_days.zero?
 
       [company_holiday_days, @expense_sheet.service.remaining_paid_vacation_days].min

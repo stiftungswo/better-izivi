@@ -38,7 +38,7 @@ class ExpenseSheetGenerator
   end
 
   def create_expense_sheet(beginning, ending)
-    work_days, workfree_days = calculate_days(beginning, ending)
+    work_days, workfree_days, holiday_days = calculate_days(beginning, ending)
 
     ExpenseSheet.create(
       user: @service.user,
@@ -48,6 +48,7 @@ class ExpenseSheetGenerator
       ending: ending,
       work_days: work_days,
       workfree_days: workfree_days,
+      unpaid_vacation_days: holiday_days,
       bank_account_number: '4470 (200)' # TODO: Where to get bank_account_number from?
     )
   end
@@ -55,9 +56,6 @@ class ExpenseSheetGenerator
   def calculate_days(beginning, ending)
     day_calculator = DayCalculator.new(beginning, ending, @service)
 
-    work_days = day_calculator.work_days
-    workfree_days = day_calculator.workfree_days
-
-    [work_days, workfree_days]
+    [day_calculator.work_days, day_calculator.workfree_days, day_calculator.unpaid_holiday_days]
   end
 end
