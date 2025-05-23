@@ -12,9 +12,12 @@ export const ClothingExpensesSegment = expenseSheetFormSegment(
         horizontal
         appendedLabels={[
           mainStore.intl.formatMessage({
-            id: 'views.expense_sheets.ClothingExpensesSegment.hint_clothin_expenses',
-            defaultMessage: 'Vorschlag: {hintClothingExpenses}',
-          }, { hintClothingExpenses: mainStore!.formatCurrency(hints.suggestions.clothing_expenses) },
+            id: 'views.expense_sheets.ClothingExpensesSegment.hint_clothing_expenses',
+            defaultMessage: 'Vorschlag: {hintClothingExpenses} ({hintUnpaidClothingExpenseDays} Tage)',
+          }, {
+            hintClothingExpenses: mainStore!.formatCurrency(hints.suggestions.clothing_expenses),
+            hintUnpaidClothingExpenseDays: hints.suggestions.unpaid_clothing_expenses_days,
+          },
         )]}
         component={CurrencyField}
         name={'clothing_expenses'}

@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import debounce from 'lodash.debounce';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -32,13 +33,29 @@ interface ExpenseSheetFormState {
 @inject('mainStore', 'expenseSheetStore', 'serviceSpecificationStore')
 @observer
 class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState> {
+  private previousValues: any = null;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       safeOverride: false,
     };
-
   }
+
+  private debouncedApiCall = debounce(async (values: ExpenseSheet) => {
+    await this.props.expenseSheetStore!.fetchLiveHints(values)
+  }, 500);
+
+  componentWillUnmount() {
+    this.debouncedApiCall.cancel();
+  }
+
+  private handleValuesChange = (prevValues: any, nextValues: any) => {
+    if (prevValues === nextValues) {
+      return;
+    }
+    this.debouncedApiCall(nextValues);
+  };
 
   render() {
     const {
@@ -58,43 +75,50 @@ class ExpenseSheetFormInner extends React.Component<Props, ExpenseSheetFormState
         onSubmit={(formValues: FormValues) => onSubmit({ ...formValues })}
         title={title}
         validationSchema={expenseSheetSchema}
-        render={(formikProps: FormikProps<{}>): React.ReactNode => (
-          <Form>
-            <ExpenseSheetFormHeader
-              service={service}
-              expenseSheetState={expenseSheet.state}
-              serviceSpecification={serviceSpecification}
-            />
+        render={(formikProps: FormikProps<{}>): React.ReactNode => {
+          if (this.previousValues !== JSON.stringify(formikProps.values)) {
+            this.previousValues = JSON.stringify(formikProps.values);
+            this.handleValuesChange(formikProps.initialValues, formikProps.values);
+          }
 
-            <FormSegments.GeneralSegment service={service} mainStore={mainStore!}/>
-            <FormSegments.AbsolvedDaysBreakdownSegment
-              hints={hints}
-              mainStore={mainStore!}
-              sickDays={sickDays}
-              buttonDeactive={buttonDeactive}
-              onSaveSickDays={
-              (value) => this.saveSickDaysFromDime(formikProps, value)}
-            />
-            <FormSegments.CompanyHolidaysSegment hints={hints} mainStore={mainStore!}/>
-            <FormSegments.PaidVacationSegment mainStore={mainStore!}/>
-            <FormSegments.UnpaidVacationSegment mainStore={mainStore!}/>
-            <FormSegments.ClothingExpensesSegment hints={hints} mainStore={mainStore!}/>
-            <FormSegments.DrivingExpensesSegment mainStore={mainStore!}/>
-            <FormSegments.ExtraordinaryExpensesSegment mainStore={mainStore!}/>
-            <FormSegments.FooterSegment mainStore={mainStore!}/>
-            <FormSegments.StateSegment expenseSheetState={expenseSheet.state} expenseSheetStore={expenseSheetStore!}/>
+          return (
+            <Form>
+              <ExpenseSheetFormHeader
+                service={service}
+                expenseSheetState={expenseSheet.state}
+                serviceSpecification={serviceSpecification}
+              />
 
-            <ExpenseSheetFormButtons
-              safeOverride={this.state.safeOverride}
-              onForceSave={() => this.onForceSaveButtonClicked(formikProps)}
-              onSave={() => this.onSaveButtonClicked(formikProps)}
-              onDelete={this.onDeleteButtonClicked.bind(this)}
-              expenseSheet={expenseSheet}
-              mainStore={mainStore!}
-              service={service}
-            />
-          </Form>
-        )}
+              <FormSegments.GeneralSegment service={service} mainStore={mainStore!}/>
+              <FormSegments.AbsolvedDaysBreakdownSegment
+                hints={hints}
+                mainStore={mainStore!}
+                sickDays={sickDays}
+                buttonDeactive={buttonDeactive}
+                onSaveSickDays={
+                (value) => this.saveSickDaysFromDime(formikProps, value)}
+              />
+              <FormSegments.CompanyHolidaysSegment hints={hints} mainStore={mainStore!}/>
+              <FormSegments.PaidVacationSegment mainStore={mainStore!}/>
+              <FormSegments.UnpaidVacationSegment mainStore={mainStore!}/>
+              <FormSegments.ClothingExpensesSegment hints={hints} mainStore={mainStore!}/>
+              <FormSegments.DrivingExpensesSegment mainStore={mainStore!}/>
+              <FormSegments.ExtraordinaryExpensesSegment mainStore={mainStore!}/>
+              <FormSegments.FooterSegment mainStore={mainStore!}/>
+              <FormSegments.StateSegment expenseSheetState={expenseSheet.state} expenseSheetStore={expenseSheetStore!}/>
+
+              <ExpenseSheetFormButtons
+                safeOverride={this.state.safeOverride}
+                onForceSave={() => this.onForceSaveButtonClicked(formikProps)}
+                onSave={() => this.onSaveButtonClicked(formikProps)}
+                onDelete={this.onDeleteButtonClicked.bind(this)}
+                expenseSheet={expenseSheet}
+                mainStore={mainStore!}
+                service={service}
+              />
+            </Form>
+          );
+        }}
       />
     );
   }

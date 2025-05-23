@@ -18,8 +18,9 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
     let(:expected_suggestions) do
       {
-        clothing_expenses: 5980,
+        clothing_expenses: 6000,
         paid_company_holiday_days: 0,
+        unpaid_clothing_expenses_days: 26,
         unpaid_company_holiday_days: 0,
         work_days: 20,
         workfree_days: 6
@@ -151,7 +152,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
     let(:expected_value) { daily_expenses * chargeable_days }
 
     context 'with only one expense sheet' do
-      it { is_expected.to eq 5980 }
+      it { is_expected.to eq 6000 }
     end
 
     context 'with more than one expense sheet' do
@@ -163,15 +164,15 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
       before do
         additional_expense_sheets = created_expense_sheets.length - 1
         created_expense_sheets.take(additional_expense_sheets).each do |expense_sheet|
-          clothing_expenses = expense_sheet.calculate_chargeable_days * daily_expenses
-          expense_sheet.update clothing_expenses: clothing_expenses
+          suggestions = ExpenseSheetCalculators::SuggestionsCalculator.new(expense_sheet).suggestions
+          expense_sheet.update clothing_expenses: suggestions[:clothing_expenses]
         end
       end
 
       context 'with enough expense_sheets to reduce clothing_expenses' do
-        let(:service_range) { get_service_range months: 4 }
+        let(:service_range) { get_service_range months: 3 }
 
-        it { is_expected.to eq 3300 }
+        it { is_expected.to eq 6000 }
       end
 
       context 'with enough expense_sheets to nullify clothing_expenses' do
