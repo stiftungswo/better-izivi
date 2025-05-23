@@ -182,7 +182,7 @@ RSpec.describe Service, type: :model do
 
       it 'returns the calculated service days of the service' do
         expect(service.service_days).to eq 17
-        expect(service.calculate_service_days).to eq 18 # this is expected, as the table provided by the Bund is not reversible
+        expect(service.calculate_service_days).to eq 18 # this is expected, as the official table is not reversible
       end
     end
   end

@@ -30,6 +30,8 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     context 'with a single month service' do
       let(:service) { create :service, beginning: '2018-01-01', ending: '2018-01-26' }
 
+      before { create_expense_sheets }
+
       it 'creates one new expense sheet' do
         expect do
           expense_sheet_generator.create_expense_sheets beginning: service.beginning, ending: service.ending
@@ -37,7 +39,6 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
       end
 
       it 'creates the correct ExpenseSheet', :aggregate_failures do
-        create_expense_sheets
         expect(ExpenseSheet.first.beginning).to eq Date.parse('2018-01-01')
         expect(ExpenseSheet.first.ending).to eq Date.parse('2018-01-26')
         expect(ExpenseSheet.first.work_days).to eq 20
@@ -161,7 +162,9 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     end
 
     context 'when MP special case 1' do
-      let(:service) { create :service, beginning: '2024-11-25', ending: '2024-12-16', service_days: 21, service_type: :last }
+      let(:service) do
+        create :service, beginning: '2024-11-25', ending: '2024-12-16', service_days: 21, service_type: :last
+      end
 
       before { create_expense_sheets }
 
@@ -183,13 +186,17 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     end
 
     context 'when MP special case 2' do
-      let(:service) { create :service, beginning: '2025-01-06', ending: '2025-01-23', service_days: 17, service_type: :last }
+      let(:service) do
+        create :service, beginning: '2025-01-06', ending: '2025-01-23', service_days: 17, service_type: :last
+      end
 
       before { create_expense_sheets }
 
-      it 'creates the correct only ExpenseSheet', :aggregate_failures do
+      it 'creates just one ExpenseSheet' do
         expect(ExpenseSheet.count).to eq 1
+      end
 
+      it 'creates the correct only ExpenseSheet', :aggregate_failures do
         expect(ExpenseSheet.first.beginning).to eq Date.parse('2025-01-06')
         expect(ExpenseSheet.first.ending).to eq Date.parse('2025-01-23')
         expect(ExpenseSheet.first.work_days).to eq 14
@@ -199,12 +206,16 @@ RSpec.describe ExpenseSheetGenerator, type: :service do
     end
 
     context 'when MP special case 3' do
-      let(:service) { create :service, beginning: '2025-04-14', ending: '2025-05-06', service_days: 17, service_type: :last }
-      let!(:good_friday) { create :holiday, :public_holiday, beginning: '2025-04-18', ending: '2025-04-18' }
-      let!(:easter_monday) { create :holiday, :public_holiday, beginning: '2025-04-21', ending: '2025-04-21' }
-      let!(:labor_day) { create :holiday, :public_holiday, beginning: '2025-05-01', ending: '2025-05-01' }
+      let(:service) do
+        create :service, beginning: '2025-04-14', ending: '2025-05-06', service_days: 17, service_type: :last
+      end
 
-      before { create_expense_sheets }
+      before do
+        create :holiday, :public_holiday, beginning: '2025-04-18', ending: '2025-04-18'
+        create :holiday, :public_holiday, beginning: '2025-04-21', ending: '2025-04-21'
+        create :holiday, :public_holiday, beginning: '2025-05-01', ending: '2025-05-01'
+        create_expense_sheets
+      end
 
       it 'creates the correct first ExpenseSheet', :aggregate_failures do
         expect(ExpenseSheet.first.beginning).to eq Date.parse('2025-04-14')

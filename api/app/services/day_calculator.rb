@@ -20,7 +20,7 @@ class DayCalculator
   end
 
   def unpaid_holiday_days
-    @holiday_days ||= calculate_unpaid_holiday_days
+    @unpaid_holiday_days ||= calculate_unpaid_holiday_days
   end
 
   private
@@ -33,7 +33,7 @@ class DayCalculator
     total = (@beginning..@ending).count
 
     unpaid_days = holiday_calculator.company_holiday_days
-    unpaid_days = unpaid_days + [wanted_workfree_days - workfree_days, 0].max
+    unpaid_days += [wanted_workfree_days - workfree_days, 0].max
 
     total - workfree_days - unpaid_days
   end

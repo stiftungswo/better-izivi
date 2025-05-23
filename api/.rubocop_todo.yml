@@ -20,6 +20,7 @@ RSpec/MultipleMemoizedHelpers:
     - 'spec/requests/v1/phone_list_controller_spec.rb'
     - 'spec/requests/v1/service_calculator_controller_spec.rb'
     - 'spec/requests/v1/services_controller_spec.rb'
+    - 'spec/services/day_calculator_spec.rb'
     - 'spec/services/expense_sheet_calculators/expenses_calculator_spec.rb'
     - 'spec/services/expense_sheet_calculators/remaining_days_calculator_spec.rb'
     - 'spec/services/expense_sheet_calculators/suggestions_calculator_spec.rb'
