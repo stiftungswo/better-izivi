@@ -17,5 +17,9 @@ FactoryBot.define do
     trait :valais do
       location { 'valais' }
     end
+
+    trait :pre_2025_clothing do
+      work_clothing_expenses { 230 }
+    end
   end
 end

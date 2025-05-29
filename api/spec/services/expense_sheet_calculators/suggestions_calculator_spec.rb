@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
   let(:calculator) { described_class.new(expense_sheet) }
   let(:user) { create :user }
-  let(:beginning) { Date.parse('2018-01-01') }
-  let(:ending) { Date.parse('2018-01-26') }
+  let(:beginning) { Date.parse('2025-01-06') }
+  let(:ending) { Date.parse('2025-01-31') }
   let!(:service) { create :service, beginning: beginning, ending: ending, user: user }
   let(:expense_sheet) { create :expense_sheet, beginning: beginning, ending: ending, user: user }
 
@@ -147,19 +147,30 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
   describe '#suggested_clothing_expenses' do
     subject { calculator.suggested_clothing_expenses }
 
-    let(:daily_expenses) { service.service_specification.work_clothing_expenses }
-    let(:chargeable_days) { expense_sheet.calculate_chargeable_days }
-    let(:expected_value) { daily_expenses * chargeable_days }
+    let(:created_expense_sheets) { ExpenseSheetGenerator.new(service).create_expense_sheets }
+    let(:expense_sheet) { created_expense_sheets.last }
+    let(:chargeable_days) { created_expense_sheets.reduce(0) { |sum, sheet| sum + sheet.calculate_chargeable_days } }
+    let(:total_clothing_expenses) { created_expense_sheets.reduce(0) { |sum, sheet| sum + sheet.clothing_expenses } }
 
     context 'with only one expense sheet' do
       it { is_expected.to eq 6000 }
+
+      it 'has one expense sheet' do
+        expect(created_expense_sheets.length).to eq 1
+      end
+
+      it 'has the expected chargeable days' do
+        expect(chargeable_days).to eq 26
+      end
+
+      it 'has the expected total clothing expenses' do
+        expect(total_clothing_expenses).to eq 0
+      end
     end
 
     context 'with more than one expense sheet' do
       let(:service_range) { get_service_range months: 3 }
       let(:service) { create :service, beginning: service_range.begin, ending: service_range.end, user: user }
-      let(:created_expense_sheets) { ExpenseSheetGenerator.new(service).create_expense_sheets }
-      let(:expense_sheet) { created_expense_sheets.last }
 
       before do
         additional_expense_sheets = created_expense_sheets.length - 1
@@ -173,12 +184,104 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
         let(:service_range) { get_service_range months: 3 }
 
         it { is_expected.to eq 6000 }
+
+        it 'has the expected chargeable days' do
+          expect(chargeable_days).to eq 82
+        end
+
+        it 'has the expected total clothing expenses' do
+          expect(total_clothing_expenses).to eq 18_000
+        end
       end
 
       context 'with enough expense_sheets to nullify clothing_expenses' do
         let(:service_range) { get_service_range months: 5 }
 
         it { is_expected.to eq 0 }
+
+        it 'has the expected chargeable days' do
+          expect(chargeable_days).to eq 138
+        end
+
+        it 'has the expected total clothing expenses' do
+          expect(total_clothing_expenses).to eq 24_000
+        end
+      end
+    end
+  end
+
+  describe '#suggested_clothing_expenses pre 2025' do
+    subject { calculator.suggested_clothing_expenses }
+
+    let(:created_expense_sheets) { ExpenseSheetGenerator.new(service).create_expense_sheets }
+    let(:expense_sheet) { created_expense_sheets.last }
+    let(:chargeable_days) { created_expense_sheets.reduce(0) { |sum, sheet| sum + sheet.calculate_chargeable_days } }
+    let(:total_clothing_expenses) { created_expense_sheets.reduce(0) { |sum, sheet| sum + sheet.clothing_expenses } }
+
+    let(:beginning) { Date.parse('2018-01-01') }
+    let(:ending) { Date.parse('2018-01-26') }
+    let(:service_specification) { create :service_specification, :pre_2025_clothing }
+    let!(:service) do
+      create :service, beginning: beginning, ending: ending, user: user, service_specification: service_specification
+    end
+
+    context 'with only one expense sheet' do
+      it { is_expected.to eq 5980 }
+
+      it 'has one expense sheet' do
+        expect(created_expense_sheets.length).to eq 1
+      end
+
+      it 'has the expected chargeable days' do
+        expect(chargeable_days).to eq 26
+      end
+
+      it 'has the expected total clothing expenses' do
+        expect(total_clothing_expenses).to eq 0
+      end
+    end
+
+    context 'with more than one expense sheet' do
+      let(:service_range) { get_service_range months: 3, pre2025: true }
+      let(:service) do
+        create :service, beginning: service_range.begin, ending: service_range.end, user: user,
+                         service_specification: service_specification
+      end
+
+      before do
+        additional_expense_sheets = created_expense_sheets.length - 1
+        created_expense_sheets.take(additional_expense_sheets).each do |expense_sheet|
+          suggestions = ExpenseSheetCalculators::SuggestionsCalculator.new(expense_sheet).suggestions
+          expense_sheet.update clothing_expenses: suggestions[:clothing_expenses]
+        end
+      end
+
+      context 'with enough expense_sheets to reduce clothing_expenses' do
+        let(:service_range) { get_service_range months: 4, pre2025: true }
+
+        it { is_expected.to eq 3300 }
+
+        it 'has the expected chargeable days' do
+          expect(chargeable_days).to eq 110
+        end
+
+        it 'has the expected total clothing expenses' do
+          expect(total_clothing_expenses).to eq 20_700
+        end
+      end
+
+      context 'with enough expense_sheets to nullify clothing_expenses' do
+        let(:service_range) { get_service_range months: 5, pre2025: true }
+
+        it { is_expected.to eq 0 }
+
+        it 'has the expected chargeable days' do
+          expect(chargeable_days).to eq 138
+        end
+
+        it 'has the expected total clothing expenses' do
+          expect(total_clothing_expenses).to eq 24_000
+        end
       end
     end
   end

@@ -42,6 +42,25 @@ module ExpenseSheetCalculators
     end
 
     def suggested_clothing_expenses
+      return pre_2025_clothing_expenses if @expense_sheet.beginning < Date.new(2025, 1, 1)
+
+      post_2024_clothing_expenses
+    end
+
+    private
+
+    def pre_2025_clothing_expenses
+      per_day = @expense_sheet.service.service_specification.work_clothing_expenses
+      return 0 if per_day.zero?
+
+      max_possible_value = @expense_sheet.calculate_chargeable_days * per_day
+
+      difference_to_max = WORK_CLOTHING_MAX_PER_SERVICE - already_paid_clothing_expenses
+      value = [max_possible_value, difference_to_max].min
+      [0, value].max
+    end
+
+    def post_2024_clothing_expenses
       per_twenty_six_days = @expense_sheet.service.service_specification.work_clothing_expenses
       return 0 if per_twenty_six_days.zero?
 
@@ -54,8 +73,6 @@ module ExpenseSheetCalculators
 
       [0, value].max
     end
-
-    private
 
     def to_pay_days
       @to_pay_days ||= calculate_to_pay_days
