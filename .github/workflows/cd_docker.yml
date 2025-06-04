@@ -2,7 +2,9 @@ name: "Better-iZivi CD (Docker)"
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
+      - feature/new-docker-image-ci
   workflow_dispatch:
 
 env:
