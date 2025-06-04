@@ -66,4 +66,6 @@ jobs:
         env:
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_ENVIRONMENT: ${{ secrets.SENTRY_ENVIRONMENT }}
           API_URL: ${{ secrets.API_URL }}
+          FEEDBACKS_URL: ${{ secrets.FEEDBACKS_URL }}
