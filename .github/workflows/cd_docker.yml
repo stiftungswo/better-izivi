@@ -47,7 +47,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
 
       - name: Build and push API Docker image
-        id: push
+        id: push-api
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: api
@@ -57,7 +57,7 @@ jobs:
           labels: ${{ steps.meta-api.outputs.labels }}
 
       - name: Build and push Frontend Docker image
-        id: push
+        id: push-frontend
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: frontend
