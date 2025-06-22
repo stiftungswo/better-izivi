@@ -5,7 +5,7 @@ FactoryBot.define do
     name { 'MyServiceSpecification' }
     sequence(:identification_number) { |i| (82_844 + i).to_s }
     short_name { 'M' }
-    work_clothing_expenses { 230 }
+    work_clothing_expenses { 6_000 }
     accommodation_expenses { 0 }
     location { 'zurich' }
     active { true }
@@ -16,6 +16,10 @@ FactoryBot.define do
 
     trait :valais do
       location { 'valais' }
+    end
+
+    trait :pre_2025_clothing do
+      work_clothing_expenses { 230 }
     end
   end
 end

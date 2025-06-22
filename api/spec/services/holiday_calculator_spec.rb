@@ -7,8 +7,8 @@ RSpec.describe HolidayCalculator, type: :service do
   let(:ending) { Date.parse('2018-01-31') }
   let(:holiday_calculator) { described_class.new(beginning, ending) }
 
-  describe '#calculate_company_holiday_days' do
-    subject { holiday_calculator.calculate_company_holiday_days }
+  describe '#company_holiday_days' do
+    subject { holiday_calculator.company_holiday_days }
 
     before do
       create :holiday, beginning: '2018-01-01', ending: '2018-01-07'
@@ -48,8 +48,8 @@ RSpec.describe HolidayCalculator, type: :service do
     end
   end
 
-  describe '#calculate_public_holiday_days' do
-    subject { holiday_calculator.calculate_public_holiday_days }
+  describe '#public_holiday_days' do
+    subject { holiday_calculator.public_holiday_days }
 
     before do
       create :holiday, :public_holiday, beginning: '2018-01-01', ending: '2018-01-07'

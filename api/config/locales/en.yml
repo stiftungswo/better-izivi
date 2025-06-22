@@ -180,8 +180,8 @@ en:
           driving_expenses_comment_empty: N/A
           unpaid_vacation_comment: incl. %{comment}
           work_clothing_expenses_comment:
-            one: CHF %{amount}/day for %{count} chargeable service day
-            other: CHF %{amount}/day for %{count} chargeable service days
+            one: CHF %{amount} for %{count} chargeable service day
+            other: CHF %{amount} for %{count} chargeable service days
       filename: ExpenseSheet_%{today}
       header: Expense report of the service company 423 - SWO, Bahnstrasse 18b, 8603 Schwerzenbach
       info_block:

@@ -19,7 +19,7 @@ FactoryBot.define do
     driving_expenses_comment { 'MyString' }
     extraordinary_expenses { 0 }
     extraordinary_expenses_comment { 'MyString' }
-    clothing_expenses { 3200 }
+    clothing_expenses { 6000 }
     clothing_expenses_comment { 'MyString' }
     bank_account_number { 'MyString' }
     state { :open }

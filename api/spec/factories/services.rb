@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :service do
     beginning { '2018-11-05' }
     ending { '2018-11-30' }
+    service_days { 26 }
     confirmation_date { '2018-09-15' }
     service_type { :normal }
     first_swo_service { true }
@@ -20,6 +21,7 @@ FactoryBot.define do
     trait :long do
       beginning { '2018-11-05' }
       ending { '2019-08-02' }
+      service_days { 271 }
       first_swo_service { true }
       long_service { true }
     end

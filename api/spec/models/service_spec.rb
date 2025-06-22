@@ -10,6 +10,7 @@ RSpec.describe Service, type: :model do
       user
       service_specification
       service_type
+      service_days
     ]
 
     it_behaves_like 'validates that the ending is after beginning' do
@@ -153,7 +154,7 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#at_year' do
-    subject(:services) { described_class.at_year(2018) }
+    subject(:services) { described_class.in_year(2018) }
 
     before do
       create_pair :service, beginning: '2018-11-05', ending: '2018-11-30'
@@ -166,17 +167,28 @@ RSpec.describe Service, type: :model do
     end
   end
 
-  describe '#service_days' do
+  describe '#calculate_service_days' do
     let(:service) { build(:service, beginning: beginning, ending: beginning + 25.days) }
     let(:beginning) { Time.zone.today.beginning_of_week }
 
-    it 'returns the service days of the service' do
+    it 'returns the calculated service days of the service' do
       expect(service.service_days).to eq 26
+      expect(service.calculate_service_days).to eq 26
+    end
+
+    context 'when service is 17 days long' do
+      let(:service) { build(:service, beginning: beginning, ending: beginning + 17.days, service_days: 17) }
+      let(:beginning) { Date.parse('2025-01-06') }
+
+      it 'returns the calculated service days of the service' do
+        expect(service.service_days).to eq 17
+        expect(service.calculate_service_days).to eq 18 # this is expected, as the official table is not reversible
+      end
     end
   end
 
   describe '#eligible_paid_vacation_days' do
-    let(:service) { build(:service, :long, beginning: beginning, ending: beginning + 214.days) }
+    let(:service) { build(:service, :long, beginning: beginning, ending: beginning + 214.days, service_days: 214) }
     let(:beginning) { Time.zone.today.beginning_of_week }
 
     it 'returns the eligible personal vacation days of the service' do

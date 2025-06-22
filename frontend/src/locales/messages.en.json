@@ -170,7 +170,7 @@
   "views.expense_sheets.absolvedDaysBreakdownSegment.work_days_sugestion": "Default: {workDaysSuggestion} Days",
   "views.expense_sheets.absolvedDaysBreakdownSegment.worked": "Worked",
   "views.expense_sheets.absolvedDaysBreakdownSegment.workfree": "Free of work",
-  "views.expense_sheets.ClothingExpensesSegment.hint_clothin_expenses": "Proposal: {hintClothingExpenses}",
+  "views.expense_sheets.ClothingExpensesSegment.hint_clothing_expenses": "Proposal: {hintClothingExpenses} ({hintUnpaidClothingExpenseDays} Days)",
   "views.expense_sheets.CompanyHolidaysSegment.paid_company_holidays": "Proposal: {paidCompanyHolidays} Days",
   "views.expense_sheets.CompanyHolidaysSegment.unpaid_company_holidays": "Proposal: {unpaidCompanyHolidays} Days",
   "views.expense_sheets.DrivingExpensesSegment.driving_expenses": "Travel expenses",

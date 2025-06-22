@@ -23,7 +23,7 @@ class Service < ApplicationRecord
     last: 2
   }, _suffix: 'civil_service'
 
-  validates :ending, :beginning, :service_type,
+  validates :ending, :beginning, :service_type, :service_days,
             presence: true
 
   validate :ending_is_friday, unless: :last_civil_service?
@@ -36,7 +36,7 @@ class Service < ApplicationRecord
 
   scope :at_date, ->(date) { where(arel_table[:beginning].lteq(date)).where(arel_table[:ending].gteq(date)) }
   scope :chronologically, -> { order(:beginning, :ending) }
-  scope :at_year, ->(year) { overlapping_date_range(Date.new(year), Date.new(year).at_end_of_year) }
+  scope :in_year, ->(year) { overlapping_date_range(Date.new(year), Date.new(year).at_end_of_year) }
 
   delegate :used_paid_vacation_days, :used_sick_days, to: :used_days_calculator
   delegate :remaining_paid_vacation_days, :remaining_sick_days, to: :remaining_days_calculator
@@ -47,7 +47,7 @@ class Service < ApplicationRecord
     raise 'Cannot delete a service which has associated expense sheets!' unless deletable?
   end
 
-  def service_days
+  def calculate_service_days
     service_calculator.calculate_chargeable_service_days(ending)
   end
 
@@ -57,6 +57,12 @@ class Service < ApplicationRecord
 
   def eligible_sick_days
     service_calculator.calculate_eligible_sick_days(service_days)
+  end
+
+  def eligible_paid_workfree_days
+    return Float::INFINITY unless short_service?
+
+    ShortServiceCalculator.eligible_workfree_days(service_days)
   end
 
   def conventional_service?
@@ -101,6 +107,10 @@ class Service < ApplicationRecord
   def work_record_available?
     (date_range.count >= 90 && service_specification.certificate_of_employment_template.present?) ||
       (date_range.count < 90 && service_specification.confirmation_of_employment_template.present?)
+  end
+
+  def short_service?
+    service_days < MIN_NORMAL_SERVICE_LENGTH
   end
 
   private

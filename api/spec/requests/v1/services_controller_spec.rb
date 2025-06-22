@@ -112,6 +112,7 @@ RSpec.describe V1::ServicesController, type: :request do
             user_id
             beginning
             ending
+            service_days
             confirmation_date
             eligible_paid_vacation_days
             service_type

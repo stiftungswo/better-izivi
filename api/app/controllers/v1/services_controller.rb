@@ -7,7 +7,7 @@ module V1
     include V1::Concerns::JsonAndPdfRespondable
 
     PERMITTED_SERVICE_PARAMS = %i[
-      user_id beginning ending confirmation_date service_type
+      user_id beginning ending service_days confirmation_date service_type
       first_swo_service long_service probation_service
       feedback_mail_sent service_specification_id starts_on_saturday
     ].freeze
@@ -21,7 +21,7 @@ module V1
 
     def index
       year = filter_params[:year]
-      @services = year.present? ? Service.at_year(year.to_i).order(:beginning) : Service.all
+      @services = year.present? ? Service.in_year(year.to_i).order(:beginning) : Service.all
     end
 
     def show

@@ -76,6 +76,7 @@ export interface ExpenseSheetHints {
     paid_company_holiday_days: number;
     unpaid_company_holiday_days: number;
     clothing_expenses: number;
+    unpaid_clothing_expenses_days: number;
   };
   remaining_days: {
     sick_days: number;
