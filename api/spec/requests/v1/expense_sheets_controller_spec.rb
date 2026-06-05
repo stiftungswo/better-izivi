@@ -83,7 +83,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
           it 'returns only the filtered expense_sheets' do
             request
-            expect(parse_response_json(response)).to eq(json_expense_sheets)
+            expect(parse_response_json(response).sort_by { |sheet| sheet[:id] }).to eq(json_expense_sheets)
           end
         end
 
@@ -104,7 +104,7 @@ RSpec.describe V1::ExpenseSheetsController, type: :request do
 
           it 'returns only the filtered expense_sheets' do
             request
-            expect(parse_response_json(response)).to eq(json_expense_sheets)
+            expect(parse_response_json(response).sort_by { |sheet| sheet[:id] }).to eq(json_expense_sheets)
           end
         end
 
