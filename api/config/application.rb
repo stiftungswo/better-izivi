@@ -32,9 +32,17 @@ module Api
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', nil)
+
+    if config.relative_url_root.present?
+      config.middleware.use Rack::Config do |env|
+        env['SCRIPT_NAME'] = config.relative_url_root
+      end
+    end
+
     config.action_mailer.default_url_options = {
       host: ENV.fetch('APP_HOST', 'localhost'),
-      port: ENV.fetch('APP_POST', 3000)
+      port: ENV.fetch('APP_PORT', 3000)
     }
 
     config.i18n.default_locale = :de
