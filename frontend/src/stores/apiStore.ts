@@ -7,7 +7,9 @@ import moment from 'moment';
 
 // this will be replaced by a build script, if necessary
 const baseUrlOverride = 'BASE_URL';
-export const baseUrl = baseUrlOverride.startsWith('http') ? baseUrlOverride : 'http://localhost:28000/v1';
+export const baseUrl = baseUrlOverride.startsWith('http')
+  ? baseUrlOverride
+  : (process.env.REACT_APP_API_URL || 'http://localhost:28000/v1');
 
 export const apiDateFormat = 'YYYY-MM-DD';
 

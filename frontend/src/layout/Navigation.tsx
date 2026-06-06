@@ -41,7 +41,7 @@ interface NavProps {
   appMode: AppMode;
 }
 
-const feedbacksUrl = 'FEEDBACKS_URL';
+const feedbacksUrl = process.env.REACT_APP_FEEDBACKS_URL || 'FEEDBACKS_URL';
 
 @inject('mainStore', 'apiStore')
 @observer

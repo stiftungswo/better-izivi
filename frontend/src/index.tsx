@@ -12,8 +12,8 @@ import { StoreConnectedIntlProvider } from './utilities/StoreConnectedIntlProvid
 import { StoreProvider } from './utilities/StoreProvider';
 
 const browserHistory = createBrowserHistory();
-const sentryDSN = 'SENTRY_DSN'; // this value will be replaced by a build script
-const sentryEnvironment = 'SENTRY_ENVIRONMENT';
+const sentryDSN = process.env.REACT_APP_SENTRY_DSN || 'SENTRY_DSN';
+const sentryEnvironment = process.env.REACT_APP_SENTRY_ENVIRONMENT || 'SENTRY_ENVIRONMENT';
 
 const options: Sentry.BrowserOptions = {};
 

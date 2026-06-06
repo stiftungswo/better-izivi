@@ -31,7 +31,7 @@ import { UserUpdate } from './views/users/UserUpdate';
 
 Icons();
 
-const feedbacksUrl = 'FEEDBACKS_URL';
+const feedbacksUrl = process.env.REACT_APP_FEEDBACKS_URL || 'FEEDBACKS_URL';
 
 class App extends React.Component {
   render() {
