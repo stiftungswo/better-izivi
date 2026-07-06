@@ -44,7 +44,7 @@ services:
             - USERNAME_DIME=zivi@example.com
             - PASSWORD_DIME=123456
             - CONNECT_TO_DIME=false
-            - API_URI_DIME=https://dime-apir-develop.stiftungswo.ch
+            - API_URI_DIME=${API_URI_DIME:-https://dime-apir-develop.stiftungswo.ch}
             - REDIS_URL=redis://redis:6379/0
 
     worker:

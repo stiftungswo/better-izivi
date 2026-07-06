@@ -1,0 +1,20 @@
+{
+  "name": "izivi-integration-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Black-box HTTP integration tests for the Better-iZivi Rails API. Written in TypeScript so the suite is unaffected by the Ruby/Rails upgrade it guards.",
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.9",
+    "axios": "^1.7.2",
+    "bcryptjs": "^3.0.3",
+    "jest": "^29.7.0",
+    "mysql2": "^3.22.5",
+    "ts-jest": "^29.1.5",
+    "typescript": "^5.5.3"
+  }
+}
