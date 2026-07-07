@@ -27,6 +27,7 @@ gem 'rails', '6.1.6.1'
 gem 'rails-i18n'
 gem 'sepa_king'
 gem 'sidekiq', '~> 6.5'
+gem 'sidekiq-cron', '~> 1.9'
 gem 'validates_timeliness'
 
 group :production do
