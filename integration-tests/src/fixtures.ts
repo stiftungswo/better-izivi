@@ -71,7 +71,7 @@ export async function registerCivilServant(
       zip: '8000',
       hometown: 'Testhometown',
       phone: '079 000 00 00',
-      zdp: 100_000 + (Date.now() % 800_000),
+      zdp: 100_000 + (Math.floor(Date.now() + Math.random() * 1_000_000) % 800_000),
       regional_center_id: regionalCenterId,
       ...overrides,
     },
@@ -158,6 +158,12 @@ export async function createService(
     params: { beginning, ending },
     headers: authHeaders(adminToken),
   });
+
+  if (calculated.status !== 200 || typeof calculated.data?.result !== 'number') {
+    throw new Error(
+      `Failed to calculate service days: ${calculated.status} ${JSON.stringify(calculated.data)}`
+    );
+  }
 
   const response = await client.post(
     '/v1/services',

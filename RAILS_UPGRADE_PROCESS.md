@@ -38,7 +38,7 @@ Write this down. You will reference it constantly.
 
 Never jump directly from Rails 6.0 to 8.0. Step through each major version:
 
-```
+```text
 6.0 → 6.1 → 7.0 → 7.1 → 8.0
 ```
 

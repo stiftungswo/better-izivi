@@ -1,7 +1,7 @@
 import { client, authHeaders } from '../src/client';
 import { signInAsAdmin, Session } from '../src/auth';
 import { createConfirmedService, createServiceSpecification, registerCivilServant } from '../src/fixtures';
-import { DimeMock, MOCK_HOST_IP, startDimeMock } from '../src/dimeMock';
+import { DimeMock, MOCK_DIME_EMPLOYEE_ID, MOCK_DIME_TOKEN, MOCK_HOST_IP, startDimeMock } from '../src/dimeMock';
 import { installCaCertInApiContainer, recreateApiContainer, waitForApiReady } from '../src/dockerDime';
 
 // GET /v1/expenses_sheet_sick_days_dime calls out to an external DIME
@@ -61,13 +61,13 @@ describe('GET /v1/expenses_sheet_sick_days_dime (against a mocked DIME backend)'
     const searchRequest = requests.find((r) => r.method === 'GET' && r.url.startsWith('/v2/employees?'));
     expect(searchRequest).toBeDefined();
     expect(decodeURIComponent(searchRequest!.url)).toContain(`filterSearch=${user.email}`);
-    expect(searchRequest!.headers.authorization).toBe('mock-dime-token');
+    expect(searchRequest!.headers.authorization).toBe(MOCK_DIME_TOKEN);
 
     const effortsRequest = requests.find((r) => r.method === 'GET' && r.url.startsWith('/v2/project_efforts?'));
     expect(effortsRequest).toBeDefined();
     expect(effortsRequest!.url).toContain(`start=${expenseSheet.beginning}`);
     expect(effortsRequest!.url).toContain(`end=${expenseSheet.ending}`);
-    expect(effortsRequest!.url).toContain('employee_ids=4242');
+    expect(effortsRequest!.url).toContain(`employee_ids=${MOCK_DIME_EMPLOYEE_ID}`);
   });
 
   it('returns -1 when DIME has no matching employee', async () => {

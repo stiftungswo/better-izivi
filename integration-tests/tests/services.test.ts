@@ -31,7 +31,7 @@ describe('V1::ServicesController', () => {
     expect(response.data).toEqual({ result: expect.any(Number) });
   });
 
-  it('lets an admin create, confirm and cancel-by-overlap a service for a fresh user', async () => {
+  it('lets an admin create and confirm a service, and rejects an overlapping create', async () => {
     const user = await registerCivilServant();
     const { beginning, ending } = normalServiceRange(520);
 
@@ -162,7 +162,7 @@ describe('V1::ServicesController', () => {
     expect(pdfResponse.headers['content-type']).toContain('pdf');
 
     const newEnding = new Date(service.ending);
-    newEnding.setDate(newEnding.getDate() + 7);
+    newEnding.setUTCDate(newEnding.getUTCDate() + 7);
     const newEndingIso = newEnding.toISOString().slice(0, 10);
     const recalculated = await client.get('/v1/services/calculate_service_days', {
       params: { beginning: service.beginning, ending: newEndingIso },

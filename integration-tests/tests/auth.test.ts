@@ -39,7 +39,11 @@ describe('POST /v1/users/sign_in', () => {
 describe('POST /v1/users/validate', () => {
   it('accepts valid, not-yet-taken registration fields', async () => {
     const response = await client.post('/v1/users/validate', {
-      user: { email: `validate-${Date.now()}@example.com`, zdp: 222333, community_password: '123456' },
+      user: {
+        email: `validate-${Date.now()}@example.com`,
+        zdp: 222333,
+        community_password: process.env.COMMUNITY_PASSWORD ?? '123456',
+      },
     });
 
     expect(response.status).toBe(204);
@@ -49,7 +53,7 @@ describe('POST /v1/users/validate', () => {
     const user = await registerCivilServant();
 
     const response = await client.post('/v1/users/validate', {
-      user: { email: user.email, zdp: 222334, community_password: '123456' },
+      user: { email: user.email, zdp: 222334, community_password: process.env.COMMUNITY_PASSWORD ?? '123456' },
     });
 
     expect(response.status).toBe(400);

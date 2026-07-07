@@ -57,8 +57,8 @@ function generateSelfSignedCert(): { certPem: string; keyPem: string } {
   return { certPem, keyPem };
 }
 
-const MOCK_DIME_TOKEN = 'mock-dime-token';
-const MOCK_DIME_EMPLOYEE_ID = 4242;
+export const MOCK_DIME_TOKEN = 'mock-dime-token';
+export const MOCK_DIME_EMPLOYEE_ID = 4242;
 
 export async function startDimeMock(): Promise<DimeMock> {
   const { certPem, keyPem } = generateSelfSignedCert();
