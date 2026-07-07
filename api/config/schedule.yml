@@ -1,0 +1,5 @@
+send_feedback_reminders:
+  cron: "0 8 * * mon"
+  class: "SendFeedbackRemindersJob"
+  queue: mailers
+  description: "Weekly feedback reminder mail for services that ended and haven't been reminded yet"
