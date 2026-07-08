@@ -2,6 +2,7 @@
 
 if defined? Sidekiq
   require 'sidekiq/web'
+  require 'sidekiq/cron/web'
 
   Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
     [user, password] == [ENV.fetch('SIDEKIQ_USER', nil), ENV.fetch('SIDEKIQ_PASSWORD', nil)]
