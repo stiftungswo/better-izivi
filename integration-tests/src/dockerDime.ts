@@ -13,6 +13,30 @@ function dockerCompose(args: string[], env: NodeJS.ProcessEnv = process.env): vo
 }
 
 /**
+ * The docker-compose bridge network's gateway IP, reachable from inside the
+ * `api` container as "the host". docker-compose.yml doesn't pin a subnet, so
+ * Docker picks one (and therefore this gateway) dynamically — reading it off
+ * the running container instead of hardcoding it keeps this working
+ * regardless of what Docker assigns.
+ */
+export function getApiContainerGatewayIp(): string {
+  const gateway = execFileSync('docker', [
+    'inspect',
+    API_CONTAINER,
+    '--format',
+    '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}',
+  ])
+    .toString()
+    .trim();
+
+  if (!gateway) {
+    throw new Error(`Could not determine the docker bridge gateway IP for container ${API_CONTAINER}`);
+  }
+
+  return gateway;
+}
+
+/**
  * Recreates the `api` container from docker-compose.yml with API_URI_DIME
  * pointed at our mock (or, called with no argument, back at whatever
  * docker-compose.yml defaults it to). This is the only way to change it:

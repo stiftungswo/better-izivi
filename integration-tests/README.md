@@ -10,7 +10,7 @@ nothing about the Ruby process behind the API.
 
 1. Start the API against a database with the schema loaded:
 
-   ```
+   ```sh
    docker compose up -d mysql api
    docker exec better_izivi_api bin/rails db:create db:schema:load
    ```
@@ -20,7 +20,7 @@ nothing about the Ruby process behind the API.
 
 2. Install dependencies and run the suite:
 
-   ```
+   ```sh
    npm install
    npm test
    ```
@@ -83,9 +83,11 @@ mock instead of skipping the endpoint:
    search, `/v2/project_efforts`), recording every request it receives.
 2. `src/dockerDime.ts` recreates the `api` container (`docker compose up -d
    --force-recreate api`) with `API_URI_DIME` pointed at the mock via the
-   docker-compose bridge network's gateway IP (`172.20.0.1`, reachable from
-   inside the container as "the host"), then installs the mock's cert into
-   the container's trust store (`docker exec -u root ... update-ca-certificates`)
+   docker-compose bridge network's gateway IP (read off the running container
+   with `docker inspect`, since docker-compose.yml doesn't pin a subnet and
+   Docker may assign a different one per machine — reachable from inside the
+   container as "the host"), then installs the mock's cert into the
+   container's trust store (`docker exec -u root ... update-ca-certificates`)
    so the hardcoded `VERIFY_PEER` check passes.
 3. Tests hit `/v1/expenses_sheet_sick_days_dime` for real and assert both the
    response *and* that the mock actually received the expected requests

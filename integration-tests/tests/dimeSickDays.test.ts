@@ -1,8 +1,13 @@
 import { client, authHeaders } from '../src/client';
 import { signInAsAdmin, Session } from '../src/auth';
 import { createConfirmedService, createServiceSpecification, registerCivilServant } from '../src/fixtures';
-import { DimeMock, MOCK_DIME_EMPLOYEE_ID, MOCK_DIME_TOKEN, MOCK_HOST_IP, startDimeMock } from '../src/dimeMock';
-import { installCaCertInApiContainer, recreateApiContainer, waitForApiReady } from '../src/dockerDime';
+import { DimeMock, MOCK_DIME_EMPLOYEE_ID, MOCK_DIME_TOKEN, startDimeMock } from '../src/dimeMock';
+import {
+  getApiContainerGatewayIp,
+  installCaCertInApiContainer,
+  recreateApiContainer,
+  waitForApiReady,
+} from '../src/dockerDime';
 
 // GET /v1/expenses_sheet_sick_days_dime calls out to an external DIME
 // service (AuthenticateInDime), unconditionally — CONNECT_TO_DIME only
@@ -19,8 +24,9 @@ describe('GET /v1/expenses_sheet_sick_days_dime (against a mocked DIME backend)'
   let serviceSpecificationId: number;
 
   beforeAll(async () => {
-    mock = await startDimeMock();
-    recreateApiContainer(`https://${MOCK_HOST_IP}:${mock.port}`);
+    const hostIp = getApiContainerGatewayIp();
+    mock = await startDimeMock(hostIp);
+    recreateApiContainer(`https://${hostIp}:${mock.port}`);
     await waitForApiReady();
     installCaCertInApiContainer(mock.certPem);
 

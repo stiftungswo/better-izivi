@@ -10,7 +10,6 @@ import path from 'path';
 // at this mock (see dockerDime.ts) — so the mock has to actually terminate
 // TLS with a certificate the container is willing to trust, not just listen
 // on plain HTTP.
-export const MOCK_HOST_IP = '172.20.0.1'; // the docker-compose bridge network's gateway, reachable from the api container as "the host"
 
 export interface RecordedRequest {
   method: string;
@@ -27,7 +26,7 @@ export interface DimeMock {
   stop: () => Promise<void>;
 }
 
-function generateSelfSignedCert(): { certPem: string; keyPem: string } {
+function generateSelfSignedCert(hostIp: string): { certPem: string; keyPem: string } {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dime-mock-cert-'));
   const keyPath = path.join(dir, 'key.pem');
   const certPath = path.join(dir, 'cert.pem');
@@ -47,7 +46,7 @@ function generateSelfSignedCert(): { certPem: string; keyPem: string } {
     '-subj',
     '/CN=dime-mock',
     '-addext',
-    `subjectAltName=IP:${MOCK_HOST_IP}`,
+    `subjectAltName=IP:${hostIp}`,
   ]);
 
   const certPem = fs.readFileSync(certPath, 'utf8');
@@ -60,8 +59,8 @@ function generateSelfSignedCert(): { certPem: string; keyPem: string } {
 export const MOCK_DIME_TOKEN = 'mock-dime-token';
 export const MOCK_DIME_EMPLOYEE_ID = 4242;
 
-export async function startDimeMock(): Promise<DimeMock> {
-  const { certPem, keyPem } = generateSelfSignedCert();
+export async function startDimeMock(hostIp: string): Promise<DimeMock> {
+  const { certPem, keyPem } = generateSelfSignedCert(hostIp);
   const requests: RecordedRequest[] = [];
   let projectEffortsCount = 1;
   let employeeFound = true;
@@ -69,7 +68,7 @@ export async function startDimeMock(): Promise<DimeMock> {
   const server = https.createServer({ cert: certPem, key: keyPem }, (req, res) => {
     requests.push({ method: req.method ?? '', url: req.url ?? '', headers: req.headers });
 
-    const url = new URL(req.url ?? '', `https://${MOCK_HOST_IP}`);
+    const url = new URL(req.url ?? '', `https://${hostIp}`);
 
     if (req.method === 'POST' && url.pathname === '/v2/employees/sign_in') {
       res.writeHead(200, { Authorization: MOCK_DIME_TOKEN, 'Content-Type': 'application/json' });
