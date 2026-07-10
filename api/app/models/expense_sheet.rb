@@ -28,7 +28,7 @@ class ExpenseSheet < ApplicationRecord
 
   before_destroy :legitimate_destroy
 
-  enum state: {
+  enum :state, {
     open: 0,
     ready_for_payment: 1,
     payment_in_progress: 2,

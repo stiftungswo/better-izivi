@@ -17,11 +17,11 @@ class Service < ApplicationRecord
 
   before_destroy :check_delete
 
-  enum service_type: {
+  enum :service_type, {
     normal: 0,
     first: 1,
     last: 2
-  }, _suffix: 'civil_service'
+  }, suffix: 'civil_service'
 
   validates :ending, :beginning, :service_type, :service_days,
             presence: true

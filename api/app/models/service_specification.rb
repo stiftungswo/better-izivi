@@ -4,15 +4,15 @@ class ServiceSpecification < ApplicationRecord
   ALLOWED_EXPENSE_KEYS = %w[breakfast lunch dinner].freeze
   POCKET_MONEY = 750
 
-  serialize :work_days_expenses, JSON
-  serialize :paid_vacation_expenses, JSON
-  serialize :first_day_expenses, JSON
-  serialize :last_day_expenses, JSON
+  serialize :work_days_expenses, coder: JSON
+  serialize :paid_vacation_expenses, coder: JSON
+  serialize :first_day_expenses, coder: JSON
+  serialize :last_day_expenses, coder: JSON
 
-  enum location: {
+  enum :location, {
     valais: 'vs',
     zurich: 'zh'
-  }, _prefix: true
+  }, prefix: true
 
   has_many :services, dependent: :restrict_with_error
 

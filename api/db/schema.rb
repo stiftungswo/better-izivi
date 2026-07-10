@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_07_10_150610) do
+ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
   create_table "allowlisted_jwts", charset: "utf8", force: :cascade do |t|
     t.string "jti", null: false
     t.string "aud"

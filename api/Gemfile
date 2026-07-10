@@ -29,7 +29,7 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
-gem 'rails', '7.1.6'
+gem 'rails', '8.0.5'
 gem 'rails-i18n'
 gem 'sepa_king'
 gem 'sidekiq', '~> 6.5'
@@ -51,7 +51,7 @@ group :development, :test do
   gem 'rake', '13.0.6'
   gem 'reek'
   gem 'rspec-collection_matchers'
-  gem 'rspec-rails', '~> 5.1.2'
+  gem 'rspec-rails', '~> 8.0'
   gem 'rubocop', '~> 1.35', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', '~> 2.15', require: false
@@ -64,6 +64,9 @@ group :development do
   gem 'bullet'
   gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.8'
+  # Ruby 3.4 dropped `mutex_m` from the default gems bundled with the
+  # interpreter; spring-watcher-listen still requires it.
+  gem 'mutex_m'
   # Ruby 3.4 dropped `kconv` from the default gems bundled with the
   # interpreter; letter_opener still requires it. The `nkf` gem ships the
   # same lib/kconv.rb shim, so pulling it in restores `require 'kconv'`.
