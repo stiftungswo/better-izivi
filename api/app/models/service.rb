@@ -128,7 +128,7 @@ class Service < ApplicationRecord
   end
 
   def no_overlapping_service
-    overlaps_other_service = Service.where(user: user).where.not(id: id).overlapping_date_range(beginning, ending).any?
+    overlaps_other_service = Service.where(user:).where.not(id:).overlapping_date_range(beginning, ending).any?
 
     errors.add(:beginning, :overlaps_service) if overlaps_other_service
   end

@@ -7,7 +7,7 @@ service_attributes = [
   {
     user: User.find_by(email: 'zivi@example.com'),
     service_specification: ServiceSpecification.first,
-    beginning: beginning,
+    beginning:,
     ending: beginning + 25.days,
     confirmation_date: beginning - 1.month,
     service_type: :normal,

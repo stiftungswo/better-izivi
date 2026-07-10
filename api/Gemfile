@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '2.7.5'
+ruby '3.4.10'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -11,13 +11,19 @@ end
 
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
-gem 'devise-jwt', '~> 0.9.0'
+gem 'devise-jwt', '~> 0.13.0'
 gem 'docx'
 gem 'dotenv-rails'
 gem 'hexapdf'
 gem 'iban-tools'
 gem 'jbuilder'
+# Ruby 3.4 dropped `matrix` and `observer` from the default gems bundled with
+# the interpreter; transitive deps still require them, so they need to be
+# declared explicitly now.
+gem 'matrix'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
+gem 'observer'
+gem 'ostruct'
 gem 'pdf-forms'
 gem 'prawn'
 gem 'prawn-table'
@@ -38,7 +44,6 @@ end
 group :development, :test do
   gem 'brakeman', require: false
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'debase', '~> 0.2.4.1'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry-byebug'
@@ -51,7 +56,6 @@ group :development, :test do
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', '~> 2.15', require: false
   gem 'rubocop-rspec', '~> 2.12', require: false
-  gem 'ruby-debug-ide'
 end
 
 group :development do
@@ -60,17 +64,21 @@ group :development do
   gem 'bullet'
   gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.8'
+  # Ruby 3.4 dropped `kconv` from the default gems bundled with the
+  # interpreter; letter_opener still requires it. The `nkf` gem ships the
+  # same lib/kconv.rb shim, so pulling it in restores `require 'kconv'`.
+  gem 'nkf'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
 group :test do
   gem 'climate_control'
-  gem 'i18n-tasks', '~> 1.0.11'
+  gem 'i18n-tasks', '~> 1.1'
   gem 'pdf-inspector', require: 'pdf/inspector'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
-  gem 'test-prof', '0.9.0'
+  gem 'test-prof', '~> 1.6'
 end
 
 gem 'tzinfo-data'

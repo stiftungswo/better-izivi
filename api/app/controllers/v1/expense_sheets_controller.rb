@@ -45,7 +45,7 @@ module V1
       if live_expense_sheet.valid?
         suggestions = ExpenseSheetCalculators::SuggestionsCalculator.new(live_expense_sheet).suggestions
         remaining_days = ExpenseSheetCalculators::RemainingDaysCalculator.new(live_expense_sheet.service).remaining_days
-        render :hints, locals: { suggestions: suggestions, remaining_days: remaining_days }
+        render :hints, locals: { suggestions:, remaining_days: }
       else
         render json: { errors: live_expense_sheet.errors }, status: :unprocessable_entity
       end
@@ -55,7 +55,7 @@ module V1
       suggestions = ExpenseSheetCalculators::SuggestionsCalculator.new(@expense_sheet).suggestions
       remaining_days = ExpenseSheetCalculators::RemainingDaysCalculator.new(@expense_sheet.service).remaining_days
 
-      render :hints, locals: { suggestions: suggestions, remaining_days: remaining_days }
+      render :hints, locals: { suggestions:, remaining_days: }
     end
 
     def sum

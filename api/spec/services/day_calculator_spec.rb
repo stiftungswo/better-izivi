@@ -6,8 +6,8 @@ RSpec.describe DayCalculator, type: :service do
   let(:beginning) { Date.parse('2017-11-27') }
   let(:ending) { Date.parse('2018-02-02') }
   let(:user) { create :user }
-  let!(:service) { create :service, user: user, beginning: beginning, ending: ending }
-  let(:expense_sheet) { create :expense_sheet, user: user, beginning: beginning, ending: ending }
+  let!(:service) { create :service, user:, beginning:, ending: }
+  let(:expense_sheet) { create :expense_sheet, user:, beginning:, ending: }
   let(:day_calculator) { described_class.new(beginning, ending, service) }
 
   let(:create_public_holidays) do

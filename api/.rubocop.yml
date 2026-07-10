@@ -5,7 +5,16 @@ inherit_from:
 require:
   - rubocop-performance
   - rubocop-rails
-  - 'test_prof/rubocop'
 
-RSpec/AggregateFailures:
-  Enabled: true
+AllCops:
+  # rubocop ~> 1.35 doesn't recognize Ruby versions above 3.2 and errors on
+  # `.ruby-version` (3.4.10) otherwise. Bump alongside rubocop itself in the
+  # linting upgrade step (RAILS_UPGRADE_PROCESS.md step 7).
+  TargetRubyVersion: 3.2
+
+# test-prof 1.6 (needed for Ruby 3.4 compat) moved its RuboCop integration to
+# RuboCop's newer `plugins:` mechanism, which our pinned rubocop (~> 1.35)
+# doesn't support, and renamed this cop from RSpec/AggregateFailures to
+# RSpec/AggregateExamples in the process. Re-enable properly in the RuboCop
+# upgrade step (RAILS_UPGRADE_PROCESS.md step 7) rather than bumping rubocop
+# here as a side effect of the Ruby bump.

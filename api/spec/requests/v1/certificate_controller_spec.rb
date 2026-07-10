@@ -6,8 +6,8 @@ RSpec.describe V1::CertificateController, type: :request do
   describe '#show' do
     let(:user) { create :user, :admin }
     let(:token) { generate_jwt_token_for_user(user) }
-    let(:service) { create :service, user: user }
-    let(:request) { get "/v1/export_certificate/#{service.id}.docx", params: { token: token } }
+    let(:service) { create :service, user: }
+    let(:request) { get "/v1/export_certificate/#{service.id}.docx", params: { token: } }
 
     context 'when user is an admin' do
       it 'returns a content type docx' do

@@ -14,8 +14,8 @@ RSpec.describe V1::ServicesController, type: :request do
       let(:request) { get v1_services_path }
 
       before do
-        create(:service, beginning: '2018-11-05', ending: '2018-11-30', user: user)
-        create(:service, beginning: '2018-12-03', ending: '2018-12-28', user: user)
+        create(:service, beginning: '2018-11-05', ending: '2018-11-30', user:)
+        create(:service, beginning: '2018-12-03', ending: '2018-12-28', user:)
       end
 
       context 'when user is not admin' do
@@ -30,7 +30,7 @@ RSpec.describe V1::ServicesController, type: :request do
         before { request }
 
         context 'when the user has permission to view its own resource' do
-          let(:service) { create :service, user: user }
+          let(:service) { create :service, user: }
           let(:expected_response) do
             extract_to_json(service, :id, :user_id, :service_specification_identification_number,
                             :beginning, :ending, :confirmation_date, :eligible_paid_vacation_days,
@@ -59,13 +59,13 @@ RSpec.describe V1::ServicesController, type: :request do
       end
 
       context 'when the pdf format is requested' do
-        let(:request) { get v1_service_path service, format: :pdf, params: { token: token } }
+        let(:request) { get v1_service_path service, format: :pdf, params: { token: } }
         let(:token) { generate_jwt_token_for_user(user) }
 
         before { request }
 
         context 'when the user has permission to view its own resource' do
-          let(:service) { create :service, user: user }
+          let(:service) { create :service, user: }
           let(:expected_response) do
             extract_to_json(service, :id, :user_id, :service_specification_identification_number,
                             :beginning, :ending, :confirmation_date, :eligible_paid_vacation_days,
@@ -193,7 +193,7 @@ RSpec.describe V1::ServicesController, type: :request do
     end
 
     describe '#update' do
-      let!(:service) { create :service, :unconfirmed, user: user }
+      let!(:service) { create :service, :unconfirmed, user: }
       let(:put_request) { put v1_service_path(service, params: { service: params }) }
 
       context 'with valid params' do
@@ -228,7 +228,7 @@ RSpec.describe V1::ServicesController, type: :request do
         end
 
         context 'when a non-admin user updates their own confirmed service' do
-          let!(:service) { create :service, user: user }
+          let!(:service) { create :service, user: }
 
           it_behaves_like 'admin protected resource' do
             let(:request) { put_request }
@@ -277,7 +277,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
     describe '#destroy' do
       let(:delete_request) { delete v1_service_path service }
-      let(:service) { create :service, user: user }
+      let(:service) { create :service, user: }
 
       before { service }
 
@@ -312,7 +312,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
     describe '#confirm' do
       let(:confirm_request) { put service_confirm_v1_service_path service }
-      let(:service) { create :service, :unconfirmed, user: user }
+      let(:service) { create :service, :unconfirmed, user: }
 
       before { service }
 
@@ -350,8 +350,8 @@ RSpec.describe V1::ServicesController, type: :request do
 
       let!(:services) do
         [
-          create(:service, beginning: '2018-10-01', ending: '2018-11-02', user: user),
-          create(:service, beginning: '2018-11-05', ending: '2018-12-28', user: user)
+          create(:service, beginning: '2018-10-01', ending: '2018-11-02', user:),
+          create(:service, beginning: '2018-11-05', ending: '2018-12-28', user:)
         ]
       end
       let(:request) { get v1_services_path }
@@ -419,7 +419,7 @@ RSpec.describe V1::ServicesController, type: :request do
       end
 
       context 'when the pdf format is requested' do
-        let(:request) { get v1_service_path service, format: :pdf, params: { token: token } }
+        let(:request) { get v1_service_path service, format: :pdf, params: { token: } }
         let(:token) { generate_jwt_token_for_user(user) }
 
         before { request }
@@ -468,7 +468,7 @@ RSpec.describe V1::ServicesController, type: :request do
     end
 
     describe '#update' do
-      let!(:service) { create :service, :unconfirmed, user: user }
+      let!(:service) { create :service, :unconfirmed, user: }
       let(:put_request) { put v1_service_path(service, params: { service: params }) }
 
       context 'with valid params' do
@@ -520,7 +520,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
     describe '#destroy' do
       let(:delete_request) { delete v1_service_path service }
-      let(:service) { create :service, user: user }
+      let(:service) { create :service, user: }
 
       before { service }
 
@@ -540,7 +540,7 @@ RSpec.describe V1::ServicesController, type: :request do
 
     describe '#confirm' do
       let(:confirm_request) { put service_confirm_v1_service_path service }
-      let!(:service) { create :service, :unconfirmed, user: user }
+      let!(:service) { create :service, :unconfirmed, user: }
 
       context 'when the user confirm his own service' do
         it 'does update the confirmation_date the Service' do

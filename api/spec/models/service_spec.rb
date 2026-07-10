@@ -14,13 +14,13 @@ RSpec.describe Service, type: :model do
     ]
 
     it_behaves_like 'validates that the ending is after beginning' do
-      let(:model) { build(:service, :last, beginning: beginning, ending: ending) }
+      let(:model) { build(:service, :last, beginning:, ending:) }
     end
 
     describe '#length_is_valid' do
       subject { service.tap(&:validate).errors.added? :service_days, :invalid_length }
 
-      let(:service) { build(:service, beginning: beginning, ending: ending, user: user) }
+      let(:service) { build(:service, beginning:, ending:, user:) }
       let(:user) { create :user }
       let(:service_range) { get_service_range months: 2 }
       let(:beginning) { service_range.begin }
@@ -39,7 +39,7 @@ RSpec.describe Service, type: :model do
       end
 
       context 'when service is last' do
-        let(:service) { build(:service, beginning: beginning, ending: ending, user: user, service_type: :last) }
+        let(:service) { build(:service, beginning:, ending:, user:, service_type: :last) }
 
         context 'when service has a length that is bigger then 26 days' do
           it { is_expected.to be false }
@@ -54,7 +54,7 @@ RSpec.describe Service, type: :model do
     end
 
     describe 'ending_is_friday validation' do
-      subject { build(:service, ending: ending).tap(&:validate).errors.added? :ending, :not_a_friday }
+      subject { build(:service, ending:).tap(&:validate).errors.added? :ending, :not_a_friday }
 
       let(:ending) { Time.zone.today.at_end_of_week - 2.days }
 
@@ -71,7 +71,7 @@ RSpec.describe Service, type: :model do
 
     describe '#beginning_is_monday' do
       subject do
-        build(:service, beginning: beginning, ending: ending)
+        build(:service, beginning:, ending:)
           .tap(&:validate).errors.added? :beginning, :not_a_monday
       end
 
@@ -92,7 +92,7 @@ RSpec.describe Service, type: :model do
     describe '#no_overlapping_service' do
       subject { service.tap(&:validate).errors.added? :beginning, :overlaps_service }
 
-      let(:service) { build(:service, beginning: beginning, ending: ending, user: user) }
+      let(:service) { build(:service, beginning:, ending:, user:) }
       let(:user) { create :user }
       let(:service_range) { get_service_range months: 2 }
       let(:beginning) { service_range.begin }
@@ -100,7 +100,7 @@ RSpec.describe Service, type: :model do
       let(:other_beginning) { (service_range.begin - 2.months).at_beginning_of_week }
       let(:other_ending) { (service_range.begin - 1.month).at_end_of_week - 2.days }
 
-      before { create :service, user: user, beginning: other_beginning, ending: other_ending }
+      before { create :service, user:, beginning: other_beginning, ending: other_ending }
 
       context 'when there is no overlapping service' do
         it { is_expected.to be false }
@@ -168,7 +168,7 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#calculate_service_days' do
-    let(:service) { build(:service, beginning: beginning, ending: beginning + 25.days) }
+    let(:service) { build(:service, beginning:, ending: beginning + 25.days) }
     let(:beginning) { Time.zone.today.beginning_of_week }
 
     it 'returns the calculated service days of the service' do
@@ -177,7 +177,7 @@ RSpec.describe Service, type: :model do
     end
 
     context 'when service is 17 days long' do
-      let(:service) { build(:service, beginning: beginning, ending: beginning + 17.days, service_days: 17) }
+      let(:service) { build(:service, beginning:, ending: beginning + 17.days, service_days: 17) }
       let(:beginning) { Date.parse('2025-01-06') }
 
       it 'returns the calculated service days of the service' do
@@ -188,7 +188,7 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#eligible_paid_vacation_days' do
-    let(:service) { build(:service, :long, beginning: beginning, ending: beginning + 214.days, service_days: 214) }
+    let(:service) { build(:service, :long, beginning:, ending: beginning + 214.days, service_days: 214) }
     let(:beginning) { Time.zone.today.beginning_of_week }
 
     it 'returns the eligible personal vacation days of the service' do
@@ -197,7 +197,7 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#eligible_sick_days' do
-    let(:service) { build(:service, beginning: beginning, ending: beginning + 25.days) }
+    let(:service) { build(:service, beginning:, ending: beginning + 25.days) }
     let(:beginning) { Time.zone.today.beginning_of_week }
     let(:service_calculator) { instance_double ServiceCalculator }
 
@@ -220,16 +220,16 @@ RSpec.describe Service, type: :model do
     let(:ending) { (Time.zone.today - 1.week).end_of_week - 2.days }
 
     let(:user) { create :user }
-    let(:service) { create(:service, user: user, beginning: beginning, ending: ending) }
+    let(:service) { create(:service, user:, beginning:, ending:) }
 
     context 'when it has one expense_sheet' do
-      let(:expense_sheet) { create :expense_sheet, user: user, beginning: beginning, ending: ending }
+      let(:expense_sheet) { create :expense_sheet, user:, beginning:, ending: }
 
       it { is_expected.to eq [expense_sheet] }
     end
 
     context 'when it has multiple expense_sheets' do
-      let(:expense_sheets) { create_list :expense_sheet, 3, user: user, beginning: beginning, ending: ending }
+      let(:expense_sheets) { create_list :expense_sheet, 3, user:, beginning:, ending: }
 
       it { is_expected.to eq expense_sheets }
     end
@@ -263,7 +263,7 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#in_future?' do
-    subject { build(:service, :last, beginning: beginning).in_future? }
+    subject { build(:service, :last, beginning:).in_future? }
 
     context 'when service will start in future' do
       let(:beginning) { (Time.zone.today + 2.weeks).at_beginning_of_week }
@@ -285,7 +285,7 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#date_range' do
-    subject { build(:service, beginning: beginning, ending: ending).date_range }
+    subject { build(:service, beginning:, ending:).date_range }
 
     let(:beginning) { Date.parse '2018-10-29' }
     let(:ending) { Date.parse '2018-11-30' }
@@ -295,14 +295,14 @@ RSpec.describe Service, type: :model do
 
   describe '#work_record_available?' do
     subject do
-      build(:service, beginning: beginning, ending: ending,
-                      service_specification: service_specification).work_record_available?
+      build(:service, beginning:, ending:,
+                      service_specification:).work_record_available?
     end
 
     let(:service_specification) do
       build(:service_specification,
-            certificate_of_employment_template: certificate_of_employment_template,
-            confirmation_of_employment_template: confirmation_of_employment_template)
+            certificate_of_employment_template:,
+            confirmation_of_employment_template:)
     end
 
     let(:beginning) { Date.parse '2018-10-29' }

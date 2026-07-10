@@ -6,7 +6,8 @@ Rails.application.routes.draw do
       post 'users/validate', to: 'devise_overrides/registrations#validate', defaults: { format: :json }
     end
     devise_for :users, defaults: { format: :json }, controllers: {
-      registrations: 'devise_overrides/registrations'
+      registrations: 'devise_overrides/registrations',
+      sessions: 'devise_overrides/sessions'
     }
   end
 

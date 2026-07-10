@@ -10,6 +10,6 @@ def allowlist_token(token, user)
   AllowlistedJwt.create(
     token.second
       .slice('jti', 'aud')
-      .merge(exp: Time.zone.at(token.second['exp']), user: user)
+      .merge(exp: Time.zone.at(token.second['exp']), user:)
   )
 end

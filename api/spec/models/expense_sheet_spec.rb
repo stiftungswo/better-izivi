@@ -4,10 +4,10 @@ require 'rails_helper'
 
 RSpec.describe ExpenseSheet, type: :model do
   describe 'validations' do
-    before { create :service, user: user }
+    before { create :service, user: }
 
     let(:user) { create :user }
-    let(:expense_sheet) { build :expense_sheet, user: user }
+    let(:expense_sheet) { build :expense_sheet, user: }
 
     let(:present_fields) do
       %i[beginning ending work_days bank_account_number state]
@@ -48,11 +48,11 @@ RSpec.describe ExpenseSheet, type: :model do
 
       let(:user) { create :user }
 
-      before { create :service, user: user, beginning: beginning, ending: ending }
+      before { create :service, user:, beginning:, ending: }
 
       context 'when expense_sheet is in service period' do
         subject(:expense_sheet) do
-          build(:expense_sheet, user: user, beginning: beginning, ending: ending).tap(&:validate)
+          build(:expense_sheet, user:, beginning:, ending:).tap(&:validate)
         end
 
         it 'is valid' do
@@ -62,7 +62,7 @@ RSpec.describe ExpenseSheet, type: :model do
 
       context 'when expense_sheet is outside service period' do
         subject(:expense_sheet) do
-          build(:expense_sheet, user: user, beginning: invalid_beginning, ending: invalid_ending).tap(&:validate)
+          build(:expense_sheet, user:, beginning: invalid_beginning, ending: invalid_ending).tap(&:validate)
         end
 
         let(:invalid_beginning) { Date.parse('2019-09-28') }
@@ -76,14 +76,14 @@ RSpec.describe ExpenseSheet, type: :model do
   end
 
   it_behaves_like 'validates that the ending is after beginning' do
-    let(:model) { build(:expense_sheet, beginning: beginning, ending: ending) }
+    let(:model) { build(:expense_sheet, beginning:, ending:) }
   end
 
   describe '#destroy' do
-    before { create :service, user: user }
+    before { create :service, user: }
 
     let(:user) { create :user }
-    let!(:expense_sheet) { create :expense_sheet, user: user }
+    let!(:expense_sheet) { create :expense_sheet, user: }
 
     context 'when the expense sheet is not already paid' do
       it 'destroys the expense_sheet' do
@@ -108,10 +108,10 @@ RSpec.describe ExpenseSheet, type: :model do
   describe '#state' do
     subject { !expense_sheet.errors.added?(:state, :invalid_state_change) }
 
-    before { expense_sheet.update(state: state) }
+    before { expense_sheet.update(state:) }
 
     let(:expense_sheet) do
-      expense_sheet = build(:expense_sheet, user: user, state: state_was)
+      expense_sheet = build(:expense_sheet, user:, state: state_was)
       expense_sheet.save validate: false
       expense_sheet
     end
@@ -215,12 +215,12 @@ RSpec.describe ExpenseSheet, type: :model do
   describe '#total_paid_vacation_days' do
     subject { expense_sheet.total_paid_vacation_days }
 
-    before { create :service, user: user }
+    before { create :service, user: }
 
     let(:user) { create :user }
     let(:expense_sheet) do
       create :expense_sheet,
-             paid_vacation_days: 2, paid_company_holiday_days: 1, unpaid_company_holiday_days: 3, user: user
+             paid_vacation_days: 2, paid_company_holiday_days: 1, unpaid_company_holiday_days: 3, user:
     end
 
     it { is_expected.to eq 3 }
@@ -228,8 +228,8 @@ RSpec.describe ExpenseSheet, type: :model do
 
   describe '#at_service_beginning?' do
     let(:user) { create :user }
-    let!(:service) { create :service, service_data.merge(user: user) }
-    let(:expense_sheet) { create :expense_sheet, expense_sheet_data.merge(user: user) }
+    let!(:service) { create :service, service_data.merge(user:) }
+    let(:expense_sheet) { create :expense_sheet, expense_sheet_data.merge(user:) }
 
     let(:service_data) do
       {

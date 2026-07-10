@@ -7,8 +7,8 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
   let(:user) { create :user }
   let(:beginning) { Date.parse('2025-01-06') }
   let(:ending) { Date.parse('2025-01-31') }
-  let!(:service) { create :service, beginning: beginning, ending: ending, user: user }
-  let(:expense_sheet) { create :expense_sheet, beginning: beginning, ending: ending, user: user }
+  let!(:service) { create :service, beginning:, ending:, user: }
+  let(:expense_sheet) { create :expense_sheet, beginning:, ending:, user: }
 
   let(:expected_work_days) { 20 }
   let(:expected_workfree_days) { 6 }
@@ -57,7 +57,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
     let(:remaining_paid_vacation_days) { 0 }
     let(:company_holiday_days) { 0 }
-    let(:day_calculator) { instance_double(DayCalculator, company_holiday_days: company_holiday_days) }
+    let(:day_calculator) { instance_double(DayCalculator, company_holiday_days:) }
 
     before do
       allow(expense_sheet.service).to receive(:remaining_paid_vacation_days).and_return remaining_paid_vacation_days
@@ -103,7 +103,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
     let(:remaining_paid_vacation_days) { 0 }
     let(:company_holiday_days) { 0 }
-    let(:day_calculator) { instance_double(DayCalculator, company_holiday_days: company_holiday_days) }
+    let(:day_calculator) { instance_double(DayCalculator, company_holiday_days:) }
 
     before do
       allow(expense_sheet.service).to receive(:remaining_paid_vacation_days).and_return remaining_paid_vacation_days
@@ -170,7 +170,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
 
     context 'with more than one expense sheet' do
       let(:service_range) { get_service_range months: 3 }
-      let(:service) { create :service, beginning: service_range.begin, ending: service_range.end, user: user }
+      let(:service) { create :service, beginning: service_range.begin, ending: service_range.end, user: }
 
       before do
         additional_expense_sheets = created_expense_sheets.length - 1
@@ -222,7 +222,7 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
     let(:ending) { Date.parse('2018-01-26') }
     let(:service_specification) { create :service_specification, :pre_2025_clothing }
     let!(:service) do
-      create :service, beginning: beginning, ending: ending, user: user, service_specification: service_specification
+      create :service, beginning:, ending:, user:, service_specification:
     end
 
     context 'with only one expense sheet' do
@@ -244,8 +244,8 @@ RSpec.describe ExpenseSheetCalculators::SuggestionsCalculator, type: :service do
     context 'with more than one expense sheet' do
       let(:service_range) { get_service_range months: 3, pre2025: true }
       let(:service) do
-        create :service, beginning: service_range.begin, ending: service_range.end, user: user,
-                         service_specification: service_specification
+        create :service, beginning: service_range.begin, ending: service_range.end, user:,
+                         service_specification:
       end
 
       before do

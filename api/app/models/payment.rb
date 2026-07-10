@@ -26,13 +26,13 @@ class Payment
     raise ActiveRecord::RecordNotFound, I18n.t('payment.errors.not_found') if expense_sheets.empty?
 
     state = expense_sheets.first.state
-    Payment.new expense_sheets: expense_sheets, payment_timestamp: payment_timestamp, state: state
+    Payment.new expense_sheets:, payment_timestamp:, state:
   end
 
   def self.all(filters = nil)
     filtered_expense_sheets(filters).group_by(&:payment_timestamp).map do |payment_timestamp, grouped_expense_sheets|
       state = grouped_expense_sheets.first.state
-      Payment.new(expense_sheets: grouped_expense_sheets, state: state, payment_timestamp: payment_timestamp)
+      Payment.new(expense_sheets: grouped_expense_sheets, state:, payment_timestamp:)
     end
   end
 
