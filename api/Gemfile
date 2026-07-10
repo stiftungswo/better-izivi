@@ -17,13 +17,17 @@ gem 'dotenv-rails'
 gem 'hexapdf'
 gem 'iban-tools'
 gem 'jbuilder'
+# Pin below 1.6: newer `logger` breaks ActiveSupport::LoggerThreadSafeLevel on
+# Rails 7.0 (https://github.com/rails/rails/issues/54264) — drop this once
+# Rails is bumped past 7.0.
+gem 'logger', '< 1.6'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'pdf-forms'
 gem 'prawn'
 gem 'prawn-table'
 gem 'puma'
 gem 'rack-cors', require: 'rack/cors'
-gem 'rails', '6.1.6.1'
+gem 'rails', '7.0.8.7'
 gem 'rails-i18n'
 gem 'sepa_king'
 gem 'sidekiq', '~> 6.5'

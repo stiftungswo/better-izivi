@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module V1
-  class ServiceCalculatorController < APIController
+  class ServiceCalculatorController < ApiController
     def calculate_service_days
       ending = Date.parse(service_calculator_params[:ending])
       service_days = service_calculator.calculate_chargeable_service_days(ending)

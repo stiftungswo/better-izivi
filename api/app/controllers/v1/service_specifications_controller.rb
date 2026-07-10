@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module V1
-  class ServiceSpecificationsController < APIController
+  class ServiceSpecificationsController < ApiController
     include V1::Concerns::AdminAuthorizable
 
     before_action :authorize_admin!, except: %i[index show]

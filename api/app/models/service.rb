@@ -9,8 +9,8 @@ class Service < ApplicationRecord
   SATURDAY_WEEKDAY = Date::DAYNAMES.index('Saturday').freeze
   MIN_NORMAL_SERVICE_LENGTH = 26
 
-  include Concerns::PositiveTimeSpanValidatable
-  include Concerns::DateRangeFilterable
+  include PositiveTimeSpanValidatable
+  include DateRangeFilterable
 
   belongs_to :user
   belongs_to :service_specification

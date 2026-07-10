@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module V1
-  class UsersController < APIController
+  class UsersController < ApiController
     ADDITIONAL_PERMITTED_USER_PARAMS = [:email].freeze
     ADMIN_RESTRICTED_USER_PARAMS = %i[internal_note role].freeze
 
@@ -50,7 +50,7 @@ module V1
     end
 
     def user_params
-      permitted_keys = ::Concerns::DeviseUserParamsRegistrable::PERMITTED_USER_KEYS + ADDITIONAL_PERMITTED_USER_PARAMS
+      permitted_keys = ::DeviseUserParamsRegistrable::PERMITTED_USER_KEYS + ADDITIONAL_PERMITTED_USER_PARAMS
       permitted_keys.push(ADMIN_RESTRICTED_USER_PARAMS) if current_user.admin?
 
       format_iban(params.require(:user).permit(*permitted_keys))

@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ExpenseSheet < ApplicationRecord
-  include Concerns::PositiveTimeSpanValidatable
-  include Concerns::DateRangeFilterable
-  include Concerns::ExpenseSheet::StateMachine
+  include PositiveTimeSpanValidatable
+  include DateRangeFilterable
+  include StateMachine
 
   belongs_to :user
 
