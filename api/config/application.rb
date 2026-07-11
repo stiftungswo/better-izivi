@@ -60,7 +60,7 @@ module Api
     # download routes, and by Devise's own sign-out check) to write to the
     # session. Identical across all environments, so it lives here rather than
     # being repeated in each config/environments/*.rb file.
-    config.session_store :cookie_store, key: '_interslice_session'
+    config.session_store :cookie_store, key: '_interslice_session', same_site: :lax
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
 
