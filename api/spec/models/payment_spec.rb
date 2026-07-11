@@ -243,7 +243,7 @@ RSpec.describe Payment, type: :model do
       end
 
       context 'with :paid state filter' do
-        let(:found_payments) { described_class.all [state: :paid] }
+        let(:found_payments) { described_class.all [{ state: :paid }] }
         let(:expected_payments) { paid_payments }
 
         it 'returns all corresponding payments' do
@@ -252,7 +252,7 @@ RSpec.describe Payment, type: :model do
       end
 
       context 'with :payment_in_progress state filter' do
-        let(:found_payments) { described_class.all [state: :payment_in_progress] }
+        let(:found_payments) { described_class.all [{ state: :payment_in_progress }] }
         let(:expected_payments) { payment_in_progress_payments }
 
         it 'returns all corresponding payments' do

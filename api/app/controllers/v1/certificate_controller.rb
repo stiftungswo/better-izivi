@@ -16,9 +16,9 @@ module V1
       respond_to_json_and_docx(@service)
     end
 
-    def respond_to_json_and_docx(*args)
+    def respond_to_json_and_docx(*)
       respond_to do |format|
-        @generate_certificate = Docx::Certificate::GenerateCertificate.new(*args)
+        @generate_certificate = Docx::Certificate::GenerateCertificate.new(*)
         format.json
         format.docx do
           send_data @generate_certificate.render,

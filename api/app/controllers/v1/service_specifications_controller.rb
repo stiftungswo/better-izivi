@@ -55,7 +55,7 @@ module V1
 
       sanitized_params.to_h do |key, value|
         is_json_key = PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS.key? key.to_sym
-        value = is_json_key ? json_string_to_integer(value) : value
+        value = json_string_to_integer(value) if is_json_key
 
         [key, value]
       end

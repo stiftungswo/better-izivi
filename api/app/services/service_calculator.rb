@@ -40,9 +40,7 @@ class ServiceCalculator
     normal_service_calculator.calculate_eligible_paid_vacation_days service_days
   end
 
-  def calculate_eligible_sick_days(service_days)
-    SickDaysCalculator.calculate_eligible_sick_days(service_days)
-  end
+  delegate :calculate_eligible_sick_days, to: :SickDaysCalculator
 
   private
 

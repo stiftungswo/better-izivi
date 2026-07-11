@@ -182,7 +182,7 @@ module Pdfs
        { content: "#{exps_user.last_name} #{exps_user.first_name}" },
        {
          content: "#{I18n.l(expense_sheet.beginning,
-                            format: :short)} - #{I18n.l(expense_sheet.ending, format: :short)}".to_s, align: :center
+                            format: :short)} - #{I18n.l(expense_sheet.ending, format: :short)}", align: :center
        }]
     end
 
