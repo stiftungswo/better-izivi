@@ -29,6 +29,7 @@ RSpec.describe SubscribeToNewsletter do
     expect(Net::HTTP).to have_received(:new).with('www.stiftungswo.ch', 443)
     expect(http_double).to have_received(:use_ssl=).with(true)
     expect(http_double).to have_received(:verify_mode=).with(OpenSSL::SSL::VERIFY_PEER)
+    expect(request_holder.request).to be_a(Net::HTTP::Post)
   end
 
   it 'sends the email, first and last name as a JSON body' do

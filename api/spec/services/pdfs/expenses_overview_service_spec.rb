@@ -48,11 +48,11 @@ RSpec.describe Pdfs::ExpensesOverviewService, type: :service do
     end
 
     it "includes each expense sheet's per-row totals from the real calculators, not hardcoded numbers" do
-      expected_full_expenses = Pdfs::ExpenseSheet::FormatHelper.to_chf(
-        first_expense_sheet.calculate_full_expenses.to_s
-      )
+      expected = [first_expense_sheet, second_expense_sheet].map do |sheet|
+        Pdfs::ExpenseSheet::FormatHelper.to_chf(sheet.calculate_full_expenses.to_s)
+      end
 
-      expect(pdf_text_inspector.strings).to include(expected_full_expenses)
+      expect(pdf_text_inspector.strings).to include(*expected)
     end
 
     it 'includes a grand "Total" row summing across every listed expense sheet' do
@@ -65,13 +65,17 @@ RSpec.describe Pdfs::ExpensesOverviewService, type: :service do
       let(:only_done_sheets) { 'true' }
 
       it 'adds the "based on" disclaimer line' do
-        expect(pdf_text_inspector.strings).to include(I18n.t('pdfs.expenses_overview.basedon'))
+        expect(pdf_text_inspector.strings).to include(
+          I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today))
+        )
       end
     end
 
     context 'when only_done_sheets is not true' do
       it 'omits the "based on" disclaimer line' do
-        expect(pdf_text_inspector.strings).not_to include(I18n.t('pdfs.expenses_overview.basedon'))
+        expect(pdf_text_inspector.strings).not_to include(
+          I18n.t('pdfs.expenses_overview.basedon', date: I18n.l(Time.zone.today))
+        )
       end
     end
 

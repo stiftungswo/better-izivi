@@ -535,8 +535,8 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails (~> 2.36)
   rubocop-rspec (~> 3.10)
-  sentry-rails
-  sentry-ruby
+  sentry-rails (~> 6.6)
+  sentry-ruby (~> 6.6)
   sepa_king
   shoulda-matchers
   sidekiq (~> 6.5)
