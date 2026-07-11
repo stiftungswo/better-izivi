@@ -6,7 +6,7 @@ services:
     working_dir: /api
     depends_on:
       - mysql
-    env_file: 'api/.env.semaphore'
+    env_file: 'api/.env.ci'
   frontend:
     image: node:10
     container_name: better_izivi_frontend
@@ -14,7 +14,7 @@ services:
       - ./frontend:/var/frontend
     working_dir: /var/frontend
   mysql:
-    image: mariadb:10.3.14
+    image: mariadb:11.4.12
     container_name: better_izivi_db
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes

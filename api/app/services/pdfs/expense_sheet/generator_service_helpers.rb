@@ -3,8 +3,8 @@
 module Pdfs
   module ExpenseSheet
     module GeneratorServiceHelpers
-      def self.safe_call(object, *args)
-        return object.call(*args) if object.is_a? Proc
+      def self.safe_call(object, *)
+        return object.call(*) if object.is_a? Proc
 
         object
       end

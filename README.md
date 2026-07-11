@@ -198,7 +198,7 @@ RubyMine ist eine IDE für Ruby von Jetbrains. Will man mit RubyMine im Docker e
 
 1. In RubyMine: `Preferences > Languages & Frameworks > Ruby SDK and Gems` eine neue Remote SDK hinzufügen (`+ > New remote...`) 
 2. `Docker Compose` auswählen
-3. Bei `Configuration file` die Semaphore-Docker-Compose-Datei auswählen (`better-izivi/docker-compose.semaphore.yaml`)
+3. Bei `Configuration file` die CI-Docker-Compose-Datei auswählen (`better-izivi/docker-compose.ci.yml`)
 4. Die `system environment variables` (Icon rechts bei `Environment variables`) deaktivieren
 
 Nun kann man direkt in RubyMine die API starten und beenden. (Über `Edit run configurations` das Port-Mapping anpassen)

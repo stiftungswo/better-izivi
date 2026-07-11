@@ -22,14 +22,14 @@ module V1
       render partial: 'shared/users/user', locals: { user: @user }
     end
 
-    def destroy
-      raise ValidationError, @user.errors unless @user.destroy
-    end
-
     def update
       raise ValidationError, @user.errors unless @user.update(user_params)
 
       show
+    end
+
+    def destroy
+      raise ValidationError, @user.errors unless @user.destroy
     end
 
     private

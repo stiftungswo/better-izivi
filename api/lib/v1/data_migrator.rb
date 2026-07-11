@@ -31,7 +31,7 @@ module V1
 
     def create_migration_db
       puts 'Creating migration database'
-      execute_sql <<-SQL.squish.chomp
+      execute_sql <<~SQL.squish.chomp
         CREATE DATABASE #{MIGRATION_DATABASE_NAME};
       SQL
     end
@@ -71,7 +71,7 @@ module V1
 
     def remove_migration_database
       puts 'Removing migration databse'
-      execute_sql <<-SQL.squish.chomp
+      execute_sql <<~SQL.squish.chomp
         DROP DATABASE #{MIGRATION_DATABASE_NAME};
       SQL
     end

@@ -10,6 +10,10 @@ module V1
     before_action :authorize_admin!
     before_action :set_payment, only: %i[confirm destroy]
 
+    def index
+      @payments = Payment.all(payments_list_filter)
+    end
+
     def show
       @payment = Payment.find(payment_timestamp_param)
 
@@ -24,10 +28,6 @@ module V1
                                      from_date: I18n.l(@payment.payment_timestamp, format: '%d.%m.%Y'))
         end
       end
-    end
-
-    def index
-      @payments = Payment.all(payments_list_filter)
     end
 
     def create
