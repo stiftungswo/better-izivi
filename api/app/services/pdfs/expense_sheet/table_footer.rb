@@ -45,7 +45,7 @@ module Pdfs
         cursor_save_text_box(content,
                              at: [(global_indent + 3), cursor],
                              width: (indent - 8),
-                             align: align,
+                             align:,
                              style: :bold)
       end
 

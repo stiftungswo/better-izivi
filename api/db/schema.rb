@@ -10,15 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_12_04_194509) do
-
+ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
   create_table "allowlisted_jwts", charset: "utf8", force: :cascade do |t|
     t.string "jti", null: false
     t.string "aud"
-    t.datetime "exp", null: false
+    t.datetime "exp", precision: nil, null: false
     t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["jti"], name: "index_allowlisted_jwts_on_jti", unique: true
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
@@ -46,9 +45,9 @@ ActiveRecord::Schema.define(version: 2024_12_04_194509) do
     t.string "clothing_expenses_comment"
     t.string "bank_account_number", null: false
     t.integer "state", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "payment_timestamp"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "payment_timestamp", precision: nil
     t.boolean "ignore_first_day", default: false, null: false
     t.boolean "ignore_last_day", default: false, null: false
     t.integer "included_in_download_at"
@@ -60,16 +59,16 @@ ActiveRecord::Schema.define(version: 2024_12_04_194509) do
     t.date "ending", null: false
     t.integer "holiday_type", default: 1, null: false
     t.string "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "regional_centers", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
     t.string "short_name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "service_specifications", charset: "utf8", force: :cascade do |t|
@@ -83,8 +82,8 @@ ActiveRecord::Schema.define(version: 2024_12_04_194509) do
     t.text "last_day_expenses", null: false
     t.string "location", default: "zh"
     t.boolean "active", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "identification_number", null: false
     t.string "certificate_of_employment_template"
     t.string "confirmation_of_employment_template"
@@ -102,8 +101,8 @@ ActiveRecord::Schema.define(version: 2024_12_04_194509) do
     t.boolean "long_service", default: false, null: false
     t.boolean "probation_service", default: false, null: false
     t.boolean "feedback_mail_sent", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "starts_on_saturday", default: false, null: false
     t.integer "service_days", null: false
     t.index ["service_specification_id"], name: "index_services_on_service_specification_id"
@@ -130,11 +129,11 @@ ActiveRecord::Schema.define(version: 2024_12_04_194509) do
     t.bigint "regional_center_id", null: false
     t.text "internal_note"
     t.boolean "chainsaw_workshop", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
+    t.datetime "reset_password_sent_at", precision: nil
     t.integer "dime_id", default: 0
     t.boolean "photographs_accepted", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true

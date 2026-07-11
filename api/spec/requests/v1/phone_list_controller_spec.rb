@@ -4,13 +4,13 @@ require 'rails_helper'
 
 RSpec.describe V1::PhoneListController, type: :request do
   describe '#show' do
-    let(:request) { get(v1_phone_list_export_path(format: :pdf, params: params)) }
+    let(:request) { get(v1_phone_list_export_path(format: :pdf, params:)) }
     let(:beginning) { '2018-11-05' }
     let(:ending) { '2018-11-30' }
     let(:params) do
       {
-        token: token,
-        phone_list: { beginning: beginning, ending: ending }
+        token:,
+        phone_list: { beginning:, ending: }
       }
     end
     let!(:user) { create :user }
@@ -47,7 +47,7 @@ RSpec.describe V1::PhoneListController, type: :request do
         end
 
         context 'when an invalid format is requested' do
-          let(:request) { get(v1_phone_list_export_path, params: params) }
+          let(:request) { get(v1_phone_list_export_path, params:) }
 
           it_behaves_like 'format protected resource'
         end

@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :expense_sheets, dependent: :restrict_with_error
   has_many :services, dependent: :restrict_with_error
 
-  enum role: {
+  enum :role, {
     admin: 1,
     civil_servant: 2
   }

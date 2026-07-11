@@ -27,7 +27,7 @@ RSpec.describe Pdfs::ExpenseSheet::GeneratorService, type: :service do
           beginning: Date.parse('2018-01-01'),
           ending: Date.parse('2018-02-23'),
           service_days: 54,
-          service_specification: service_specification
+          service_specification:
         }
       end
 

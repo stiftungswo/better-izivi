@@ -44,10 +44,10 @@ class ExpenseSheetGenerator
       user: @service.user,
       ignore_first_day: false,
       ignore_last_day: false,
-      beginning: beginning,
-      ending: ending,
-      work_days: work_days,
-      workfree_days: workfree_days,
+      beginning:,
+      ending:,
+      work_days:,
+      workfree_days:,
       unpaid_vacation_days: holiday_days,
       bank_account_number: '4470 (200)' # TODO: Where to get bank_account_number from?
     )

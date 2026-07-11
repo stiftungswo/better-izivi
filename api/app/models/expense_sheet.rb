@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class ExpenseSheet < ApplicationRecord
-  include Concerns::PositiveTimeSpanValidatable
-  include Concerns::DateRangeFilterable
-  include Concerns::ExpenseSheet::StateMachine
+  include PositiveTimeSpanValidatable
+  include DateRangeFilterable
+  include StateMachine
 
   belongs_to :user
 
@@ -28,14 +28,14 @@ class ExpenseSheet < ApplicationRecord
 
   before_destroy :legitimate_destroy
 
-  enum state: {
+  enum :state, {
     open: 0,
     ready_for_payment: 1,
     payment_in_progress: 2,
     paid: 3
   }
 
-  scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp: payment_timestamp) }
+  scope :in_payment, ->(payment_timestamp) { includes(:user).where(payment_timestamp:) }
   scope :payment_issued, -> { includes(:user).where.not(payment_timestamp: [nil]) }
   scope :before_date, ->(date) { where(arel_table[:ending].lt(date)) }
   scope :filtered_by, ->(filters) { filters.reduce(self) { |query, filter| query.where(filter) } if filters.present? }
