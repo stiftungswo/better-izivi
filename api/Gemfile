@@ -40,7 +40,8 @@ gem 'validates_timeliness'
 
 group :production do
   gem 'lograge'
-  gem 'sentry-raven'
+  gem 'sentry-rails'
+  gem 'sentry-ruby'
 end
 
 group :development, :test do

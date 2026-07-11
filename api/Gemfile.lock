@@ -167,10 +167,6 @@ GEM
       railties (>= 5.0.0)
     faker (2.22.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.5.2)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.0)
     ffi (1.15.5)
     ffi (1.15.5-x64-mingw32)
     fugit (1.12.3)
@@ -415,12 +411,16 @@ GEM
       rubocop (~> 1.31)
     ruby-progressbar (1.11.0)
     ruby-rc4 (0.1.5)
-    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     safe_shell (1.1.0)
     securerandom (0.4.1)
-    sentry-raven (3.1.2)
-      faraday (>= 1.0)
+    sentry-rails (6.6.2)
+      railties (>= 5.2.0)
+      sentry-ruby (~> 6.6.2)
+    sentry-ruby (6.6.2)
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      logger
     sepa_king (0.13.0)
       activemodel (>= 4.2)
       iban-tools
@@ -526,7 +526,8 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails (~> 2.15)
   rubocop-rspec (~> 2.12)
-  sentry-raven
+  sentry-rails
+  sentry-ruby
   sepa_king
   shoulda-matchers
   sidekiq (~> 6.5)
