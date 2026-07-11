@@ -17,9 +17,11 @@ gem 'dotenv-rails'
 gem 'hexapdf'
 gem 'iban-tools'
 gem 'jbuilder'
-# Ruby 3.4 dropped `matrix` and `observer` from the default gems bundled with
-# the interpreter; transitive deps still require them, so they need to be
-# declared explicitly now.
+# Ruby 3.4 dropped `matrix`, `observer` and `ostruct` from the default gems
+# bundled with the interpreter. `matrix` and `observer` are hard LoadErrors
+# for transitive deps (prawn and factory_bot_rails respectively); `ostruct`
+# is just to silence a "will no longer be part of the default gems" warning
+# ahead of Ruby 4.0.
 gem 'matrix'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'observer'

@@ -56,6 +56,14 @@ module Api
     config.i18n.fallbacks = %i[de en]
     config.time_zone = 'Bern'
 
+    # Needed for Devise's `sign_in` (used by the token-authenticated PDF/XML/docx
+    # download routes, and by Devise's own sign-out check) to write to the
+    # session. Identical across all environments, so it lives here rather than
+    # being repeated in each config/environments/*.rb file.
+    config.session_store :cookie_store, key: '_interslice_session'
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use config.session_store, config.session_options
+
     Prawn::Font::AFM.hide_m17n_warning = true
   end
 end

@@ -77,12 +77,6 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  # Needed for Devise's `sign_in` (used by the token-authenticated PDF/XML/docx
-  # download routes) to write to the session — see the same block in production.rb.
-  config.session_store :cookie_store, key: '_interslice_session'
-  config.middleware.use ActionDispatch::Cookies
-  config.middleware.use config.session_store, config.session_options
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true

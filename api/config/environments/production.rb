@@ -105,10 +105,6 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  config.session_store :cookie_store, key: '_interslice_session'
-  config.middleware.use ActionDispatch::Cookies
-  config.middleware.use config.session_store, config.session_options
-
   # CORS configuration
   config.middleware.insert_before 0, Rack::Cors do
     allow do
