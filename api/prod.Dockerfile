@@ -11,9 +11,14 @@ ENV RACK_ENV=production
 RUN gem install bundler -v "2.6.9" --no-document
 RUN apt-get update && apt-get install -y mariadb-client pdftk
 
+RUN useradd -ms /bin/bash rails
+
 WORKDIR /api
 COPY Gemfile* ./
 COPY . /api
+
+RUN chown -R rails:rails /api /usr/local/bundle
+USER rails
 
 RUN bundle install --jobs=8
 
