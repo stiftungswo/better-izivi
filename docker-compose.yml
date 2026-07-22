@@ -12,7 +12,7 @@ services:
         command: "rails server -p 8000 -b 0.0.0.0"
         depends_on:
             - mysql
-            - redis
+            - valkey
         ports:
             - "28000:8000"
             - "1234:1234"
@@ -45,7 +45,7 @@ services:
             - PASSWORD_DIME=123456
             - CONNECT_TO_DIME=false
             - API_URI_DIME=${API_URI_DIME:-https://dime-apir-develop.stiftungswo.ch}
-            - REDIS_URL=redis://redis:6379/0
+            - REDIS_URL=redis://valkey:6379/0
 
     worker:
         image: better-izivi-api-dev
@@ -56,12 +56,12 @@ services:
         command: "bundle exec sidekiq -C config/sidekiq.yml"
         depends_on:
             - mysql
-            - redis
+            - valkey
         environment: *api_env
 
-    redis:
-        image: redis:7.4-alpine
-        container_name: better_izivi_redis
+    valkey:
+        image: valkey/valkey:8.1-alpine
+        container_name: better_izivi_valkey
         ports:
             - "26379:6379"
 
