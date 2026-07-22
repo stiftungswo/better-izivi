@@ -60,7 +60,7 @@ services:
         environment: *api_env
 
     redis:
-        image: redis:6.2.5-alpine
+        image: redis:7.4-alpine
         container_name: better_izivi_redis
         ports:
             - "26379:6379"

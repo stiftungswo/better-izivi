@@ -47,7 +47,7 @@ module V1
         remaining_days = ExpenseSheetCalculators::RemainingDaysCalculator.new(live_expense_sheet.service).remaining_days
         render :hints, locals: { suggestions:, remaining_days: }
       else
-        render json: { errors: live_expense_sheet.errors }, status: :unprocessable_entity
+        render json: { errors: live_expense_sheet.errors }, status: :unprocessable_content
       end
     end
 
