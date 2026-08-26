@@ -24,6 +24,23 @@ RSpec.describe V1::FormbricksSurveysController, type: :request do
       it_behaves_like 'renders a successful http status code'
     end
 
+    context 'when Formbricks rejects the request' do
+      let(:user) { create :user, :admin }
+
+      before do
+        sign_in user
+        allow(FormbricksClient).to receive(:new)
+          .and_raise(FormbricksApiError, 'Formbricks API request failed with status 401')
+      end
+
+      it 'renders a bad gateway error instead of an empty list', :aggregate_failures do
+        request
+
+        expect(response).to have_http_status(:bad_gateway)
+        expect(parse_response_json(response)).to eq(error: 'Formbricks API request failed with status 401')
+      end
+    end
+
     context 'when the user is signed in but not an admin' do
       let(:user) { create :user }
 

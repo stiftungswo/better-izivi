@@ -1,8 +1,7 @@
-Folgende Einsatzspezifikationen haben noch keine Formbricks-Umfrage hinterlegt,
-daher wurde für zugehörige Einsätze noch keine Feedback-Erinnerung verschickt:
+<%= I18n.t('admin_mailer.missing_feedback_survey_mail.intro') %>
 
 <% @service_specifications.each do |spec| -%>
 - <%= spec.name %> (<%= spec.identification_number %>)
 <% end -%>
 
-Bitte im Adminbereich unter "Einsatzspezifikationen" eine Umfrage zuweisen.
+<%= I18n.t('admin_mailer.missing_feedback_survey_mail.instruction') %>

@@ -140,6 +140,10 @@ en:
       user: User
   admin_mailer:
     missing_feedback_survey_mail:
+      instruction: Please assign a survey in the admin area under "Service specifications".
+      intro: |-
+        The following service specifications do not have a Formbricks survey assigned yet,
+        so no feedback reminder has been sent for their associated services:
       subject: Missing Formbricks survey on service specification
   attributes:
     payment_timestamp: Payment timestamp

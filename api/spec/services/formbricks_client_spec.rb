@@ -6,14 +6,15 @@ RSpec.describe FormbricksClient do
   subject(:client) { described_class.new }
 
   let(:http_double) { instance_double(Net::HTTP) }
-  let(:response) do
-    instance_double(Net::HTTPResponse, body: {
+  let(:surveys_body) do
+    {
       data: [
         { id: 'link-survey-1', name: 'Exit Survey', type: 'link' },
         { id: 'app-survey-1', name: 'In-App Survey', type: 'app' }
       ]
-    }.to_json)
+    }.to_json
   end
+  let(:response) { build_response(Net::HTTPOK, '200', surveys_body) }
   let(:requests) { [] }
 
   before do
@@ -27,6 +28,10 @@ RSpec.describe FormbricksClient do
       requests << req
       response
     end
+  end
+
+  def build_response(klass, code, body)
+    klass.new('1.1', code, 'reason').tap { |resp| allow(resp).to receive(:body).and_return(body) }
   end
 
   describe '#link_surveys' do
@@ -47,6 +52,18 @@ RSpec.describe FormbricksClient do
       allow(response).to receive(:body).and_return({ data: [] }.to_json)
 
       expect(client.link_surveys).to eq []
+    end
+
+    it 'raises a FormbricksApiError when the request is unauthorized' do
+      allow(http_double).to receive(:request).and_return(build_response(Net::HTTPUnauthorized, '401', ''))
+
+      expect { client.link_surveys }.to raise_error(FormbricksApiError, /401/)
+    end
+
+    it 'raises a FormbricksApiError when the request fails on the Formbricks side' do
+      allow(http_double).to receive(:request).and_return(build_response(Net::HTTPInternalServerError, '500', ''))
+
+      expect { client.link_surveys }.to raise_error(FormbricksApiError, /500/)
     end
   end
 end

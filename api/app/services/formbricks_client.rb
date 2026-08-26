@@ -17,7 +17,11 @@ class FormbricksClient
   private
 
   def surveys
-    JSON.parse(fetch_surveys.body).fetch('data', [])
+    response = fetch_surveys
+    raise FormbricksApiError, "Formbricks API request failed with status #{response.code}" unless
+        response.is_a?(Net::HTTPSuccess)
+
+    JSON.parse(response.body).fetch('data', [])
   end
 
   def fetch_surveys
