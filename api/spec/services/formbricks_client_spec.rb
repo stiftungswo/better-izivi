@@ -65,5 +65,17 @@ RSpec.describe FormbricksClient do
 
       expect { client.link_surveys }.to raise_error(FormbricksApiError, /500/)
     end
+
+    it 'raises a FormbricksApiError when the network request itself fails' do
+      allow(http_double).to receive(:request).and_raise(SocketError, 'getaddrinfo failed')
+
+      expect { client.link_surveys }.to raise_error(FormbricksApiError, /getaddrinfo failed/)
+    end
+
+    it 'raises a FormbricksApiError when the response body is not valid JSON' do
+      allow(response).to receive(:body).and_return('not json')
+
+      expect { client.link_surveys }.to raise_error(FormbricksApiError, /invalid JSON/)
+    end
   end
 end

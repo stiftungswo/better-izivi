@@ -21,7 +21,13 @@ class FormbricksClient
     raise FormbricksApiError, "Formbricks API request failed with status #{response.code}" unless
         response.is_a?(Net::HTTPSuccess)
 
-    JSON.parse(response.body).fetch('data', [])
+    parse_surveys(response.body)
+  end
+
+  def parse_surveys(body)
+    JSON.parse(body).fetch('data', [])
+  rescue JSON::ParserError => e
+    raise FormbricksApiError, "Formbricks API returned invalid JSON: #{e.message}"
   end
 
   def fetch_surveys
@@ -31,5 +37,7 @@ class FormbricksClient
     http.use_ssl = uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_PEER
     http.request(req)
+  rescue StandardError => e
+    raise FormbricksApiError, "Formbricks API request failed: #{e.message}"
   end
 end
