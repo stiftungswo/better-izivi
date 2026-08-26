@@ -1,8 +1,10 @@
+import { observer } from 'mobx-react';
 import * as React from 'react';
 import { WithSheet } from 'react-jss';
 import { CheckboxField } from '../../form/CheckboxField';
-import { TextField } from '../../form/common';
+import { SelectField, TextField } from '../../form/common';
 import { WiredField } from '../../form/formik';
+import { FormbricksSurveyStore } from '../../stores/formbricksSurveyStore';
 import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
 
 const STANDARD_INPUT_ROW_NAME_KEYS = Object.freeze([
@@ -29,6 +31,7 @@ interface OverviewTableRowParams {
   name: string;
   size?: string;
   disabled?: boolean;
+  options?: { id: string; name: string }[];
 }
 
 const OverviewTableRow = ({ tableDataClassName, ...other }: OverviewTableRowParams) => {
@@ -39,27 +42,43 @@ const OverviewTableRow = ({ tableDataClassName, ...other }: OverviewTableRowPara
   );
 };
 
-export const ServiceSpecificationOverviewTableRowFields = ({ classes }: WithSheet<typeof serviceSpecificationStyles>) => {
-  const defaultParams = {
-    tableDataClassName: classes.rowTd,
-  };
+interface ServiceSpecificationOverviewTableRowFieldsProps extends WithSheet<typeof serviceSpecificationStyles> {
+  formbricksSurveyStore?: FormbricksSurveyStore;
+}
 
-  const inputDefaultParams = {
-    ...defaultParams,
-    className: classes.inputs,
-    component: TextField,
-    size: '5',
-  };
+export const ServiceSpecificationOverviewTableRowFields = observer(
+  ({ classes, formbricksSurveyStore }: ServiceSpecificationOverviewTableRowFieldsProps) => {
+    const defaultParams = {
+      tableDataClassName: classes.rowTd,
+    };
 
-  return (
-    <>
-      <OverviewTableRow {...defaultParams} className={classes.checkboxes} component={CheckboxField} name={'active'}/>
-      <OverviewTableRow {...inputDefaultParams} name={'identification_number'} size={'3'}/>
-      <OverviewTableRow {...inputDefaultParams} name={'name'} size={'20'} />
-      <OverviewTableRow {...inputDefaultParams} name={'short_name'} size={'1'} />
-      <OverviewTableRow {...inputDefaultParams} name={'pocket_money'} disabled={true} />
+    const inputDefaultParams = {
+      ...defaultParams,
+      className: classes.inputs,
+      component: TextField,
+      size: '5',
+    };
 
-      {STANDARD_INPUT_ROW_NAME_KEYS.map(name => <OverviewTableRow {...inputDefaultParams} name={name} key={name} />)}
-    </>
-  );
-};
+    const surveyOptions = (formbricksSurveyStore ? formbricksSurveyStore.entities : []).map(({ id, name }) => ({ id, name }));
+
+    return (
+      <>
+        <OverviewTableRow {...defaultParams} className={classes.checkboxes} component={CheckboxField} name={'active'}/>
+        <OverviewTableRow {...inputDefaultParams} name={'identification_number'} size={'3'}/>
+        <OverviewTableRow {...inputDefaultParams} name={'name'} size={'20'} />
+        <OverviewTableRow {...inputDefaultParams} name={'short_name'} size={'1'} />
+        <OverviewTableRow {...inputDefaultParams} name={'pocket_money'} disabled={true} />
+
+        {STANDARD_INPUT_ROW_NAME_KEYS.map(name => <OverviewTableRow {...inputDefaultParams} name={name} key={name} />)}
+
+        <OverviewTableRow
+          {...defaultParams}
+          className={classes.inputs}
+          component={SelectField}
+          name={'formbricks_survey_id'}
+          options={surveyOptions}
+        />
+      </>
+    );
+  },
+);

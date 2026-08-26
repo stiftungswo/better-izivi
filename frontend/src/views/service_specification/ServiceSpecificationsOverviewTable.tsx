@@ -149,6 +149,14 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
       span: { col: 6 },
       subcolumns: getDailyExpensesSubcolumns(intl),
     },
+    {
+      label:
+        intl.formatMessage({
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.formbricks_survey',
+          defaultMessage: 'Feedback-Umfrage',
+        }),
+      span: { row: 2 },
+    },
   ];
 };
 

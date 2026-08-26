@@ -10,8 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
-  create_table "allowlisted_jwts", charset: "utf8", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2026_08_26_150001) do
+  create_table "allowlisted_jwts", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "jti", null: false
     t.string "aud"
     t.datetime "exp", precision: nil, null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
     t.index ["user_id"], name: "index_allowlisted_jwts_on_user_id"
   end
 
-  create_table "expense_sheets", charset: "utf8", force: :cascade do |t|
+  create_table "expense_sheets", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.date "beginning", null: false
     t.date "ending", null: false
     t.bigint "user_id", null: false
@@ -54,7 +54,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
     t.index ["user_id"], name: "index_expense_sheets_on_user_id"
   end
 
-  create_table "holidays", charset: "utf8", force: :cascade do |t|
+  create_table "holidays", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.date "beginning", null: false
     t.date "ending", null: false
     t.integer "holiday_type", default: 1, null: false
@@ -63,7 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "regional_centers", charset: "utf8", force: :cascade do |t|
+  create_table "regional_centers", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
     t.string "short_name", null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "service_specifications", charset: "utf8", force: :cascade do |t|
+  create_table "service_specifications", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "short_name", null: false
     t.integer "work_clothing_expenses", null: false
@@ -87,10 +87,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
     t.string "identification_number", null: false
     t.string "certificate_of_employment_template"
     t.string "confirmation_of_employment_template"
+    t.string "formbricks_survey_id"
     t.index ["identification_number"], name: "index_service_specifications_on_identification_number", unique: true
   end
 
-  create_table "services", charset: "utf8", force: :cascade do |t|
+  create_table "services", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "service_specification_id", null: false
     t.date "beginning", null: false
@@ -109,7 +110,17 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
-  create_table "users", charset: "utf8", force: :cascade do |t|
+  create_table "user_settings", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "key", null: false
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "key"], name: "index_user_settings_on_user_id_and_key", unique: true
+    t.index ["user_id"], name: "index_user_settings_on_user_id"
+  end
+
+  create_table "users", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "email", null: false
     t.integer "zdp", null: false
     t.string "first_name", null: false
@@ -146,5 +157,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_07_10_150610) do
   add_foreign_key "expense_sheets", "users"
   add_foreign_key "services", "service_specifications"
   add_foreign_key "services", "users"
+  add_foreign_key "user_settings", "users"
   add_foreign_key "users", "regional_centers"
 end

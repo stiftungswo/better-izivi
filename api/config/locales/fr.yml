@@ -138,6 +138,9 @@ fr:
       service: Service
       service_specification: spécification du service
       user: Utilisateur
+  admin_mailer:
+    missing_feedback_survey_mail:
+      subject: Enquête Formbricks manquante pour une spécification de service
   attributes:
     payment_timestamp: Horodatage du paiement
     state: Statut

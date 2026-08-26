@@ -37,7 +37,8 @@ services:
             - SERVICE_AGREEMENT_LETTER_SENDER_NAME=My Company Name
             - SERVICE_AGREEMENT_LETTER_SENDER_ADDRESS=MyStreet 111
             - SERVICE_AGREEMENT_LETTER_SENDER_ZIP_CITY=1234 MyCity
-            - FEEDBACK_MAIL_SURVEY_URL=http://survey.stiftungswo.ch/my/survey?service_id=%{service_id}
+            - FORMBRICKS_API_HOST=http://survey.stiftungswo.ch
+            - FORMBRICKS_API_KEY=changeme
             - FEEDBACK_MAIL_TESTIMONIAL_URL=https://naturzivi.ch/testimonial
             - FEEDBACK_MAIL_GOOGLE_REVIEW_URL=https://g.page/r/Ceus2ke10hBiEAg/review
             - PASSWORD_RESET_LINK="e.g. http://izivi.localhost:3000/users/passwords/edit/%{token}"

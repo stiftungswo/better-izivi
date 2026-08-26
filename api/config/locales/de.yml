@@ -138,6 +138,9 @@ de:
       service: Einsatz
       service_specification: Pflichtenheft
       user: Benutzer
+  admin_mailer:
+    missing_feedback_survey_mail:
+      subject: Fehlende Formbricks-Umfrage bei Einsatzspezifikation
   attributes:
     payment_timestamp: Auszahlungszeitstempel
     state: Status

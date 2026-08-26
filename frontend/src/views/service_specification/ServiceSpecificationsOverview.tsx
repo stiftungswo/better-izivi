@@ -5,6 +5,7 @@ import * as React from 'react';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import IziviContent from '../../layout/IziviContent';
+import { FormbricksSurveyStore } from '../../stores/formbricksSurveyStore';
 import { MainStore } from '../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
 import { ServiceSpecification } from '../../types';
@@ -28,10 +29,12 @@ const INITIAL_FORM_VALUES = Object.freeze({
   accommodation_expenses: 0,
   active: false,
   pocket_money: 750,
+  formbricks_survey_id: null,
 });
 
 interface ServiceSpecificationProps extends WithSheet<typeof serviceSpecificationStyles> {
   serviceSpecificationStore?: ServiceSpecificationStore;
+  formbricksSurveyStore?: FormbricksSurveyStore;
   mainStore?: MainStore;
 }
 
@@ -39,7 +42,7 @@ interface ServiceSpecificationState {
   loading: boolean;
 }
 
-@inject('serviceSpecificationStore', 'mainStore')
+@inject('serviceSpecificationStore', 'formbricksSurveyStore', 'mainStore')
 @observer
 export class ServiceSpecificationsOverviewInner extends React.Component<ServiceSpecificationProps, ServiceSpecificationState> {
   constructor(props: ServiceSpecificationProps) {
@@ -48,6 +51,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
     this.props.serviceSpecificationStore!.fetchAll().then(() => {
       this.setState({ loading: false });
     });
+    this.props.formbricksSurveyStore!.fetchAll();
 
     this.state = {
       loading: true,

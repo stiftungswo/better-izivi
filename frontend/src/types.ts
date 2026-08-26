@@ -135,6 +135,12 @@ export interface ServiceSpecification {
   accommodation_expenses: number;
   pocket_money: number;
   active: boolean;
+  formbricks_survey_id: string | null;
+}
+
+export interface FormbricksSurvey {
+  id: string;
+  name: string;
 }
 
 type UserRole = 'admin' | 'civil_servant';
@@ -155,6 +161,7 @@ export interface User {
   hometown: string;
   internal_note: string;
   last_name: string;
+  notify_on_missing_survey: boolean;
   phone: string;
   regional_center_id: number;
   expense_sheets: ShortExpenseSheetListing[];

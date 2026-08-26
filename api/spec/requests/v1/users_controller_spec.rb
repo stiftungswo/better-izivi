@@ -145,7 +145,7 @@ RSpec.describe V1::UsersController, type: :request do
         end
 
         context 'when he tries to update an admin protected field' do
-          let(:params) { { internal_note: 'Restricted', role: 'admin' } }
+          let(:params) { { internal_note: 'Restricted', role: 'admin', notify_on_missing_survey: true } }
 
           it 'does not change the internal notes field' do
             expect { request }.not_to(change { updated_user.reload.internal_note })
@@ -153,6 +153,10 @@ RSpec.describe V1::UsersController, type: :request do
 
           it 'does not update the role' do
             expect { request }.not_to(change { updated_user.reload.role })
+          end
+
+          it 'does not update notify_on_missing_survey' do
+            expect { request }.not_to(change { updated_user.reload.notify_on_missing_survey })
           end
         end
 
@@ -201,12 +205,16 @@ RSpec.describe V1::UsersController, type: :request do
       end
 
       context 'when he tries to update admin protected fields' do
-        let(:params) { { internal_note: 'Restricted', role: 'admin' } }
+        let(:params) { { internal_note: 'Restricted', role: 'admin', notify_on_missing_survey: true } }
 
         it 'changes #role and #internal_note' do
           expect { request }.to change { updated_user.reload.internal_note }.to(params[:internal_note]).and(
             change { updated_user.reload.admin? }.from(false).to(true)
           )
+        end
+
+        it 'changes #notify_on_missing_survey' do
+          expect { request }.to change { updated_user.reload.notify_on_missing_survey }.from(false).to(true)
         end
       end
     end

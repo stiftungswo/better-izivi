@@ -138,6 +138,9 @@ en:
       service: Service
       service_specification: Service specification
       user: User
+  admin_mailer:
+    missing_feedback_survey_mail:
+      subject: Missing Formbricks survey on service specification
   attributes:
     payment_timestamp: Payment timestamp
     state: State

@@ -4,11 +4,14 @@ require 'rails_helper'
 
 RSpec.describe FeedbackMailer, type: :mailer do
   describe 'feedback_reminder_mail' do
-    let(:service) { build_stubbed :service, user: build_stubbed(:user) }
+    let(:service_specification) { build_stubbed :service_specification, formbricks_survey_id: 'survey-123' }
+    let(:service) do
+      build_stubbed :service, user: build_stubbed(:user), service_specification:
+    end
     let(:mail) { described_class.feedback_reminder_mail(service) }
     let(:envs) do
       {
-        FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%<service_id>s',
+        FORMBRICKS_API_HOST: 'http://example.com',
         FEEDBACK_MAIL_TESTIMONIAL_URL: 'https://naturzivi.ch/testimonial',
         FEEDBACK_MAIL_GOOGLE_REVIEW_URL: 'https://g.page/r/Ceus2ke10hBiEAg/review',
         MAIL_SENDER: 'from@example.com'
@@ -32,7 +35,7 @@ RSpec.describe FeedbackMailer, type: :mailer do
     end
 
     describe 'body' do
-      let(:link) { "http://example.com?service_id=#{service.id}" }
+      let(:link) { "http://example.com/s/survey-123?service_id=#{service.id}" }
 
       it 'contains the correct parts', :aggregate_failures do
         ClimateControl.modify envs do
