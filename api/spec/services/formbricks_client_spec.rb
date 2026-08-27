@@ -77,5 +77,19 @@ RSpec.describe FormbricksClient do
 
       expect { client.link_surveys }.to raise_error(FormbricksApiError, /invalid JSON/)
     end
+
+    it 'treats a missing "data" key as no surveys' do
+      allow(response).to receive(:body).and_return({}.to_json)
+
+      expect(client.link_surveys).to eq []
+    end
+
+    ['null', '[]', '{"data": null}', '{"data": [null]}'].each do |malformed_body|
+      it "raises a FormbricksApiError for the semantically malformed body `#{malformed_body}`" do
+        allow(response).to receive(:body).and_return(malformed_body)
+
+        expect { client.link_surveys }.to raise_error(FormbricksApiError, /unexpected response shape/)
+      end
+    end
   end
 end

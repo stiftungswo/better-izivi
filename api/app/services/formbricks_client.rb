@@ -25,9 +25,20 @@ class FormbricksClient
   end
 
   def parse_surveys(body)
-    JSON.parse(body).fetch('data', [])
+    parsed = JSON.parse(body)
+    raise_invalid_shape unless parsed.is_a?(Hash)
+    return [] unless parsed.key?('data')
+
+    data = parsed['data']
+    raise_invalid_shape unless data.is_a?(Array) && data.all?(Hash)
+
+    data
   rescue JSON::ParserError => e
     raise FormbricksApiError, "Formbricks API returned invalid JSON: #{e.message}"
+  end
+
+  def raise_invalid_shape
+    raise FormbricksApiError, 'Formbricks API returned an unexpected response shape'
   end
 
   def fetch_surveys
