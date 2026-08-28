@@ -146,7 +146,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.dinner',
           defaultMessage: 'Abendessen',
         }),
-      span: { col: 6 },
+      span: { col: 4 },
       subcolumns: getDailyExpensesSubcolumns(intl),
     },
     {

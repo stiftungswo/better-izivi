@@ -26,7 +26,9 @@ RSpec.describe FeedbackReminderMailSenderService, type: :service do
     end
 
     it 'does not touch the excluded services' do
-      expect { service.send_reminders }.not_to(change { excluded_services.map(&:reload) })
+      expect { service.send_reminders }.not_to(
+        change { excluded_services.map { |excluded_service| excluded_service.reload.attributes } }
+      )
     end
   end
 

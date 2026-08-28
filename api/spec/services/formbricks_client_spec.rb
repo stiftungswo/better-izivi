@@ -34,6 +34,14 @@ RSpec.describe FormbricksClient do
     klass.new('1.1', code, 'reason').tap { |resp| allow(resp).to receive(:body).and_return(body) }
   end
 
+  describe '#initialize' do
+    it 'raises a FormbricksApiError when FORMBRICKS_API_HOST is not https' do
+      allow(ENV).to receive(:fetch).with('FORMBRICKS_API_HOST').and_return('http://formbricks.example.com')
+
+      expect { described_class.new }.to raise_error(FormbricksApiError, /https/)
+    end
+  end
+
   describe '#link_surveys' do
     it 'requests the management surveys endpoint with the api key header', :aggregate_failures do
       client.link_surveys
