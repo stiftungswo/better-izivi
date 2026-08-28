@@ -5,6 +5,7 @@ module ErrorHandler
 
   class << self
     # :reek:TooManyStatements
+    # rubocop:disable Metrics/AbcSize
     def included(klass)
       # Caution, do not simplify statement which is suggested by RubyMine. It breaks the application
       klass.rescue_from(ActiveRecord::RecordNotFound) { |error| render_json_error(error) }
@@ -14,7 +15,9 @@ module ErrorHandler
       klass.rescue_from(ActionController::UnknownFormat) { |_error| render_format_error }
       klass.rescue_from(CalculationError) { |error| render_calculation_error(error) }
       klass.rescue_from(ActiveRecord::ReadOnlyRecord) { |error| render_json_error(error) }
+      klass.rescue_from(FormbricksApiError) { |error| render_bad_gateway_error(error) }
     end
+    # rubocop:enable Metrics/AbcSize
   end
 
   private
@@ -39,5 +42,9 @@ module ErrorHandler
 
   def render_calculation_error(error)
     render json: { error: error.message }, status: :bad_request
+  end
+
+  def render_bad_gateway_error(error)
+    render json: { error: error.message }, status: :bad_gateway
   end
 end

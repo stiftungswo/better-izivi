@@ -158,6 +158,14 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
           end
         end
 
+        context 'when updating the formbricks survey id' do
+          let(:params) { { formbricks_survey_id: 'survey-abc' } }
+
+          it 'updates the formbricks_survey_id' do
+            expect { put_request }.to(change { service_specification.reload.formbricks_survey_id }.to('survey-abc'))
+          end
+        end
+
         context 'with invalid params' do
           let(:params) { { work_clothing_expenses: 'ab' } }
 

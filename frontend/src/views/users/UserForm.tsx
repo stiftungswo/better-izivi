@@ -354,6 +354,17 @@ class UserFormInner extends React.Component<Props> {
                     defaultMessage: 'Interne Bemerkung',
                   })}
                 />
+                {formikProps.values.role === 'admin' && (
+                  <WiredField
+                    horizontal
+                    component={CheckboxField}
+                    name={'notify_on_missing_survey'}
+                    label={intl.formatMessage({
+                      id: 'views.users.userForm.notify_on_missing_survey',
+                      defaultMessage: 'Bei fehlender Umfrage benachrichtigen',
+                    })}
+                  />
+                )}
               </>
             )}
 

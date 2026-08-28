@@ -138,6 +138,13 @@ de:
       service: Einsatz
       service_specification: Pflichtenheft
       user: Benutzer
+  admin_mailer:
+    missing_feedback_survey_mail:
+      instruction: Bitte im Adminbereich unter "Einsatzspezifikationen" eine Umfrage zuweisen.
+      intro: |-
+        Folgende Einsatzspezifikationen haben noch keine Formbricks-Umfrage hinterlegt,
+        daher wurde für zugehörige Einsätze noch keine Feedback-Erinnerung verschickt:
+      subject: Fehlende Formbricks-Umfrage bei Einsatzspezifikation
   attributes:
     payment_timestamp: Auszahlungszeitstempel
     state: Status

@@ -236,11 +236,14 @@ RSpec.describe Service, type: :model do
   end
 
   describe '#send_feedback_reminder' do
-    subject(:service) { build :service, user: build(:user) }
+    subject(:service) do
+      build :service, user: build(:user),
+                      service_specification: build(:service_specification, formbricks_survey_id: 'survey-123')
+    end
 
     let(:envs) do
       {
-        FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%<service_id>s',
+        FORMBRICKS_API_HOST: 'https://example.com',
         FEEDBACK_MAIL_TESTIMONIAL_URL: 'https://naturzivi.ch/testimonial',
         FEEDBACK_MAIL_GOOGLE_REVIEW_URL: 'https://g.page/r/Ceus2ke10hBiEAg/review',
         MAIL_SENDER: 'from@example.com'

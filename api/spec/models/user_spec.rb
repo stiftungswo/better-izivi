@@ -134,6 +134,34 @@ RSpec.describe User, type: :model do
     it { is_expected.to eq 'Peter Zivi' }
   end
 
+  describe '#notify_on_missing_survey' do
+    subject(:user) { create :user }
+
+    it 'is false when no setting has been stored' do
+      expect(user.notify_on_missing_survey).to be false
+    end
+
+    it 'is true after being set to true' do
+      user.update!(notify_on_missing_survey: true)
+
+      expect(user.reload.notify_on_missing_survey).to be true
+    end
+
+    it 'is false again after being set back to false' do
+      user.update!(notify_on_missing_survey: true)
+      user.update!(notify_on_missing_survey: false)
+
+      expect(user.reload.notify_on_missing_survey).to be false
+    end
+
+    it 'does not create duplicate user_settings rows when set repeatedly' do
+      expect do
+        user.update!(notify_on_missing_survey: true)
+        user.update!(notify_on_missing_survey: false)
+      end.to change(UserSetting, :count).by(1)
+    end
+  end
+
   describe '#active?' do
     subject { user.active? }
 

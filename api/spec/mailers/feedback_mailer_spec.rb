@@ -4,11 +4,14 @@ require 'rails_helper'
 
 RSpec.describe FeedbackMailer, type: :mailer do
   describe 'feedback_reminder_mail' do
-    let(:service) { build_stubbed :service, user: build_stubbed(:user) }
+    let(:service_specification) { build_stubbed :service_specification, formbricks_survey_id: 'survey-123' }
+    let(:service) do
+      build_stubbed :service, user: build_stubbed(:user), service_specification:
+    end
     let(:mail) { described_class.feedback_reminder_mail(service) }
     let(:envs) do
       {
-        FEEDBACK_MAIL_SURVEY_URL: 'http://example.com?service_id=%<service_id>s',
+        FORMBRICKS_API_HOST: 'https://example.com',
         FEEDBACK_MAIL_TESTIMONIAL_URL: 'https://naturzivi.ch/testimonial',
         FEEDBACK_MAIL_GOOGLE_REVIEW_URL: 'https://g.page/r/Ceus2ke10hBiEAg/review',
         MAIL_SENDER: 'from@example.com'
@@ -32,13 +35,23 @@ RSpec.describe FeedbackMailer, type: :mailer do
     end
 
     describe 'body' do
-      let(:link) { "http://example.com?service_id=#{service.id}" }
+      let(:link) { "https://example.com/s/survey-123?service_id=#{service.id}" }
 
       it 'contains the correct parts', :aggregate_failures do
         ClimateControl.modify envs do
           expect(mail.body.encoded).to match("Lieber #{service.user.full_name}")
           expect(mail.text_part.decoded).to include link
           expect(mail.html_part.decoded).to include link
+        end
+      end
+    end
+
+    context 'when FORMBRICKS_API_HOST is not https' do
+      let(:envs) { { FORMBRICKS_API_HOST: 'http://example.com' } }
+
+      it 'raises a FormbricksApiError' do
+        ClimateControl.modify envs do
+          expect { mail.subject }.to raise_error(FormbricksApiError, /https/)
         end
       end
     end
