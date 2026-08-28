@@ -31,11 +31,17 @@ class FormbricksClient
     return [] unless parsed.key?('data')
 
     data = parsed['data']
-    raise_invalid_shape unless data.is_a?(Array) && data.all?(Hash)
+    raise_invalid_shape unless data.is_a?(Array) && data.all? { |survey| valid_survey?(survey) }
 
     data
   rescue JSON::ParserError => e
     raise FormbricksApiError, "Formbricks API returned invalid JSON: #{e.message}"
+  end
+
+  def valid_survey?(survey)
+    survey.is_a?(Hash) &&
+      survey['id'].is_a?(String) && !survey['id'].empty? &&
+      survey['name'].is_a?(String) && !survey['name'].empty?
   end
 
   def raise_invalid_shape

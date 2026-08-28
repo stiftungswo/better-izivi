@@ -274,6 +274,7 @@
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name": "Kurz-Name",
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name_short": "KN",
   "views.service_specification.ServiceSpecificationsOverviewTable.work": "Arbeit",
+  "views.service_specification.ServiceSpecificationsOverviewTableRowFields.no_survey": "Keine Umfrage",
   "views.users.expenseSheetSubform.done": "Erledigt",
   "views.users.expenseSheetSubform.edit": "{icon} Bearbeiten",
   "views.users.expenseSheetSubform.expense_sheets": "Spesenblätter",

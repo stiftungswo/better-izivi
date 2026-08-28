@@ -243,7 +243,7 @@ RSpec.describe Service, type: :model do
 
     let(:envs) do
       {
-        FORMBRICKS_API_HOST: 'http://example.com',
+        FORMBRICKS_API_HOST: 'https://example.com',
         FEEDBACK_MAIL_TESTIMONIAL_URL: 'https://naturzivi.ch/testimonial',
         FEEDBACK_MAIL_GOOGLE_REVIEW_URL: 'https://g.page/r/Ceus2ke10hBiEAg/review',
         MAIL_SENDER: 'from@example.com'

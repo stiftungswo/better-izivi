@@ -272,6 +272,7 @@
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name": "Short name",
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name_short": "KN",
   "views.service_specification.ServiceSpecificationsOverviewTable.work": "Work",
+  "views.service_specification.ServiceSpecificationsOverviewTableRowFields.no_survey": "No survey",
   "views.users.expenseSheetSubform.done": "Done",
   "views.users.expenseSheetSubform.edit": "{icon} Edit",
   "views.users.expenseSheetSubform.expense_sheets": "Expense sheets",

@@ -92,7 +92,16 @@ RSpec.describe FormbricksClient do
       expect(client.link_surveys).to eq []
     end
 
-    ['null', '[]', '{"data": null}', '{"data": [null]}'].each do |malformed_body|
+    [
+      'null',
+      '[]',
+      '{"data": null}',
+      '{"data": [null]}',
+      '{"data": [{"type": "link"}]}',
+      '{"data": [{"id": "", "name": "Exit Survey", "type": "link"}]}',
+      '{"data": [{"id": "link-survey-1", "name": "", "type": "link"}]}',
+      '{"data": [{"id": 123, "name": "Exit Survey", "type": "link"}]}'
+    ].each do |malformed_body|
       it "raises a FormbricksApiError for the semantically malformed body `#{malformed_body}`" do
         allow(response).to receive(:body).and_return(malformed_body)
 

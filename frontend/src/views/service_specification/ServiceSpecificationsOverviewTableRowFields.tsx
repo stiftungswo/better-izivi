@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import { WithSheet } from 'react-jss';
 import { CheckboxField } from '../../form/CheckboxField';
 import { SelectField, TextField } from '../../form/common';
@@ -48,6 +49,7 @@ interface ServiceSpecificationOverviewTableRowFieldsProps extends WithSheet<type
 
 export const ServiceSpecificationOverviewTableRowFields = observer(
   ({ classes, formbricksSurveyStore }: ServiceSpecificationOverviewTableRowFieldsProps) => {
+    const intl = useIntl();
     const defaultParams = {
       tableDataClassName: classes.rowTd,
     };
@@ -59,7 +61,17 @@ export const ServiceSpecificationOverviewTableRowFields = observer(
       size: '5',
     };
 
-    const surveyOptions = (formbricksSurveyStore ? formbricksSurveyStore.entities : []).map(({ id, name }) => ({ id, name }));
+    const noSurveyOption = {
+      id: '',
+      name: intl.formatMessage({
+        id: 'views.service_specification.ServiceSpecificationsOverviewTableRowFields.no_survey',
+        defaultMessage: 'Keine Umfrage',
+      }),
+    };
+    const surveyOptions = [
+      noSurveyOption,
+      ...(formbricksSurveyStore ? formbricksSurveyStore.entities : []).map(({ id, name }) => ({ id, name })),
+    ];
 
     return (
       <>

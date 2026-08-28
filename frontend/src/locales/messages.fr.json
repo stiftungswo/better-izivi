@@ -275,6 +275,7 @@
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name": "Nom court",
   "views.service_specification.ServiceSpecificationsOverviewTable.short_name_short": "KN",
   "views.service_specification.ServiceSpecificationsOverviewTable.work": "Travail",
+  "views.service_specification.ServiceSpecificationsOverviewTableRowFields.no_survey": "Aucune enquête",
   "views.users.expenseSheetSubform.done": "Fait",
   "views.users.expenseSheetSubform.edit": "{icon} Modifier",
   "views.users.expenseSheetSubform.expense_sheets": "Les notes de frais",
