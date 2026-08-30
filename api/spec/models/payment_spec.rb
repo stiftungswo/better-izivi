@@ -261,6 +261,23 @@ RSpec.describe Payment, type: :model do
       end
     end
 
+    context 'with expense sheets sharing payment_timestamp and beginning date' do
+      let(:shared_timestamp) { Time.zone.at(1_564_471_897) }
+      let(:shared_beginning) { Date.parse('2018-11-05') }
+      let!(:first_expense_sheet) do
+        create(:expense_sheet, :payment_in_progress, beginning: shared_beginning, payment_timestamp: shared_timestamp)
+      end
+      let!(:second_expense_sheet) do
+        create(:expense_sheet, :payment_in_progress, beginning: shared_beginning, payment_timestamp: shared_timestamp)
+      end
+
+      it 'orders the tied expense sheets by id ascending' do
+        tied_payment = found_payments.find { |pay| pay.payment_timestamp == shared_timestamp }
+
+        expect(tied_payment.expense_sheets.map(&:id)).to eq [first_expense_sheet.id, second_expense_sheet.id].sort
+      end
+    end
+
     context 'with no payments' do
       it 'returns an empty array' do
         expect(found_payments).to eq []
