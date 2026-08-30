@@ -14,7 +14,7 @@ class Payment
       ExpenseSheet
         .payment_issued
         .eager_load(user: { services: [:service_specification] })
-        .order(payment_timestamp: :desc)
+        .order(payment_timestamp: :desc, beginning: :asc)
         .filtered_by(filters)
     end
   end
