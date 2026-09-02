@@ -33,14 +33,16 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
       context 'with active and inactive service specifications' do
         it 'lists active service specifications before inactive ones, ordered by identification number' do
           inactive = create :service_specification, active: false, identification_number: '10000'
-          active = create :service_specification, active: true, identification_number: '90000'
+          higher_active = create :service_specification, active: true, identification_number: '95000'
+          lower_active = create :service_specification, active: true, identification_number: '20000'
 
           request
 
           identification_numbers = parse_response_json(response).pluck(:identification_number)
 
           expect(identification_numbers).to eq(
-            (service_specifications + [active]).map(&:identification_number).sort + [inactive.identification_number]
+            (service_specifications + [lower_active, higher_active]).map(&:identification_number).sort +
+              [inactive.identification_number]
           )
         end
       end
