@@ -21,7 +21,7 @@ module V1
     }.freeze
 
     def index
-      @service_specifications = ServiceSpecification.all
+      @service_specifications = ServiceSpecification.order(active: :desc, identification_number: :asc)
     end
 
     def show; end
