@@ -58,9 +58,12 @@ Rails.application.configure do
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Use a real queuing backend for Active Job (and separate queues per environment)
+  # Use a real queuing backend for Active Job. Each environment already has
+  # its own isolated Redis instance, so there's no need for a queue name
+  # prefix - and config/sidekiq.yml's :queues list (shared across all
+  # environments) has no way to know about one, which silently stranded every
+  # job enqueued here in a queue nothing was listening to.
   config.active_job.queue_adapter = :sidekiq
-  config.active_job.queue_name_prefix = "izivi_api_#{Rails.env}"
 
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
