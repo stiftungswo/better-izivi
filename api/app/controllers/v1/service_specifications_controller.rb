@@ -9,7 +9,7 @@ module V1
 
     PERMITTED_SERVICE_SPECIFICATION_KEYS = %i[
       name short_name work_clothing_expenses
-      accommodation_expenses location active
+      accommodation_expenses site_id active
       identification_number id formbricks_survey_id
     ].freeze
 

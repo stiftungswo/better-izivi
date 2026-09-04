@@ -10,6 +10,7 @@ import { PaymentStore } from '../stores/paymentStore';
 import { RegionalCenterStore } from '../stores/regionalCenterStore';
 import { ServiceSpecificationStore } from '../stores/serviceSpecificationStore';
 import { ServiceStore } from '../stores/serviceStore';
+import { SiteStore } from '../stores/siteStore';
 import { UserFeedbackStore } from '../stores/userFeedbackStore';
 import { UserStore } from '../stores/userStore';
 import { Formatter } from './formatter';
@@ -31,6 +32,7 @@ export class StoreProvider extends React.Component<Props> {
     serviceSpecificationStore: ServiceSpecificationStore;
     regionalCenterStore: RegionalCenterStore;
     formbricksSurveyStore: FormbricksSurveyStore;
+    siteStore: SiteStore;
   };
 
   constructor(props: Props) {
@@ -52,6 +54,7 @@ export class StoreProvider extends React.Component<Props> {
       serviceSpecificationStore: new ServiceSpecificationStore(mainStore),
       regionalCenterStore: new RegionalCenterStore(mainStore),
       formbricksSurveyStore: new FormbricksSurveyStore(mainStore),
+      siteStore: new SiteStore(mainStore),
     };
   }
   render() {

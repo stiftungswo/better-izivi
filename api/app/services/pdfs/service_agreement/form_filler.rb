@@ -117,7 +117,7 @@ module Pdfs
       end
 
       def valais?
-        @service.service_specification.location_valais?
+        @service.service_specification.site.language_french?
       end
     end
   end

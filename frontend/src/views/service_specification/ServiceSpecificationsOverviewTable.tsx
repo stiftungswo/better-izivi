@@ -157,6 +157,14 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
         }),
       span: { row: 2 },
     },
+    {
+      label:
+        intl.formatMessage({
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.site',
+          defaultMessage: 'Standort',
+        }),
+      span: { row: 2 },
+    },
   ];
 };
 

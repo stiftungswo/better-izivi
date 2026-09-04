@@ -20,6 +20,7 @@ const serviceSpecificationSchema = yup.object({
   pocket_money: yup.number().required(),
   active: yup.boolean(),
   formbricks_survey_id: yup.string().nullable().transform(value => (value === '' ? null : value)),
+  site_id: yup.number().required(),
 });
 
 export default serviceSpecificationSchema;

@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_08_26_150001) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_05_000004) do
+  create_table "active_storage_attachments", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
   create_table "allowlisted_jwts", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "jti", null: false
     t.string "aud"
@@ -80,7 +108,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_150001) do
     t.text "paid_vacation_expenses", null: false
     t.text "first_day_expenses", null: false
     t.text "last_day_expenses", null: false
-    t.string "location", default: "zh"
     t.boolean "active", default: true
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
@@ -88,7 +115,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_150001) do
     t.string "certificate_of_employment_template"
     t.string "confirmation_of_employment_template"
     t.string "formbricks_survey_id"
+    t.bigint "site_id", null: false
     t.index ["identification_number"], name: "index_service_specifications_on_identification_number", unique: true
+    t.index ["site_id"], name: "index_service_specifications_on_site_id"
   end
 
   create_table "services", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -108,6 +137,13 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_150001) do
     t.integer "service_days", null: false
     t.index ["service_specification_id"], name: "index_services_on_service_specification_id"
     t.index ["user_id"], name: "index_services_on_user_id"
+  end
+
+  create_table "sites", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "language", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_settings", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -153,8 +189,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_08_26_150001) do
     t.index ["zdp"], name: "index_users_on_zdp", unique: true
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "allowlisted_jwts", "users", on_delete: :cascade
   add_foreign_key "expense_sheets", "users"
+  add_foreign_key "service_specifications", "sites"
   add_foreign_key "services", "service_specifications"
   add_foreign_key "services", "users"
   add_foreign_key "user_settings", "users"

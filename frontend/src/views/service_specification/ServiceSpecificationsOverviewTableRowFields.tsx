@@ -6,6 +6,7 @@ import { CheckboxField } from '../../form/CheckboxField';
 import { SelectField, TextField } from '../../form/common';
 import { WiredField } from '../../form/formik';
 import { FormbricksSurveyStore } from '../../stores/formbricksSurveyStore';
+import { SiteStore } from '../../stores/siteStore';
 import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
 
 const STANDARD_INPUT_ROW_NAME_KEYS = Object.freeze([
@@ -45,10 +46,11 @@ const OverviewTableRow = ({ tableDataClassName, ...other }: OverviewTableRowPara
 
 interface ServiceSpecificationOverviewTableRowFieldsProps extends WithSheet<typeof serviceSpecificationStyles> {
   formbricksSurveyStore?: FormbricksSurveyStore;
+  siteStore?: SiteStore;
 }
 
 export const ServiceSpecificationOverviewTableRowFields = observer(
-  ({ classes, formbricksSurveyStore }: ServiceSpecificationOverviewTableRowFieldsProps) => {
+  ({ classes, formbricksSurveyStore, siteStore }: ServiceSpecificationOverviewTableRowFieldsProps) => {
     const intl = useIntl();
     const defaultParams = {
       tableDataClassName: classes.rowTd,
@@ -73,6 +75,8 @@ export const ServiceSpecificationOverviewTableRowFields = observer(
       ...(formbricksSurveyStore ? formbricksSurveyStore.entities : []).map(({ id, name }) => ({ id, name })),
     ];
 
+    const siteOptions = (siteStore ? siteStore.entities : []).map(({ id, name }) => ({ id: String(id), name }));
+
     return (
       <>
         <OverviewTableRow {...defaultParams} className={classes.checkboxes} component={CheckboxField} name={'active'}/>
@@ -89,6 +93,13 @@ export const ServiceSpecificationOverviewTableRowFields = observer(
           component={SelectField}
           name={'formbricks_survey_id'}
           options={surveyOptions}
+        />
+        <OverviewTableRow
+          {...defaultParams}
+          className={classes.inputs}
+          component={SelectField}
+          name={'site_id'}
+          options={siteOptions}
         />
       </>
     );

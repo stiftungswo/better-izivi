@@ -8,6 +8,7 @@ import IziviContent from '../../layout/IziviContent';
 import { FormbricksSurveyStore } from '../../stores/formbricksSurveyStore';
 import { MainStore } from '../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
+import { SiteStore } from '../../stores/siteStore';
 import { ServiceSpecification } from '../../types';
 import { PlusSquareRegularIcon, SaveRegularIcon } from '../../utilities/Icon';
 import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
@@ -30,11 +31,13 @@ const INITIAL_FORM_VALUES = Object.freeze({
   active: false,
   pocket_money: 750,
   formbricks_survey_id: null,
+  site_id: null,
 });
 
 interface ServiceSpecificationProps extends WithSheet<typeof serviceSpecificationStyles> {
   serviceSpecificationStore?: ServiceSpecificationStore;
   formbricksSurveyStore?: FormbricksSurveyStore;
+  siteStore?: SiteStore;
   mainStore?: MainStore;
 }
 
@@ -42,7 +45,7 @@ interface ServiceSpecificationState {
   loading: boolean;
 }
 
-@inject('serviceSpecificationStore', 'formbricksSurveyStore', 'mainStore')
+@inject('serviceSpecificationStore', 'formbricksSurveyStore', 'siteStore', 'mainStore')
 @observer
 export class ServiceSpecificationsOverviewInner extends React.Component<ServiceSpecificationProps, ServiceSpecificationState> {
   constructor(props: ServiceSpecificationProps) {
@@ -52,6 +55,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
       this.setState({ loading: false });
     });
     this.props.formbricksSurveyStore!.fetchAll();
+    this.props.siteStore!.fetchAll();
 
     this.state = {
       loading: true,
