@@ -46,14 +46,16 @@ RSpec.describe Pdfs::ServiceAgreement::GlueService, type: :service do
         [
           'Einsatzvereinbarung',
           'Taschengeld',
-          'Anstellungsbedingungen der SWO',
-          'Zeckenschutzimpfung ',
+          'Schwerzenbach',
+          'Manuel Brändli',
+          'Arlesheim',
+          'Fabian Tobler',
           'Lieber Zivi'
         ]
       end
 
-      it 'renders five pages' do
-        expect(pdf_page_inspector.pages.size).to eq 5
+      it 'renders seven pages' do
+        expect(pdf_page_inspector.pages.size).to eq 7
       end
 
       it 'renders pages in correct order', :aggregate_failures do
