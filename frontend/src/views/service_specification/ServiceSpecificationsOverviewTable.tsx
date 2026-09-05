@@ -94,7 +94,7 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
       label:
         intl.formatMessage({
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.expenses',
-          defaultMessage: 'Spesen',
+          defaultMessage: 'Verpflegungsspesen',
         }),
     },
   ];

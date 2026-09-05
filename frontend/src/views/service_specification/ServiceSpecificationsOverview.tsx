@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import IziviContent from '../../layout/IziviContent';
@@ -54,6 +55,19 @@ interface ServiceSpecificationRowProps extends ServiceSpecificationProps {
 const ServiceSpecificationRow: React.FunctionComponent<ServiceSpecificationRowProps> = props => {
   const { formikProps, actionIcon, classes, ...rowFieldProps } = props;
   const [expensesExpanded, setExpensesExpanded] = React.useState(false);
+  const intl = useIntl();
+
+  const expensesToggleLabel = intl.formatMessage(
+    expensesExpanded
+      ? {
+        id: 'views.service_specification.ServiceSpecificationsOverview.hide_expenses',
+        defaultMessage: 'Verpflegungsspesen ausblenden',
+      }
+      : {
+        id: 'views.service_specification.ServiceSpecificationsOverview.show_expenses',
+        defaultMessage: 'Verpflegungsspesen anzeigen',
+      },
+  );
 
   return (
     <>
@@ -64,6 +78,8 @@ const ServiceSpecificationRow: React.FunctionComponent<ServiceSpecificationRowPr
             className={classes.smallFontSize}
             size={'sm'}
             outline
+            aria-label={expensesToggleLabel}
+            aria-expanded={expensesExpanded}
             onClick={() => setExpensesExpanded(!expensesExpanded)}
           >
             <FontAwesomeIcon icon={expensesExpanded ? AngleUpIcon : AngleDownIcon} />
