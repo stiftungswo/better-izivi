@@ -150,7 +150,7 @@ export interface Site {
   language: string;
   terms_pdf?: File | null;
   terms_pdf_filename?: string;
-  terms_pdf_url?: string;
+  terms_pdf_url?: string | null;
 }
 
 type UserRole = 'admin' | 'civil_servant';

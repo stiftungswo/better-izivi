@@ -97,11 +97,13 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
   constructor(props: ServiceSpecificationProps) {
     super(props);
 
-    this.props.serviceSpecificationStore!.fetchAll().then(() => {
+    Promise.all([
+      this.props.serviceSpecificationStore!.fetchAll(),
+      this.props.formbricksSurveyStore!.fetchAll(),
+      this.props.siteStore!.fetchAll(),
+    ]).catch(() => undefined).then(() => {
       this.setState({ loading: false });
     });
-    this.props.formbricksSurveyStore!.fetchAll();
-    this.props.siteStore!.fetchAll();
 
     this.state = {
       loading: true,
