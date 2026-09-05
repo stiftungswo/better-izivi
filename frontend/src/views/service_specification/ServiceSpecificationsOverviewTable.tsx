@@ -1,4 +1,3 @@
-import { ary, compact, flatMap, partial } from 'lodash';
 import * as React from 'react';
 import { IntlShape, useIntl } from 'react-intl';
 import { WithSheet } from 'react-jss';
@@ -9,45 +8,7 @@ import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
 interface TableHeader {
   label: string;
   tooltip?: string;
-  span?: {
-    col?: number;
-    row?: number;
-  };
-  subcolumns?: TableHeader[];
 }
-
-const getDailyExpensesSubcolumns = (intl: IntlShape) => {
-  return [
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.first_day',
-          defaultMessage: 'Erster Tag',
-        }),
-    },
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.work',
-          defaultMessage: 'Arbeit',
-        }),
-    },
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.free',
-          defaultMessage: 'Frei',
-        }),
-    },
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.last_day',
-          defaultMessage: 'Letzter Tag',
-        }),
-    },
-  ];
-};
 
 const getColumns = (intl: IntlShape): TableHeader[] => {
   return [
@@ -57,7 +18,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.active',
           defaultMessage: 'Aktiv',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -70,7 +30,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.service_specification_number',
           defaultMessage: 'Pflichtenheft Nummer',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -78,7 +37,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.name',
           defaultMessage: 'Name',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -91,7 +49,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.short_name',
           defaultMessage: 'Kurz-Name',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -104,7 +61,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.pocket_money_tooltip',
           defaultMessage: 'Taschengeld (Fixer Betrag)',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -112,7 +68,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.accommodation',
           defaultMessage: 'Unterkunft',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -120,34 +75,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.clothing',
           defaultMessage: 'Kleider',
         }),
-      span: { row: 2 },
-    },
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.breakfast',
-          defaultMessage: 'Frühstück',
-        }),
-      span: { col: 4 },
-      subcolumns: getDailyExpensesSubcolumns(intl),
-    },
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.lunch',
-          defaultMessage: 'Mittagessen',
-        }),
-      span: { col: 4 },
-      subcolumns: getDailyExpensesSubcolumns(intl),
-    },
-    {
-      label:
-        intl.formatMessage({
-          id: 'views.service_specification.ServiceSpecificationsOverviewTable.dinner',
-          defaultMessage: 'Abendessen',
-        }),
-      span: { col: 4 },
-      subcolumns: getDailyExpensesSubcolumns(intl),
     },
     {
       label:
@@ -155,7 +82,6 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.formbricks_survey',
           defaultMessage: 'Feedback-Umfrage',
         }),
-      span: { row: 2 },
     },
     {
       label:
@@ -163,10 +89,20 @@ const getColumns = (intl: IntlShape): TableHeader[] => {
           id: 'views.service_specification.ServiceSpecificationsOverviewTable.site',
           defaultMessage: 'Standort',
         }),
-      span: { row: 2 },
+    },
+    {
+      label:
+        intl.formatMessage({
+          id: 'views.service_specification.ServiceSpecificationsOverviewTable.expenses',
+          defaultMessage: 'Spesen',
+        }),
     },
   ];
 };
+
+// active, id, name, short_name, pocket_money, accommodation, clothing, formbricks_survey, site, expenses-toggle,
+// plus the trailing action-button column every row renders.
+export const TABLE_COLUMN_COUNT = 11;
 
 const TableHeaderTooltip: React.FunctionComponent<{ tableHeader: TableHeader, id: string }> = params => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -175,7 +111,7 @@ const TableHeaderTooltip: React.FunctionComponent<{ tableHeader: TableHeader, id
     return (
       <>
         <div id={params.id}>{params.children}</div>
-        <Tooltip placement="bottom" target={params.id} isOpen={isOpen} toggle={ary(partial(setIsOpen, !isOpen), 0)}>
+        <Tooltip placement="bottom" target={params.id} isOpen={isOpen} toggle={() => setIsOpen(!isOpen)}>
           {params.tableHeader.tooltip}
         </Tooltip>
       </>
@@ -185,39 +121,20 @@ const TableHeaderTooltip: React.FunctionComponent<{ tableHeader: TableHeader, id
   }
 };
 
-const OverviewTableHeader = (params: { tableHeaderClasses: string[] }) => {
+const OverviewTableHeader = (params: { tableHeaderClass: string }) => {
   const intl = useIntl();
-  const [mainTableHeaderClass, secondaryTableHeaderClass] = params.tableHeaderClasses;
-  const secondaryTableHeaders = compact(
-    flatMap<TableHeader[], TableHeader | undefined>(getColumns(intl), header => (header as TableHeader).subcolumns),
-  );
-
-  const layout = [
-    { class: mainTableHeaderClass, columns: getColumns(intl) },
-    { class: secondaryTableHeaderClass, columns: secondaryTableHeaders },
-  ];
+  const columns = getColumns(intl);
 
   return (
-    <>
-      {layout.map((headerRow, headerIndex) => {
-        return (
-          <tr key={headerIndex}>
-            {headerRow.columns.map((column, columnIndex) => (
-              <th
-                className={headerRow.class}
-                key={columnIndex}
-                rowSpan={column.span ? column.span.row || 1 : 1}
-                colSpan={column.span ? column.span.col || 1 : 1}
-              >
-                <TableHeaderTooltip tableHeader={column} id={`header-${headerIndex}-${columnIndex}`}>
-                  {column.label}
-                </TableHeaderTooltip>
-              </th>
-            ))}
-          </tr>
-        );
-      })}
-    </>
+    <tr>
+      {columns.map((column, columnIndex) => (
+        <th className={params.tableHeaderClass} key={columnIndex}>
+          <TableHeaderTooltip tableHeader={column} id={`header-${columnIndex}`}>
+            {column.label}
+          </TableHeaderTooltip>
+        </th>
+      ))}
+    </tr>
   );
 };
 
@@ -227,7 +144,7 @@ export const ServiceSpecificationsOverviewTable: React.FunctionComponent<WithShe
   return (
     <Table hover={true} responsive={true}>
       <thead>
-        <OverviewTableHeader tableHeaderClasses={[classes.th, classes.secondTh]} />
+        <OverviewTableHeader tableHeaderClass={classes.th} />
       </thead>
       <tbody>{props.children}</tbody>
     </Table>

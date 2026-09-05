@@ -9,22 +9,36 @@ import { FormbricksSurveyStore } from '../../stores/formbricksSurveyStore';
 import { SiteStore } from '../../stores/siteStore';
 import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
 
-const STANDARD_INPUT_ROW_NAME_KEYS = Object.freeze([
-  'accommodation_expenses',
-  'work_clothing_expenses',
-  'first_day_expenses.breakfast',
-  'work_days_expenses.breakfast',
-  'paid_vacation_expenses.breakfast',
-  'last_day_expenses.breakfast',
-  'first_day_expenses.lunch',
-  'work_days_expenses.lunch',
-  'paid_vacation_expenses.lunch',
-  'last_day_expenses.lunch',
-  'first_day_expenses.dinner',
-  'work_days_expenses.dinner',
-  'paid_vacation_expenses.dinner',
-  'last_day_expenses.dinner',
-]);
+const MAIN_INPUT_ROW_NAME_KEYS = Object.freeze(['accommodation_expenses', 'work_clothing_expenses']);
+
+interface ExpenseFieldGroup {
+  labelId: string;
+  defaultLabel: string;
+  namePrefix: 'first_day_expenses' | 'work_days_expenses' | 'paid_vacation_expenses' | 'last_day_expenses';
+}
+
+const EXPENSE_FIELD_GROUPS: ExpenseFieldGroup[] = [
+  {
+    labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.first_day',
+    defaultLabel: 'Erster Tag',
+    namePrefix: 'first_day_expenses',
+  },
+  {
+    labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.work',
+    defaultLabel: 'Arbeit',
+    namePrefix: 'work_days_expenses',
+  },
+  {
+    labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.free',
+    defaultLabel: 'Frei',
+    namePrefix: 'paid_vacation_expenses',
+  },
+  {
+    labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.last_day',
+    defaultLabel: 'Letzter Tag',
+    namePrefix: 'last_day_expenses',
+  },
+];
 
 interface OverviewTableRowParams {
   tableDataClassName: string;
@@ -32,6 +46,7 @@ interface OverviewTableRowParams {
   component: React.ElementType;
   name: string;
   size?: string;
+  label?: string;
   disabled?: boolean;
   options?: { id: string; name: string }[];
 }
@@ -85,7 +100,7 @@ export const ServiceSpecificationOverviewTableRowFields = observer(
         <OverviewTableRow {...inputDefaultParams} name={'short_name'} size={'1'} />
         <OverviewTableRow {...inputDefaultParams} name={'pocket_money'} disabled={true} />
 
-        {STANDARD_INPUT_ROW_NAME_KEYS.map(name => <OverviewTableRow {...inputDefaultParams} name={name} key={name} />)}
+        {MAIN_INPUT_ROW_NAME_KEYS.map(name => <OverviewTableRow {...inputDefaultParams} name={name} key={name} />)}
 
         <OverviewTableRow
           {...defaultParams}
@@ -105,3 +120,48 @@ export const ServiceSpecificationOverviewTableRowFields = observer(
     );
   },
 );
+
+type ServiceSpecificationOverviewExpenseFieldsProps = WithSheet<typeof serviceSpecificationStyles>;
+
+export const ServiceSpecificationOverviewExpenseFields = observer(({ classes }: ServiceSpecificationOverviewExpenseFieldsProps) => {
+  const intl = useIntl();
+
+  const mealRows: { labelId: string; defaultLabel: string; meal: 'breakfast' | 'lunch' | 'dinner' }[] = [
+    {
+      labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.breakfast',
+      defaultLabel: 'Frühstück',
+      meal: 'breakfast',
+    },
+    {
+      labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.lunch',
+      defaultLabel: 'Mittagessen',
+      meal: 'lunch',
+    },
+    {
+      labelId: 'views.service_specification.ServiceSpecificationsOverviewTable.dinner',
+      defaultLabel: 'Abendessen',
+      meal: 'dinner',
+    },
+  ];
+
+  return (
+    <div className={classes.expensePanel}>
+      {mealRows.map(({ labelId, defaultLabel, meal }) => (
+        <div className={classes.expensePanelRow} key={meal}>
+          <div className={classes.expensePanelRowLabel}>{intl.formatMessage({ id: labelId, defaultMessage: defaultLabel })}</div>
+          {EXPENSE_FIELD_GROUPS.map(group => (
+            <div className={classes.expensePanelField} key={group.namePrefix}>
+              <WiredField
+                component={TextField}
+                className={classes.inputs}
+                name={`${group.namePrefix}.${meal}`}
+                size={'5'}
+                label={intl.formatMessage({ id: group.labelId, defaultMessage: group.defaultLabel })}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+});
