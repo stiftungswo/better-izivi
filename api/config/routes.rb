@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :regional_centers, only: :index
     resources :holidays, only: %i[index create update destroy]
     resources :service_specifications, except: :destroy
+    resources :sites, except: :destroy
     resources :formbricks_surveys, only: :index
     resources :payments, except: :update, param: :payment_timestamp
     resources :users, except: :create

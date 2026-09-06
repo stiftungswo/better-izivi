@@ -76,6 +76,9 @@ export class Navigation extends React.Component<NavProps> {
                     <NavEntry to="/service_specifications">
                       <FormattedMessage id="layout.navigation.service_specifications" defaultMessage="Pflichtenheft" />
                     </NavEntry>
+                    <NavEntry to="/sites">
+                      <FormattedMessage id="layout.navigation.sites" defaultMessage="Standorte" />
+                    </NavEntry>
                     <NavEntry to="/holidays">
                       <FormattedMessage id="layout.navigation.holidays" defaultMessage="Feiertage" />
                     </NavEntry>

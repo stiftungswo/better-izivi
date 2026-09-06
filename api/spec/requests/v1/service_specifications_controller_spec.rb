@@ -55,14 +55,14 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
         let(:user) { create :user, :admin }
 
         context 'when params are valid' do
-          let(:params) { attributes_for(:service_specification) }
+          let(:params) { attributes_for(:service_specification).merge(site_id: create(:site).id) }
 
           let(:expected_returned_json_keys) do
             %i[
               identification_number
               name
               short_name
-              location
+              site_id
               active
               work_days_expenses
               paid_vacation_expenses
@@ -93,7 +93,9 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
         context 'when params are invalid' do
           let(:params) do
-            attributes_for(:service_specification).merge(short_name: '', accommodation_expenses: 'I am invalid')
+            attributes_for(:service_specification).merge(
+              site_id: create(:site).id, short_name: '', accommodation_expenses: 'I am invalid'
+            )
           end
 
           it 'does not create a new ServiceSpecification' do
@@ -147,7 +149,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
                             :short_name,
                             :work_clothing_expenses,
                             :accommodation_expenses,
-                            :location,
+                            :site_id,
                             :active)
           end
 

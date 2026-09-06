@@ -136,11 +136,21 @@ export interface ServiceSpecification {
   pocket_money: number;
   active: boolean;
   formbricks_survey_id: string | null;
+  site_id: number | null;
 }
 
 export interface FormbricksSurvey {
   id: string;
   name: string;
+}
+
+export interface Site {
+  id?: number;
+  name: string;
+  language: string;
+  terms_pdf?: File | null;
+  terms_pdf_filename?: string;
+  terms_pdf_url?: string | null;
 }
 
 type UserRole = 'admin' | 'civil_servant';

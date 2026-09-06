@@ -9,6 +9,8 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons/faTrashAlt';
 import { faUser } from '@fortawesome/free-regular-svg-icons/faUser';
 import { faAngleDoubleLeft } from '@fortawesome/free-solid-svg-icons/faAngleDoubleLeft';
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons/faAngleDoubleRight';
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons/faAngleDown';
+import { faAngleUp } from '@fortawesome/free-solid-svg-icons/faAngleUp';
 import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons/faArrowCircleLeft';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
@@ -40,6 +42,8 @@ export const Icons = () => {
     faHourglass,
     faSave,
     faEnvelope,
+    faAngleDown,
+    faAngleUp,
   );
 };
 
@@ -143,6 +147,16 @@ const MailSolidIcon: IconLookup = {
   iconName: 'envelope',
 };
 
+const AngleDownIcon: IconLookup = {
+  prefix: 'fas',
+  iconName: 'angle-down',
+};
+
+const AngleUpIcon: IconLookup = {
+  prefix: 'fas',
+  iconName: 'angle-up',
+};
+
 export {
   CheckSolidIcon,
   ExclamationSolidIcon,
@@ -164,4 +178,6 @@ export {
   MailSolidIcon,
   DownloadIcon,
   ArrowLeftIcon,
+  AngleDownIcon,
+  AngleUpIcon,
 };

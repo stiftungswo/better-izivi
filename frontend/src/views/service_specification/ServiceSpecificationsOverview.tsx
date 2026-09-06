@@ -1,19 +1,22 @@
+import { IconLookup } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, FormikActions } from 'formik';
+import { Formik, FormikActions, FormikProps } from 'formik';
 import { inject, observer } from 'mobx-react';
 import * as React from 'react';
+import { useIntl } from 'react-intl';
 import injectSheet, { WithSheet } from 'react-jss';
 import Button from 'reactstrap/lib/Button';
 import IziviContent from '../../layout/IziviContent';
 import { FormbricksSurveyStore } from '../../stores/formbricksSurveyStore';
 import { MainStore } from '../../stores/mainStore';
 import { ServiceSpecificationStore } from '../../stores/serviceSpecificationStore';
+import { SiteStore } from '../../stores/siteStore';
 import { ServiceSpecification } from '../../types';
-import { PlusSquareRegularIcon, SaveRegularIcon } from '../../utilities/Icon';
+import { AngleDownIcon, AngleUpIcon, PlusSquareRegularIcon, SaveRegularIcon } from '../../utilities/Icon';
 import serviceSpecificationStyles from './serviceSpecificationOverviewStyle';
 import serviceSpecificationSchema from './serviceSpecificationSchema';
-import { ServiceSpecificationsOverviewTable } from './ServiceSpecificationsOverviewTable';
-import { ServiceSpecificationOverviewTableRowFields } from './ServiceSpecificationsOverviewTableRowFields';
+import { ServiceSpecificationOverviewExpenseFields, ServiceSpecificationOverviewTableRowFields } from './ServiceSpecificationsOverviewTableRowFields';
+import { ServiceSpecificationsOverviewTable, TABLE_COLUMN_COUNT } from './ServiceSpecificationsOverviewTable';
 
 const INITIAL_DAILY_EXPENSES_FORM_VALUES = Object.freeze({ breakfast: 0, lunch: 0, dinner: 0 });
 const INITIAL_FORM_VALUES = Object.freeze({
@@ -30,11 +33,13 @@ const INITIAL_FORM_VALUES = Object.freeze({
   active: false,
   pocket_money: 750,
   formbricks_survey_id: null,
+  site_id: null,
 });
 
 interface ServiceSpecificationProps extends WithSheet<typeof serviceSpecificationStyles> {
   serviceSpecificationStore?: ServiceSpecificationStore;
   formbricksSurveyStore?: FormbricksSurveyStore;
+  siteStore?: SiteStore;
   mainStore?: MainStore;
 }
 
@@ -42,16 +47,79 @@ interface ServiceSpecificationState {
   loading: boolean;
 }
 
-@inject('serviceSpecificationStore', 'formbricksSurveyStore', 'mainStore')
+interface ServiceSpecificationRowProps extends ServiceSpecificationProps {
+  formikProps: FormikProps<ServiceSpecification>;
+  actionIcon: IconLookup;
+}
+
+const ServiceSpecificationRow: React.FunctionComponent<ServiceSpecificationRowProps> = props => {
+  const { formikProps, actionIcon, classes, ...rowFieldProps } = props;
+  const [expensesExpanded, setExpensesExpanded] = React.useState(false);
+  const intl = useIntl();
+
+  const expensesToggleLabel = intl.formatMessage(
+    expensesExpanded
+      ? {
+        id: 'views.service_specification.ServiceSpecificationsOverview.hide_expenses',
+        defaultMessage: 'Verpflegungsspesen ausblenden',
+      }
+      : {
+        id: 'views.service_specification.ServiceSpecificationsOverview.show_expenses',
+        defaultMessage: 'Verpflegungsspesen anzeigen',
+      },
+  );
+
+  return (
+    <>
+      <tr>
+        <ServiceSpecificationOverviewTableRowFields classes={classes} {...rowFieldProps} />
+        <td className={classes.rowTd}>
+          <Button
+            className={classes.smallFontSize}
+            size={'sm'}
+            outline
+            aria-label={expensesToggleLabel}
+            aria-expanded={expensesExpanded}
+            onClick={() => setExpensesExpanded(!expensesExpanded)}
+          >
+            <FontAwesomeIcon icon={expensesExpanded ? AngleUpIcon : AngleDownIcon} />
+          </Button>
+        </td>
+        <td className={classes.buttonsTd}>
+          <Button
+            className={classes.smallFontSize}
+            color={'success'}
+            disabled={formikProps.isSubmitting}
+            onClick={formikProps.submitForm}
+          >
+            <FontAwesomeIcon icon={actionIcon} />
+          </Button>
+        </td>
+      </tr>
+      {expensesExpanded && (
+        <tr className={classes.expensesRow}>
+          <td colSpan={TABLE_COLUMN_COUNT}>
+            <ServiceSpecificationOverviewExpenseFields classes={classes} theme={rowFieldProps.theme} />
+          </td>
+        </tr>
+      )}
+    </>
+  );
+};
+
+@inject('serviceSpecificationStore', 'formbricksSurveyStore', 'siteStore', 'mainStore')
 @observer
 export class ServiceSpecificationsOverviewInner extends React.Component<ServiceSpecificationProps, ServiceSpecificationState> {
   constructor(props: ServiceSpecificationProps) {
     super(props);
 
-    this.props.serviceSpecificationStore!.fetchAll().then(() => {
+    Promise.all([
+      this.props.serviceSpecificationStore!.fetchAll(),
+      this.props.formbricksSurveyStore!.fetchAll(),
+      this.props.siteStore!.fetchAll(),
+    ]).catch(() => undefined).then(() => {
       this.setState({ loading: false });
     });
-    this.props.formbricksSurveyStore!.fetchAll();
 
     this.state = {
       loading: true,
@@ -90,20 +158,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
             initialValues={INITIAL_FORM_VALUES}
             onSubmit={this.handleAdd}
             render={formikProps => (
-              <tr>
-                <ServiceSpecificationOverviewTableRowFields {...this.props} />
-                <td className={this.props.classes.buttonsTd}>
-                  <Button
-                    className={this.props.classes.smallFontSize}
-                    color={'success'}
-                    disabled={formikProps.isSubmitting}
-                    onClick={formikProps.submitForm}
-                  >
-                    <FontAwesomeIcon icon={PlusSquareRegularIcon} />
-                  </Button>
-                </td>
-                <td />
-              </tr>
+              <ServiceSpecificationRow {...this.props} formikProps={formikProps} actionIcon={PlusSquareRegularIcon} />
             )}
           />
           {serviceSpecifications.map(serviceSpecification => (
@@ -113,19 +168,7 @@ export class ServiceSpecificationsOverviewInner extends React.Component<ServiceS
               initialValues={serviceSpecification}
               onSubmit={this.handleSubmit}
               render={formikProps => (
-                <tr>
-                  <ServiceSpecificationOverviewTableRowFields {...this.props} />
-                  <td className={this.props.classes.buttonsTd}>
-                    <Button
-                      className={this.props.classes.smallFontSize}
-                      color={'success'}
-                      disabled={formikProps.isSubmitting}
-                      onClick={formikProps.submitForm}
-                    >
-                      <FontAwesomeIcon icon={SaveRegularIcon} />
-                    </Button>
-                  </td>
-                </tr>
+                <ServiceSpecificationRow {...this.props} formikProps={formikProps} actionIcon={SaveRegularIcon} />
               )}
             />
           ))}

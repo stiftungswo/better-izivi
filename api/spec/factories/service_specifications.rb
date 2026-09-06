@@ -7,7 +7,7 @@ FactoryBot.define do
     short_name { 'M' }
     work_clothing_expenses { 6_000 }
     accommodation_expenses { 0 }
-    location { 'zurich' }
+    site
     active { true }
     work_days_expenses { { breakfast: 400, lunch: 900, dinner: 700 } }
     paid_vacation_expenses { { breakfast: 400, lunch: 900, dinner: 700 } }
@@ -15,7 +15,7 @@ FactoryBot.define do
     last_day_expenses { { breakfast: 400, lunch: 900, dinner: 0 } }
 
     trait :valais do
-      location { 'valais' }
+      site { association :site, :french }
     end
 
     trait :pre_2025_clothing do
