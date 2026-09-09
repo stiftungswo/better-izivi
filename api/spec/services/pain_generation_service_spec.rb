@@ -42,4 +42,20 @@ RSpec.describe PainGenerationService, type: :service do
       end
     end
   end
+
+  describe '#generate_pain when PAIN_CREDITOR_NAME is missing' do
+    let(:user) { create :user }
+    let(:expense_sheet) do
+      create :expense_sheet, :ready_for_payment, user:
+    end
+
+    before { create :service, user: user }
+
+    it 'raises a clear error instead of crashing on a nil name' do
+      ClimateControl.modify PAIN_CREDITOR_NAME: nil do
+        expect { described_class.new([expense_sheet]).generate_pain }
+          .to raise_error(KeyError, /PAIN_CREDITOR_NAME/)
+      end
+    end
+  end
 end
