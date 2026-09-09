@@ -29,6 +29,23 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
       it_behaves_like 'renders a successful http status code' do
         before { create :service_specification }
       end
+
+      context 'with active and inactive service specifications' do
+        it 'lists active service specifications before inactive ones, ordered by identification number' do
+          inactive = create :service_specification, active: false, identification_number: '10000'
+          higher_active = create :service_specification, active: true, identification_number: '95000'
+          lower_active = create :service_specification, active: true, identification_number: '20000'
+
+          request
+
+          identification_numbers = parse_response_json(response).pluck(:identification_number)
+
+          expect(identification_numbers).to eq(
+            (service_specifications + [lower_active, higher_active]).map(&:identification_number).sort +
+              [inactive.identification_number]
+          )
+        end
+      end
     end
 
     describe '#create' do
@@ -38,14 +55,14 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
         let(:user) { create :user, :admin }
 
         context 'when params are valid' do
-          let(:params) { attributes_for(:service_specification) }
+          let(:params) { attributes_for(:service_specification).merge(site_id: create(:site).id) }
 
           let(:expected_returned_json_keys) do
             %i[
               identification_number
               name
               short_name
-              location
+              site_id
               active
               work_days_expenses
               paid_vacation_expenses
@@ -76,7 +93,9 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
 
         context 'when params are invalid' do
           let(:params) do
-            attributes_for(:service_specification).merge(short_name: '', accommodation_expenses: 'I am invalid')
+            attributes_for(:service_specification).merge(
+              site_id: create(:site).id, short_name: '', accommodation_expenses: 'I am invalid'
+            )
           end
 
           it 'does not create a new ServiceSpecification' do
@@ -130,7 +149,7 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
                             :short_name,
                             :work_clothing_expenses,
                             :accommodation_expenses,
-                            :location,
+                            :site_id,
                             :active)
           end
 
@@ -155,6 +174,14 @@ RSpec.describe V1::ServiceSpecificationsController, type: :request do
               :first_day_expenses,
               :last_day_expenses
             )
+          end
+        end
+
+        context 'when updating the formbricks survey id' do
+          let(:params) { { formbricks_survey_id: 'survey-abc' } }
+
+          it 'updates the formbricks_survey_id' do
+            expect { put_request }.to(change { service_specification.reload.formbricks_survey_id }.to('survey-abc'))
           end
         end
 

@@ -167,10 +167,6 @@ module Pdfs
       def calculate_company_holidays
         Holiday.overlapping_date_range(@service.beginning, @service.ending).find(&:company_holiday?)
       end
-
-      def valais?
-        @service.service_specification.location_valais?
-      end
     end
   end
 end

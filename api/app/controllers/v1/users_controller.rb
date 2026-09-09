@@ -3,7 +3,7 @@
 module V1
   class UsersController < ApiController
     ADDITIONAL_PERMITTED_USER_PARAMS = [:email].freeze
-    ADMIN_RESTRICTED_USER_PARAMS = %i[internal_note role].freeze
+    ADMIN_RESTRICTED_USER_PARAMS = %i[internal_note role notify_on_missing_survey].freeze
 
     include V1::Concerns::AdminAuthorizable
 

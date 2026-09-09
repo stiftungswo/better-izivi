@@ -9,6 +9,9 @@ class User < ApplicationRecord
 
   has_many :expense_sheets, dependent: :restrict_with_error
   has_many :services, dependent: :restrict_with_error
+  has_many :user_settings, dependent: :destroy
+
+  NOTIFY_ON_MISSING_SURVEY_KEY = 'notify_on_missing_survey'
 
   enum :role, {
     admin: 1,
@@ -90,5 +93,14 @@ class User < ApplicationRecord
     return false unless encrypted_password_changed?
 
     changes.keys.length == 1
+  end
+
+  def notify_on_missing_survey?
+    user_settings.find_by(key: NOTIFY_ON_MISSING_SURVEY_KEY)&.value == 'true'
+  end
+  alias notify_on_missing_survey notify_on_missing_survey?
+
+  def notify_on_missing_survey=(value)
+    user_settings.find_or_initialize_by(key: NOTIFY_ON_MISSING_SURVEY_KEY).update(value: value.to_s)
   end
 end

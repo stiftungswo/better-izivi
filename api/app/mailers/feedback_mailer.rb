@@ -3,7 +3,11 @@
 class FeedbackMailer < ApplicationMailer
   def feedback_reminder_mail(service)
     @user = service.user
-    @feedback_url = format(ENV.fetch('FEEDBACK_MAIL_SURVEY_URL', nil), service_id: service.id)
+    survey_id = service.service_specification.formbricks_survey_id
+    api_host = ENV.fetch('FORMBRICKS_API_HOST')
+    raise FormbricksApiError, 'FORMBRICKS_API_HOST must use https' unless URI(api_host).scheme == 'https'
+
+    @feedback_url = "#{api_host}/s/#{survey_id}?service_id=#{service.id}"
     @testimonial_url = ENV.fetch('FEEDBACK_MAIL_TESTIMONIAL_URL', nil)
     @googlereview_url = ENV.fetch('FEEDBACK_MAIL_GOOGLE_REVIEW_URL', nil)
 

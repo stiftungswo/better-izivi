@@ -1,0 +1,7 @@
+<%= I18n.t('admin_mailer.missing_feedback_survey_mail.intro') %>
+
+<% @service_specifications.each do |spec| -%>
+- <%= spec.name %> (<%= spec.identification_number %>)
+<% end -%>
+
+<%= I18n.t('admin_mailer.missing_feedback_survey_mail.instruction') %>

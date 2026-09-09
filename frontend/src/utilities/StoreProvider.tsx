@@ -3,12 +3,14 @@ import { Provider } from 'mobx-react';
 import * as React from 'react';
 import { ApiStore } from '../stores/apiStore';
 import { ExpenseSheetStore } from '../stores/expenseSheetStore';
+import { FormbricksSurveyStore } from '../stores/formbricksSurveyStore';
 import { HolidayStore } from '../stores/holidayStore';
 import { MainStore } from '../stores/mainStore';
 import { PaymentStore } from '../stores/paymentStore';
 import { RegionalCenterStore } from '../stores/regionalCenterStore';
 import { ServiceSpecificationStore } from '../stores/serviceSpecificationStore';
 import { ServiceStore } from '../stores/serviceStore';
+import { SiteStore } from '../stores/siteStore';
 import { UserFeedbackStore } from '../stores/userFeedbackStore';
 import { UserStore } from '../stores/userStore';
 import { Formatter } from './formatter';
@@ -29,6 +31,8 @@ export class StoreProvider extends React.Component<Props> {
     serviceStore: ServiceStore;
     serviceSpecificationStore: ServiceSpecificationStore;
     regionalCenterStore: RegionalCenterStore;
+    formbricksSurveyStore: FormbricksSurveyStore;
+    siteStore: SiteStore;
   };
 
   constructor(props: Props) {
@@ -49,6 +53,8 @@ export class StoreProvider extends React.Component<Props> {
       serviceStore: new ServiceStore(mainStore),
       serviceSpecificationStore: new ServiceSpecificationStore(mainStore),
       regionalCenterStore: new RegionalCenterStore(mainStore),
+      formbricksSurveyStore: new FormbricksSurveyStore(mainStore),
+      siteStore: new SiteStore(mainStore),
     };
   }
   render() {

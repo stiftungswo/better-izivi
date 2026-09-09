@@ -9,16 +9,12 @@ class ServiceSpecification < ApplicationRecord
   serialize :first_day_expenses, coder: JSON
   serialize :last_day_expenses, coder: JSON
 
-  enum :location, {
-    valais: 'vs',
-    zurich: 'zh'
-  }, prefix: true
-
+  belongs_to :site
   has_many :services, dependent: :restrict_with_error
 
   validates :accommodation_expenses, :first_day_expenses,
             :identification_number, :last_day_expenses,
-            :location, :name, :paid_vacation_expenses,
+            :name, :paid_vacation_expenses,
             :work_clothing_expenses, :work_days_expenses,
             :short_name, presence: true
 

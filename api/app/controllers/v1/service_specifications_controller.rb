@@ -9,8 +9,8 @@ module V1
 
     PERMITTED_SERVICE_SPECIFICATION_KEYS = %i[
       name short_name work_clothing_expenses
-      accommodation_expenses location active
-      identification_number id
+      accommodation_expenses site_id active
+      identification_number id formbricks_survey_id
     ].freeze
 
     PERMITTED_SERVICE_SPECIFICATION_JSON_KEYS = {
@@ -21,7 +21,7 @@ module V1
     }.freeze
 
     def index
-      @service_specifications = ServiceSpecification.all
+      @service_specifications = ServiceSpecification.order(active: :desc, identification_number: :asc)
     end
 
     def show; end

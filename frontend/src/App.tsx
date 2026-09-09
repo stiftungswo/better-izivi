@@ -24,6 +24,7 @@ import { PhoneListView } from './views/PhoneList';
 import { Register } from './views/register/Register';
 import { ServiceOverview } from './views/service_overview/ServiceOverview';
 import { ServiceSpecificationsOverview } from './views/service_specification/ServiceSpecificationsOverview';
+import { SitesOverview } from './views/site/SitesOverview';
 import { UserFeedbackOverview } from './views/user_feedback_overview/UserFeedbackOverview';
 import { ProfileOverview } from './views/users/ProfileOverview';
 import { UserOverview } from './views/users/UserOverview';
@@ -63,6 +64,7 @@ class App extends React.Component {
           <ProtectedRoute requiresAdmin component={UserOverview} exact path={'/users'} />
           <ProtectedRoute requiresAdmin component={UserUpdate} exact path={'/users/:id'} />
           <ProtectedRoute requiresAdmin component={ServiceSpecificationsOverview} exact path={'/service_specifications'} />
+          <ProtectedRoute requiresAdmin component={SitesOverview} exact path={'/sites'} />
           <Route component={NotFound} />
         </Switch>
       </IziviLayout>

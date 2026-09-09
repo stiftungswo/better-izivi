@@ -138,6 +138,13 @@ fr:
       service: Service
       service_specification: spécification du service
       user: Utilisateur
+  admin_mailer:
+    missing_feedback_survey_mail:
+      instruction: Veuillez attribuer une enquête dans la zone d'administration sous "Spécifications de service".
+      intro: |-
+        Les spécifications de service suivantes n'ont pas encore d'enquête Formbricks attribuée,
+        aucun rappel de feedback n'a donc été envoyé pour les services associés :
+      subject: Enquête Formbricks manquante pour une spécification de service
   attributes:
     payment_timestamp: Horodatage du paiement
     state: Statut

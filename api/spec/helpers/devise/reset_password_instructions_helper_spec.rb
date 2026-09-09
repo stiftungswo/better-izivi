@@ -9,6 +9,8 @@ RSpec.describe Devise::ResetPasswordInstructionsHelper, type: :helper do
     let(:token) { '1234' }
     let(:user) { build :user }
 
+    before { allow(ENV).to receive(:fetch).and_call_original }
+
     context 'when reset link is in ENVs' do
       let(:link) { 'http://l.ch?token=%<token>s' }
 

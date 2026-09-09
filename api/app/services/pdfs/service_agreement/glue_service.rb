@@ -6,9 +6,6 @@ require 'hexapdf'
 module Pdfs
   module ServiceAgreement
     class GlueService
-      FRENCH_FILE_PATH = Rails.root.join('app/assets/pdfs/french_service_agreement_text.pdf').freeze
-      GERMAN_FILE_PATH = Rails.root.join('app/assets/pdfs/german_service_agreement_text.pdf').freeze
-
       def initialize(service)
         @service = service
         @combined = HexaPDF::Document.new
@@ -49,13 +46,10 @@ module Pdfs
       end
 
       def load_info_text
-        HexaPDF::Document.open(
-          valais? ? FRENCH_FILE_PATH : GERMAN_FILE_PATH
-        ).pages.each { |page| @combined.pages << @combined.import(page) }
-      end
+        terms_pdf = @service.service_specification.site.terms_pdf
 
-      def valais?
-        @service.service_specification.location_valais?
+        HexaPDF::Document.new(io: StringIO.new(terms_pdf.download))
+                         .pages.each { |page| @combined.pages << @combined.import(page) }
       end
 
       def calculate_company_holidays
