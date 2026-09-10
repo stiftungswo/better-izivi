@@ -34,8 +34,8 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '8.0.5'
 gem 'rails-i18n'
 gem 'sepa_king'
-gem 'sidekiq', '~> 6.5'
-gem 'sidekiq-cron', '~> 1.9'
+gem 'sidekiq', '~> 8.1'
+gem 'sidekiq-cron', '~> 2.4'
 gem 'validates_timeliness'
 
 group :production do
