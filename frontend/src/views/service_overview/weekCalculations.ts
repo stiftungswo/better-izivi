@@ -20,6 +20,9 @@ export function getStartWeek(beginning: moment.MomentInput, fetchYear: number): 
   if (beginningMoment.isoWeekYear() < fetchYear) {
     return START_WEEK_BEFORE_YEAR;
   }
+  if (beginningMoment.isoWeekYear() > fetchYear) {
+    return END_WEEK_BEYOND_YEAR;
+  }
   return beginningMoment.isoWeek();
 }
 
