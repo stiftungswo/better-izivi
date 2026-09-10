@@ -20,6 +20,7 @@ import { ServiceStore } from '../../stores/serviceStore';
 import { ServiceCollection } from '../../types';
 import { ServiceRow } from './ServiceRow';
 import { ServiceStyles } from './ServiceStyles';
+import * as weekCalculations from './weekCalculations';
 
 interface ServiceOverviewProps extends WithSheet<typeof ServiceStyles> {
   serviceSpecificationStore?: ServiceSpecificationStore;
@@ -511,35 +512,19 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   }
 
   isWeekStartWeek(week: number, service: ServiceCollection): boolean {
-    return week === this.getStartWeek(service);
+    return weekCalculations.isWeekStartWeek(week, this.getStartWeek(service));
   }
 
   isWeekMiddleWeek(week: number, service: ServiceCollection): boolean {
-    const startWeek = this.getStartWeek(service);
-    const endWeek = this.getEndWeek(service);
-
-    if (endWeek === 53 && moment(service.ending).year() > parseInt(this.state.fetchYear, 10)) {
-      return week > startWeek && week < endWeek;
-    } else if (endWeek !== 53) {
-      return week > startWeek && week < endWeek;
-    } else {
-      return false;
-    }
+    return weekCalculations.isWeekMiddleWeek(week, this.getStartWeek(service), this.getEndWeek(service));
   }
 
   isWeekEndWeek(week: number, service: ServiceCollection): boolean {
-    const endWeek = this.getEndWeek(service);
-    if (endWeek === 53 && moment(service.ending).year() > parseInt(this.state.fetchYear, 10)) {
-      return week === endWeek;
-    } else if (endWeek !== 53) {
-      return week === endWeek;
-    } else {
-      return false;
-    }
+    return weekCalculations.isWeekEndWeek(week, this.getEndWeek(service));
   }
 
   isWeekDuringService(week: number, service: ServiceCollection): boolean {
-    return this.isWeekStartWeek(week, service) || this.isWeekMiddleWeek(week, service) || this.isWeekEndWeek(week, service);
+    return weekCalculations.isWeekDuringService(week, this.getStartWeek(service), this.getEndWeek(service));
   }
 
   getActiveServiceInWeek(week: number, services: ServiceCollection[]): ServiceCollection | null {
@@ -553,19 +538,11 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   }
 
   getStartWeek(service: ServiceCollection): number {
-    let startWeek = moment(service.beginning!).isoWeek();
-    if (moment(service.beginning!).year() < parseInt(this.state.fetchYear, 10)) {
-      startWeek = -1;
-    }
-    return startWeek;
+    return weekCalculations.getStartWeek(service.beginning!, parseInt(this.state.fetchYear, 10));
   }
 
   getEndWeek(service: ServiceCollection): number {
-    let endWeek = moment(service.ending!).isoWeek();
-    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10) && endWeek !== 53) {
-      endWeek = 55;
-    }
-    return endWeek;
+    return weekCalculations.getEndWeek(service.ending!, parseInt(this.state.fetchYear, 10));
   }
 
   getEmptyWeekCount(): Map<number, Map<number, number>> {
