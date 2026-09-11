@@ -474,23 +474,34 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
         const einsatz = currService.confirmation_date == null ? classes.einsatzDraft : classes.einsatz;
 
         if (this.isWeekStartWeek(currWeek, currService)) {
+          // Use the service's actual beginning (and, if the service also ends in this same
+          // week, its actual ending) instead of the full ISO week range: an ISO week can
+          // straddle two calendar years, which would otherwise make the tooltip claim the
+          // service touches a date it never reaches.
+          const beginningFormatted = moment(currService.beginning!).format('DD.MM.YYYY');
+          const startWeekTitleEnd = this.isWeekEndWeek(currWeek, currService)
+            ? moment(currService.ending!).format('DD.MM.YYYY')
+            : popOverEnd;
+          const startWeekTitle = beginningFormatted + ' - ' + startWeekTitleEnd;
           const content = moment(currService.beginning!)
             .date()
             .toString();
           cells.push(
             (
-              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+              <td key={currWeek} title={startWeekTitle} className={classes.rowTd + ' ' + einsatz}>
                 {content}
               </td>
             ),
           );
         } else if (this.isWeekEndWeek(currWeek, currService)) {
+          const endingFormatted = moment(currService.ending!).format('DD.MM.YYYY');
+          const endWeekTitle = popOverStart + ' - ' + endingFormatted;
           const content = moment(currService.ending!)
             .date()
             .toString();
           cells.push(
             (
-              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+              <td key={currWeek} title={endWeekTitle} className={classes.rowTd + ' ' + einsatz}>
                 {content}
               </td>
             ),
