@@ -1,4 +1,4 @@
-import { END_WEEK_BEYOND_YEAR, START_WEEK_BEFORE_YEAR, getEndWeek, getStartWeek, isWeekDuringService } from './weekCalculations';
+import { END_WEEK_BEYOND_YEAR, START_WEEK_BEFORE_YEAR, getEndWeek, getStartWeek, getTotalWeeksInYear, isWeekDuringService } from './weekCalculations';
 
 // Ticket #0000541: a service ending Mon-Thu of a year's 53rd ISO week (e.g. 2026-12-31)
 // was only shown/summed for its first week, while ending on the Fri-Sun of that same
@@ -64,5 +64,36 @@ describe('weekCalculations regression: ISO week 53 boundary (ticket #0000541)', 
     // fetchYear 2026 this service already ended and shouldn't show as active at all.
     expect(getEndWeek('2025-12-28', 2026)).toBe(START_WEEK_BEFORE_YEAR);
     expect(activeWeeksOfService('2025-12-01', '2025-12-28', 2026)).toEqual([]);
+  });
+
+  it('marks every displayed week active for a service spanning the whole year and both boundaries at once', () => {
+    // Begins before fetchYear and ends after it: START_WEEK_BEFORE_YEAR and
+    // END_WEEK_BEYOND_YEAR combined should still cover every real week 1..53.
+    const startWeek = getStartWeek('2025-01-01', FETCH_YEAR_2026);
+    const endWeek = getEndWeek('2027-12-31', FETCH_YEAR_2026);
+    expect(startWeek).toBe(START_WEEK_BEFORE_YEAR);
+    expect(endWeek).toBe(END_WEEK_BEYOND_YEAR);
+    const allWeeks = Array.from({ length: 53 }, (_, i) => i + 1);
+    expect(activeWeeksOfService('2025-01-01', '2027-12-31', FETCH_YEAR_2026)).toEqual(allWeeks);
+  });
+});
+
+describe('getTotalWeeksInYear regression: must not depend on the current real-world date', () => {
+  it('returns the correct ISO week count for known 52- and 53-week years', () => {
+    expect(getTotalWeeksInYear(2026)).toBe(53);
+    expect(getTotalWeeksInYear(2020)).toBe(53);
+    expect(getTotalWeeksInYear(2025)).toBe(52);
+    expect(getTotalWeeksInYear(2027)).toBe(52);
+  });
+
+  it('gives the same correct result regardless of which real-world day it runs on, including the specific dates that broke the old moment().year(fetchYear) approach', () => {
+    // On these real dates, isoWeekYear() differs from the calendar year (e.g. 2022-01-01's
+    // isoWeekYear() is 2021, not 2022) - the old implementation used the wrong ISO
+    // week-year as its reference frame on exactly these days and returned 53 instead of 52.
+    const previouslyBrokenTodayDates = ['2017-01-01', '2022-01-01', '2022-01-02', '2023-01-01', '2028-01-01', '2028-01-02', '2034-01-01'];
+    for (const today of previouslyBrokenTodayDates) {
+      expect(getTotalWeeksInYear(2022, today)).toBe(52);
+      expect(getTotalWeeksInYear(2026, today)).toBe(53);
+    }
   });
 });

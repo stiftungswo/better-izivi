@@ -52,3 +52,13 @@ export function isWeekEndWeek(week: number, endWeek: number): boolean {
 export function isWeekDuringService(week: number, startWeek: number, endWeek: number): boolean {
   return isWeekStartWeek(week, startWeek) || isWeekMiddleWeek(week, startWeek, endWeek) || isWeekEndWeek(week, endWeek);
 }
+
+export function getTotalWeeksInYear(fetchYear: number, referenceDate: moment.MomentInput = moment()): number {
+  // Anchored purely on fetchYear via the isoWeekYear setter, not on the live today-date:
+  // mutating only the calendar year of "today" (the previous approach) silently used the
+  // wrong ISO week-year as its reference frame whenever "today" itself straddled an ISO
+  // week-year boundary (e.g. real dates like 2022-01-01, whose isoWeekYear() is 2021, not
+  // 2022). referenceDate defaults to now and is only overridden in tests, since the result
+  // must not depend on which day this happens to run.
+  return moment(referenceDate).isoWeekYear(fetchYear).isoWeeksInYear();
+}
