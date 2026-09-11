@@ -31,6 +31,9 @@ export function getEndWeek(ending: moment.MomentInput, fetchYear: number): numbe
   if (endingMoment.isoWeekYear() > fetchYear) {
     return END_WEEK_BEYOND_YEAR;
   }
+  if (endingMoment.isoWeekYear() < fetchYear) {
+    return START_WEEK_BEFORE_YEAR;
+  }
   return endingMoment.isoWeek();
 }
 

@@ -58,4 +58,11 @@ describe('weekCalculations regression: ISO week 53 boundary (ticket #0000541)', 
     expect(getStartWeek('2025-12-29', 2025)).toBe(END_WEEK_BEYOND_YEAR);
     expect(activeWeeksOfService('2025-12-29', '2026-01-05', 2025)).toEqual([]);
   });
+
+  it('treats an ending that truly precedes the displayed ISO week-year as already over (CodeRabbit finding)', () => {
+    // 2025-12-01 through 2025-12-28 is entirely within ISO week-year 2025, so for
+    // fetchYear 2026 this service already ended and shouldn't show as active at all.
+    expect(getEndWeek('2025-12-28', 2026)).toBe(START_WEEK_BEFORE_YEAR);
+    expect(activeWeeksOfService('2025-12-01', '2025-12-28', 2026)).toEqual([]);
+  });
 });
