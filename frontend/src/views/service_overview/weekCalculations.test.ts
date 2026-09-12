@@ -78,22 +78,19 @@ describe('weekCalculations regression: ISO week 53 boundary (ticket #0000541)', 
   });
 });
 
-describe('getTotalWeeksInYear regression: must not depend on the current real-world date', () => {
+describe('getTotalWeeksInYear regression: must not depend on any date other than fetchYear', () => {
+  // Two prior designs both broke on this: anchoring on moment() (the live today-date) got the
+  // wrong ISO week-year as its reference frame on real dates like 2022-01-01 (isoWeekYear()
+  // 2021, not 2022); anchoring on an injectable referenceDate defaulting to moment() fixed
+  // that but broke differently - e.g. referenceDate '2027-01-01' already has isoWeekYear()
+  // 2026, so isoWeekYear(2026) was a no-op and isoWeeksInYear() picked up the stale calendar
+  // year 2027, returning 52 instead of 53 (a CodeRabbit finding on this PR). Anchoring purely
+  // on `${fetchYear}-01-04` (always ISO week 1 of ISO week-year fetchYear, by definition) has
+  // no such external date to disagree with fetchYear in the first place.
   it('returns the correct ISO week count for known 52- and 53-week years', () => {
     expect(getTotalWeeksInYear(2026)).toBe(53);
     expect(getTotalWeeksInYear(2020)).toBe(53);
     expect(getTotalWeeksInYear(2025)).toBe(52);
     expect(getTotalWeeksInYear(2027)).toBe(52);
-  });
-
-  it('gives the same correct result regardless of which real-world day it runs on, including the specific dates that broke the old moment().year(fetchYear) approach', () => {
-    // On these real dates, isoWeekYear() differs from the calendar year (e.g. 2022-01-01's
-    // isoWeekYear() is 2021, not 2022) - the old implementation used the wrong ISO
-    // week-year as its reference frame on exactly these days and returned 53 instead of 52.
-    const previouslyBrokenTodayDates = ['2017-01-01', '2022-01-01', '2022-01-02', '2023-01-01', '2028-01-01', '2028-01-02', '2034-01-01'];
-    for (const today of previouslyBrokenTodayDates) {
-      expect(getTotalWeeksInYear(2022, today)).toBe(52);
-      expect(getTotalWeeksInYear(2026, today)).toBe(53);
-    }
   });
 });
