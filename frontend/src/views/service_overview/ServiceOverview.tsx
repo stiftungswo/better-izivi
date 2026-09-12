@@ -332,11 +332,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     let monthColCount = 0;
 
     // setting currDate to monday in fetchYear's ISO week 1
-    const currDate = moment()
-      .year(parseInt(this.state.fetchYear, 10))
-      .isoWeek(1)
-      .isoWeekday(1)
-      .toDate();
+    const currDate = weekCalculations.getFirstDisplayedMonday(parseInt(this.state.fetchYear, 10));
     // get month of monday in currDate's week (= fetchYear's week 1)
     let currMonth = moment(currDate)
       .isoWeekday(1)

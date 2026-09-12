@@ -1,4 +1,13 @@
-import { END_WEEK_BEYOND_YEAR, START_WEEK_BEFORE_YEAR, getEndWeek, getStartWeek, getTotalWeeksInYear, isWeekDuringService } from './weekCalculations';
+import moment from 'moment';
+import {
+  END_WEEK_BEYOND_YEAR,
+  START_WEEK_BEFORE_YEAR,
+  getEndWeek,
+  getFirstDisplayedMonday,
+  getStartWeek,
+  getTotalWeeksInYear,
+  isWeekDuringService,
+} from './weekCalculations';
 
 // Ticket #0000541: a service ending Mon-Thu of a year's 53rd ISO week (e.g. 2026-12-31)
 // was only shown/summed for its first week, while ending on the Fri-Sun of that same
@@ -92,5 +101,26 @@ describe('getTotalWeeksInYear regression: must not depend on any date other than
     expect(getTotalWeeksInYear(2020)).toBe(53);
     expect(getTotalWeeksInYear(2025)).toBe(52);
     expect(getTotalWeeksInYear(2027)).toBe(52);
+  });
+});
+
+describe('getFirstDisplayedMonday regression: must not depend on any date other than fetchYear', () => {
+  // The old setWeekAndMonthHeaders() anchored on moment() (the live today-date), only
+  // overwriting its calendar year - the same pattern that broke getNrWeeks(). E.g. real
+  // "today" 2026-12-29 with fetchYear 2025 produced 2025-12-29, which is ISO week 1 of 2026,
+  // not 2025 (a CodeRabbit finding on this PR), shifting month/week headers by a full year.
+  it('returns the Monday of ISO week 1 for known years, matching each year\'s own ISO week-year', () => {
+    const knownMondays: { [fetchYear: number]: string } = {
+      2025: '2024-12-30',
+      2026: '2025-12-29',
+      2027: '2027-01-04',
+    };
+    for (const fetchYear of Object.keys(knownMondays).map(Number)) {
+      const monday = moment(getFirstDisplayedMonday(fetchYear));
+      expect(monday.format('YYYY-MM-DD')).toBe(knownMondays[fetchYear]);
+      expect(monday.isoWeekYear()).toBe(fetchYear);
+      expect(monday.isoWeek()).toBe(1);
+      expect(monday.isoWeekday()).toBe(1);
+    }
   });
 });

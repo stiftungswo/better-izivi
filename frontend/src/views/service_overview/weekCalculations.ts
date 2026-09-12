@@ -62,3 +62,12 @@ export function getTotalWeeksInYear(fetchYear: number): number {
   // which specific date is passed in.
   return moment(`${fetchYear}-01-04`, 'YYYY-MM-DD').isoWeeksInYear();
 }
+
+export function getFirstDisplayedMonday(fetchYear: number): Date {
+  // Same January 4th anchor as getTotalWeeksInYear, for the same reason: anchoring on
+  // moment() (the live today-date) and only overwriting its calendar year can land on a date
+  // whose ISO week-year doesn't match fetchYear at all (e.g. real "today" 2026-12-29 with
+  // fetchYear 2025 produces 2025-12-29, which is ISO week 1 of 2026, not 2025), shifting the
+  // month/week headers built from it by a full year on those specific real-world dates.
+  return moment(`${fetchYear}-01-04`, 'YYYY-MM-DD').isoWeekday(1).toDate();
+}
