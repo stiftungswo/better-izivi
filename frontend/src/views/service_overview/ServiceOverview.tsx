@@ -20,6 +20,7 @@ import { ServiceStore } from '../../stores/serviceStore';
 import { ServiceCollection } from '../../types';
 import { ServiceRow } from './ServiceRow';
 import { ServiceStyles } from './ServiceStyles';
+import * as weekCalculations from './weekCalculations';
 
 interface ServiceOverviewProps extends WithSheet<typeof ServiceStyles> {
   serviceSpecificationStore?: ServiceSpecificationStore;
@@ -75,28 +76,11 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   }
 
   getNrWeeks(): void {
-    /* Since not all years have 52 weeks in the iso week date format
-    (some have 53, 2020/2026 for example)
-    this function sets totalWeeks to 52 or 53 for the whole class */
-    const localCookieYear = window.localStorage.getItem(this.cookieYear);
-    const fetchYear = localCookieYear == null ? this.currYear.toString() : localCookieYear!;
-    const lastWeek = moment()
-      .year(parseInt(fetchYear, 10))
-      .isoWeek(53)
-      .isoWeekday(4)
-      .toDate();
-    /* lastWeek defines the last thursday in the last week with the beginning in
-    fetchYear, because of it's importance to
-    determine if the year has 52 or 53 weeks */
-    if (moment(lastWeek).year() === parseInt(fetchYear, 10)) {
-      this.setState({
-        totalWeeks: 53,
-      });
-    } else {
-      this.setState({
-        totalWeeks: 52,
-      });
-    }
+    // Since not all years have 52 weeks in the iso week date format
+    // (some have 53, 2020/2026 for example), this sets totalWeeks to 52 or 53 for the whole class.
+    this.setState({
+      totalWeeks: weekCalculations.getTotalWeeksInYear(parseInt(this.state.fetchYear, 10)),
+    });
   }
 
   componentDidMount(): void {
@@ -348,11 +332,7 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
     let monthColCount = 0;
 
     // setting currDate to monday in fetchYear's ISO week 1
-    const currDate = moment()
-      .year(parseInt(this.state.fetchYear, 10))
-      .isoWeek(1)
-      .isoWeekday(1)
-      .toDate();
+    const currDate = weekCalculations.getFirstDisplayedMonday(parseInt(this.state.fetchYear, 10));
     // get month of monday in currDate's week (= fetchYear's week 1)
     let currMonth = moment(currDate)
       .isoWeekday(1)
@@ -473,23 +453,34 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
         const einsatz = currService.confirmation_date == null ? classes.einsatzDraft : classes.einsatz;
 
         if (this.isWeekStartWeek(currWeek, currService)) {
+          // Use the service's actual beginning (and, if the service also ends in this same
+          // week, its actual ending) instead of the full ISO week range: an ISO week can
+          // straddle two calendar years, which would otherwise make the tooltip claim the
+          // service touches a date it never reaches.
+          const beginningFormatted = moment(currService.beginning!).format('DD.MM.YYYY');
+          const startWeekTitleEnd = this.isWeekEndWeek(currWeek, currService)
+            ? moment(currService.ending!).format('DD.MM.YYYY')
+            : popOverEnd;
+          const startWeekTitle = beginningFormatted + ' - ' + startWeekTitleEnd;
           const content = moment(currService.beginning!)
             .date()
             .toString();
           cells.push(
             (
-              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+              <td key={currWeek} title={startWeekTitle} className={classes.rowTd + ' ' + einsatz}>
                 {content}
               </td>
             ),
           );
         } else if (this.isWeekEndWeek(currWeek, currService)) {
+          const endingFormatted = moment(currService.ending!).format('DD.MM.YYYY');
+          const endWeekTitle = popOverStart + ' - ' + endingFormatted;
           const content = moment(currService.ending!)
             .date()
             .toString();
           cells.push(
             (
-              <td key={currWeek} title={title} className={classes.rowTd + ' ' + einsatz}>
+              <td key={currWeek} title={endWeekTitle} className={classes.rowTd + ' ' + einsatz}>
                 {content}
               </td>
             ),
@@ -511,35 +502,19 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   }
 
   isWeekStartWeek(week: number, service: ServiceCollection): boolean {
-    return week === this.getStartWeek(service);
+    return weekCalculations.isWeekStartWeek(week, this.getStartWeek(service));
   }
 
   isWeekMiddleWeek(week: number, service: ServiceCollection): boolean {
-    const startWeek = this.getStartWeek(service);
-    const endWeek = this.getEndWeek(service);
-
-    if (endWeek === 53 && moment(service.ending).year() > parseInt(this.state.fetchYear, 10)) {
-      return week > startWeek && week < endWeek;
-    } else if (endWeek !== 53) {
-      return week > startWeek && week < endWeek;
-    } else {
-      return false;
-    }
+    return weekCalculations.isWeekMiddleWeek(week, this.getStartWeek(service), this.getEndWeek(service));
   }
 
   isWeekEndWeek(week: number, service: ServiceCollection): boolean {
-    const endWeek = this.getEndWeek(service);
-    if (endWeek === 53 && moment(service.ending).year() > parseInt(this.state.fetchYear, 10)) {
-      return week === endWeek;
-    } else if (endWeek !== 53) {
-      return week === endWeek;
-    } else {
-      return false;
-    }
+    return weekCalculations.isWeekEndWeek(week, this.getEndWeek(service));
   }
 
   isWeekDuringService(week: number, service: ServiceCollection): boolean {
-    return this.isWeekStartWeek(week, service) || this.isWeekMiddleWeek(week, service) || this.isWeekEndWeek(week, service);
+    return weekCalculations.isWeekDuringService(week, this.getStartWeek(service), this.getEndWeek(service));
   }
 
   getActiveServiceInWeek(week: number, services: ServiceCollection[]): ServiceCollection | null {
@@ -553,19 +528,11 @@ class ServiceOverviewContent extends React.Component<ServiceOverviewProps, Servi
   }
 
   getStartWeek(service: ServiceCollection): number {
-    let startWeek = moment(service.beginning!).isoWeek();
-    if (moment(service.beginning!).year() < parseInt(this.state.fetchYear, 10)) {
-      startWeek = -1;
-    }
-    return startWeek;
+    return weekCalculations.getStartWeek(service.beginning!, parseInt(this.state.fetchYear, 10));
   }
 
   getEndWeek(service: ServiceCollection): number {
-    let endWeek = moment(service.ending!).isoWeek();
-    if (moment(service.ending!).year() > parseInt(this.state.fetchYear, 10) && endWeek !== 53) {
-      endWeek = 55;
-    }
-    return endWeek;
+    return weekCalculations.getEndWeek(service.ending!, parseInt(this.state.fetchYear, 10));
   }
 
   getEmptyWeekCount(): Map<number, Map<number, number>> {
