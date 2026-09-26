@@ -119,9 +119,9 @@ GEM
       warden-jwt_auth (~> 0.10)
     diff-lcs (1.6.2)
     docile (1.4.0)
-    docx (0.7.0)
+    docx (0.13.0)
       nokogiri (~> 1.13, >= 1.13.0)
-      rubyzip (~> 2.0)
+      rubyzip (>= 2.0, < 4)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -171,7 +171,6 @@ GEM
     faker (2.22.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
-    ffi (1.15.5-x64-mingw32)
     fugit (1.12.3)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -424,7 +423,7 @@ GEM
       rubocop (~> 1.86, >= 1.86.2)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
-    rubyzip (2.3.2)
+    rubyzip (3.4.0)
     safe_shell (1.1.0)
     securerandom (0.4.1)
     sentry-rails (6.6.2)
@@ -496,7 +495,7 @@ GEM
 
 PLATFORMS
   ruby
-  x64-mingw32
+  x64-mingw-ucrt
 
 DEPENDENCIES
   better_errors
