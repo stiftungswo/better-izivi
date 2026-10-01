@@ -63,7 +63,7 @@
     "@types/react-widgets-moment": "^4.0.1",
     "@types/reactstrap": "^6.4.4",
     "@types/yup": "^0.26.4",
-    "cypress": "^3.4.1",
+    "cypress": "^16.1.0",
     "json-server": "^0.15.0",
     "react-scripts": "^3.4.4",
     "serve": "^11.1.0",
