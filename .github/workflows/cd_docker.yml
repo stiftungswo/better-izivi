@@ -45,6 +45,10 @@ jobs:
             type=ref,event=branch
             type=raw,value=latest,enable=${{ github.ref_name == 'master' }}
 
+      - name: Record build time
+        id: build-time
+        run: echo "value=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
+
       - name: Build and push API Docker image
         id: push-api
         uses: docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25 # v5.10.0
@@ -54,6 +58,10 @@ jobs:
           push: true
           tags: ${{ steps.meta-api.outputs.tags }}
           labels: ${{ steps.meta-api.outputs.labels }}
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+            GIT_BRANCH=${{ github.ref_name }}
+            BUILD_TIME=${{ steps.build-time.outputs.value }}
 
   build-push-frontend:
     runs-on: ubuntu-latest
