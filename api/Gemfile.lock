@@ -171,7 +171,6 @@ GEM
     faker (2.22.0)
       i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
-    ffi (1.15.5-x64-mingw32)
     fugit (1.12.3)
       et-orbi (~> 1.4)
       raabro (~> 1.4)
@@ -257,8 +256,10 @@ GEM
       net-protocol
     nio4r (2.7.5)
     nkf (0.3.0)
-    nokogiri (1.19.4)
+    nokogiri (1.19.5)
       mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.19.5-x64-mingw-ucrt)
       racc (~> 1.4)
     observer (0.1.2)
     orm_adapter (0.5.0)
@@ -496,7 +497,7 @@ GEM
 
 PLATFORMS
   ruby
-  x64-mingw32
+  x64-mingw-ucrt
 
 DEPENDENCIES
   better_errors
